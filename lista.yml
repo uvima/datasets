@@ -1,0 +1,187 @@
+- title: 'Cluster Jerárquico: desigualdad_CCAA'
+  tecnica: Cluster Jerárquico
+  href: files/desigualdad_ccaa.xlsx
+  fichero: desigualdad_ccaa
+  documento: notebooks/Cluster Jerarquico/desigualdad_ccaa/desigualdad_ccaa.html
+  categories: [Cluster Jerárquico]
+- title: 'Cluster K-Means: desigualdad_CCAA'
+  tecnica: Cluster K-Means
+  href: files/desigualdad_ccaa.xlsx
+  fichero: desigualdad_ccaa
+  documento: notebooks/Cluster K-Means/desigualdad_ccaa/desigualdad_ccaa.html
+  categories: [Cluster K-Means]
+- title: 'Cluster Jerárquico: ecv_cluster'
+  tecnica: Cluster Jerárquico
+  href: files/ECV.xlsx
+  fichero: ECV
+  documento: notebooks/Cluster Jerarquico/ecv_cluster/ecv_cluster.html
+  categories: [Cluster Jerárquico]
+- title: 'Cluster K-Means: ecv_cluster'
+  tecnica: Cluster K-Means
+  href: files/ECV.xlsx
+  fichero: ECV
+  documento: notebooks/Cluster K-Means/ecv_cluster/ecv_cluster.html
+  categories: [Cluster K-Means]
+- title: 'Regresión Logística: ECV_microdatos'
+  tecnica: Regresión Logística
+  href: files/ECV.xlsx
+  fichero: ECV
+  documento: notebooks/Logistic Regression/ECV/ECV.html
+  categories: [Regresión Logística]
+- title: 'Reducción Dimensionalidad - Análisis Factorial: ECV_factorial'
+  tecnica: Reducción Dimensionalidad - Análisis Factorial
+  href: files/ECV.xlsx
+  fichero: ECV
+  documento: notebooks/Reduccion Dimension/Analisis Factorial/ECV_factorial/ECV_factorial.html
+  categories: [Reducción Dimensionalidad]
+- title: 'Cluster Jerárquico: ecv_cluster'
+  tecnica: Cluster Jerárquico
+  href: files/ecv_cluster.xlsx
+  fichero: ecv_cluster
+  documento: notebooks/Cluster Jerarquico/ecv_cluster/ecv_cluster.html
+  categories: [Cluster Jerárquico]
+- title: 'Cluster K-Means: ecv_cluster'
+  tecnica: Cluster K-Means
+  href: files/ecv_cluster.xlsx
+  fichero: ecv_cluster
+  documento: notebooks/Cluster K-Means/ecv_cluster/ecv_cluster.html
+  categories: [Cluster K-Means]
+- title: 'Reducción Dimensionalidad - Análisis Factorial: ECV_factorial'
+  tecnica: Reducción Dimensionalidad - Análisis Factorial
+  href: files/ECV_factorial.xlsx
+  fichero: ECV_factorial
+  documento: notebooks/Reduccion Dimension/Analisis Factorial/ECV_factorial/ECV_factorial.html
+  categories: [Reducción Dimensionalidad]
+- title: 'Reducción Dimensionalidad - PCA: IMCV_pca'
+  tecnica: Reducción Dimensionalidad - PCA
+  href: files/IMCV_pca.xlsx
+  fichero: IMCV_pca
+  documento: notebooks/Reduccion Dimension/PCA/IMCV_pca/IMCV_pca.html
+  categories: [Reducción Dimensionalidad]
+- title: 'Regresión Lineal: IMCV_reg'
+  tecnica: Regresión Lineal
+  href: files/IMCV_reg.xlsx
+  fichero: IMCV_reg
+  documento: notebooks/Linear Regression/IMCV/IMCV.html
+  categories: [Regresión Lineal]
+- title: 'Reducción Dimensionalidad - PCA: IMCV_pca'
+  tecnica: Reducción Dimensionalidad - PCA
+  href: files/IMCV_reg.xlsx
+  fichero: IMCV_reg
+  documento: notebooks/Reduccion Dimension/PCA/IMCV_pca/IMCV_pca.html
+  categories: [Reducción Dimensionalidad]
+- title: 'Series Temporales - ARIMA: ipc_series'
+  tecnica: Series Temporales - ARIMA
+  href: files/ipc_series.xlsx
+  fichero: ipc_series
+  documento: notebooks/Series Temporales/ARIMA/ipc_series/ipc_series.html
+  categories: [Series Temporales]
+- title: 'Análisis Discriminante: laboral'
+  tecnica: Análisis Discriminante
+  href: files/laboral.xlsx
+  fichero: laboral
+  documento: notebooks/Analisis Discriminante/Lineal_y_Cuadratico/laboral/laboral.html
+  categories: [Análisis Discriminante]
+- title: 'Regresión Logística: laboral'
+  tecnica: Regresión Logística
+  href: files/laboral.xlsx
+  fichero: laboral
+  documento: notebooks/Logistic Regression/laboral/laboral.html
+  categories: [Regresión Logística]
+- title: 'Series Temporales - ARIMA: madrid_series'
+  tecnica: Series Temporales - ARIMA
+  href: files/madrid_series.xlsx
+  fichero: madrid_series
+  documento: notebooks/Series Temporales/ARIMA/Madrid/madrid_series.html
+  categories: [Series Temporales]
+- title: 'Reducción Dimensionalidad - PCA: MercadoHipotecas'
+  tecnica: Reducción Dimensionalidad - PCA
+  href: files/MercadoHipotecas.xlsx
+  fichero: MercadoHipotecas
+  documento: notebooks/Reduccion Dimension/PCA/MercadoHipotecas/MercadoHipotecas.html
+  categories: [Reducción Dimensionalidad]
+- title: 'Series Temporales - ARIMA: navarra'
+  tecnica: Series Temporales - ARIMA
+  href: files/navarra_series.xlsx
+  fichero: navarra_series
+  documento: notebooks/Series Temporales/ARIMA/Navarra/navarra_series.html
+  categories: [Series Temporales]
+- title: 'Regresión Logística: ECV_microdatos'
+  tecnica: Regresión Logística
+  href: files/partos.xlsx
+  fichero: partos
+  documento: notebooks/Logistic Regression/Partos/Partos.html
+  categories: [Regresión Logística]
+- title: 'Reducción Dimensionalidad - Análisis Factorial: pisa_factorial'
+  tecnica: Reducción Dimensionalidad - Análisis Factorial
+  href: files/pisa_factorial.xlsx
+  fichero: pisa_factorial
+  documento: notebooks/Reduccion Dimension/Analisis Factorial/pisa_factorial/pisa_factorial.html
+  categories: [Reducción Dimensionalidad]
+- title: 'Reducción Dimensionalidad - PCA: provincias_variado'
+  tecnica: Reducción Dimensionalidad - PCA
+  href: files/provincias_variado.xlsx
+  fichero: provincias_variado
+  documento: notebooks/Reduccion Dimension/PCA/provincias_variado/provincias_variado.html
+  categories: [Reducción Dimensionalidad]
+- title: 'Análisis Discriminante: salud'
+  tecnica: Análisis Discriminante
+  href: files/salud.xlsx
+  fichero: salud
+  documento: notebooks/Analisis Discriminante/Lineal_y_Cuadratico/salud/salud.html
+  categories: [Análisis Discriminante]
+- title: 'Regresión Lineal: salud_reg'
+  tecnica: Regresión Lineal
+  href: files/salud.xlsx
+  fichero: salud
+  documento: notebooks/Linear Regression/salud_reg/salud_reg.html
+  categories: [Regresión Lineal]
+- title: 'Regresión Logística: salud'
+  tecnica: Regresión Logística
+  href: files/salud.xlsx
+  fichero: salud
+  documento: notebooks/Logistic Regression/salud/salud.html
+  categories: [Regresión Logística]
+- title: 'Regresión Lineal: salud_reg'
+  tecnica: Regresión Lineal
+  href: files/salud_reg.xlsx
+  fichero: salud_reg
+  documento: notebooks/Linear Regression/salud_reg/salud_reg.html
+  categories: [Regresión Lineal]
+- title: 'Reducción Dimensionalidad - PCA: Situacion_sanitaria'
+  tecnica: Reducción Dimensionalidad - PCA
+  href: files/Situacion_sanitaria.xlsx
+  fichero: Situacion_sanitaria
+  documento: notebooks/Reduccion Dimension/PCA/Situacion_sanitaria/Situacion_sanitaria.html
+  categories: [Reducción Dimensionalidad]
+- title: 'Regresión Lineal: Sucidios'
+  tecnica: Regresión Lineal
+  href: files/suicidios2019CCAA.xlsx
+  fichero: suicidios2019CCAA
+  documento: notebooks/Linear Regression/Suicidios_2019CCAA/Suicidios_2019.html
+  categories: [Regresión Lineal]
+- title: 'Cluster Jerárquico: VarCovid'
+  tecnica: Cluster Jerárquico
+  href: files/VarCovid.xlsx
+  fichero: VarCovid
+  documento: notebooks/Cluster Jerarquico/VarCovid/VarCovid.html
+  categories: [Cluster Jerárquico]
+- title: 'Cluster Jerárquico: VarCovid_provincias'
+  tecnica: Cluster Jerárquico
+  href: files/VarCovid.xlsx
+  fichero: VarCovid
+  documento: notebooks/Cluster Jerarquico/VarCovid_provincias/VarCovid_provincias.html
+  categories: [Cluster Jerárquico]
+- title: 'Cluster K-Means: VarCovid'
+  tecnica: Cluster K-Means
+  href: files/VarCovid.xlsx
+  fichero: VarCovid
+  documento: notebooks/Cluster K-Means/VarCovid/VarCovid.html
+  categories: [Cluster K-Means]
+- title: 'Cluster Jerárquico: VarCovid_provincias'
+  tecnica: Cluster Jerárquico
+  href: files/VarCovid_provincias.xlsx
+  fichero: VarCovid_provincias
+  documento: notebooks/Cluster Jerarquico/VarCovid_provincias/VarCovid_provincias.html
+  categories: [Cluster Jerárquico]
+

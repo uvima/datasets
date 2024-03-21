@@ -1,0 +1,502 @@
+---
+title: 'Regresión Lineal: IMCV_reg'
+---
+
+```{r}
+#| label: setup
+#| include: false
+knitr::opts_chunk$set(echo = TRUE,fig.align='center',warning=FALSE,message=FALSE)
+
+
+# fig.align= 'center para que nos centre todas figuras que se muestran
+# warning = FALSE para que no muestre mensajes de warning
+# message = FALSE para que no muestre mensajes automáticos cuando carga paquetes y demás en el output
+
+```
+
+# Introducción
+
+## dataset
+
+En el siguiente dataset disponemos de datos por Comunidades Autónomas de
+las nueve **dimensiones relativas a la calidad de vida que componen el Índice Multidimensional de Calidad de Vida (IMCV)**, una estadística con
+carácter experimental. Datos correspondientes al año 2020.
+
+Concretamente tenemos las siguietnes variables:
+
+-   **indice_total**: Índice multidimensional de calidad de vida
+    teniendo en cuenta las nueve dimensiones.
+-   **dim1** : Indicador sobre las condiciones materiales de vida.
+-   **dim2** : Indicador sobre el trabajo.
+-   **dim3** : Indicador sobre la salud.
+-   **dim4** : Indicador sobre la eduación.
+-   **dim5** : Indicador sobre el ocio y relaciones sociales.\
+-   **dim6** : Indicador sobre la seguridad física y personal.\
+-   **dim7** : Indicador sobre la gobernanza y los derechos básicos.\
+-   **dim8** : Indicador sobre el entorno y el medioambiente.
+-   **CCAA**: Comunidades Autónomas.
+
+Los datos relativos a este estudio corresponden, como ya se ha
+comentado, a la estadística experimental sobre el **ÍndiceMultidimensional de Calidad de Vida (IMCV)**. Se construye a partir de
+los indicadores de calidad del INE, que ofrecen una visión panorámica
+(multidimensional) de la calidad de vida en España, mediante la elección
+de un conjunto amplio pero limitado de indicadores (actualmente 60) que
+cubren nueve dimensiones usadas para describir la calidad de vida.
+
+**Nota**: Notar que en este dataset no se tiene la variable **dim9** ya
+que en ese caso el ajuste de la regresión sería prefecto puesto que la
+variable **indice_total** es la media artimética de las 9 dimensiones.
+
+## Descripción del trabajo a realizar
+
+**(Esto irá en la web de explica)** Se pretende hacer una regresión lineal que explique el índice total en función de las dimensiones (sin tener en centa la var. comunidad autónoma).
+
+  - Hacer un análisis exploratorio.
+  - Plantear las hipótesis de una regresión (incluyendo todas variables).
+  - Analizar el modelo planteado y su ajuste de bondad.
+  - Comprobar hipótesis de regresión.
+  - Hacer una conclusión.
+
+
+
+
+\newpage
+# Análisis Exploratorio (EDA[^1])
+
+[^1]: EDA viene del Inglés *Exploratory Data Analysis* y son los pasos
+    relativos en los que se exploran las variables para tener una idea
+    de que forma toma el dataset.
+
+
+
+Lo primero de todo vamos a cargar las librearias necesarias para ejecutar el resto del código del trabajo:
+
+
+```{r }
+#| label: librerias
+library(readxl)  # Para leer los excels
+library(kableExtra) # Para dar formato a las tablas html
+library(knitr)
+library(gridExtra)  # Para cargar bien las tab
+library(car)   # for bonfferroni test
+
+```
+Ahora leemos los datos del excel correspondientes a la pestaña *"Datos"* y vemos si hay algún NA o algún valor igual a 0 en nuestro dataset. Vemos que no han ningún NA (missing value) en el dataset luego no será necesario realizar ninguna técnica para imputar los missing values o borrar observaciones.
+
+
+```{r}
+#| label: datos
+IMCV <- read_excel("../../../files/IMCV_reg.xlsx",sheet = "Datos")
+```
+
+
+```{r}
+c(anyNA(IMCV) ,   #Any missing data 
+  any(IMCV==0) )  # Any value equal to 0
+```
+
+
+
+Realizando un **resumen numérico** vemos que todas las dimensiones toman valores en torno a $[90,110]$. Recordar que estas representan índices. Para ninguna de ellas parece haber valores atípicos en relación a los demas luego no parece necesario hacer ningún tipo de ajuste a los datos. Además las medias y medianas son muy parecidas. Junto con los **histogramas y los boxplots** se podría concluir que no parece haber ningún dato atípico/outlier y tampoco parece haber mucha asímetria, hecho que se puede ver en los histogramas y en los boxplots (mirando las distancias entre máximo/tercer cuartil y mínimo/1er cuartil son parecidas).
+```{r}
+#| echo: false
+mmary_stats <- function(data) {
+  # Inicializa un dataframe vacío para almacenar los resultados
+  result <- data.frame()
+
+  # Itera sobre cada columna del dataframe
+  for (col in colnames(data)) {
+    if (is.numeric(data[[col]])) {
+      # Si la columna es numérica, calcula las estadísticas descriptivas
+      stats <- c(
+        column = col,
+        Min = format(round(min(data[[col]], na.rm = TRUE)), nsmall = 2),
+        Q1 = format(round(quantile(data[[col]], 0.25, na.rm = TRUE)), nsmall = 2),
+        Mean = format(round(mean(data[[col]], na.rm = TRUE)), nsmall = 2),
+        Median = format(round(median(data[[col]], na.rm = TRUE)), nsmall = 2),
+        Q3 =format(round( quantile(data[[col]], 0.75, na.rm = TRUE)), nsmall = 2),
+        Max = format(round(max(data[[col]], na.rm = TRUE)), nsmall = 2))
+
+      result <- rbind(result, stats)
+    }
+    
+  }
+
+  # Establece los nombres de las filas como las medidas
+  colnames(result) <- c("variable","Min", "Q1", "Mean", "Median", "Q3", "Max")
+
+  return(result)
+}
+
+
+# Ejemplo de uso con un data frame 'df'
+# Reemplaza 'df' con el nombre de tu data frame
+result_df <- mmary_stats(IMCV)
+
+# Convierte la salida a una tabla utilizando kable
+kable(result_df, format = "pipe", caption = "Table showing the measures of interest.")
+
+
+
+```
+
+
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| fig-cap: Plots de todas las dimensiones.
+# Assuming IMV is your data frame and d is the variable of interest
+library(ggplot2)
+
+# Histogram dim1
+histogram <- ggplot(IMCV, aes(x = dim1)) +
+  geom_histogram(fill = "lightblue", color = "black", bins = 5) +
+  labs(title = "Histogram of dim1", x = "dim1", y = "Frequency") +
+  theme_minimal(base_size = 8)
+
+# Box Plot dim1
+boxplot <- ggplot(IMCV, aes(x = "d", y = dim1)) +
+  geom_boxplot(fill = "lightblue", color = "black")+ stat_boxplot(geom = 'errorbar', width = 0.2) +
+  labs(title = "Box Plot of dim1", x = "", y = "dim1") +
+  theme_minimal(base_size = 8) +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())
+
+
+
+# Histogram dim2
+histogram2 <- ggplot(IMCV, aes(x = dim2)) +
+  geom_histogram(fill = "lightblue", color = "black", bins = 5) +
+  labs(title = "Histogram of dim2", x = "dim2", y = "Frequency") +
+  theme_minimal(base_size = 8)
+
+# Box Plot dim2
+boxplot2 <- ggplot(IMCV, aes(x = "d", y = dim2)) +
+  geom_boxplot(fill = "lightblue", color = "black")+ stat_boxplot(geom = 'errorbar', width = 0.2) +
+  labs(title = "Box Plot of dim2", x = "", y = "dim2") +
+  theme_minimal(base_size = 8) +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())
+
+
+
+# Histogram dim3
+histogram3 <- ggplot(IMCV, aes(x = dim3)) +
+  geom_histogram(fill = "lightblue", color = "black", bins = 5) +
+  labs(title = "Histogram of dim3", x = "dim3", y = "Frequency") +
+  theme_minimal(base_size = 8)
+
+# Box Plot dim3
+boxplot3 <- ggplot(IMCV, aes(x = "d", y = dim3)) +
+  geom_boxplot(fill = "lightblue", color = "black")+ stat_boxplot(geom = 'errorbar', width = 0.2) +
+  labs(title = "Box Plot of dim3", x = "", y = "dim3") +
+  theme_minimal(base_size = 8) +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())
+
+
+
+# Histogram dim4
+histogram4 <- ggplot(IMCV, aes(x = dim4)) +
+  geom_histogram(fill = "lightblue", color = "black", bins = 5) +
+  labs(title = "Histogram of dim4", x = "dim4", y = "Frequency") +
+  theme_minimal(base_size = 8)
+
+# Box Plot dim4
+boxplot4 <- ggplot(IMCV, aes(x = "d", y = dim4)) +
+  geom_boxplot(fill = "lightblue", color = "black")+ stat_boxplot(geom = 'errorbar', width = 0.2) +
+  labs(title = "Box Plot of dim4", x = "", y = "dim4") +
+  theme_minimal(base_size = 8) +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())
+
+
+
+# Histogram dim5
+histogram5 <- ggplot(IMCV, aes(x = dim5)) +
+  geom_histogram(fill = "lightblue", color = "black", bins = 5) +
+  labs(title = "Histogram of dim5", x = "dim5", y = "Frequency") +
+  theme_minimal(base_size = 8)
+
+# Box Plot dim5
+boxplot5 <- ggplot(IMCV, aes(x = "d", y = dim5)) +
+  geom_boxplot(fill = "lightblue", color = "black")+ stat_boxplot(geom = 'errorbar', width = 0.2) +
+  labs(title = "Box Plot of dim5", x = "", y = "dim5") +
+  theme_minimal(base_size = 8) +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())
+
+
+
+# Histogram dim6
+histogram6 <- ggplot(IMCV, aes(x = dim6)) +
+  geom_histogram(fill = "lightblue", color = "black", bins = 5) +
+  labs(title = "Histogram of dim6", x = "dim6", y = "Frequency") +
+  theme_minimal(base_size = 8)
+
+# Box Plot dim6
+boxplot6 <- ggplot(IMCV, aes(x = "d", y = dim6)) +
+  geom_boxplot(fill = "lightblue", color = "black")+ stat_boxplot(geom = 'errorbar', width = 0.2) +
+  labs(title = "Box Plot of dim6", x = "", y = "dim6") +
+  theme_minimal(base_size = 8) +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())
+
+
+
+# Histogram dim7
+histogram7 <- ggplot(IMCV, aes(x = dim7)) +
+  geom_histogram(fill = "lightblue", color = "black", bins = 5) +
+  labs(title = "Histogram of dim7", x = "dim7", y = "Frequency") +
+  theme_minimal(base_size = 8)
+
+# Box Plot dim7
+boxplot7 <- ggplot(IMCV, aes(x = "d", y = dim7)) +
+  geom_boxplot(fill = "lightblue", color = "black")+ stat_boxplot(geom = 'errorbar', width = 0.2) +
+  labs(title = "Box Plot of dim7", x = "", y = "dim7") +
+  theme_minimal(base_size = 8) +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())
+
+
+# Histogram dim8
+histogram8 <- ggplot(IMCV, aes(x = dim8)) +
+  geom_histogram(fill = "lightblue", color = "black", bins = 5) +
+  labs(title = "Histogram of dim8", x = "dim8", y = "Frequency") +
+  theme_minimal(base_size = 8)
+
+# Box Plot dim8
+boxplot8 <- ggplot(IMCV, aes(x = "d", y = dim8)) +
+  geom_boxplot(fill = "lightblue", color = "black")+ stat_boxplot(geom = 'errorbar', width = 0.2) +
+  labs(title = "Box Plot of dim8", x = "", y = "dim8") +
+  theme_minimal(base_size = 8) +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())
+
+
+# Histogram inidice_total
+histogramtot <- ggplot(IMCV, aes(x = indice_total)) +
+  geom_histogram(fill = "lightgreen", color = "black", bins = 5) +
+  labs(title = "Histogram of indice_total", x = "indice_total", y = "Frequency") +
+  theme_minimal(base_size = 8)
+
+# Box Plot inidice_total
+boxplottot <- ggplot(IMCV, aes(x = "d", y = indice_total)) +
+  geom_boxplot(fill = "lightgreen", color = "black")+ stat_boxplot(geom = 'errorbar', width = 0.2) +
+  labs(title = "Box Plot of indice_total", x = "", y = "indice_total") +
+  theme_minimal(base_size = 8) +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())
+
+
+
+# Arrange plots vertically
+library(gridExtra)
+grid.arrange(histogram, boxplot,histogram2, boxplot2,histogram3,boxplot3,histogram4,boxplot4, nrow = 2,ncol=4, widths = c(0.3, 0.2,0.3,0.2))
+
+grid.arrange(histogram5, boxplot5,histogram6, boxplot6,histogram7,boxplot7,histogram8,boxplot8, nrow = 2,ncol=4, widths = c(0.3, 0.2,0.3,0.2))
+
+```
+
+
+
+
+
+
+```{r}
+#| echo: false
+#| out-width: 50%
+#| fig-align: center
+#| fig-cap: 'Plots para la dimensión total. '
+grid.arrange(histogramtot,boxplottot,widths=c(0.3,0.2),nrow=1)
+
+
+```
+
+
+
+
+
+
+# Regresión Lineal
+
+
+## Hipótesis y indicadores de bondad
+
+Para que una regresión lineal proporcione un buen ajsute a los datos debe cumplir una serie de requisitos que por tanto deben ser verificados al llevar a cabo el estudio. Recordar que la regresión lineal se expresa como:
+\[
+\mathbf{Y}=\mathbf{X} \boldsymbol{\beta}+\boldsymbol{\varepsilon}
+\]
+donde $\mathbf{Y}$ es la variable respuesta, $\mathbf{X}$ los predictores, $\boldsymbol{\beta}$ los coeficientes de la regresión y $\boldsymbol{\varepsilon}$ el error.
+\[
+\mathbf{Y}=\left[\begin{array}{c}
+y_1 \\
+y_2 \\
+\vdots \\
+y_n
+\end{array}\right] \quad \mathbf{X}=\left[\begin{array}{cccc}
+1 & x_{11} & \ldots & x_{1 k} \\
+1 & x_{21} & \ldots & x_{2 k} \\
+\vdots & \ddots & \vdots & \\
+1 & x_{n 1} & \ldots & x_{n k}
+\end{array}\right] \quad \boldsymbol{\beta}=\left[\begin{array}{c}
+\beta_0 \\
+\beta_1 \\
+\vdots \\
+\beta_k
+\end{array}\right] \quad \boldsymbol{\varepsilon}=\left[\begin{array}{c}
+\varepsilon_1 \\
+\varepsilon_2 \\
+\vdots \\
+\varepsilon_n
+\end{array}\right]
+\]
+Las hipótesis que se deben cumplir son:
+
+  - **Linealidad**: La media de la respuesta es función lineal de los predictores. En términos matemáticos:
+  $$E\left[\mathbf{Y} \mid \mathbf{X}_1=x_1, \ldots, \mathbf{X}_k=x_k\right]=\beta_0+\beta_1 x_1+\ldots+\beta_k x_k$$
+  
+- **Independencia de errores**: Los errores $\varepsilon_i$ deben ser independientes, es decir, $Cov[\varepsilon_i,\varepsilon_j] =0, \; \forall i\neq j$.
+
+- **Homocedasticidad**: Cuando la varianza del error es constante, condicionada a los predictores.
+
+\[\operatorname{Var}\left[\varepsilon_i \mid \mathbf{X}_1=x_1, \ldots, \mathbf{X}_k=x_k\right]=\sigma^2\]
+
+- **Normalidad** : Los errores deben estar distribuidos normalmente, es decir, $\varepsilon_i \sim N(0,\sigma^2)\; \forall i$.
+
+
+Además hay algunas medidas indicadores como el $R^2\_adj$ que indican la variabiliad de la variable respueta que es eescplicada por el modelo, siendo mejor el modelo cuanto más grande sea este valor.
+
+
+
+
+
+## Modelo
+
+
+Inicialmente vamos a considerar un modelo con todas variables predictoras para intentar predecir el $indice\_total$ y veremos si este modelo cumple las hipótesis necesarias y cuan bueno es.
+```{r}
+#| label: modelo1
+#| class-source: fold-show
+
+#Modelo inicial
+lm1<-lm(indice_total~dim1+dim2+dim3+dim4+dim5+dim6+dim7+dim8,IMCV)
+
+summary(lm1)
+```
+A primera vista vemos un valor de **Multiple R-squared:  0.9812,**, lo cual es bastante alto y por tanto nuestro modelo parece capturar bien la variabilidad de la variable respuesta, concretamente un $98\%$. Sin embargo, en los sucesivos modelos que planteemos no podemos usar como criterio de comparación el $R-squared$ pues aumenta a la vez que lo hace el número de variables, y por tanto para comparar modelos entre si se debe usar el **Adjusted R-squared** (que tiene en cuenta el número de variables). 
+
+En la línea de los residuos no parece haber contraindicaciones a que estos sigan una distribución normal centrada en cero puesto que tenemos unas medidas de dispersión bastante simétricas. No osbtante, más adelante se procederán a hacer los test pertinentes. 
+
+En la última linea el $F-test$ lo que considera es la hipótesis nula de $H0: \beta_i =0\; \forall i$ y $H1: al\; menos \; un \; \beta_i \neq 0$. Para un nivel de significancia de $0.05$ podemos rechazar la hipótesis nula y por tanto aceptar la alternativa, lo cual es buena señal.
+
+No obstante es necesario analizar que se cumplan las hipótesis iniciales para poder asegurar que estamos ante un buen modelo. 
+
+## Test de Bonferroni (datos atípicos)
+
+La idea principal es verificar si los residuos de las observaciones son significativamente diferentes de cero. Si un residuo tiene un valor studentizado grande en comparación con una distribución t, puede considerarse como un posible valor atípico. En este caso parece no haber indiacción de valores atípicos.
+
+
+```{r}
+#| class-source: fold-show
+outlierTest(lm1)
+```
+
+## Test homocedasticidad
+En términos sencillos, la prueba de Breusch-Pagan evalúa si la varianza de los errores en un modelo de regresión es constante o si varía a lo largo de los valores de las variables predictoras. Una violación de la homocedasticidad puede afectar la validez de las inferencias realizadas a partir del modelo.
+
+
+El test funciona de la siguiente manera: se obtienen los residuos al cuadrado y se realiza una regresión auxiliar para determinar si hay una relación significativa entre los residuos al cuadrado y las variables predictoras. Si se encuentra evidencia significativa, puede indicar la presencia de heterocedasticidad.
+
+```{r}
+#| class-source: fold-show
+library(lmtest)
+
+bptest(indice_total~dim1+dim2+dim3+dim4+dim5+dim6+dim7+dim8 ,data=IMCV, varformula = ~fitted.values(lm1), studentize=FALSE)
+```
+
+Si el valor p obtenido de la prueba de Breusch-Pagan es $0.7$,  interpretaríamos esto como evidencia insuficiente para rechazar la hipótesis nula de homocedasticidad (a nivel de significancia de $0.05$). En otras palabras, no tendríamos suficiente evidencia estadística para decir que hay heterocedasticidad en los errores del modelo de regresión.
+
+En términos prácticos, esto sugiere que la varianza de los errores parece ser constante a lo largo de los valores de las variables predictoras.
+
+## Normalidad de residuos
+
+El test de Shapiro es una prueba de normalidad que se utiliza para evaluar si una muestra proviene de una población con una distribución normal. La hipótesis nula del test es que la muestra sigue una distribución normal. Si el valor p obtenido en la prueba es menor que el nivel de significancia (comúnmente establecido en $0.05$), se rechaza la hipótesis nula, indicando que la muestra no sigue una distribución normal.
+
+```{r}
+#| class-source: fold-show
+shapiro.test(lm1$residuals)
+
+```
+Aceptamos la normalidad de los residuos puesto que el $p-value>0.05$.
+
+## Test linealidad
+
+La hipótesis alternativa analiza si la inclusión de términos cuadráticos (potencia 2) de las variables predictoras mejora significativamente el modelo en comparación con un modelo que solo incluye términos lineales. 
+
+```{r}
+resettest(indice_total~dim1+dim2+dim3+dim4+dim5+dim6+dim7+dim8 ,data=IMCV, power=2, type="regressor")
+```
+Aceptamos la linealidad  puesto que el $p-value>0.05$, a un nivel de significancia de $\alpha =0.05$.
+
+
+## Gráfico de influencia del modelo porpuesto
+
+En el siguiente gráfico se muestran los residuos studentizados, es decir, los residuos transofmrados a una $N(0,1)$. Es por ello, que debido a el cuantil $z_{\alpha/2}=-1.96\; con \; \alpha=0.05$ de una normal, sabemos que el $95\%$ de elementos deben estar contenidos en $(-1,96,1.96)$ que son las rayas verticales del gráfico.
+```{r}
+#| out-width: 50%
+influencePlot(lm1,id=list(method="noteworth",n=2))
+```
+
+- Los **residuos** bajo hipótesis de RLM siguen una N(0,sigma) y los studentizados un N(0,1), es decir el $95\%$ de datos están entre $(-1.96,1.96)$, las líneas horizontales. Tenemos 20 obs. y 2 datos fuera de la línea lo que a priori podría ser correcto.
+- Las **líneas verticales** indican los datos con apalancamiento en el modelo. Es decir los datos fuera de la línea vertical dcha. No vemos ni siquiera las lineas entonces no parece haber apalancamiento.
+- El **área de las burbujas** es proporcional a la dist. de cook (mide cómo cambian los parámetros del modelo cuando se excluye una observación específic)., vemos que hay uno con una gran distancia de cook (tienen residuo grande), luego esto nos indica que epodría considerarse en cierto modo atípico. Como no hemos encontrado más evidencias de que fuera atípicio lo vamos a dejar así.
+
+
+
+## Colinealidad
+
+
+```{r}
+anova(lm1)
+
+vif(lm1)
+
+round(cov2cor(vcov(lm1)),1)
+
+
+```
+
+
+
+
+
+# Otras Consideraciones
+ 
+ Vamos a realizar un método de Stepwise que lo que hace es irncluyendo/sacando variables sobre el modelo inicial hasta encontrar el mejor AIC(el más bajo).
+
+```{r}
+library(Rcmdr)
+stepwise(lm1,direction='backward/forward',criterion='AIC')
+```
+
+
+Destacar que la realidad es que:
+
+$$indice\_total = dim1+dim2+dim3+dim4+dim5+dim6+dim7+dim8+dim9$$.
+En este caso no disponemos de $dim9$. No obstante parece obvio que la mejor estimación se da usando todas las variables, incluso aun habiendo inidicios de no hacerlo.
+
+
+# Conclusion
+
+El modelo inicial considerado tiene buenos inidcadores de bondad de ajuste y además pasa toas las hipótesis requeridas para una regresión lineal. Es por ello que parece razonable tomarlo como bueno.
