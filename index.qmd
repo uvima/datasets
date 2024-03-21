@@ -5,7 +5,7 @@ listing:
   sort-ui: [title]
   page-size: 50
   categories: true
-  fields: [title, tecnica, fichero, documento]
+  fields: [title, description, tecnica, fichero, documento]
   field-display-names:
     tecnica: Técnica estadística
     fichero: Fichero

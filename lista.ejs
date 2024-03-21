@@ -5,6 +5,7 @@
       <div class="quarto-post" <%= metadataAttrs(item) %>>
         <div class="body">
           <h3 class="no-anchor listing-title"><%= item.title %></h3>
+          <div class="listing-description"><%= item.description %></div>
           <span class="listing-tecnica"><b>Técnica estadística:</b> <%= item['tecnica'] %><span><br/>
           <a href="<%- item.href %>" ><span class="listing-fichero"><b>Fichero:</b> <u><%= item['fichero'] %></u><span></a>
           <a href="<%- item['documento'] %>"><span class="listing-documento"><b>Notebook:</b> <u><%= item.title %></u><span></a>
