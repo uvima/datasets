@@ -1,0 +1,464 @@
+---
+title: 'Reducción Dimensionalidad - Análisis Factorial: pisa_factorial'
+---
+
+```{r}
+#| label: setup
+#| include: false
+knitr::opts_chunk$set(echo = TRUE, fig.align = "center", warning = FALSE, message = FALSE)
+
+
+# fig.align= 'center para que nos centre todas figuras que se muestran
+# warning = FALSE para que no muestre mensajes de warning
+# message = FALSE para que no muestre mensajes automáticos cuando carga paquetes y demás en el output
+```
+
+# Introducción
+
+## dataset
+
+En este cuaderno vamos a analizar el dataset llamado
+[*pisa_factorial.xlsx*](../../../../files/pisa_factorial.xlsx).
+Este dataset presenta un conjunto de datos  relativos a la la prueba PISA del año 2018. El objetivo es realizar un Análisis Factorial a partir de los microdatos.
+
+Concretamente en este dataset tenemos las siguientes variables (La escala de respuesta para estas son  1 - Totalmente en desacuerdo, 2 - En desacuerdo, 3 - De acuerdo y 4 - Totalmente de acuerdo):
+
+  1. **¿Hasta qué punto estás de acuerdo con las siguientes afirmaciones sobre ti mismo?**
+
+  - ST181Q02HA: Disfruto trabajando en situaciones que requieren competir con los demás.
+  - ST181Q03HA: Es importante para mí hacerlo mejor que los demás al realizar una tarea.
+  - ST181Q04HA: Me esfuerzo mucho cuando estoy compitiendo contra los demás.
+
+
+  2. **¿Hasta qué punto estás de acuerdo con las siguientes afirmaciones sobre ti mismo?**
+
+  - ST182Q03HA: Me siento satisfecho cuando me esfuerzo todo lo que puedo.
+  - ST182Q04HA: Cuando inicio una tarea continúo hasta terminarla.
+  - ST182Q05HA: Cuando hago algo, parte de mi satisfacción se debe a que he mejorado mis resultados anteriores.
+  - ST182Q06HA: Si algo no se me da bien, prefiero seguir esforzándome para mejorar, en lugar de hacer otra cosa que sí se me da bien.
+
+  3. **¿Hasta qué punto estás de acuerdo con las siguientes afirmaciones?**
+
+  - ST183Q01HA: Cuando me he equivocado, me preocupa lo que otras personas piesen de mí.
+  - ST183Q02HA: Cuando me he equivocado, me preocupa no tener el talento suficiente.
+  - ST183Q03HA: Cuando me he equivocado, dudo sobre mis planes para el futuro.
+
+
+
+
+```{r}
+#| label: librerias
+#| message: false
+#| warning: false
+# Librerias
+library(readxl) # Para leer los excels
+library(dplyr) # Para tratamiento de dataframes
+library(skimr) # Para funcion skim
+
+ # Para llevar a cabo la división de la muestra en dos mitades mediante muestreo de las observaciones
+library(caret)
+
+ # Para realizar el AFE, el Análisis Paralelo y otras operaciones como el test de Mardia o el KMO
+library(psych)
+
+# Para graficar las correlaciones obtenidas mediante un mapa de calor
+library(ggcorrplot)
+
+ # Para poder rotar los factores
+library(GPArotation)
+
+ # Para realizar el CFA
+library(lavaan)
+
+# Para realizar el diagrama de los CFA
+library(semPlot)
+```
+
+Cargamos entonces el conjunto de datos:
+
+```{r}
+#| label: cargar_datos
+datos <- read_excel("../../../../files/pisa_factorial.xlsx", sheet = "Datos")
+```
+
+
+
+
+## Descripción del trabajo a realizar
+
+**(Esto irá en la web de explica)** Se pretende hacer un Análisis
+de Reducción de la Dimensionalidad empleando el procedimiento de Análisis Factorial. 
+
+
+-   Hacer un análisis exploratorio.
+-   Dividir datos en dos partes (una para el análisis exploratorio y otra para el confirmatorio).
+
+-   Análisis Factorial Exploratorio (EFA)
+    -   Estimación matriz correlaciones.
+    -   Verificar que la matriz sea factorizable.
+    -   Método de extracción de factores.
+    -   Número de factores a extraer.
+    -   Extracción factores + rotación.
+-   Análisis Factorial Confirmatorio (CFA)
+
+    -   Método de extracción de factores.
+    -   Probar una o varias estructuras factoriales.
+
+
+
+# Análisis Exploratorio (EDA[^1])
+
+[^1]: EDA viene del Inglés *Exploratory Data Analysis* y son los pasos
+    relativos en los que se exploran las variables para tener una idea
+    de que forma toma el dataset.
+    
+
+
+
+En primer lugar, cargamos los datos que vamos a utilizar. En este caso, se trata de un conjunto de datos compuesto por 35943 filas y 11 columnas. Las filas corresponden a individuos concertos y las 11 columnas a variables mencionadas previamente.
+
+
+Antes de comenzar a aplicar la técnica, comprobamos si hay valores perdidos, por si fuera necesario realizar algún preproceso. En este caso, y como vemos a continuación vemos que si hay valores NA, y por ello los imputaremos con el algoritmo que usemos después.
+
+```{r}
+sum(is.na(datos))
+```
+
+Por otra parte, para tener una noción general que nos permita describir el conjunto con el que vamos a trabajar, podemos extraer su dimensión, el tipo de variables que contiene o qué valores toma cada una.
+
+
+```{r}
+# Dimensión del conjunto de datos
+dim(datos)
+
+# Tipo de variables que contiene
+str(datos)
+
+# Descripción de las variables
+skim(datos)
+```
+
+
+    
+  Como vamos a hacer un doble Análisis Factorial - Exploratorio y Confirmatorio - vamos a **dividir la muestra en aproximadamente el 50%**, realizando el Exploratorio sobre una mitad, y el Confirmatorio sobre la otra, para ver si los resultados concuerdan.
+  
+```{r}
+#Vamos a extraer simplemente las columnas de identificador del alumno y las de los items que nos interesan (los que miden la competitividad, la perseverancia y el miedo al fracaso):
+subconjunto <- datos[,c("CNTSTUID", "ST181Q02HA", "ST181Q03HA", "ST181Q04HA", "ST182Q03HA", "ST182Q04HA", "ST182Q05HA", "ST182Q06HA", "ST183Q01HA", "ST183Q02HA", "ST183Q03HA")]
+set.seed(2021) #Establecemos una semilla para facilitar la reproductibilidad de los resultados
+subconjunto.ids <- createDataPartition(subconjunto$CNTSTUID, p=0.5, list=F)
+#Obtenemos mediante muestreo aleatorio el 50% de las observaciones (identificadas mediante la columna de ID del alumno)
+datos_AFE <- subconjunto[subconjunto.ids, ] #Para el Exploratorio solo conservamos las observaciones cuyos IDs han sido muestreados
+dim(datos_AFE) #17972 observaciones
+datos_AFC <- subconjunto[-subconjunto.ids, ] #Para el Confirmatorio solo conservamos las observaciones cuyos IDs no han sido muestreados
+dim(datos_AFC) #17971 observaciones
+#Eliminamos la columna de IDs, ya que no nos hace falta:
+datos_AFE$CNTSTUID <- NULL
+datos_AFC$CNTSTUID <- NULL
+```
+
+
+
+# Análisis Factorial Exploratorio (EFA)
+
+## Introducción
+
+El objetivo de la **Reducción de la dimensionalidad** es reducir la complejidad de conjuntos de datos con múltiples variables. Su objetivo es transformar variables correlacionadas en un conjunto menor de dimensiones sin perder la mayor parte de la información original.
+
+El **Análisis Factorial Exploratorio (Exploratory Factorial Analysis)** es un método para reducir la dimensionalidad de un conjunto de variables/indicadores, es decir, es un método para resumir la información. En este sentido, puede confundirse con el Análisis de Componentes Principales (PCA).
+
+El **PCA** parte de la varianza total para encontrar combinaciones lineales entre las variables originales que expliquen la mayor parte de dicha varianza total. Así, el primer componente principal sería aquella combinación lineal de variables que explica un mayor porcentaje de varianza total; el segundo componente principal sería aquel que explica la mayor proporción de varianza no explicada por el primero, y así sucesivamente. Al aplicar PCA a un conjunto de datos conseguimos pues resumir la información en unas pocas componentes principales. Dichas componentes principales, al ser combinaciones lineales de variables, resultan, muchas veces, difíciles de interpretar.
+
+Por su parte, el **EFA** distingue entre varianza común y varianza específica. La **varianza común** o compartida es aquella parte de la variabilidad total de los datos que está compartida entre las variables; mientras, la varianza no compartida es la específica de cada variable. Los factores comunes son, por tanto, variables subyacentes - no observadas - que explican la asociación entre las variables.
+
+Asimismo, desde el punto de vista de las variables, decimos que la **comunalidad** de una variable es la parte de su varianza explicada por los factores comunes. Por ello, interesa que este dato sea alto. Por el contrario, la **especificidad** es la parte de variabilidad de una variable específica de dicha variable. Esta última conviene pues que sea baja.
+
+Los factores sí suelen tener una interpretación más sencilla que los componentes principales. Asimismo, mientras los componentes principales, por definición, no están correlacionados, los factores pueden estarlo.
+
+El EFA suele utilizarse con datos procendentes de encuestas sociales, psicológicas o sanitarias, sin embargo, también puede aplicarse a otros tipos de datos. En nuestro caso tenemos datos procedentes de una encuesta de carácter sociodemográfico.
+
+
+
+Los pasos generales son:
+
+
+
+
+
+
+## Paso 1: Estimación de la matriz de correlaciones.
+Dependiendo del tipo de datos que tengamos, debemos utilizar un tipo de correlación u otro:
+
+ - **Datos continuos**: La matriz de correlaciones de Pearson y la de Spearman son las más apropiadas ante continuos o ante datos ordinales (categóricos) con más de 7 categorías de respuesta (tienden a la continuidad).
+
+  - **Datos categóricos/ordinales**: la matriz de correlaciones policórica es la más recomendada ante datos ordinales de 7 o menos categorías de respuesta. Si tuviéramos datos dicotómicos, la matriz a emplear sería la matriz tetracórica (similar a la policórica pero con datos dicotómicos).
+  
+En nuestro caso, como tenemos datos ordinales con 11 opciones de respuesta (del 0 al 10), usaremos la matriz de correlaciones de Pearson.
+
+
+```{r}
+matriz_correlaciones <- cor(datos_AFE, method = "pearson", use = "complete.obs")
+ggcorrplot(matriz_correlaciones, lab = T, type = "lower")
+```
+
+Vemos que las correlaciones son más altas entre los ítems que conforman cada uno de los subgrupos teóricos.
+
+
+
+
+## Paso 2: Verificar que la matriz sea factorizable (es decir, que tiene sentido hacer un AFE con nuestros datos):
+
+Si la matriz no fuese factorizable, la relación entre las variables sería tan baja que no se formarían factores.
+
+Entre los métodos para comprobar si la matriz es factorizable destacan:
+
+  - **Test de esfericidad de Bartlett**: se pregunta si la matriz de correlaciones es o no la matriz identidad. Si la matriz de correlaciones es la matriz identidad, las variables no estarían correlacionadas y no habría varianza compartida de la que extraer los factores (no habría factores comunes). Si rechazamos la hipótesis nula (la matriz de correlaciones es la matriz identidad), la matriz será factorizable.
+  
+  - **Medida KMO (Kaiser-Meyer-Olkin)**: expresa el grado de predicción de las variables a partir de las demás. Su valor oscila entre 0 y 1. Cuanto mayor sea, mejor. Valores a partir de 0,5 se consideran aceptables.
+
+  - **Calcular el determinante de la matriz de correlaciones**: valores cercanos a cero indican que la matriz es factorizable.
+
+```{r}
+#Test de esfericidad de Bartlett:
+p_esf <- cortest.bartlett(matriz_correlaciones, n=nrow(datos_AFE))
+cat("El p-valor del test de esfiricidad de Bartlett es: ", p_esf$p.value)
+#KMO:
+KMO(matriz_correlaciones)
+#Determinante de la matriz:
+cat("El valor del determinante de la matriz es: ", det(matriz_correlaciones))
+```
+
+
+  1 . El p-valor es menor a los niveles de significación habituales(10%, 5% y 1%) por lo que rechazamos la hipótesis nula: la matriz de correlaciones no es la matriz identidad.
+
+  2. El resultado del KMO es bueno: 0,73.
+  3. El determinante tiene un valor bastante bajo.
+
+Los test muestran que la matriz es factorizable.
+
+
+## Paso 3: Determinar un método de extracción de factores:
+
+La ecuación del modelo factorial es la siguiente:
+
+
+\[X_j = a_{j1}F_1 + a_{j2}F_2
++ ... +a_{j n}F_n + u_j
+\]
+
+Donde $X_j$ (variable j) es una combinación lineal de factores comunes y del factor único (especificidad). Los $a_{jh}$ son los pesos factoriales, que representan la importancia que cada factor común tiene en explicar la variable $X_j$.
+
+El objetivo de los métodos de extracción de factores es reproducir, con el mínimo error, la matriz de correlaciones a partir de la matriz de pesos factoriales.
+
+Existen varios métodos de extracción de factores. Los más comunes son:
+
+  - **Máxima Verosimilitud** (Maximum Likelihood, ML). Para utilizarlo, nuestros datos deben seguir una normal multivariante (lo que podemos comprobar realizando el test de Mardia, por ejemplo). Estadísticamente es el más adecuado, pues es asintóticamente insesgado, eficiente y consistente.
+  
+  - **Mínimos Cuadrados No Ponderados** (Unweighted Least Squares, ULS) (También llamado Residuos Mínimos, MinRes). No requiere de la existencia de normalidad multivariante.
+
+  - **Ejes principales**. Tampoco requiere de datos que sigan una normal multivariante.
+  
+  - **Componentes principales.** Como hemos dicho en la introducción, no es método de ánalisis factorial propiamente dicho, ya que su objetivo es intentar explicar toda la varianza, y no solo la varianza común o compartida. Sin embargo, su uso, aunque no se recomiende, está bastante extendido, pues es la opción por defecto de muchos programas estadísticos.
+
+```{r}
+# Test de Mardia:
+mardia(datos_AFE, na.rm = TRUE)
+ks.test(datos_AFE, pnorm)
+```
+
+Como los p-valores son inferiores a los niveles de significación habituales (10%, 5% y 1%) se rechaza la hipótesis nula, es decir, se rechaza la normalidad de los datos.
+
+También podemos comprobar este hecho haciendo uso del Q-Q plot, ya que la línea de puntos está bastante alejada de la recta que refleja la normal.
+
+Como no existe normalidad, debemos emplear un método de extracción de factores robusto la inexistencia de la misma, como es ULS (Mínimos Cuadrados No Ponderados).
+
+
+## Paso 4: Determinamos el número de factores a extraer:
+
+Existen cuatro métodos principales:
+
+  - **Regla de Kaiser**: se deben aceptar todos aquellos factores con un autovalor mayor a 1.
+  - **Gráfico de sedimentación** (scree plot): gráfico donde podemos ver cómo disminuye la varianza explicada o el autovalor a medida que vamos aumentando el número de factores a extraer. Se complementa muy bien con la regla de Kaiser.
+  - **Establecimiento de un porcentaje de varianza explicada mínimo (por ejemplo, el 75%)**: cogeríamos todos los factores necesarios para explicar ese porcentaje mínimo de varianza.
+  - **Análisis paralelo (AP, método recomendado)**: el AP parte de generar nuevas muestras aleatorias (mínimo 100) con el mismo número de variables y observaciones que la muestra original y, a partir de ello, se queda con aquellos factores cuyo autovalor es superior a los generados por azar.
+
+Emplearemos el Análisis Paralelo al ser el método más recomendado.
+
+```{r}
+
+
+#Gráfico de sedimentación con la regla de Kaiser marcada:
+scree(matriz_correlaciones)
+
+
+#Análisis paralelo:
+
+fa.parallel(matriz_correlaciones, n.obs = nrow(datos_AFE), n.iter = 500, fa = "fa", fm = "uls")
+
+# uls lleva a cabo un método de minimal residuals
+# fa = "fa" show the eigen values for  a principal axis factor analysis 
+```
+El Análisis Paralelo sugiere la extracción de tres factores, la regla de Kaiser, de 2, y el gráfico de sedimentación podríamos decir que de 3.
+
+Haremos caso al Análisis Paralelo, por ser la técnica más recomendada actualmente.
+
+## Paso 5: Extracción de factores + rotación:
+Vamos a extraer tres factores, siguiendo lo recomendado por el Análisis Paralelo.
+
+Asimismo, debemos decidir si vamos a rotar los factores y qué tipo de rotación vamos a emplear. Los métodos de rotación facilitan la interpretación de los factores, ya que sin rotarlos, suele ser muy difíciles de interpretar, por lo que se recomienda el uso de dichas técnicas de rotación.
+
+Existen dos tipos de rotación:
+
+  - **Rotación oblicua**: permite que los factores puedan tener correlación entre ellos. Tipo recomendado, ya que es el más cercano a la estructura real que deseamos explorar. Un ejemplo es el método oblimin.
+  - **Rotación ortogonal**: fuerza a los factores a que no puedan tener correlación entre ellos. Un ejemplo es el método varimax.
+
+Probaremos los dos y nos quedaremos con la solución que mejor resultado arroje. Pero, ¿cómo determinamos qué solución factorial ajusta mejor?
+
+  - **Fijándonos en los pesos factoriales**: Cuanto mayor sea el peso factorial de un ítem en un factor mejor. Se aceptan pesos factoriales por encima de 0,4. En general, una buena solución presentará variables que pesan mucho en un factor y poco en el resto.
+  - **Índices de bondad del ajuste**. Existen unos cuantos, pero nos podemos fijar en RMSEA, SRMR, TLI y CFI. RMSEA y SRMR cuantos más bajos mejor (se aceptan valores por debajo de 0,08), y TLI y CFI cuantos más altos mejor (valores por encima de 0,95 se consideran muy buenos).
+
+
+```{r}
+# Rotación oblicua oblimin:
+AFE_oblimin <- fa(matriz_correlaciones, nfactors = 4, n.obs = nrow(datos_AFE), rotate = "oblimin", fm = "uls", alpha = 0.05)
+AFE_oblimin
+fa.diagram(AFE_oblimin)
+```
+
+  - Vemos que los items que más pesan en el factor 1 son los correspondientes a la variable Perseverancia - los que comienzan por ST182.
+  
+  - Los items que más pesan en el factor 2 son los correspondientes a la variable Miedo al fracaso - los que comienzan por ST183.
+  
+  - Los ítems que más pesan en el factor 3 son los correspondientes a la variable    Competitividad - los que comienzan por ST181.
+  
+  - Los índices de bondad del ajuste son muy buenos: RMSEA y RMSR inferiores a 0,08 y TLI mayor a 0,95
+
+  - En el gráfico vemos que los factores 1 y 3 (perseverancia y competitividad) están ligeramente correlacionados.
+
+```{r}
+# Rotación ortogonal varimax:
+AFE_varimax <- fa(matriz_correlaciones, nfactors = 4, n.obs = nrow(datos_AFE), rotate = "varimax", fm = "uls", alpha = 0.05)
+AFE_varimax
+fa.diagram(AFE_varimax)
+```
+
+
+Los resultados son muy similares a los obtenidos con la rotación oblicua:
+
+  - Vemos que los items que más pesan en el factor 1 son los correspondientes a la variable Perseverancia - los que comienzan por ST182.
+  - Los items que más pesan en el factor 2 son los correspondientes a la variable Miedo al fracaso - los que comienzan por ST183.
+  - Los ítems que más pesan en el factor 3 son los correspondientes a la variable Competitividad - los que comienzan por ST181.
+  - Los índices de bondad del ajuste son muy buenos: RMSEA y RMSR inferiores a 0,08 y TLI mayor a 0,95
+  - En el gráfico vemos que los factores 1 y 3 ya no están correlacionados.
+
+
+
+
+## Resultados AFE:
+La estructura factorial obtenida concuerda con la estructura factorial teórica de tres factores
+
+
+# Análisis Factorial Confirmatorio (CFA):
+La diferencia fundamental entre el EFA y el CFA, es que el EFA, como su propio nombre indica, es una técnica exploratoria: con ella queremos conocer la estructura de factores o variables latentes subyacente a los datos. Sin embargo, con el CFA, nosotros testamos si una determinada estructura factorial ajusta bien o no a los datos. Esto es, en este segundo caso, nosotros debemos imponer una estructura fatorial de antemano. Recurriendo a los índices de bondad del ajusto comprobaremos si dicha estructura es o no correcta.
+
+
+
+## Paso 1: determinar un método de extracción de factores:
+Al igual que hacíamos con el EFA, con el CFA también debemos determinar un método concreto para extraer los factores. Con el fin de establecer un método u otro, llevaremos a cabo un test de Mardia: si existiera normalidad multivariante, podríamos utilizar Máxima Verosimilitud. Si nuestros datos no fuesen normales, Mínimo Cuadrados No Ponderados sería una buena opción.
+
+```{r}
+mardia(datos_AFC, na.rm = TRUE)
+ks.test(datos_AFC, pnorm)
+```
+
+
+Como podíamos esperar los resultados son idénticos a los obtenidos con la mitad de la muestra destinada al AFE: rechazamos la hipótesis nula de normalidad multivariante (al ser los p-valores inferiores a los niveles de significación habituales). Por ello, tampoco podemos usar Máxima Verosimilitud para el AFC, y usaremos, de nuevo, Mínimos Cuadrados No Ponderados (ULS).
+
+## Paso 2: Probar una o varias estructuras factoriales:
+Vamos a plantear 3 modelos diferentes: uno que replique la estructura factorial planteada en el EFA, otro de un solo factor y otro de dos factores.
+
+Para comparar modelos nos vamos a fijar en los índices de bondad del ajuste. Al igual que comentamos con el EFA: la situación óptima es aquella en la que los índices SRMR y RMSEA son inferiores a 0,08 - cuanto más bajos mejor -, y los índices TLI y CFI son superiores a 0,95 - cuanto más altos mejor.
+
+## Modelo con tres factores teóricos:
+
+```{r}
+#Especificamos el modelo: en este modelo se respetan los tres factores teóricos:
+modelo3F <- 'Competitividad =~ ST181Q02HA + ST181Q03HA + ST181Q04HA
+             Perseverancia =~ ST182Q03HA + ST182Q04HA + ST182Q05HA + ST182Q06HA
+             Miedo_al_fracaso =~ ST183Q01HA + ST183Q02HA + ST183Q03HA'
+#Realizamos el factorial:
+factorial3F <- cfa(modelo3F, datos_AFC, estimator="ULS", ordered=TRUE, orthogonal=FALSE)
+#Al usar la opción ordered=TRUE usamos la matriz policórica
+#Al usar la opción orthogonal=FALSE estamos diciendo que puede haber correlación entre factores
+summary(factorial3F, fit.measures=TRUE, standardized=TRUE)
+#Nos despliega una gran cantidad de información, pero lo esencial es fijarse en los índices de bondad del ajuste:
+
+semPlot::semPaths(factorial3F, whatLabels="est",
+        sizeMan = 3.25,
+        node.width = 1,
+        edge.label.cex = .75,
+        style = "ram",
+        mar = c(10, 5, 10, 5))
+```
+
+
+El ajuste es muy bueno: RMSEA y SRMR < 0,08, y TLI y CFI > 0,95
+
+
+## Modelo con un solo factor:
+
+
+```{r}
+#Especificamos el modelo: todos los items en un único factor:
+modelo1F <- 'Factor =~ ST181Q02HA + ST181Q03HA + ST181Q04HA + ST182Q03HA + ST182Q04HA + ST182Q05HA + ST182Q06HA + ST183Q01HA + ST183Q02HA + ST183Q03HA'
+#Realizamos el factorial:
+factorial1F <- cfa(modelo1F, datos_AFC, estimator="ULS", ordered=TRUE, orthogonal=FALSE)
+summary(factorial1F, fit.measures=TRUE, standardized=TRUE)
+```
+
+
+
+El ajuste no es bueno: RMSEA y SRMR > 0,08, y TLI y CFI < 0,95 (de hecho, es peor que en el modelo con dos factores).
+
+
+
+## Modelo con dos factores:
+Planteamos un modelo con dos factores: uno que englobe los tres items relacionados con la vivienda, y otro que englobe el resto de ítems.
+
+```{r}
+
+#Especificamos el modelo: en este modelo Competitividad y Perseverancia los introducimos en el mismo factor, ya que con el AFE vimos que tenían correlación:
+modelo2F <- 'Competitividad_Perseverancia =~ ST181Q02HA + ST181Q03HA + ST181Q04HA + ST182Q03HA + ST182Q04HA + ST182Q05HA + ST182Q06HA
+             Miedo_al_fracaso =~ ST183Q01HA + ST183Q02HA + ST183Q03HA'
+#Realizamos el factorial:
+factorial2F <- cfa(modelo2F, datos_AFC, estimator="ULS", ordered=TRUE, orthogonal=FALSE)
+summary(factorial2F, fit.measures=TRUE, standardized=TRUE)
+
+
+semPlot::semPaths(factorial2F, whatLabels="est",
+        sizeMan = 3.25,
+        node.width = 1,
+        edge.label.cex = .75,
+        style = "ram",
+        mar = c(10, 5, 10, 5))
+```
+
+El ajuste no es bueno: RMSEA y SRMR > 0,08, y TLI y CFI < 0,95
+
+
+## Resultados CFA:
+Los índices de bondad del ajuste muestran que el modelo que refleja la estructura de los tres factores teóricos es el que mejor ajusta ajusta. Su ajuste a los datos es muy bueno.
+
+
+# Conclusiones: Interpretamos los factores obtenidos tanto con el EFA como con el CFA:
+ntentamos darle nombre a los factores, facilitando la interpretación de los resultados.
+
+Con respecto a nuestro ejemplo, en primer lugar, debemos decir que la estructura factorial obtenida concuerda con la estructura factorial teórica de tres factores: las tres subescalas (los tres conjuntos de ítems) miden variables distinguibles.
+
+Los tres factores serían:
+
+  - **Factor 1**: variables ST181Q02HA ("Disfruto trabajando en situaciones que requieren competir con los demás."), ST181Q03HA ("Es importante para mí hacerlo mejor que los demás al realizar una tarea.") y ST181Q04HA ("Me esfuerzo mucho cuando estoy compitiendo contra los demás."). **Factor "competitividad**".
+
+  - **Factor 2**: variables ST182Q03HA ("Me siento satisfecho cuando me esfuerzo todo lo que puedo."), ST182Q04HA ("Cuando inicio una tarea continúo hasta terminarla."), ST182Q05HA ("Cuando hago algo, parte de mi satisfacción se debe a que he mejorado mis resultados anteriores.") y ST182Q06HA ("Si algo no se me da bien, prefiero seguir esforzándome para mejorar, en lugar de hacer otra cosa que sí se me da bien."). **Factor "perseverancia"**.
+
+  - **Factor 3**: variables ST183Q01HA ("Cuando me he equivocado, me preocupa lo que otras personas piesen de mí."), ST183Q02HA ("Cuando me he equivocado, me preocupa no tener el talento suficiente.") y ST183Q03HA ("Cuando me he equivocado, dudo sobre mis planes para el futuro."). **Factor "miedo al fracaso"**.
