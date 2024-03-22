@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Datasets - Reducción Dimensionalidad - PCA: Situacion_sanitaria</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<script src="../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../../../index.html">
+    <span class="navbar-title">Datasets</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools ms-auto">
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Notebooks</li><li class="breadcrumb-item">Reduccion Dimension</li><li class="breadcrumb-item">PCA</li><li class="breadcrumb-item"><a href="../../../../notebooks/Reduccion Dimension/PCA/Situacion_sanitaria/Situacion_sanitaria.html">Situacion Sanitaria</a></li><li class="breadcrumb-item"><a href="../../../../notebooks/Reduccion Dimension/PCA/Situacion_sanitaria/Situacion_sanitaria.html">Reducción Dimensionalidad - PCA: Situacion_sanitaria</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="../../../../index.html" class="sidebar-logo-link">
+      <img src="../../../../img/LogoINE.svg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Notebooks</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+ <span class="menu-text">Analisis Discriminante</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
+ <span class="menu-text">Lineal Y Cuadratico</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">
+ <span class="menu-text">Laboral</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Analisis Discriminante/Lineal_y_Cuadratico/laboral/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variables de Intés</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Analisis Discriminante/Lineal_y_Cuadratico/laboral/laboral.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis Discriminante: laboral</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false">
+ <span class="menu-text">Salud</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Analisis Discriminante/Lineal_y_Cuadratico/salud/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variables de Intés</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Analisis Discriminante/Lineal_y_Cuadratico/salud/salud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis Discriminante: salud</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="false">
+ <span class="menu-text">Cluster Jerarquico</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="false">
+ <span class="menu-text">Desigualdad Ccaa</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Cluster Jerarquico/desigualdad_ccaa/desigualdad_ccaa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster Jerárquico: desigualdad_CCAA</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="false">
+ <span class="menu-text">Ecv Cluster</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Cluster Jerarquico/ecv_cluster/ecv_cluster.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster Jerárquico: ecv_cluster</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="false">
+ <span class="menu-text">VarCovid</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Cluster Jerarquico/VarCovid/VarCovid.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster Jerárquico: VarCovid</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" aria-expanded="false">
+ <span class="menu-text">VarCovid Provincias</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Cluster Jerarquico/VarCovid_provincias/VarCovid_provincias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster Jerárquico: VarCovid_provincias</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" aria-expanded="false">
+ <span class="menu-text">Cluster K-Means</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" aria-expanded="false">
+ <span class="menu-text">Desigualdad Ccaa</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Cluster K-Means/desigualdad_ccaa/desigualdad_ccaa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster K-Means: desigualdad_CCAA</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" aria-expanded="false">
+ <span class="menu-text">Ecv Cluster</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Cluster K-Means/ecv_cluster/ecv_cluster.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster K-Means: ecv_cluster</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" aria-expanded="false">
+ <span class="menu-text">VarCovid</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Cluster K-Means/VarCovid/VarCovid.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster K-Means: VarCovid</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" aria-expanded="false">
+ <span class="menu-text">Linear Regression</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" aria-expanded="false">
+ <span class="menu-text">IMCV</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Linear Regression/IMCV/IMCV.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Lineal: IMCV_reg</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" aria-expanded="false">
+ <span class="menu-text">Salud Reg</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Linear Regression/salud_reg/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variables de Intés</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Linear Regression/salud_reg/salud_reg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Lineal: salud_reg</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" aria-expanded="false">
+ <span class="menu-text">Suicidios 2019CCAA</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-18" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Linear Regression/Suicidios_2019CCAA/Suicidios_2019.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Lineal: Sucidios</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" aria-expanded="false">
+ <span class="menu-text">Logistic Regression</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-19" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" aria-expanded="false">
+ <span class="menu-text">ECV</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-20" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Logistic Regression/ECV/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">¿Cómo determinamos si una persona ha mejorado o no su situación económica?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Logistic Regression/ECV/ECV.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Logística: ECV_microdatos</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-21" aria-expanded="false">
+ <span class="menu-text">Laboral</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-21" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-21" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Logistic Regression/laboral/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variables de Intés</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Logistic Regression/laboral/laboral.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Logística: laboral</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-22" aria-expanded="false">
+ <span class="menu-text">Partos</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-22" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-22" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Logistic Regression/Partos/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variables de Intés</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Logistic Regression/Partos/Partos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Logística: ECV_microdatos</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-23" aria-expanded="false">
+ <span class="menu-text">Salud</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-23" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-23" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Logistic Regression/salud/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variables de Intés</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Logistic Regression/salud/salud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Logística: salud</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-24" aria-expanded="true">
+ <span class="menu-text">Reduccion Dimension</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-24" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-24" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-25" aria-expanded="false">
+ <span class="menu-text">Analisis Factorial</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-25" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-25" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-26" aria-expanded="false">
+ <span class="menu-text">ECV Factorial</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-26" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-26" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Reduccion Dimension/Analisis Factorial/ECV_factorial/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Procesamos el dataset para adaptarlo a lo de arriba</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Reduccion Dimension/Analisis Factorial/ECV_factorial/ECV_factorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reducción Dimensionalidad - Análisis Factorial: ECV_factorial</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-27" aria-expanded="false">
+ <span class="menu-text">Pisa Factorial</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-27" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-27" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Reduccion Dimension/Analisis Factorial/pisa_factorial/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Procesamos el dataset para adaptarlo a lo de arriba</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Reduccion Dimension/Analisis Factorial/pisa_factorial/pisa_factorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reducción Dimensionalidad - Análisis Factorial: pisa_factorial</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-28" aria-expanded="true">
+ <span class="menu-text">PCA</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-28" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-28" class="collapse list-unstyled sidebar-section depth3 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-29" aria-expanded="false">
+ <span class="menu-text">IMCV Pca</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-29" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-29" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Reduccion Dimension/PCA/IMCV_pca/IMCV_pca.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reducción Dimensionalidad - PCA: IMCV_pca</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-30" aria-expanded="false">
+ <span class="menu-text">MercadoHipotecas</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-30" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-30" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Reduccion Dimension/PCA/MercadoHipotecas/MercadoHipotecas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reducción Dimensionalidad - PCA: MercadoHipotecas</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-31" aria-expanded="false">
+ <span class="menu-text">Provincias Variado</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-31" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-31" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Reduccion Dimension/PCA/provincias_variado/provincias_variado.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reducción Dimensionalidad - PCA: provincias_variado</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-32" aria-expanded="true">
+ <span class="menu-text">Situacion Sanitaria</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-32" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-32" class="collapse list-unstyled sidebar-section depth4 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Reduccion Dimension/PCA/Situacion_sanitaria/Situacion_sanitaria.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Reducción Dimensionalidad - PCA: Situacion_sanitaria</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-33" aria-expanded="false">
+ <span class="menu-text">Series Temporales</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-33" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-33" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-34" aria-expanded="false">
+ <span class="menu-text">ARIMA</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-34" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-34" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-35" aria-expanded="false">
+ <span class="menu-text">Ipc Series</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-35" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-35" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Series Temporales/ARIMA/ipc_series/ipc_series.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Series Temporales - ARIMA: ipc_series</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-36" aria-expanded="false">
+ <span class="menu-text">Madrid</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-36" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-36" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Series Temporales/ARIMA/Madrid/madrid_series.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Series Temporales - ARIMA: madrid_series</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-37" aria-expanded="false">
+ <span class="menu-text">Navarra</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-37" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-37" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Series Temporales/ARIMA/Navarra/navarra_series.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Series Temporales - ARIMA: navarra</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción">Introducción</a>
+  <ul class="collapse">
+  <li><a href="#dataset" id="toc-dataset" class="nav-link" data-scroll-target="#dataset">dataset</a></li>
+  <li><a href="#descripción-del-trabajo-a-realizar" id="toc-descripción-del-trabajo-a-realizar" class="nav-link" data-scroll-target="#descripción-del-trabajo-a-realizar">Descripción del trabajo a realizar</a></li>
+  </ul></li>
+  <li><a href="#análisis-exploratorio-eda1" id="toc-análisis-exploratorio-eda1" class="nav-link" data-scroll-target="#análisis-exploratorio-eda1">Análisis Exploratorio (EDA)</a></li>
+  <li><a href="#reducción-dimensionalidad-componentes-principales" id="toc-reducción-dimensionalidad-componentes-principales" class="nav-link" data-scroll-target="#reducción-dimensionalidad-componentes-principales">Reducción Dimensionalidad: Componentes Principales</a>
+  <ul class="collapse">
+  <li><a href="#introducción-1" id="toc-introducción-1" class="nav-link" data-scroll-target="#introducción-1">Introducción</a></li>
+  <li><a href="#modelo" id="toc-modelo" class="nav-link" data-scroll-target="#modelo">Modelo</a></li>
+  <li><a href="#selección-de-componentes" id="toc-selección-de-componentes" class="nav-link" data-scroll-target="#selección-de-componentes">Selección de componentes</a></li>
+  <li><a href="#interpretación" id="toc-interpretación" class="nav-link" data-scroll-target="#interpretación">Interpretación</a></li>
+  <li><a href="#representación-gráfica" id="toc-representación-gráfica" class="nav-link" data-scroll-target="#representación-gráfica">Representación gráfica</a></li>
+  </ul></li>
+  <li><a href="#conclusiones" id="toc-conclusiones" class="nav-link" data-scroll-target="#conclusiones">Conclusiones</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Reducción Dimensionalidad - PCA: Situacion_sanitaria</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introducción" class="level1">
+<h1>Introducción</h1>
+<section id="dataset" class="level2">
+<h2 class="anchored" data-anchor-id="dataset">dataset</h2>
+<p>En este cuaderno vamos a analizar el dataset llamado <a href="../../../../files/Situacion_sanitaria.xlsx"><em>Situacion_sanitaria.xlsx</em></a>. Este dataset presenta datos para las Comunidades Autónomas, abordando sobre aspectos demográficos y de salud. Contiene variables como la tasa de natalidad y mortalidad, el índice de envejecimiento, tasas de profesionales de la salud (médicos y enfermeros) por cada 100,000 habitantes, el porcentaje de inaccesibilidad a medicamentos recetados por razones económicas y la tasa media de morbilidad hospitalaria debido a enfermedades. Concretamente en este dataset tenemos las siguientes variables:</p>
+<ul>
+<li><strong>CCAA</strong>: Comunidad Autónoma</li>
+<li><strong>T_nat</strong>: Tasa de natalidad</li>
+<li><strong>T_mort</strong>: Tasa de mortalidad</li>
+<li><strong>Ind_envej</strong>: Índice de envejecimiento</li>
+<li><strong>Médicos</strong>: Tasa de médicos por cada 100.000 habitantes</li>
+<li><strong>Enfermeros</strong>: Tasa de enfermeros por cada 100.000 habitantes</li>
+<li><strong>Inacmedicam</strong>: Inaccesibilidad a los medicamentos recetados por motivos económicos (%)</li>
+<li><strong>Tasa_enf</strong>: Tasa de Morbilidad Hospitalaria por 100.000 habitantes debido a enfermedades, que he construido como una media (equiponderada) de las tasas de morbilidad hospitalaria debido a enfermedades endocrinas, circulatorias, digestivas, respiratorias…</li>
+</ul>
+<p>Si tomamos demasiadas variables es difícil visualizar relaciones entre ellas. Otro problema que se presenta es la fuerte correlación. Se hace necesario, pues, reducir el número de variables sin perder información. Es importante resaltar el hecho de que el concepto de mayor información se relaciona con el de mayor variabilidad o varianza.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Librerias</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl) <span class="co"># Para leer los excels</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr) <span class="co"># Para tratamiento de dataframes</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2) <span class="co"># Nice plots</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra) <span class="co"># fviz_cluster function</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr) <span class="co"># Para funcion skim</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggcorrplot) <span class="co"># Para funcion ggcorrplot</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot) <span class="co"># Para corrplot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Cargamos entonces el conjunto de datos:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"../../../../files/Situacion_sanitaria.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"Datos"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="descripción-del-trabajo-a-realizar" class="level2">
+<h2 class="anchored" data-anchor-id="descripción-del-trabajo-a-realizar">Descripción del trabajo a realizar</h2>
+<p><strong>(Esto irá en la web de explica)</strong> Se pretende hacer un Análisis de Reducción de la Dimensionalidad empleando el procedimiento de Componentes Principales. El objetivo es conocer que variables independientes son de interés para estudiar la situación sanitaria y ver qué comunidades autónomas son las más parecidas y las más diferentes.</p>
+<ul>
+<li>Hacer un análisis exploratorio explorando matriz de correlaciones.</li>
+<li>Ver si es necesario escalar/centrar los datos antes de aplicar pca y decidir si hacerlo con matriz de correlaciones o covarianzas.</li>
+<li>Seleccionar un determinado número de componentes y ver como influyen las variables en estas.</li>
+<li>Interpretar componentes y resultados.</li>
+</ul>
+</section>
+</section>
+<section id="análisis-exploratorio-eda1" class="level1">
+<h1>Análisis Exploratorio (EDA<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>)</h1>
+<p>En primer lugar, cargamos los datos que vamos a utilizar. En este caso, se trata de un conjunto de datos compuesto por 17 filas y 38 columnas. Las filas corresponden a las 17 Comunidades Autónomas de España.</p>
+<p>Antes de comenzar a aplicar la técnica, comprobamos si hay valores perdidos, por si fuera necesario realizar algún preproceso. En este caso, y como vemos a continuación, no hay ningún NA en los datos que vamos a utilizar.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(datos))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
+<p>Por otra parte, para tener una noción general que nos permita describir el conjunto con el que vamos a trabajar, podemos extraer su dimensión, el tipo de variables que contiene o qué valores toma cada una.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dimensión del conjunto de datos</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(datos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 17  8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tipo de variables que contiene</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(datos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [17 × 8] (S3: tbl_df/tbl/data.frame)
+ $ CCAA       : chr [1:17] "Andalucía" "Aragón" "Asturias, Principado de" "Baleares, Islas" ...
+ $ T_nat      : num [1:17] 8.21 7.28 5.05 8.08 6.37 6.1 5.96 7.51 8.09 7.47 ...
+ $ T_mort     : num [1:17] 8.35 10.28 12.64 6.67 7.1 ...
+ $ Ind_envej  : num [1:17] 101.1 143.5 218.7 99.7 114.1 ...
+ $ Médicos    : num [1:17] 492 689 654 484 506 ...
+ $ Enfermeros : num [1:17] 565 682 735 545 653 ...
+ $ Inacmedicam: num [1:17] 0.63 1.23 0.18 0.93 1.77 0.17 1.22 0.23 0.89 1.92 ...
+ $ Tasa_enf   : num [1:17] 545 748 834 702 538 ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Descripción de las variables</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(datos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">datos</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of rows</td>
+<td style="text-align: left;">17</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of columns</td>
+<td style="text-align: left;">8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">_______________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Column type frequency:</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">________________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Group variables</td>
+<td style="text-align: left;">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 13%">
+<col style="width: 19%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 8%">
+<col style="width: 12%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">min</th>
+<th style="text-align: right;">max</th>
+<th style="text-align: right;">empty</th>
+<th style="text-align: right;">n_unique</th>
+<th style="text-align: right;">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">CCAA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 10%">
+<col style="width: 14%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">p0</th>
+<th style="text-align: right;">p25</th>
+<th style="text-align: right;">p50</th>
+<th style="text-align: right;">p75</th>
+<th style="text-align: right;">p100</th>
+<th style="text-align: left;">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">T_nat</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">7.29</td>
+<td style="text-align: right;">1.14</td>
+<td style="text-align: right;">5.05</td>
+<td style="text-align: right;">6.37</td>
+<td style="text-align: right;">7.47</td>
+<td style="text-align: right;">8.09</td>
+<td style="text-align: right;">9.54</td>
+<td style="text-align: left;">▂▃▇▇▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">T_mort</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">9.39</td>
+<td style="text-align: right;">1.76</td>
+<td style="text-align: right;">6.67</td>
+<td style="text-align: right;">8.35</td>
+<td style="text-align: right;">9.55</td>
+<td style="text-align: right;">10.33</td>
+<td style="text-align: right;">12.64</td>
+<td style="text-align: left;">▇▇▆▆▆</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ind_envej</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">136.60</td>
+<td style="text-align: right;">37.54</td>
+<td style="text-align: right;">85.98</td>
+<td style="text-align: right;">114.07</td>
+<td style="text-align: right;">122.57</td>
+<td style="text-align: right;">150.49</td>
+<td style="text-align: right;">218.65</td>
+<td style="text-align: left;">▅▇▅▁▃</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Médicos</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">574.07</td>
+<td style="text-align: right;">77.11</td>
+<td style="text-align: right;">446.89</td>
+<td style="text-align: right;">511.41</td>
+<td style="text-align: right;">554.04</td>
+<td style="text-align: right;">649.27</td>
+<td style="text-align: right;">689.29</td>
+<td style="text-align: left;">▅▇▃▃▇</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Enfermeros</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">688.02</td>
+<td style="text-align: right;">140.73</td>
+<td style="text-align: right;">458.66</td>
+<td style="text-align: right;">584.09</td>
+<td style="text-align: right;">681.63</td>
+<td style="text-align: right;">767.79</td>
+<td style="text-align: right;">1047.93</td>
+<td style="text-align: left;">▅▇▇▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Inacmedicam</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.12</td>
+<td style="text-align: right;">0.62</td>
+<td style="text-align: right;">0.17</td>
+<td style="text-align: right;">0.73</td>
+<td style="text-align: right;">1.22</td>
+<td style="text-align: right;">1.53</td>
+<td style="text-align: right;">2.24</td>
+<td style="text-align: left;">▅▇▅▆▃</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tasa_enf</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">705.85</td>
+<td style="text-align: right;">86.01</td>
+<td style="text-align: right;">537.50</td>
+<td style="text-align: right;">654.12</td>
+<td style="text-align: right;">712.38</td>
+<td style="text-align: right;">776.25</td>
+<td style="text-align: right;">833.75</td>
+<td style="text-align: left;">▃▅▆▅▇</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Vemos que estas variables (a excepción de las CCAA) son todas de tipo numérico, y además, podemos obtener información como la media, desviación típica, los cuartiles y el histograma de cada una. <strong>Si no hubiesemos estandarizado las variables</strong>, las variables <em>Médicos</em> y <em>Enfermeros</em> dominarían las componentes principales puesto que toman unos valores muy grandes en valor absoluto.</p>
+<p><strong>Correlación:</strong> El que existan correlaciones muy elevadas en el conjunto de datos nos permitirá resumir la información en un menor número de componentes principales, pues éstas explicarán una mayor cantidad de información.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorrplot</span>(<span class="fu">cor</span>(datos[, <span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>]), <span class="at">type =</span> <span class="st">"lower"</span>, <span class="at">lab =</span> T, <span class="at">show.legend =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Situacion_sanitaria_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>En este caso, se ha generado un gráfico entre variables, sin tener en cuenta la correlación de la variable consigo misma, pues siempre será del 100%. En términos absolutos, vemos lo siguiente:</p>
+<ul>
+<li><p>Hay varias <strong>correlaciones moderadas/altas</strong> como entre las variables <em>T_nat</em> y <em>T_mort</em> con 74% y <em>T_nat</em> e <em>Ind_envej</em> con 88%. Por otro lado con signo contrario, <em>Medicos</em> y <em>Enfermeros</em> 0.7%.</p></li>
+<li><p>Hay varias <strong>corrlaciones medias</strong> como puede ser entre <em>Medicos</em> y <em>Tasa_enf</em> con un 59%, <em>Indice_envej</em> y <em>Tasa_enf</em> con 64% o <em>T_mort</em> y <em>Tasa_enf</em> con 58%.</p></li>
+</ul>
+</section>
+<section id="reducción-dimensionalidad-componentes-principales" class="level1">
+<h1>Reducción Dimensionalidad: Componentes Principales</h1>
+<section id="introducción-1" class="level2">
+<h2 class="anchored" data-anchor-id="introducción-1">Introducción</h2>
+<p>El <strong>Análisis de Componentes Principales (PCA)</strong> es una técnica para reducir la complejidad de conjuntos de datos con múltiples variables. Su objetivo es transformar variables correlacionadas en un conjunto menor de dimensiones sin perder la mayor parte de la información original.</p>
+<p>Se busca encontrar <strong>nuevas variables (componentes)</strong> que estén incorrelacionadas y que capturen la máxima variabilidad de los datos. Esto se logra mediante combinaciones lineales de las variables originales. PCA es útil para entender relaciones, reducir dimensiones y manejar la alta correlación entre variables.</p>
+<p>Para aplicar PCA, se necesitan <strong>datos cuantitativos</strong> y es crucial <em>escalar las variables</em> (estandarizar = media cero y varianza uno). Esto garantiza que ninguna variable domine el análisis. Además, se puede trabajar con la matriz de correlaciones para abordar fuertes correlaciones entre variables, manteniendo así la información más relevante del conjunto de datos.</p>
+<p>Los pasos generales son:</p>
+<ol type="1">
+<li><p><strong>Estandarización de las variables</strong>: Es importante estandarizar las variables numéricas para que tengan media cero y desviación estándar uno. Esto es crucial para que ninguna variable domine el análisis debido a su escala.</p></li>
+<li><p><strong>Cálculo de la matriz de correlaciones o covarianzas</strong>: Dependiendo del enfoque, se puede trabajar con la matriz de correlaciones si se busca abordar fuertes correlaciones entre variables, o con la matriz de covarianzas si se busca la varianza total de las variables.</p></li>
+</ol>
+<ul>
+<li><strong>NOTA</strong>: Aconsejable trabajar siempre con la matriz de correlaciones (a no ser que todas variables estén en las mismas unidades, que se podrá usar la matriz de covarianzas). De no seguir esta nota y usar la matriz de covarianzas, las variables que tienen mayores unidades dominarán la estructura de covarianza, lo que llevará a una representación inexacta de la variabilidad real de los datos.</li>
+</ul>
+<ol start="3" type="1">
+<li><p><strong>Descomposición de la matriz</strong>: Se descompone la matriz de correlaciones en sus vectores y valores propios. Los valores propios representan la cantidad de varianza explicada por cada componente principal, mientras que los vectores propios (autovectores) determinan la dirección de cada componente en el espacio multidimensional original.</p></li>
+<li><p><strong>Selección de componentes</strong>: Los componentes se ordenan de manera descendente según la cantidad de varianza que explican. Los primeros componentes capturan la mayor variabilidad de los datos y se seleccionan para reducir la dimensionalidad manteniendo la información más relevante.</p></li>
+<li><p><strong>Transformación de datos</strong>: Proyectar los datos originales en el espacio de los componentes principales para obtener las nuevas variables. Estas son combinaciones lineales de las variables originales y son ortogonales entre sí. Esta transformación lineal <strong>conserva la mayor parte de la información en un espacio de menor dimensión, lo que facilita el análisis y la visualización de los datos</strong>.</p></li>
+<li><p><strong>Interpretación y visualización</strong>: Explorar la importancia de cada componente en términos de la variabilidad explicada. Se pueden interpretar los componentes para comprender qué aspectos de los datos capturan. Si es posible, representar gráficamente los datos en el espacio reducido de los componentes principales para obtener una mejor comprensión de las relaciones entre las observaciones.</p></li>
+</ol>
+</section>
+<section id="modelo" class="level2">
+<h2 class="anchored" data-anchor-id="modelo">Modelo</h2>
+<p>En las siguientes lineas haremos que la variable <code>CCAA</code> se ponga como nombre de filas y posteriormente eliminaremos esa variable ya que ya la tendremos como nombre de filas.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>CCAA <span class="ot">&lt;-</span> datos<span class="sc">$</span>CCAA</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> datos[, <span class="sc">-</span><span class="dv">1</span>] <span class="co"># Eliminamos ahora</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(datos) <span class="ot">&lt;-</span> CCAA <span class="co"># Como nombres de filas las CCAA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Escalamos los datos y calculamos la matriz de varianzas covarianzas, mostramos solo la diagonal (debería ser 1).</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>datos2 <span class="ot">&lt;-</span> <span class="fu">scale</span>(datos)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(datos2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     T_nat             T_mort           Ind_envej          Médicos       
+ Min.   :-1.9754   Min.   :-1.54244   Min.   :-1.3485   Min.   :-1.6493  
+ 1st Qu.:-0.8131   1st Qu.:-0.58810   1st Qu.:-0.6002   1st Qu.:-0.8126  
+ Median : 0.1554   Median : 0.09356   Median :-0.3737   Median :-0.2598  
+ Mean   : 0.0000   Mean   : 0.00000   Mean   : 0.0000   Mean   : 0.0000  
+ 3rd Qu.: 0.7013   3rd Qu.: 0.53665   3rd Qu.: 0.3701   3rd Qu.: 0.9752  
+ Max.   : 1.9780   Max.   : 1.84885   Max.   : 2.1860   Max.   : 1.4942  
+   Enfermeros        Inacmedicam         Tasa_enf       
+ Min.   :-1.62982   Min.   :-1.5146   Min.   :-1.95741  
+ 1st Qu.:-0.73853   1st Qu.:-0.6173   1st Qu.:-0.60143  
+ Median :-0.04542   Median : 0.1678   Median : 0.07583  
+ Mean   : 0.00000   Mean   : 0.0000   Mean   : 0.00000  
+ 3rd Qu.: 0.56682   3rd Qu.: 0.6645   3rd Qu.: 0.81849  
+ Max.   : 2.55746   Max.   : 1.8020   Max.   : 1.48703  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(<span class="fu">var</span>(datos2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      T_nat      T_mort   Ind_envej     Médicos  Enfermeros Inacmedicam 
+          1           1           1           1           1           1 
+   Tasa_enf 
+          1 </code></pre>
+</div>
+</div>
+<p>Aplicamos funcion PCA, notar que en este caso no haría falta los argumentos <code>SCALE=TRUE</code> y <code>CENTER=TRUE</code> puesto que ya hemos escalado dos datos en un paso previo. Por defecto en la función viene el valor de <code>SCALE=FALSE</code> y <code>CENTER=TRUE</code>.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(datos2, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>) <span class="co"># Scale=T</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Calculamos los coeficientes de la ecuación para cada componente principal</strong> (Autovectores)</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pca<span class="sc">$</span>rotation</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   PC1        PC2          PC3         PC4          PC5
+T_nat       -0.4270118  0.3083847 -0.008988199  0.50247373 -0.348115698
+T_mort       0.4701640 -0.2430823 -0.113411927  0.01113627 -0.455987748
+Ind_envej    0.5036940 -0.1972515 -0.163033713 -0.10631657  0.049561195
+Médicos      0.3435595  0.5298832  0.176924105  0.13246428  0.623322284
+Enfermeros   0.2330590  0.5761666  0.404540649 -0.37517212 -0.510098955
+Inacmedicam -0.1295046  0.3910394 -0.811238715 -0.40406462 -0.004102112
+Tasa_enf     0.3921454  0.2030906 -0.327739876  0.64383523 -0.140306382
+                    PC6         PC7
+T_nat        0.40168978  0.43296643
+T_mort       0.62648091 -0.32629331
+Ind_envej   -0.02085919  0.81646163
+Médicos      0.40041787 -0.05896305
+Enfermeros  -0.21521711  0.05281068
+Inacmedicam  0.08658092 -0.03777880
+Tasa_enf    -0.48123047 -0.17824227</code></pre>
+</div>
+</div>
+<p>Podemos observar aquí nuestras variables en el nuevo sistema de cordenadas (las componentes principales), dando lugar a ecuaciones de cada eje como combinación lineal del total de variables. Analizar el vector que crea cada componente y cuáles son los pesos que tienen las variables en cada componente, ayuda a interpretar qué tipo de información recoge cada una de ellas.</p>
+<p>Por ejemplo, la primera componente principal (PC1), presenta la siguiente ecuación, como combinación lineal de las siete variables originales:</p>
+<p>$ PC_1 = -0.42 {T_nat} + 0.47 {T_mort} + 0.50Ind_envej + 0.34 Médicos + 0.23 Enfermeros -0.12 Inacmedicam + 0.39 Tasa_enf $</p>
+<p><strong>Extraemos las nuevas coordenadas de los individuos (puntuaciones)</strong></p>
+<p>Además, podemos ver las puntuaciones, que son las coordenadas de cada observación original (Comunidad Autónoma) sobre los nuevos ejes construidos (componentes principales). Esto corresponde a un cambio de coordenadas bajo el paradigma del Álgebra Lineal.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>pca<span class="sc">$</span>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                    PC1         PC2         PC3         PC4
+Andalucía                   -2.29780864 -1.17108641  0.91626309 -0.20305801
+Aragón                       1.00976268  0.77424874 -0.15274606  0.43908296
+Asturias, Principado de      4.02433299 -1.03317546  0.49808668  0.37042340
+Baleares, Islas             -2.13246462 -0.54804063 -0.03645048  0.75801563
+Canarias                    -1.83025928 -0.41486990 -0.21320240 -2.06824011
+Cantabria                    1.41475192 -0.21256737  1.88652836 -0.65976823
+Castilla y León              2.70411492 -0.18487892 -0.62652953 -0.18199384
+Castilla-La Mancha          -1.32760977 -1.94021471  1.06434279 -0.04561078
+Cataluña                    -0.33553404  0.70136546  0.27442715  1.02159787
+Comunidad Valenciana        -1.04717225 -0.08800225 -1.28286604 -0.35378816
+Extremadura                  0.51098330 -0.31670565  0.56679839 -0.05840686
+Galicia                      1.79132178 -1.49115973 -1.75060101 -0.19506453
+Madrid, Comunidad de        -0.61827496  1.70803736  1.25152616  0.76867280
+Murcia, Región de           -2.97739482 -0.02854523 -1.04491055  0.87136976
+Navarra, Comunidad Foral de -0.08425661  3.17323869 -0.15708545 -1.05193105
+País Vasco                   1.12618630  1.06177566 -0.42329241  0.08245285
+Rioja, La                    0.06932110  0.01058035 -0.77028869  0.50624630
+                                     PC5          PC6         PC7
+Andalucía                   -0.006424862  0.573688653  0.14890360
+Aragón                       0.665940100  0.695838881 -0.20598823
+Asturias, Principado de      0.225286205 -0.183607951  0.07438375
+Baleares, Islas              0.211985810 -0.922992167  0.03286732
+Canarias                     0.689522809 -0.396000896 -0.07004163
+Cantabria                    0.177812778  0.155155518 -0.07658536
+Castilla y León             -0.038962514  0.146942499  0.11730269
+Castilla-La Mancha          -0.632263777  0.112965899 -0.02533346
+Cataluña                    -0.328778916 -0.570291134 -0.12593594
+Comunidad Valenciana         0.100452783 -0.005465301 -0.14143116
+Extremadura                 -0.863974957  0.020484318 -0.09478002
+Galicia                     -0.001413730 -0.153263421  0.16331588
+Madrid, Comunidad de         0.724845530 -0.162259381  0.16899413
+Murcia, Región de            0.076244013  0.631672722  0.09459935
+Navarra, Comunidad Foral de -0.802968126 -0.003989889  0.13676882
+País Vasco                   0.184217821  0.035413303 -0.06901077
+Rioja, La                   -0.381520967  0.025708347 -0.12802897</code></pre>
+</div>
+</div>
+<p>Por ejemplo, en un gráfico bidimensional con los dos primeros ejes, Andalucía toma la posición (-2.29,-1.17), o por otro lado, el País Vasco se encuentra en (1.12, 1.06). Dando una interpretación a cada eje, podremos determinar qué perfil tiene cada CC.AA. dentro del estudio.</p>
+<p><strong>Varianza explicada por cada componente principal</strong></p>
+<p>Una vez calculadas las componentes principales, es de interés conocer la varianza explicada por cada una, ya que el principal objetivo que se sigue con PCA es maximizar la cantidad de información explicada por las componentes.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pca)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Importance of components:
+                         PC1    PC2    PC3     PC4     PC5     PC6     PC7
+Standard deviation     1.882 1.2322 0.9619 0.77556 0.47878 0.41008 0.12381
+Proportion of Variance 0.506 0.2169 0.1322 0.08593 0.03275 0.02402 0.00219
+Cumulative Proportion  0.506 0.7229 0.8551 0.94104 0.97379 0.99781 1.00000</code></pre>
+</div>
+</div>
+<ul>
+<li><p><strong>Standard deviation</strong>: muestra las desviaciones estándar de cada componente principal. Si elevamos al cuadrado estas desviaciones, tenemos la varianza (<strong>el autovalor correspondiente</strong>). Es decir, la varianza explicada por cada componente corresponde con los autovalores de la matriz de covarianzas de los datos estandarizados.</p></li>
+<li><p><strong>Proportion of Variance</strong>: es la proporción de la varianza total que explica cada componente principal y quizá, es la fila más importante de nuestros resultados. Como los autovalores están ordenados de mayor a menor y así son construidas las componentes principales, la primera componente principal es la que mayor porcentaje de variabilidad explica, un 37%. Así, la varianza explicada por la componentes van en orden decreciente, teniendo que la segunda componente explica un 31% y la tercera, un 12%.</p></li>
+<li><p><strong>Cumulative proportion</strong>: es la varianza acumulada y se calcula progresivamente sumando la Proportion of Variance anterior. En vista de estos resultados, vemos que la primera componente agrupa el 37% de la variación, y que necesitamos 3 componentes para alcanzar el 80%.</p></li>
+</ul>
+<p>Si elevamos al cuadrado estas desviaciones, tenemos la varianza (el <strong>autovalor correspondiente</strong>). Es decir, la varianza explicada por cada componente corresponde con los autovalores de la matriz de covarianzas de los datos estandarizados.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Autovalues</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>pca<span class="sc">$</span>sdev<span class="sc">^</span><span class="dv">2</span> <span class="co"># varianza de cada componente</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.54217490 1.51832920 0.92527315 0.60150104 0.22922822 0.16816380 0.01532969</code></pre>
+</div>
+</div>
+</section>
+<section id="selección-de-componentes" class="level2">
+<h2 class="anchored" data-anchor-id="selección-de-componentes">Selección de componentes</h2>
+<p>Graficando el valor de la varianza de cada componente principal, podemos observar los resultados comentados anteriormente, que las primeras componentes son las que más varianza explican y que a medida que se añaden más, la varianza explicada por cada una es menor.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_eig</span>(pca, <span class="at">main =</span> <span class="st">"Varianza de cada componente"</span>, <span class="at">choice =</span> <span class="st">"eigenvalue"</span>, <span class="at">addlabels =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Situacion_sanitaria_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>o como el porcentaje de varianza explicada por cada componente sobre el total.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_screeplot</span>(pca, <span class="at">addlabels =</span> <span class="cn">TRUE</span>, <span class="at">main =</span> <span class="st">"Porcentaje de varianza explicada por cada componente (%)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Situacion_sanitaria_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>A continuación, representamos las varianzas acumuladas:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">summary</span>(pca)<span class="sc">$</span>importance[<span class="dv">3</span>, ], <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">col =</span> <span class="st">"darkblue"</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">main =</span> <span class="st">"Porcentaje de varianza acumulada"</span>, <span class="at">xlab =</span> <span class="st">"Componente Principal"</span>, <span class="at">ylab =</span> <span class="st">"Porcentaje de varianza acumulada"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Situacion_sanitaria_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Determinar el número de componentes que elegir para continuar con el análisis no tiene unas normas determinadas a seguir. Respecto a ello, existen varios criterios con sus respectivas propuestas.</p>
+<ol type="1">
+<li><p>Una opción para determinar el número de componentes principales que seleccionar, es coger aquellas tal que expliquemos un % <strong>determinado de la variabilidad de los datos que nosotros prefijemos</strong>. Generalmente se pone como umbral mínimo un 80%, entonces necesitaríamos elegir 3 componentes.</p></li>
+<li><p>Otra posibilidad es seguir el <strong>criterio de Kaisser</strong>, que escoge aquellas componentes cuyo autovalor sea superior a 1 (cuando las variables han sido generadas a partir de la matriz de correlaciones). Según este criterio y mirando el gráfico anterior de la varianza (igual a eigenvalues), eligiríamos las dos primeras componentes.</p></li>
+<li><p>Para relajar el criterio de Kaisser, existe la <strong>modificación de Jollife</strong>, que elige aquellas componentes cuyo autovalor sea superior a 0.7. Esta modificación, nos permite elegir igualmente 3 componentes.</p></li>
+</ol>
+<p>En este caso, nos podríamos quedar con las 3 primeras componentes principales, ya que es el número en el que coincide el mayor número de criterios. Por tanto, en lugar de trabajar con las 7 variables originales, trabajaremos con 3 variables nuevas, que son combinaciones de ellas.</p>
+</section>
+<section id="interpretación" class="level2">
+<h2 class="anchored" data-anchor-id="interpretación">Interpretación</h2>
+<p>Hemos decidido quedarnos con 3 componentes principales, que explican el 85% de la variabilidad total. Para realizar su interpretación, volvemos a ver los coeficientes de las ecuaciones de los componentes, observando cuáles son los valores más altos (en valor absoluto), para así poder dar una interpretación a cada eje.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>pca<span class="sc">$</span>rotation[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   PC1        PC2          PC3         PC4
+T_nat       -0.4270118  0.3083847 -0.008988199  0.50247373
+T_mort       0.4701640 -0.2430823 -0.113411927  0.01113627
+Ind_envej    0.5036940 -0.1972515 -0.163033713 -0.10631657
+Médicos      0.3435595  0.5298832  0.176924105  0.13246428
+Enfermeros   0.2330590  0.5761666  0.404540649 -0.37517212
+Inacmedicam -0.1295046  0.3910394 -0.811238715 -0.40406462
+Tasa_enf     0.3921454  0.2030906 -0.327739876  0.64383523</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>corr_var <span class="ot">&lt;-</span> pca<span class="sc">$</span>rotation <span class="sc">%*%</span> <span class="fu">diag</span>(pca<span class="sc">$</span>sdev)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(corr_var) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"PC1"</span>, <span class="st">"PC2"</span>, <span class="st">"PC3"</span>, <span class="st">"PC4"</span>, <span class="st">"PC5"</span>, <span class="st">"PC6"</span>, <span class="st">"PC7"</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(corr_var)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Situacion_sanitaria_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Si nos fijamos en los pesos más altos, podemos darle una interpretación a cada eje. Por ejemplo:</p>
+<ul>
+<li><p>La <strong>primera componente</strong> explica un 50% de la variación. Hay valores absolutos bastante similares y elevados, que son los correspondientes con las variables Ind_envej, T_mort, T_nat y Tasa_enf. Por lo tanto, parece que la primera componente recoge <strong>información demográfica</strong>. Teniendo en cuenta los signos podemos concluir que las CC.AA. que se sitúen a la derecha del eje serán aquellas con mayor Tasa de mortalidad, mayor Índice de envejecimiento, mayor Tasa de incidencia de enfermedades en la población, y en contraposición, menor Tasa de natalidad.</p></li>
+<li><p>En la <strong>segunda componente</strong>, los pesos más elevados corresponden con las variables Médicos y Enfermeros, representando de alguna forma, los <strong>recursos sanitarios</strong> de las CCAA. Ambas variables contribuyen de forma positiva al eje, por lo que cuanto más a la derecha del eje se sitúe una CC.AA., mayores recursos de personal sanitario posee.</p></li>
+<li><p>Para la <strong>tercera componente</strong>, el peso más elevado, corresponde a la variable medidora de la <strong>inaccesibilidad de la población a los medicamentos recetados</strong> . La variable puntúa negativamente en el eje, de forma que las Comunidades con mayor valor en esta componente, son aquellas con menor inaccesibilidad a los medicamentos.</p></li>
+<li><p>En la <strong>cuarta componente</strong></p></li>
+</ul>
+</section>
+<section id="representación-gráfica" class="level2">
+<h2 class="anchored" data-anchor-id="representación-gráfica">Representación gráfica</h2>
+<p><strong>Gráfico de las variables</strong></p>
+<p>Representamos sobre las dos primeras componentes principales las variables originales. En el eje de abscisas se representa la PC1 y en el eje de ordenadas, la PC2. Para interpretar correctamente las variables tenemos que fijarnos en la longitud de la flecha y en el ángulo que forman respecto a los ejes y entre ellos mismos.</p>
+<ul>
+<li><p><strong>Ángulo vector - eje</strong>: cuanto más paralelo es un vector al eje, más ha contribuido a dicha componente principal.</p></li>
+<li><p><strong>Ángulo entre dos vectores</strong>: si es pequeño representa una alta correlación entre las variables implicadas (y por tanto, observaciones con valores altos en una variable, tendrá valores altos en la otra). Si el ángulo es cercano a 90º indica que las variables están incorreladas y los ángulos opuestos indican correlación negativa entre ellas.</p></li>
+<li><p><strong>Longitud</strong>: cuanto mayor es la longitud de un vector, mayor varianza de la variable está contenida en el biplot, es decir, mejor representada está en el gráfico.</p></li>
+</ul>
+<p>En el gráfico, diferenciamos por colores las variables según su calidad de representación en las dos primeras componentes. Cuanto más cerca esté una variable del círculo de correlaciones, mejor será su representación, por lo que las variables que estén muy cerca del centro de la gráfica son las menos importantes para las dos primeras componentes.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_var</span>(pca, <span class="at">axes =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">col.var =</span> <span class="st">"cos2"</span>, <span class="at">gradient.cols =</span> <span class="fu">c</span>(<span class="st">"#00AFBB"</span>, <span class="st">"#E7B800"</span>, <span class="st">"#FC4E07"</span>), <span class="at">repel =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Situacion_sanitaria_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_var</span>(pca, <span class="at">axes =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="at">col.var =</span> <span class="st">"cos2"</span>, <span class="at">gradient.cols =</span> <span class="fu">c</span>(<span class="st">"#00AFBB"</span>, <span class="st">"#E7B800"</span>, <span class="st">"#FC4E07"</span>), <span class="at">repel =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Situacion_sanitaria_files/figure-html/unnamed-chunk-18-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p>Si nos fijamos en el eje de abscisas, vemos como T_mort, Ind_envej, Tasa_enf y T_nat son las variables con menor ángulo respecto a él, indicando que han contribuído a la formación de la PC1. Las tres primeras variables se sitúan a la derecha del eje (contribución positiva), mientras que T_nat lo hace a la izquierda (contribución negativa). Es llamativo el pequeño ángulo formado por T_mort e Ind_envej, y es debido a la alta correlación entre ambas, que recordamos que era del 92%).</p></li>
+<li><p>En cuanto al eje de ordenadas, vemos que las variables que forman un menor ángulo respecto a él, son Médicos y Enfermeros, siendo las que más contribuían a la formación de la PC2, ambas de forma positiva.</p></li>
+</ul>
+<p><strong>RESUMEN DE RESULTADOS</strong></p>
+<p>Los gráficos obtenidos muestran una visualización de las variables en función de las componentes principales 1 y 2, y 1 y 3. Las variables que tienen una correlación alta con la primera componente principal están más cerca del eje horizontal y las variables que tienen una alta correlación con la segunda componente principal están más cerca del eje vertical. Las variables que se encuentran cerca del centro del gráfico tienen una correlación baja con ambas componentes principales, aún así nos guiaremos con la tabla para decidir qué variables están mejor explicadas por cada una de las componentes. En resumen, estos gráficos proporcionan una representación visual de las relaciones entre las variables en función de las dos primeras componentes principales y las dos segundas, lo que puede ayudar a identificar patrones y tendencias en los datos.</p>
+<p>En el siguiente gráfico podemos ver las correlaciones de dichas variables con las componentes principales, como ya hemos comentado.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>corr_var <span class="ot">&lt;-</span> pca<span class="sc">$</span>rotation <span class="sc">%*%</span> <span class="fu">diag</span>(pca<span class="sc">$</span>sdev)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(corr_var) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"PC1"</span>, <span class="st">"PC2"</span>, <span class="st">"PC3"</span>, <span class="st">"PC4"</span>, <span class="st">"PC5"</span>, <span class="st">"PC6"</span>, <span class="st">"PC7"</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(corr_var)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Situacion_sanitaria_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>En cuanto a este gráfico, es llamativo como las dos o tres primeras componentes son las más importantes en el PCA, sobre todo, la PC1.</p>
+<p>En resumen, las nuevas componentes han permitido identificar patrones y características de las comunidades autónomas en términos de la situación sanitaria y indicadores relativos a esta.</p>
+<p><strong>Gráfico de los individuos</strong></p>
+<p>Tras observar la representación de las variables, en este apartado vemos la representación de los individuos sobre los nuevos ejes, con la idea de que aquellos con características similares, se agrupan cerca al tener puntuaciones parecidas. Las comunidades con valores cercanos a la media se situarán cerca del centro del gráfico (0,0).</p>
+<p>Representando los individuos sobre PC1 y PC2, vemos que Comunidades como Canarias y Baleares, o Aragón y el País Vasco están muy próximas entre sí, indicando que tienden a tener un nivel sanitario similar.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sobre PC1 y PC2</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_ind</span>(pca, <span class="at">col.ind =</span> <span class="st">"cos2"</span>, <span class="at">gradient.cols =</span> <span class="fu">c</span>(<span class="st">"#00AFBB"</span>, <span class="st">"#E7B800"</span>, <span class="st">"#FC4E07"</span>), <span class="at">repel =</span> <span class="cn">TRUE</span>, <span class="at">axes =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Situacion_sanitaria_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_ind</span>(pca, <span class="at">col.ind =</span> <span class="st">"cos2"</span>, <span class="at">gradient.cols =</span> <span class="fu">c</span>(<span class="st">"#00AFBB"</span>, <span class="st">"#E7B800"</span>, <span class="st">"#FC4E07"</span>), <span class="at">repel =</span> <span class="cn">TRUE</span>, <span class="at">axes =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Situacion_sanitaria_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Del mismo modo, podemos representar las Comunidades sobre PC1 y PC3.</p>
+<p>En este caso, las CC.AA. con menor porcentaje de población con inaccesibilidad a los medicamentos son Cantabria, Madrid y Castilla-La Macha, mientras que las Comunidades en las que un mayor porcentaje de población sufre estos problemas son Galicia, la Comunidad Valenciana o Murcia.</p>
+<p><strong>Biplot</strong></p>
+<p>Para poder extraer fácilmente los perfiles, podemos combinar las variables e individuos en un solo gráfico que nos permita identificar qué Comunidades se encuentran en una situación parecida y además, que nos permita identificar sus características.</p>
+<p>El biplot permite la representación conjunta de los individuos y las variables sobre los nuevos ejes. Para que el resultado sea fácilmente interpretable, debemos tener pocas variables e individuos en el conjunto de datos.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_biplot</span>(pca, <span class="at">repel =</span> <span class="cn">TRUE</span>, <span class="at">col.var =</span> <span class="st">"deeppink"</span>, <span class="at">col.ind =</span> <span class="st">"#696969"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Situacion_sanitaria_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Los ejes inferior e izquierdo representan las puntuaciones o scores de cada observación sobre las componentes principales. Por ejemplo, las coordenadas de Andalucía son (-2.29, -1.17) o las de Madrid, (-0.61, 1.7).</p>
+<p>Sobre ellos, se han superpuesto a escala, las variables tenidas en cuenta en el análisis.</p>
+<p><strong>Perfiles</strong></p>
+<ul>
+<li><p>Respecto a los extremos del eje PC1, observamos dos grupos diferenciados. Por una parte, (Murcia, Canarias Baleares y Andalucía) son las CC.AA. con mayor tasa de natalidad; mientras que (Asturias, Galicia, Castilla y León) son las que tienen una población más envejecida y con mayor tasa de morbilidad por enfermedades.</p></li>
+<li><p>Respecto al eje PC2, se tiene que Navarra es la Comunidad con mayor personal sanitario, seguida por Madrid. Entre las Comunidades con menores recursos sanitarios se encuentran Castilla-La Mancha, Galicia y Andalucía.</p></li>
+</ul>
+<p>También se puede destacar que La Rioja se encuentra justo en el origen de coordenadas (0,0), pudiendo considerarse representante de la media española en cuanto a las características demográficas y sanitarias.</p>
+</section>
+</section>
+<section id="conclusiones" class="level1">
+<h1>Conclusiones</h1>
+<p>El objetivo de este estudio era, partiendo de un conjunto de datos demográfico-sanitarios sobre la población española, extraer en qué situación se encuentra cada Comunidad y así identificar cuáles son las Comunidades con un perfil más parecido entre sí.</p>
+<p>Tras haber aplicado la técnica de PCA, hemos concluido que:</p>
+<ul>
+<li><p>Las CC.AA. del noroeste de España como Galicia, Asturias, Castilla y León y Cantabria se caracterizan por tener su población envejecida y con mayor tasa de incidencia de enfermedades. Además, coincide con tener una baja tasa de personal sanitario.</p></li>
+<li><p>En contraposición, Aragón o el País Vasco tienen también una población envejecida pero cuentan con una mayor tasa de personal sanitario por habitante.</p></li>
+<li><p>Murcia, Andalucía, Baleares y Canarias se caracterizan por ser las Comunidades con mayor tasa de natalidad de España.</p></li>
+<li><p>La situación demográfica de Madrid y Cataluña es mejor que la media española, mayor tasa de natalidad, menor mortalidad, además de que cuentan con una mayor tasa de personal sanitario.</p></li>
+<li><p>En los extremos, Castilla La-Mancha es la Comunidad con menor personal sanitario entre su población, mientras que Navarra es la que concentra un mayor número de médicos y enfermeros entre ella.</p></li>
+<li><p>La situación de la Rioja puede considerarse como la representantiva de la media española. También la Comunidad Valenciana y Extremadura se encuentran cercana a ella, aunque con una tasa algo menor de personal sanitario. Y mientras que la primera cuenta con una población más joven, Extremadura tiene algo más de envejecimiento en su población.</p></li>
+</ul>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>EDA viene del Inglés <em>Exploratory Data Analysis</em> y son los pasos relativos en los que se exploran las variables para tener una idea de que forma toma el dataset.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

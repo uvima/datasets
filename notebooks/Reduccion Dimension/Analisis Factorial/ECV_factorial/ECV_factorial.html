@@ -1,0 +1,2024 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Datasets - Reducción Dimensionalidad - Análisis Factorial: ECV_factorial</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<script src="../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../../../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../../../index.html">
+    <span class="navbar-title">Datasets</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools ms-auto">
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Notebooks</li><li class="breadcrumb-item">Reduccion Dimension</li><li class="breadcrumb-item">Analisis Factorial</li><li class="breadcrumb-item"><a href="../../../../notebooks/Reduccion Dimension/Analisis Factorial/ECV_factorial/Dataset_cleaning.html">ECV Factorial</a></li><li class="breadcrumb-item"><a href="../../../../notebooks/Reduccion Dimension/Analisis Factorial/ECV_factorial/ECV_factorial.html">Reducción Dimensionalidad - Análisis Factorial: ECV_factorial</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="../../../../index.html" class="sidebar-logo-link">
+      <img src="../../../../img/LogoINE.svg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Notebooks</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+ <span class="menu-text">Analisis Discriminante</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
+ <span class="menu-text">Lineal Y Cuadratico</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">
+ <span class="menu-text">Laboral</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Analisis Discriminante/Lineal_y_Cuadratico/laboral/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variables de Intés</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Analisis Discriminante/Lineal_y_Cuadratico/laboral/laboral.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis Discriminante: laboral</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false">
+ <span class="menu-text">Salud</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Analisis Discriminante/Lineal_y_Cuadratico/salud/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variables de Intés</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Analisis Discriminante/Lineal_y_Cuadratico/salud/salud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis Discriminante: salud</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="false">
+ <span class="menu-text">Cluster Jerarquico</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="false">
+ <span class="menu-text">Desigualdad Ccaa</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Cluster Jerarquico/desigualdad_ccaa/desigualdad_ccaa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster Jerárquico: desigualdad_CCAA</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="false">
+ <span class="menu-text">Ecv Cluster</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Cluster Jerarquico/ecv_cluster/ecv_cluster.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster Jerárquico: ecv_cluster</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="false">
+ <span class="menu-text">VarCovid</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Cluster Jerarquico/VarCovid/VarCovid.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster Jerárquico: VarCovid</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" aria-expanded="false">
+ <span class="menu-text">VarCovid Provincias</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Cluster Jerarquico/VarCovid_provincias/VarCovid_provincias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster Jerárquico: VarCovid_provincias</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" aria-expanded="false">
+ <span class="menu-text">Cluster K-Means</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" aria-expanded="false">
+ <span class="menu-text">Desigualdad Ccaa</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Cluster K-Means/desigualdad_ccaa/desigualdad_ccaa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster K-Means: desigualdad_CCAA</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" aria-expanded="false">
+ <span class="menu-text">Ecv Cluster</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Cluster K-Means/ecv_cluster/ecv_cluster.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster K-Means: ecv_cluster</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" aria-expanded="false">
+ <span class="menu-text">VarCovid</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Cluster K-Means/VarCovid/VarCovid.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster K-Means: VarCovid</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" aria-expanded="false">
+ <span class="menu-text">Linear Regression</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" aria-expanded="false">
+ <span class="menu-text">IMCV</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Linear Regression/IMCV/IMCV.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Lineal: IMCV_reg</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" aria-expanded="false">
+ <span class="menu-text">Salud Reg</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Linear Regression/salud_reg/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variables de Intés</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Linear Regression/salud_reg/salud_reg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Lineal: salud_reg</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" aria-expanded="false">
+ <span class="menu-text">Suicidios 2019CCAA</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-18" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Linear Regression/Suicidios_2019CCAA/Suicidios_2019.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Lineal: Sucidios</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" aria-expanded="false">
+ <span class="menu-text">Logistic Regression</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-19" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" aria-expanded="false">
+ <span class="menu-text">ECV</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-20" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Logistic Regression/ECV/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">¿Cómo determinamos si una persona ha mejorado o no su situación económica?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Logistic Regression/ECV/ECV.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Logística: ECV_microdatos</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-21" aria-expanded="false">
+ <span class="menu-text">Laboral</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-21" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-21" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Logistic Regression/laboral/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variables de Intés</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Logistic Regression/laboral/laboral.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Logística: laboral</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-22" aria-expanded="false">
+ <span class="menu-text">Partos</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-22" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-22" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Logistic Regression/Partos/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variables de Intés</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Logistic Regression/Partos/Partos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Logística: ECV_microdatos</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-23" aria-expanded="false">
+ <span class="menu-text">Salud</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-23" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-23" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Logistic Regression/salud/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variables de Intés</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Logistic Regression/salud/salud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Logística: salud</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-24" aria-expanded="true">
+ <span class="menu-text">Reduccion Dimension</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-24" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-24" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-25" aria-expanded="true">
+ <span class="menu-text">Analisis Factorial</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-25" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-25" class="collapse list-unstyled sidebar-section depth3 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-26" aria-expanded="true">
+ <span class="menu-text">ECV Factorial</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-26" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-26" class="collapse list-unstyled sidebar-section depth4 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Reduccion Dimension/Analisis Factorial/ECV_factorial/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Procesamos el dataset para adaptarlo a lo de arriba</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Reduccion Dimension/Analisis Factorial/ECV_factorial/ECV_factorial.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Reducción Dimensionalidad - Análisis Factorial: ECV_factorial</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-27" aria-expanded="false">
+ <span class="menu-text">Pisa Factorial</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-27" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-27" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Reduccion Dimension/Analisis Factorial/pisa_factorial/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Procesamos el dataset para adaptarlo a lo de arriba</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Reduccion Dimension/Analisis Factorial/pisa_factorial/pisa_factorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reducción Dimensionalidad - Análisis Factorial: pisa_factorial</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-28" aria-expanded="false">
+ <span class="menu-text">PCA</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-28" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-28" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-29" aria-expanded="false">
+ <span class="menu-text">IMCV Pca</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-29" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-29" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Reduccion Dimension/PCA/IMCV_pca/IMCV_pca.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reducción Dimensionalidad - PCA: IMCV_pca</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-30" aria-expanded="false">
+ <span class="menu-text">MercadoHipotecas</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-30" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-30" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Reduccion Dimension/PCA/MercadoHipotecas/MercadoHipotecas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reducción Dimensionalidad - PCA: MercadoHipotecas</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-31" aria-expanded="false">
+ <span class="menu-text">Provincias Variado</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-31" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-31" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Reduccion Dimension/PCA/provincias_variado/provincias_variado.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reducción Dimensionalidad - PCA: provincias_variado</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-32" aria-expanded="false">
+ <span class="menu-text">Situacion Sanitaria</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-32" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-32" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Reduccion Dimension/PCA/Situacion_sanitaria/Situacion_sanitaria.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reducción Dimensionalidad - PCA: Situacion_sanitaria</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-33" aria-expanded="false">
+ <span class="menu-text">Series Temporales</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-33" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-33" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-34" aria-expanded="false">
+ <span class="menu-text">ARIMA</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-34" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-34" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-35" aria-expanded="false">
+ <span class="menu-text">Ipc Series</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-35" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-35" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Series Temporales/ARIMA/ipc_series/ipc_series.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Series Temporales - ARIMA: ipc_series</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-36" aria-expanded="false">
+ <span class="menu-text">Madrid</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-36" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-36" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Series Temporales/ARIMA/Madrid/madrid_series.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Series Temporales - ARIMA: madrid_series</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-37" aria-expanded="false">
+ <span class="menu-text">Navarra</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-37" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-37" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Series Temporales/ARIMA/Navarra/navarra_series.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Series Temporales - ARIMA: navarra</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción">Introducción</a>
+  <ul class="collapse">
+  <li><a href="#dataset" id="toc-dataset" class="nav-link" data-scroll-target="#dataset">dataset</a></li>
+  <li><a href="#descripción-del-trabajo-a-realizar" id="toc-descripción-del-trabajo-a-realizar" class="nav-link" data-scroll-target="#descripción-del-trabajo-a-realizar">Descripción del trabajo a realizar</a></li>
+  </ul></li>
+  <li><a href="#análisis-exploratorio-eda1" id="toc-análisis-exploratorio-eda1" class="nav-link" data-scroll-target="#análisis-exploratorio-eda1">Análisis Exploratorio (EDA)</a></li>
+  <li><a href="#análisis-factorial-exploratorio-efa" id="toc-análisis-factorial-exploratorio-efa" class="nav-link" data-scroll-target="#análisis-factorial-exploratorio-efa">Análisis Factorial Exploratorio (EFA)</a>
+  <ul class="collapse">
+  <li><a href="#introducción-1" id="toc-introducción-1" class="nav-link" data-scroll-target="#introducción-1">Introducción</a></li>
+  <li><a href="#paso-1-estimación-de-la-matriz-de-correlaciones." id="toc-paso-1-estimación-de-la-matriz-de-correlaciones." class="nav-link" data-scroll-target="#paso-1-estimación-de-la-matriz-de-correlaciones.">Paso 1: Estimación de la matriz de correlaciones.</a></li>
+  <li><a href="#paso-2-verificar-que-la-matriz-sea-factorizable-es-decir-que-tiene-sentido-hacer-un-afe-con-nuestros-datos" id="toc-paso-2-verificar-que-la-matriz-sea-factorizable-es-decir-que-tiene-sentido-hacer-un-afe-con-nuestros-datos" class="nav-link" data-scroll-target="#paso-2-verificar-que-la-matriz-sea-factorizable-es-decir-que-tiene-sentido-hacer-un-afe-con-nuestros-datos">Paso 2: Verificar que la matriz sea factorizable (es decir, que tiene sentido hacer un AFE con nuestros datos):</a></li>
+  <li><a href="#paso-3-determinar-un-método-de-extracción-de-factores" id="toc-paso-3-determinar-un-método-de-extracción-de-factores" class="nav-link" data-scroll-target="#paso-3-determinar-un-método-de-extracción-de-factores">Paso 3: Determinar un método de extracción de factores:</a></li>
+  <li><a href="#paso-4-determinamos-el-número-de-factores-a-extraer" id="toc-paso-4-determinamos-el-número-de-factores-a-extraer" class="nav-link" data-scroll-target="#paso-4-determinamos-el-número-de-factores-a-extraer">Paso 4: Determinamos el número de factores a extraer:</a></li>
+  <li><a href="#paso-5-extracción-de-factores-rotación" id="toc-paso-5-extracción-de-factores-rotación" class="nav-link" data-scroll-target="#paso-5-extracción-de-factores-rotación">Paso 5: Extracción de factores + rotación:</a></li>
+  <li><a href="#resultados-afe" id="toc-resultados-afe" class="nav-link" data-scroll-target="#resultados-afe">Resultados AFE:</a></li>
+  </ul></li>
+  <li><a href="#análisis-factorial-confirmatorio-cfa" id="toc-análisis-factorial-confirmatorio-cfa" class="nav-link" data-scroll-target="#análisis-factorial-confirmatorio-cfa">Análisis Factorial Confirmatorio (CFA):</a>
+  <ul class="collapse">
+  <li><a href="#paso-1-determinar-un-método-de-extracción-de-factores" id="toc-paso-1-determinar-un-método-de-extracción-de-factores" class="nav-link" data-scroll-target="#paso-1-determinar-un-método-de-extracción-de-factores">Paso 1: determinar un método de extracción de factores:</a></li>
+  <li><a href="#paso-2-probar-una-o-varias-estructuras-factoriales" id="toc-paso-2-probar-una-o-varias-estructuras-factoriales" class="nav-link" data-scroll-target="#paso-2-probar-una-o-varias-estructuras-factoriales">Paso 2: Probar una o varias estructuras factoriales:</a></li>
+  <li><a href="#modelo-con-los-cuatro-factores-que-muestra-el-exploratorio" id="toc-modelo-con-los-cuatro-factores-que-muestra-el-exploratorio" class="nav-link" data-scroll-target="#modelo-con-los-cuatro-factores-que-muestra-el-exploratorio">Modelo con los cuatro factores que muestra el Exploratorio:</a></li>
+  <li><a href="#modelo-con-un-solo-factor" id="toc-modelo-con-un-solo-factor" class="nav-link" data-scroll-target="#modelo-con-un-solo-factor">Modelo con un solo factor:</a></li>
+  <li><a href="#modelo-con-dos-factores" id="toc-modelo-con-dos-factores" class="nav-link" data-scroll-target="#modelo-con-dos-factores">Modelo con dos factores:</a></li>
+  <li><a href="#resultados-cfa" id="toc-resultados-cfa" class="nav-link" data-scroll-target="#resultados-cfa">Resultados CFA:</a></li>
+  </ul></li>
+  <li><a href="#conclusiones-interpretamos-los-factores-obtenidos-tanto-con-el-efa-como-con-el-cfa" id="toc-conclusiones-interpretamos-los-factores-obtenidos-tanto-con-el-efa-como-con-el-cfa" class="nav-link" data-scroll-target="#conclusiones-interpretamos-los-factores-obtenidos-tanto-con-el-efa-como-con-el-cfa">Conclusiones: Interpretamos los factores obtenidos tanto con el EFA como con el CFA:</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Reducción Dimensionalidad - Análisis Factorial: ECV_factorial</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introducción" class="level1">
+<h1>Introducción</h1>
+<section id="dataset" class="level2">
+<h2 class="anchored" data-anchor-id="dataset">dataset</h2>
+<p>En este cuaderno vamos a analizar el dataset llamado <a href="../../../../files/ECV_factorial.xlsx"><em>ECV_factorial.xlsx</em></a>. Este dataset presenta un conjunto de microdatos relativos a la ECV donde se puntua el nivel de satisfacción en determinados ámbitos de la vida (laboral, económico, relaciones personales..). El objetivo es llevar a cabo un análisis factorial.</p>
+<p>Concretamente en este dataset tenemos las siguientes variables:</p>
+<ul>
+<li><strong>PB030</strong>: Identificación transversal de la persona.</li>
+<li><strong>PW010</strong>: Grado de satisfacción con su vida en la actualidad.</li>
+<li><strong>PW030</strong>: Grado de satisfacción con la situación económica en su hogar.</li>
+<li><strong>PW040</strong>: Grado de satisfacción con su vivienda.</li>
+<li><strong>PW100</strong>: Grado de satisfacción con su trabajo actual.</li>
+<li><strong>PW120</strong>: Grado de satisfacción con el tiempo que dispone para hacer lo que le gusta.</li>
+<li><strong>PW160</strong>: Grado de satisfacción con sus relaciones personales.</li>
+<li><strong>PW200</strong>: Grado de satisfacción con las áreas recreativas o verdes de la zona en la que vive.</li>
+<li><strong>PW210</strong>: Grado de satisfacción con la calidad de la zona en la que vive.</li>
+</ul>
+<p>Excepto la primera vaiable, todas ellas están codificadas desde 0 (Nada satisfecho) hasta 10 (Plenamente satisfecho) y 99 NO sabe.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Librerias</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl) <span class="co"># Para leer los excels</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr) <span class="co"># Para tratamiento de dataframes</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr) <span class="co"># Para funcion skim</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a> <span class="co"># Para llevar a cabo la división de la muestra en dos mitades mediante muestreo de las observaciones</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a> <span class="co"># Para realizar el AFE, el Análisis Paralelo y otras operaciones como el test de Mardia o el KMO</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Para graficar las correlaciones obtenidas mediante un mapa de calor</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggcorrplot)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a> <span class="co"># Para poder rotar los factores</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GPArotation)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a> <span class="co"># Para realizar el CFA</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Para realizar el diagrama de los CFA</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Cargamos entonces el conjunto de datos:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"../../../../files/ECV_factorial.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"Datos"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="descripción-del-trabajo-a-realizar" class="level2">
+<h2 class="anchored" data-anchor-id="descripción-del-trabajo-a-realizar">Descripción del trabajo a realizar</h2>
+<p><strong>(Esto irá en la web de explica)</strong> Se pretende hacer un Análisis de Reducción de la Dimensionalidad empleando el procedimiento de Análisis Factorial.</p>
+<ul>
+<li><p>Hacer un análisis exploratorio.</p></li>
+<li><p>Dividir datos en dos partes (una para el análisis exploratorio y otra para el confirmatorio).</p></li>
+<li><p>Análisis Factorial Exploratorio (EFA)</p>
+<ul>
+<li>Estimación matriz correlaciones.</li>
+<li>Verificar que la matriz sea factorizable.</li>
+<li>Método de extracción de factores.</li>
+<li>Número de factores a extraer.</li>
+<li>Extracción factores + rotación.</li>
+</ul></li>
+<li><p>Análisis Factorial Confirmatorio (CFA)</p>
+<ul>
+<li>Método de extracción de factores.</li>
+<li>Probar una o varias estructuras factoriales.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="análisis-exploratorio-eda1" class="level1">
+<h1>Análisis Exploratorio (EDA<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>)</h1>
+<p>En primer lugar, cargamos los datos que vamos a utilizar. En este caso, se trata de un conjunto de datos compuesto por 26883 filas y 9 columnas. Las filas corresponden a individuos concertos y las 14 columnas a variables mencionadas previamente.</p>
+<p>Antes de comenzar a aplicar la técnica, comprobamos si hay valores perdidos, por si fuera necesario realizar algún preproceso. En este caso, y como vemos a continuación vemos que si hay valores NA, y por ello los imputaremos con el algoritmo que usemos después.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(datos))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 26341</code></pre>
+</div>
+</div>
+<p>Por otra parte, para tener una noción general que nos permita describir el conjunto con el que vamos a trabajar, podemos extraer su dimensión, el tipo de variables que contiene o qué valores toma cada una.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dimensión del conjunto de datos</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(datos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 26883     9</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tipo de variables que contiene</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(datos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [26,883 × 9] (S3: tbl_df/tbl/data.frame)
+ $ PB030: num [1:26883] 101 102 103 201 202 301 302 401 402 501 ...
+ $ PW010: num [1:26883] 8 8 7 10 10 5 5 8 8 6 ...
+ $ PW030: num [1:26883] 8 8 7 4 4 5 8 0 0 6 ...
+ $ PW040: num [1:26883] 8 8 7 8 7 6 8 8 8 8 ...
+ $ PW100: num [1:26883] 8 NA 7 10 9 NA NA NA NA NA ...
+ $ PW120: num [1:26883] 8 8 5 10 6 8 NA 8 5 10 ...
+ $ PW160: num [1:26883] 8 8 7 10 10 8 8 8 8 8 ...
+ $ PW200: num [1:26883] 8 8 7 5 8 8 8 8 10 8 ...
+ $ PW210: num [1:26883] 8 8 7 5 8 7 7 8 8 8 ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Descripción de las variables</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(datos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">datos</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of rows</td>
+<td style="text-align: left;">26883</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of columns</td>
+<td style="text-align: left;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">_______________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Column type frequency:</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">________________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Group variables</td>
+<td style="text-align: left;">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 10%">
+<col style="width: 14%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 4%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">p0</th>
+<th style="text-align: right;">p25</th>
+<th style="text-align: right;">p50</th>
+<th style="text-align: right;">p75</th>
+<th style="text-align: right;">p100</th>
+<th style="text-align: left;">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">PB030</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">783590.75</td>
+<td style="text-align: right;">483645.37</td>
+<td style="text-align: right;">101</td>
+<td style="text-align: right;">369651</td>
+<td style="text-align: right;">748903</td>
+<td style="text-align: right;">1180003</td>
+<td style="text-align: right;">1711204</td>
+<td style="text-align: left;">▇▇▇▆▆</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PW010</td>
+<td style="text-align: right;">1377</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">6.90</td>
+<td style="text-align: right;">1.99</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">▁▁▅▇▃</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PW030</td>
+<td style="text-align: right;">1386</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">5.80</td>
+<td style="text-align: right;">2.19</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">▂▃▇▇▂</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PW040</td>
+<td style="text-align: right;">1396</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">7.35</td>
+<td style="text-align: right;">1.82</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">▁▁▃▇▅</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PW100</td>
+<td style="text-align: right;">16589</td>
+<td style="text-align: right;">0.38</td>
+<td style="text-align: right;">6.96</td>
+<td style="text-align: right;">1.97</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">▁▁▅▇▃</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PW120</td>
+<td style="text-align: right;">1408</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">6.65</td>
+<td style="text-align: right;">2.37</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">▂▂▆▇▅</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PW160</td>
+<td style="text-align: right;">1394</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">7.82</td>
+<td style="text-align: right;">1.70</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">▁▁▂▇▆</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PW200</td>
+<td style="text-align: right;">1402</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">6.65</td>
+<td style="text-align: right;">2.30</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">▁▂▅▇▃</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PW210</td>
+<td style="text-align: right;">1389</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">7.25</td>
+<td style="text-align: right;">1.91</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">▁▁▃▇▅</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Como vamos a hacer un doble Análisis Factorial - Exploratorio y Confirmatorio - vamos a <strong>dividir la muestra en aproximadamente el 50%</strong>, realizando el Exploratorio sobre una mitad, y el Confirmatorio sobre la otra, para ver si los resultados concuerdan.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2021</span>) <span class="co"># Establecemos una semilla para facilitar la reproductibilidad de los resultados</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>subconjunto.ids <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(datos<span class="sc">$</span>PB030, <span class="at">p =</span> <span class="fl">0.5</span>, <span class="at">list =</span> F)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtenemos mediante muestreo aleatorio el 50% de las observaciones (identificadas mediante la columna de ID del alumno)</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>datos_AFE <span class="ot">&lt;-</span> datos[subconjunto.ids, ] <span class="co"># Para el Exploratorio solo conservamos las observaciones cuyos IDs han sido muestreados</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(datos_AFE) <span class="co"># 13443 observaciones</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 13443     9</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>datos_AFC <span class="ot">&lt;-</span> datos[<span class="sc">-</span>subconjunto.ids, ] <span class="co"># Para el COnfirmatorio solo conservamos las observaciones cuyos IDs no han sido muestreados</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(datos_AFC) <span class="co"># 13440 observaciones</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 13440     9</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminamos la columna de IDs, ya que no nos hace falta:</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>datos_AFE<span class="sc">$</span>PB030 <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>datos_AFC<span class="sc">$</span>PB030 <span class="ot">&lt;-</span> <span class="cn">NULL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="análisis-factorial-exploratorio-efa" class="level1">
+<h1>Análisis Factorial Exploratorio (EFA)</h1>
+<section id="introducción-1" class="level2">
+<h2 class="anchored" data-anchor-id="introducción-1">Introducción</h2>
+<p>El objetivo de la <strong>Reducción de la dimensionalidad</strong> es reducir la complejidad de conjuntos de datos con múltiples variables. Su objetivo es transformar variables correlacionadas en un conjunto menor de dimensiones sin perder la mayor parte de la información original.</p>
+<p>El <strong>Análisis Factorial Exploratorio (Exploratory Factorial Analysis)</strong> es un método para reducir la dimensionalidad de un conjunto de variables/indicadores, es decir, es un método para resumir la información. En este sentido, puede confundirse con el Análisis de Componentes Principales (PCA).</p>
+<p>El <strong>PCA</strong> parte de la varianza total para encontrar combinaciones lineales entre las variables originales que expliquen la mayor parte de dicha varianza total. Así, el primer componente principal sería aquella combinación lineal de variables que explica un mayor porcentaje de varianza total; el segundo componente principal sería aquel que explica la mayor proporción de varianza no explicada por el primero, y así sucesivamente. Al aplicar PCA a un conjunto de datos conseguimos pues resumir la información en unas pocas componentes principales. Dichas componentes principales, al ser combinaciones lineales de variables, resultan, muchas veces, difíciles de interpretar.</p>
+<p>Por su parte, el <strong>EFA</strong> distingue entre varianza común y varianza específica. La <strong>varianza común</strong> o compartida es aquella parte de la variabilidad total de los datos que está compartida entre las variables; mientras, la varianza no compartida es la específica de cada variable. Los factores comunes son, por tanto, variables subyacentes - no observadas - que explican la asociación entre las variables.</p>
+<p>Asimismo, desde el punto de vista de las variables, decimos que la <strong>comunalidad</strong> de una variable es la parte de su varianza explicada por los factores comunes. Por ello, interesa que este dato sea alto. Por el contrario, la <strong>especificidad</strong> es la parte de variabilidad de una variable específica de dicha variable. Esta última conviene pues que sea baja.</p>
+<p>Los factores sí suelen tener una interpretación más sencilla que los componentes principales. Asimismo, mientras los componentes principales, por definición, no están correlacionados, los factores pueden estarlo.</p>
+<p>El EFA suele utilizarse con datos procendentes de encuestas sociales, psicológicas o sanitarias, sin embargo, también puede aplicarse a otros tipos de datos. En nuestro caso tenemos datos procedentes de una encuesta de carácter sociodemográfico.</p>
+<p>Los pasos generales son:</p>
+</section>
+<section id="paso-1-estimación-de-la-matriz-de-correlaciones." class="level2">
+<h2 class="anchored" data-anchor-id="paso-1-estimación-de-la-matriz-de-correlaciones.">Paso 1: Estimación de la matriz de correlaciones.</h2>
+<p>Dependiendo del tipo de datos que tengamos, debemos utilizar un tipo de correlación u otro:</p>
+<ul>
+<li><p><strong>Datos continuos</strong>: La matriz de correlaciones de Pearson y la de Spearman son las más apropiadas ante continuos o ante datos ordinales (categóricos) con más de 7 categorías de respuesta (tienden a la continuidad).</p></li>
+<li><p><strong>Datos categóricos/ordinales</strong>: la matriz de correlaciones policórica es la más recomendada ante datos ordinales de 7 o menos categorías de respuesta. Si tuviéramos datos dicotómicos, la matriz a emplear sería la matriz tetracórica (similar a la policórica pero con datos dicotómicos).</p></li>
+</ul>
+<p>En nuestro caso, como tenemos datos ordinales con 11 opciones de respuesta (del 0 al 10), usaremos la matriz de correlaciones de Pearson.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>matriz_correlaciones <span class="ot">&lt;-</span> <span class="fu">cor</span>(datos_AFE, <span class="at">method =</span> <span class="st">"pearson"</span>, <span class="at">use =</span> <span class="st">"complete.obs"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorrplot</span>(matriz_correlaciones, <span class="at">lab =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ECV_factorial_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Todas las correlaciones son positivas y, en general, no son muy altas.</p>
+</section>
+<section id="paso-2-verificar-que-la-matriz-sea-factorizable-es-decir-que-tiene-sentido-hacer-un-afe-con-nuestros-datos" class="level2">
+<h2 class="anchored" data-anchor-id="paso-2-verificar-que-la-matriz-sea-factorizable-es-decir-que-tiene-sentido-hacer-un-afe-con-nuestros-datos">Paso 2: Verificar que la matriz sea factorizable (es decir, que tiene sentido hacer un AFE con nuestros datos):</h2>
+<p>Si la matriz no fuese factorizable, la relación entre las variables sería tan baja que no se formarían factores.</p>
+<p>Entre los métodos para comprobar si la matriz es factorizable destacan:</p>
+<ul>
+<li><p><strong>Test de esfericidad de Bartlett</strong>: se pregunta si la matriz de correlaciones es o no la matriz identidad. Si la matriz de correlaciones es la matriz identidad, las variables no estarían correlacionadas y no habría varianza compartida de la que extraer los factores (no habría factores comunes). Si rechazamos la hipótesis nula (la matriz de correlaciones es la matriz identidad), la matriz será factorizable.</p></li>
+<li><p><strong>Medida KMO (Kaiser-Meyer-Olkin)</strong>: expresa el grado de predicción de las variables a partir de las demás. Su valor oscila entre 0 y 1. Cuanto mayor sea, mejor. Valores a partir de 0,5 se consideran aceptables.</p></li>
+<li><p><strong>Calcular el determinante de la matriz de correlaciones</strong>: valores cercanos a cero indican que la matriz es factorizable.</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test de esfericidad de Bartlett:</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>p_esf <span class="ot">&lt;-</span> <span class="fu">cortest.bartlett</span>(matriz_correlaciones, <span class="at">n =</span> <span class="fu">nrow</span>(datos_AFE))</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"El p-valor del test de esfiricidad de Bartlett es: "</span>, p_esf<span class="sc">$</span>p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>El p-valor del test de esfiricidad de Bartlett es:  0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># KMO:</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">KMO</span>(matriz_correlaciones)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Kaiser-Meyer-Olkin factor adequacy
+Call: KMO(r = matriz_correlaciones)
+Overall MSA =  0.8
+MSA for each item = 
+PW010 PW030 PW040 PW100 PW120 PW160 PW200 PW210 
+ 0.81  0.83  0.88  0.89  0.88  0.86  0.67  0.70 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Determinante de la matriz:</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"El valor del determinante de la matriz es: "</span>, <span class="fu">det</span>(matriz_correlaciones))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>El valor del determinante de la matriz es:  0.08410902</code></pre>
+</div>
+</div>
+<p>El p-valor es menor a los niveles de significación habituales(10%, 5% y 1%) por lo que rechazamos la hipótesis nula: la matriz de correlaciones no es la matriz identidad.</p>
+<ol type="1">
+<li>El resultado del KMO es bueno: 0,80.</li>
+<li>El determinante tiene un valor bastante bajo.</li>
+<li>Los test muestran que la matriz es factorizable.</li>
+</ol>
+</section>
+<section id="paso-3-determinar-un-método-de-extracción-de-factores" class="level2">
+<h2 class="anchored" data-anchor-id="paso-3-determinar-un-método-de-extracción-de-factores">Paso 3: Determinar un método de extracción de factores:</h2>
+<p>La ecuación del modelo factorial es la siguiente:</p>
+<p>[X_j = a_{j1}F_1 + a_{j2}F_2 + … +a_{j n}F_n + u_j ]</p>
+<p>Donde <span class="math inline">\(X_j\)</span> (variable j) es una combinación lineal de factores comunes y del factor único (especificidad). Los <span class="math inline">\(a_{jh}\)</span> son los pesos factoriales, que representan la importancia que cada factor común tiene en explicar la variable <span class="math inline">\(X_j\)</span>.</p>
+<p>El objetivo de los métodos de extracción de factores es reproducir, con el mínimo error, la matriz de correlaciones a partir de la matriz de pesos factoriales.</p>
+<p>Existen varios métodos de extracción de factores. Los más comunes son:</p>
+<ul>
+<li><p><strong>Máxima Verosimilitud</strong> (Maximum Likelihood, ML). Para utilizarlo, nuestros datos deben seguir una normal multivariante (lo que podemos comprobar realizando el test de Mardia, por ejemplo). Estadísticamente es el más adecuado, pues es asintóticamente insesgado, eficiente y consistente.</p></li>
+<li><p><strong>Mínimos Cuadrados No Ponderados</strong> (Unweighted Least Squares, ULS) (También llamado Residuos Mínimos, MinRes). No requiere de la existencia de normalidad multivariante.</p></li>
+<li><p><strong>Ejes principales</strong>. Tampoco requiere de datos que sigan una normal multivariante.</p></li>
+<li><p><strong>Componentes principales.</strong> Como hemos dicho en la introducción, no es método de ánalisis factorial propiamente dicho, ya que su objetivo es intentar explicar toda la varianza, y no solo la varianza común o compartida. Sin embargo, su uso, aunque no se recomiende, está bastante extendido, pues es la opción por defecto de muchos programas estadísticos.</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test de Mardia:</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mardia</span>(datos_AFE, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ECV_factorial_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call: mardia(x = datos_AFE, na.rm = TRUE)
+
+Mardia tests of multivariate skew and kurtosis
+Use describe(x) the to get univariate tests
+n.obs = 5157   num.vars =  8 
+b1p =  11.34   skew =  9750.3  with probability  &lt;=  0
+ small sample skew =  9757.24  with probability &lt;=  0
+b2p =  130.3   kurtosis =  142.78  with probability &lt;=  0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(datos_AFE, pnorm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Asymptotic one-sample Kolmogorov-Smirnov test
+
+data:  datos_AFE
+D = 0.95804, p-value &lt; 2.2e-16
+alternative hypothesis: two-sided</code></pre>
+</div>
+</div>
+<p>Como los p-valores son inferiores a los niveles de significación habituales (10%, 5% y 1%) se rechaza la hipótesis nula, es decir, se rechaza la normalidad de los datos. También podemos comprobar este hecho haciendo uso del Q-Q plot, ya que la línea de puntos está bastante alejada de la recta que refleja la normal. O lo que e lo mismo, hay mas de un 5% de datos fuera de la diagonal, leugo con un 95% de confianza podremos decir que no se asemeja con una normal.</p>
+<p>Como no existe normalidad, debemos emplear un método de extracción de factores robusto la inexistencia de la misma, como es ULS (Mínimos Cuadrados No Ponderados).</p>
+</section>
+<section id="paso-4-determinamos-el-número-de-factores-a-extraer" class="level2">
+<h2 class="anchored" data-anchor-id="paso-4-determinamos-el-número-de-factores-a-extraer">Paso 4: Determinamos el número de factores a extraer:</h2>
+<p>Existen cuatro métodos principales:</p>
+<ul>
+<li><strong>Regla de Kaiser</strong>: se deben aceptar todos aquellos factores con un autovalor mayor a 1.</li>
+<li><strong>Gráfico de sedimentación</strong> (scree plot): gráfico donde podemos ver cómo disminuye la varianza explicada o el autovalor a medida que vamos aumentando el número de factores a extraer. Se complementa muy bien con la regla de Kaiser.</li>
+<li><strong>Establecimiento de un porcentaje de varianza explicada mínimo (por ejemplo, el 75%)</strong>: cogeríamos todos los factores necesarios para explicar ese porcentaje mínimo de varianza.</li>
+<li><strong>Análisis paralelo (AP, método recomendado)</strong>: el AP parte de generar nuevas muestras aleatorias (mínimo 100) con el mismo número de variables y observaciones que la muestra original y, a partir de ello, se queda con aquellos factores cuyo autovalor es superior a los generados por azar.</li>
+</ul>
+<p>Emplearemos el Análisis Paralelo al ser el método más recomendado.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fa.parallel</span>(matriz_correlaciones, <span class="at">n.obs =</span> <span class="fu">nrow</span>(datos_AFE), <span class="at">n.iter =</span> <span class="dv">500</span>, <span class="at">fa =</span> <span class="st">"fa"</span>, <span class="at">fm =</span> <span class="st">"uls"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ECV_factorial_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Parallel analysis suggests that the number of factors =  4  and the number of components =  NA </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># uls lleva a cabo un método de minimal residuals</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"># fa = "fa" show the eigen values for  a principal axis factor analysis </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>El Análisis Paralelo sugiere la extracción de 4 factores.</p>
+</section>
+<section id="paso-5-extracción-de-factores-rotación" class="level2">
+<h2 class="anchored" data-anchor-id="paso-5-extracción-de-factores-rotación">Paso 5: Extracción de factores + rotación:</h2>
+<p>Vamos a extraer tres factores, siguiendo lo recomendado por el Análisis Paralelo.</p>
+<p>Asimismo, debemos decidir si vamos a rotar los factores y qué tipo de rotación vamos a emplear. Los métodos de rotación facilitan la interpretación de los factores, ya que sin rotarlos, suele ser muy difíciles de interpretar, por lo que se recomienda el uso de dichas técnicas de rotación.</p>
+<p>Existen dos tipos de rotación:</p>
+<ul>
+<li><strong>Rotación oblicua</strong>: permite que los factores puedan tener correlación entre ellos. Tipo recomendado, ya que es el más cercano a la estructura real que deseamos explorar. Un ejemplo es el método oblimin.</li>
+<li><strong>Rotación ortogonal</strong>: fuerza a los factores a que no puedan tener correlación entre ellos. Un ejemplo es el método varimax.</li>
+</ul>
+<p>Probaremos los dos y nos quedaremos con la solución que mejor resultado arroje. Pero, ¿cómo determinamos qué solución factorial ajusta mejor?</p>
+<ul>
+<li><strong>Fijándonos en los pesos factoriales</strong>: Cuanto mayor sea el peso factorial de un ítem en un factor mejor. Se aceptan pesos factoriales por encima de 0,4. En general, una buena solución presentará variables que pesan mucho en un factor y poco en el resto.</li>
+<li><strong>Índices de bondad del ajuste</strong>. Existen unos cuantos, pero nos podemos fijar en RMSEA, SRMR, TLI y CFI. RMSEA y SRMR cuantos más bajos mejor (se aceptan valores por debajo de 0,08), y TLI y CFI cuantos más altos mejor (valores por encima de 0,95 se consideran muy buenos).</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rotación oblicua oblimin:</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>AFE_oblimin <span class="ot">&lt;-</span> <span class="fu">fa</span>(matriz_correlaciones, <span class="at">nfactors =</span> <span class="dv">4</span>, <span class="at">n.obs =</span> <span class="fu">nrow</span>(datos_AFE), <span class="at">rotate =</span> <span class="st">"oblimin"</span>, <span class="at">fm =</span> <span class="st">"uls"</span>, <span class="at">alpha =</span> <span class="fl">0.05</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>AFE_oblimin</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Factor Analysis using method =  uls
+Call: fa(r = matriz_correlaciones, nfactors = 4, n.obs = nrow(datos_AFE), 
+    rotate = "oblimin", fm = "uls", alpha = 0.05)
+Standardized loadings (pattern matrix) based upon correlation matrix
+       ULS1  ULS2  ULS4  ULS3   h2     u2 com
+PW010  0.77 -0.06  0.09 -0.02 0.65 0.3543 1.0
+PW030  0.01  0.01  0.98  0.01 1.00 0.0045 1.0
+PW040  0.49  0.22  0.09 -0.03 0.44 0.5587 1.5
+PW100  0.52  0.01  0.06  0.10 0.38 0.6242 1.1
+PW120  0.01  0.00  0.01  0.99 1.00 0.0045 1.0
+PW160  0.64  0.07 -0.14  0.07 0.39 0.6099 1.2
+PW200 -0.07  0.74  0.05  0.06 0.55 0.4544 1.0
+PW210  0.04  0.92 -0.02 -0.03 0.87 0.1317 1.0
+
+                      ULS1 ULS2 ULS4 ULS3
+SS loadings           1.63 1.51 1.07 1.05
+Proportion Var        0.20 0.19 0.13 0.13
+Cumulative Var        0.20 0.39 0.53 0.66
+Proportion Explained  0.31 0.29 0.20 0.20
+Cumulative Proportion 0.31 0.60 0.80 1.00
+
+ With factor correlations of 
+     ULS1 ULS2 ULS4 ULS3
+ULS1 1.00 0.44 0.62 0.40
+ULS2 0.44 1.00 0.28 0.26
+ULS4 0.62 0.28 1.00 0.29
+ULS3 0.40 0.26 0.29 1.00
+
+Mean item complexity =  1.1
+Test of the hypothesis that 4 factors are sufficient.
+
+df null model =  28  with the objective function =  2.48 with Chi Square =  33268.91
+df of  the model are 2  and the objective function was  0.01 
+
+The root mean square of the residuals (RMSR) is  0.01 
+The df corrected root mean square of the residuals is  0.03 
+
+The harmonic n.obs is  13443 with the empirical chi square  53.96  with prob &lt;  1.9e-12 
+The total n.obs was  13443  with Likelihood Chi Square =  111.81  with prob &lt;  5.3e-25 
+
+Tucker Lewis Index of factoring reliability =  0.954
+RMSEA index =  0.064  and the 95 % confidence intervals are  0.052 0.076
+BIC =  92.8
+Fit based upon off diagonal values = 1
+Measures of factor score adequacy             
+                                                  ULS1 ULS2 ULS4 ULS3
+Correlation of (regression) scores with factors   0.90 0.94 1.00 1.00
+Multiple R square of scores with factors          0.81 0.89 1.00 1.00
+Minimum correlation of possible factor scores     0.62 0.78 0.99 0.99</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fa.diagram</span>(AFE_oblimin)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ECV_factorial_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rotación ortogonal varimax:</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>AFE_varimax <span class="ot">&lt;-</span> <span class="fu">fa</span>(matriz_correlaciones, <span class="at">nfactors =</span> <span class="dv">4</span>, <span class="at">n.obs =</span> <span class="fu">nrow</span>(datos_AFE), <span class="at">rotate =</span> <span class="st">"varimax"</span>, <span class="at">fm =</span> <span class="st">"uls"</span>, <span class="at">alpha =</span> <span class="fl">0.05</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>AFE_varimax</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Factor Analysis using method =  uls
+Call: fa(r = matriz_correlaciones, nfactors = 4, n.obs = nrow(datos_AFE), 
+    rotate = "varimax", fm = "uls", alpha = 0.05)
+Standardized loadings (pattern matrix) based upon correlation matrix
+      ULS1 ULS2 ULS4 ULS3   h2     u2 com
+PW010 0.74 0.10 0.27 0.09 0.65 0.3543 1.3
+PW030 0.39 0.13 0.90 0.11 1.00 0.0045 1.4
+PW040 0.54 0.31 0.22 0.06 0.44 0.5587 2.0
+PW100 0.54 0.13 0.19 0.17 0.38 0.6242 1.6
+PW120 0.25 0.13 0.10 0.95 1.00 0.0045 1.2
+PW160 0.58 0.18 0.04 0.14 0.39 0.6099 1.3
+PW200 0.15 0.71 0.09 0.11 0.55 0.4544 1.2
+PW210 0.25 0.89 0.06 0.05 0.87 0.1317 1.2
+
+                      ULS1 ULS2 ULS4 ULS3
+SS loadings           1.77 1.49 1.00 1.00
+Proportion Var        0.22 0.19 0.12 0.12
+Cumulative Var        0.22 0.41 0.53 0.66
+Proportion Explained  0.34 0.28 0.19 0.19
+Cumulative Proportion 0.34 0.62 0.81 1.00
+
+Mean item complexity =  1.4
+Test of the hypothesis that 4 factors are sufficient.
+
+df null model =  28  with the objective function =  2.48 with Chi Square =  33268.91
+df of  the model are 2  and the objective function was  0.01 
+
+The root mean square of the residuals (RMSR) is  0.01 
+The df corrected root mean square of the residuals is  0.03 
+
+The harmonic n.obs is  13443 with the empirical chi square  53.96  with prob &lt;  1.9e-12 
+The total n.obs was  13443  with Likelihood Chi Square =  111.81  with prob &lt;  5.3e-25 
+
+Tucker Lewis Index of factoring reliability =  0.954
+RMSEA index =  0.064  and the 95 % confidence intervals are  0.052 0.076
+BIC =  92.8
+Fit based upon off diagonal values = 1
+Measures of factor score adequacy             
+                                                  ULS1 ULS2 ULS4 ULS3
+Correlation of (regression) scores with factors   0.83 0.92 0.97 0.99
+Multiple R square of scores with factors          0.69 0.86 0.95 0.98
+Minimum correlation of possible factor scores     0.37 0.71 0.90 0.97</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fa.diagram</span>(AFE_varimax)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ECV_factorial_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="resultados-afe" class="level2">
+<h2 class="anchored" data-anchor-id="resultados-afe">Resultados AFE:</h2>
+<p>El resultado usando tanto la rotación oblicua como la ortogonal es similar (en la ortogonal vemos como los factores ya no están correlacionados - porque no se les permite estarlo). En ambos casos, el ajuste, siguiendo los índices de bondad del mismo, es muy bueno: RMSEA y RMSR inferiores a 0,08 y TLI mayor a 0,95.</p>
+</section>
+</section>
+<section id="análisis-factorial-confirmatorio-cfa" class="level1">
+<h1>Análisis Factorial Confirmatorio (CFA):</h1>
+<p>La diferencia fundamental entre el EFA y el CFA, es que el EFA, como su propio nombre indica, es una técnica exploratoria: con ella queremos conocer la estructura de factores o variables latentes subyacente a los datos. Sin embargo, con el CFA, nosotros testamos si una determinada estructura factorial ajusta bien o no a los datos. Esto es, en este segundo caso, nosotros debemos imponer una estructura fatorial de antemano. Recurriendo a los índices de bondad del ajusto comprobaremos si dicha estructura es o no correcta.</p>
+<section id="paso-1-determinar-un-método-de-extracción-de-factores" class="level2">
+<h2 class="anchored" data-anchor-id="paso-1-determinar-un-método-de-extracción-de-factores">Paso 1: determinar un método de extracción de factores:</h2>
+<p>Al igual que hacíamos con el EFA, con el CFA también debemos determinar un método concreto para extraer los factores. Con el fin de establecer un método u otro, llevaremos a cabo un test de Mardia: si existiera normalidad multivariante, podríamos utilizar Máxima Verosimilitud. Si nuestros datos no fuesen normales, Mínimo Cuadrados No Ponderados sería una buena opción.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mardia</span>(datos_AFC, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ECV_factorial_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call: mardia(x = datos_AFC, na.rm = TRUE)
+
+Mardia tests of multivariate skew and kurtosis
+Use describe(x) the to get univariate tests
+n.obs = 5107   num.vars =  8 
+b1p =  11.59   skew =  9861.08  with probability  &lt;=  0
+ small sample skew =  9868.16  with probability &lt;=  0
+b2p =  126.63   kurtosis =  131.71  with probability &lt;=  0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(datos_AFC, pnorm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Asymptotic one-sample Kolmogorov-Smirnov test
+
+data:  datos_AFC
+D = 0.95624, p-value &lt; 2.2e-16
+alternative hypothesis: two-sided</code></pre>
+</div>
+</div>
+<p>Como podíamos esperar los resultados son idénticos a los obtenidos con la mitad de la muestra destinada al EFA: rechazamos la hipótesis nula de normalidad multivariante (al ser los p-valores inferiores a los niveles de significación habituales). Por ello, tampoco podemos usar Máxima Verosimilitud para el CFA, y usaremos, de nuevo, Mínimos Cuadrados No Ponderados (ULS).</p>
+</section>
+<section id="paso-2-probar-una-o-varias-estructuras-factoriales" class="level2">
+<h2 class="anchored" data-anchor-id="paso-2-probar-una-o-varias-estructuras-factoriales">Paso 2: Probar una o varias estructuras factoriales:</h2>
+<p>Vamos a plantear 3 modelos diferentes: uno que replique la estructura factorial planteada en el EFA, otro de un solo factor y otro de dos factores.</p>
+<p>Para comparar modelos nos vamos a fijar en los índices de bondad del ajuste. Al igual que comentamos con el EFA: la situación óptima es aquella en la que los índices SRMR y RMSEA son inferiores a 0,08 - cuanto más bajos mejor -, y los índices TLI y CFI son superiores a 0,95 - cuanto más altos mejor.</p>
+</section>
+<section id="modelo-con-los-cuatro-factores-que-muestra-el-exploratorio" class="level2">
+<h2 class="anchored" data-anchor-id="modelo-con-los-cuatro-factores-que-muestra-el-exploratorio">Modelo con los cuatro factores que muestra el Exploratorio:</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Especificamos el modelo:</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>modelo_4F_AFE <span class="ot">&lt;-</span> <span class="st">"Factor1 =~ PW010 + PW040 + PW100 + PW160</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="st">                  Factor2 =~ PW200 + PW210</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="st">                  Factor3 =~ PW120</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="st">                  Factor4 =~ PW030"</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Realizamos el factorial:</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>factorial_4F_AFE <span class="ot">&lt;-</span> <span class="fu">cfa</span>(modelo_4F_AFE, datos_AFC, <span class="at">estimator =</span> <span class="st">"ULS"</span>, <span class="at">orthogonal =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(factorial_4F_AFE, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6.17 ended normally after 31 iterations
+
+  Estimator                                        ULS
+  Optimization method                           NLMINB
+  Number of model parameters                        20
+
+                                                  Used       Total
+  Number of observations                          5107       13440
+
+Model Test User Model:
+                                                      
+  Test statistic                              2798.941
+  Degrees of freedom                                16
+  P-value (Unknown)                                 NA
+
+Model Test Baseline Model:
+
+  Test statistic                            244573.959
+  Degrees of freedom                                28
+  P-value                                           NA
+
+User Model versus Baseline Model:
+
+  Comparative Fit Index (CFI)                    0.989
+  Tucker-Lewis Index (TLI)                       0.980
+
+Root Mean Square Error of Approximation:
+
+  RMSEA                                          0.185
+  90 Percent confidence interval - lower         0.179
+  90 Percent confidence interval - upper         0.190
+  P-value H_0: RMSEA &lt;= 0.050                    0.000
+  P-value H_0: RMSEA &gt;= 0.080                    1.000
+
+Standardized Root Mean Square Residual:
+
+  SRMR                                           0.036
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model        Unstructured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  Factor1 =~                                                            
+    PW010             1.000                               1.230    0.729
+    PW040             0.902    0.006  154.059    0.000    1.109    0.651
+    PW100             0.990    0.006  158.608    0.000    1.217    0.619
+    PW160             0.709    0.005  139.082    0.000    0.872    0.552
+  Factor2 =~                                                            
+    PW200             1.000                               1.705    0.741
+    PW210             0.988    0.008  127.508    0.000    1.685    0.912
+  Factor3 =~                                                            
+    PW120             1.000                               2.341    1.000
+  Factor4 =~                                                            
+    PW030             1.000                               1.936    1.000
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  Factor1 ~~                                                            
+    Factor2           1.082    0.008  135.914    0.000    0.516    0.516
+    Factor3           1.427    0.009  153.160    0.000    0.496    0.496
+    Factor4           1.610    0.010  165.798    0.000    0.676    0.676
+  Factor2 ~~                                                            
+    Factor3           1.210    0.011  109.986    0.000    0.303    0.303
+    Factor4           1.058    0.011   98.275    0.000    0.320    0.320
+  Factor3 ~~                                                            
+    Factor4           1.399    0.014   99.975    0.000    0.309    0.309
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+   .PW010             1.336    0.019   69.104    0.000    1.336    0.469
+   .PW040             1.676    0.018   92.327    0.000    1.676    0.577
+   .PW100             2.389    0.019  124.496    0.000    2.389    0.617
+   .PW160             1.738    0.016  105.875    0.000    1.738    0.695
+   .PW200             2.383    0.030   78.692    0.000    2.383    0.450
+   .PW210             0.577    0.030   19.415    0.000    0.577    0.169
+   .PW120             0.000                               0.000    0.000
+   .PW030             0.000                               0.000    0.000
+    Factor1           1.512    0.013  113.445    0.000    1.000    1.000
+    Factor2           2.908    0.027  108.321    0.000    1.000    1.000
+    Factor3           5.478    0.014  391.452    0.000    1.000    1.000
+    Factor4           3.748    0.014  267.783    0.000    1.000    1.000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>semPlot<span class="sc">::</span><span class="fu">semPaths</span>(factorial_4F_AFE, <span class="at">whatLabels=</span><span class="st">"est"</span>,</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">sizeMan =</span> <span class="fl">3.25</span>,</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">node.width =</span> <span class="dv">1</span>,</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">edge.label.cex =</span> .<span class="dv">75</span>,</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">style =</span> <span class="st">"ram"</span>,</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ECV_factorial_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Se nos despliega una gran cantidad de información, pero, para facilitar el análisis, nos fijaremos simplemente en los índices de bondad del ajuste. Siguiendo dichos índices, el ajuste parece bueno: SRMR &lt; 0,08, y TLI y CFI &gt; 0,95. Sin embargo, RMSEA es mayor a 0,8</p>
+</section>
+<section id="modelo-con-un-solo-factor" class="level2">
+<h2 class="anchored" data-anchor-id="modelo-con-un-solo-factor">Modelo con un solo factor:</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Planteamos el modelo:</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>modelo_1F <span class="ot">&lt;-</span> <span class="st">"Factor =~ PW010 + PW030 + PW040 + PW100 + PW120 + PW160 + PW200 + PW210"</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Realizamos el factorial:</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>factorial_1F_AFE <span class="ot">&lt;-</span> <span class="fu">cfa</span>(modelo_1F, datos_AFC, <span class="at">estimator =</span> <span class="st">"ULS"</span>, <span class="at">orthogonal =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(factorial_1F_AFE, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6.17 ended normally after 35 iterations
+
+  Estimator                                        ULS
+  Optimization method                           NLMINB
+  Number of model parameters                        16
+
+                                                  Used       Total
+  Number of observations                          5107       13440
+
+Model Test User Model:
+                                                       
+  Test statistic                              19921.783
+  Degrees of freedom                                 20
+  P-value (Unknown)                                  NA
+
+Model Test Baseline Model:
+
+  Test statistic                            244573.959
+  Degrees of freedom                                28
+  P-value                                           NA
+
+User Model versus Baseline Model:
+
+  Comparative Fit Index (CFI)                    0.919
+  Tucker-Lewis Index (TLI)                       0.886
+
+Root Mean Square Error of Approximation:
+
+  RMSEA                                          0.441
+  90 Percent confidence interval - lower         0.436
+  90 Percent confidence interval - upper         0.447
+  P-value H_0: RMSEA &lt;= 0.050                    0.000
+  P-value H_0: RMSEA &gt;= 0.080                    1.000
+
+Standardized Root Mean Square Residual:
+
+  SRMR                                           0.084
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model        Unstructured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  Factor =~                                                             
+    PW010             1.000                               1.153    0.683
+    PW030             1.036    0.006  160.123    0.000    1.195    0.617
+    PW040             0.933    0.006  154.647    0.000    1.075    0.631
+    PW100             1.002    0.006  158.516    0.000    1.156    0.588
+    PW120             0.995    0.006  158.139    0.000    1.147    0.490
+    PW160             0.737    0.005  139.432    0.000    0.849    0.537
+    PW200             1.021    0.006  159.425    0.000    1.177    0.512
+    PW210             1.017    0.006  159.238    0.000    1.173    0.635
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+   .PW010             1.518    0.018   84.056    0.000    1.518    0.533
+   .PW030             2.321    0.018  126.206    0.000    2.321    0.619
+   .PW040             1.749    0.017  100.078    0.000    1.749    0.602
+   .PW100             2.535    0.018  140.204    0.000    2.535    0.655
+   .PW120             4.162    0.018  231.056    0.000    4.162    0.760
+   .PW160             1.777    0.016  110.391    0.000    1.777    0.711
+   .PW200             3.905    0.018  213.996    0.000    3.905    0.738
+   .PW210             2.040    0.018  112.034    0.000    2.040    0.597
+    Factor            1.330    0.011  116.555    0.000    1.000    1.000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>semPlot<span class="sc">::</span><span class="fu">semPaths</span>(factorial_1F_AFE, <span class="at">whatLabels=</span><span class="st">"est"</span>,</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">sizeMan =</span> <span class="fl">3.25</span>,</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">node.width =</span> <span class="dv">1</span>,</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">edge.label.cex =</span> .<span class="dv">75</span>,</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">style =</span> <span class="st">"ram"</span>,</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ECV_factorial_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Los índices de bondad del ajuste presentan todos peores valores que el modelo de 4 factores obtenido en el AFE: RMSEA = 0,441; SRMR = 0,084; CFI = 0,919; TLI = 0,886</p>
+</section>
+<section id="modelo-con-dos-factores" class="level2">
+<h2 class="anchored" data-anchor-id="modelo-con-dos-factores">Modelo con dos factores:</h2>
+<p>Planteamos un modelo con dos factores: uno que englobe los tres items relacionados con la vivienda, y otro que englobe el resto de ítems.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Planteamos el modelo:</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>modelo_2F <span class="ot">&lt;-</span> <span class="st">"factor_vivienda =~ PW040 + PW200 + PW210</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="st">              factor_miscelanea =~ PW010 + PW030 + PW100 + PW120 + PW160"</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Realizamos el factorial:</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>factorial_2F <span class="ot">&lt;-</span> <span class="fu">cfa</span>(modelo_2F, datos_AFC, <span class="at">estimator =</span> <span class="st">"ULS"</span>, <span class="at">orthogonal =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(factorial_2F, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6.17 ended normally after 35 iterations
+
+  Estimator                                        ULS
+  Optimization method                           NLMINB
+  Number of model parameters                        17
+
+                                                  Used       Total
+  Number of observations                          5107       13440
+
+Model Test User Model:
+                                                       
+  Test statistic                              12204.349
+  Degrees of freedom                                 19
+  P-value (Unknown)                                  NA
+
+Model Test Baseline Model:
+
+  Test statistic                            244573.959
+  Degrees of freedom                                28
+  P-value                                           NA
+
+User Model versus Baseline Model:
+
+  Comparative Fit Index (CFI)                    0.950
+  Tucker-Lewis Index (TLI)                       0.927
+
+Root Mean Square Error of Approximation:
+
+  RMSEA                                          0.354
+  90 Percent confidence interval - lower         0.349
+  90 Percent confidence interval - upper         0.360
+  P-value H_0: RMSEA &lt;= 0.050                    0.000
+  P-value H_0: RMSEA &gt;= 0.080                    1.000
+
+Standardized Root Mean Square Residual:
+
+  SRMR                                           0.073
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model        Unstructured
+
+Latent Variables:
+                       Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  factor_vivienda =~                                                        
+    PW040                 1.000                               1.121    0.658
+    PW200                 1.300    0.009  146.358    0.000    1.458    0.634
+    PW210                 1.306    0.009  146.386    0.000    1.465    0.792
+  factor_miscelanea =~                                                      
+    PW010                 1.000                               1.231    0.729
+    PW030                 1.025    0.007  157.091    0.000    1.261    0.652
+    PW100                 1.000    0.006  156.148    0.000    1.231    0.626
+    PW120                 0.986    0.006  155.560    0.000    1.214    0.519
+    PW160                 0.718    0.005  137.747    0.000    0.884    0.559
+
+Covariances:
+                     Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  factor_vivienda ~~                                                      
+    factor_misceln      0.920    0.006  142.840    0.000    0.667    0.667
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+   .PW040             1.649    0.019   88.350    0.000    1.649    0.567
+   .PW200             3.166    0.023  138.155    0.000    3.166    0.598
+   .PW210             1.271    0.023   55.195    0.000    1.271    0.372
+   .PW010             1.333    0.019   69.586    0.000    1.333    0.468
+   .PW030             2.157    0.019  110.858    0.000    2.157    0.576
+   .PW100             2.355    0.019  122.927    0.000    2.355    0.608
+   .PW120             4.005    0.019  210.874    0.000    4.005    0.731
+   .PW160             1.717    0.016  104.214    0.000    1.717    0.687
+    factor_viviend    1.257    0.012  101.809    0.000    1.000    1.000
+    factor_misceln    1.515    0.013  115.828    0.000    1.000    1.000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>semPlot<span class="sc">::</span><span class="fu">semPaths</span>(factorial_2F, <span class="at">whatLabels=</span><span class="st">"est"</span>,</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">sizeMan =</span> <span class="fl">3.25</span>,</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">node.width =</span> <span class="dv">1</span>,</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">edge.label.cex =</span> .<span class="dv">75</span>,</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">style =</span> <span class="st">"ram"</span>,</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ECV_factorial_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Los índices de bondad del ajuste presentan todos peores valores que el modelo de 4 factores obtenido en el AFE: RMSEA = 0,354; SRMR = 0,073; CFI = 0,950; TLI = 0,927</p>
+</section>
+<section id="resultados-cfa" class="level2">
+<h2 class="anchored" data-anchor-id="resultados-cfa">Resultados CFA:</h2>
+<p>Los índices de bondad del ajuste muestran que, de los tres modelos planteados, el modelo que refleja la estructura de los cuatro factores del AFE es el que mejor ajuste tiene.</p>
+</section>
+</section>
+<section id="conclusiones-interpretamos-los-factores-obtenidos-tanto-con-el-efa-como-con-el-cfa" class="level1">
+<h1>Conclusiones: Interpretamos los factores obtenidos tanto con el EFA como con el CFA:</h1>
+<p>Intentamos darle nombre a los factores, facilitando la interpretación de los resultados.</p>
+<p>Los resultados entre el Análisis Factorial Exploratorio (EFA) y el Confirmatorio (CFA) concuerdan: el modelo que mejor ajusta es el que tiene cuatro factores:</p>
+<ul>
+<li><p><strong>Factor 1</strong>: variables PW010 (grado de satisfacción con la vida en la actualidad), PW040 (grado de satisfacción con la vivienda), PW100 (grado de satisfacción con el trabajo actual) y PW160 (grado de satisfacción con las relaciones personales). <strong>Factor “bienestar general/principal”</strong>.</p></li>
+<li><p><strong>Factor 2</strong>: variables PW200 (grado de satisfacción con las áreas recreativas o verdes de la zona en la que vive) y PW210 (grado de satisfacción con la calidad de la zona en la que vive). <strong>Factor “zona residencial”</strong>.</p></li>
+<li><p><strong>Factor 3</strong>: variable PW120 (grado de satisfacción con el tiempo que dispone para hacer lo que le gusta). <strong>Factor “tiempo libre”</strong>.</p></li>
+<li><p><strong>Factor 4</strong>: variable PW030 (grado de satisfacción con la situación económica en su hogar). <strong>Factor “situación económica”</strong>.</p></li>
+</ul>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>EDA viene del Inglés <em>Exploratory Data Analysis</em> y son los pasos relativos en los que se exploran las variables para tener una idea de que forma toma el dataset.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
