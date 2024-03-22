@@ -5,13 +5,11 @@ listing:
   sort-ui: [title]
   page-size: 50
   categories: true
-  fields: [title, description, tecnica, fichero, documento]
   field-display-names:
-    tecnica: Técnica estadística
-    fichero: Fichero
-    documento: Notebook
+    tecnica: "Técnica estadística"
+    notebook: Notebook
     title: Título
-    categories: Técnica estadística
+    categories: "Técnica estadística"
     
   template: lista.ejs
   contents:
