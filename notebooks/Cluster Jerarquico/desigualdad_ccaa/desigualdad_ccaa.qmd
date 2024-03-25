@@ -17,7 +17,7 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = "center", warning = FALSE, messag
 
 ## dataset
 
-En este cuaderno vamos a analizar el dataset llamado [*desigualdad_CCAA.xlsx*](../../../files/desigualdad_CCAA.xlsx). Este dataset presenta un conjunto de datos sobre el salario medio anual de hombres y mujeres en España, relativos a años 2017/18. Los datos (relativos a las variables *salario medio mujeres, hombres* que nos interesan) han sido extraidos de la **Operación** **Encuesta Anual de Estructura Salarial** (IOE 30189), que se encuentra dentro de la temática Mercado laboral y salarios. Concretamente en este dataset tenemos las siguientes variables (que nos interesan para este análisis):
+En este cuaderno vamos a analizar el dataset llamado [desigualdad_ccaa.xlsx](../../../files/desigualdad_ccaa.xlsx). Este dataset presenta un conjunto de datos sobre el salario medio anual de hombres y mujeres en España, relativos a años 2017/18. Los datos (relativos a las variables *salario medio mujeres, hombres* que nos interesan) han sido extraidos de la **Operación** **Encuesta Anual de Estructura Salarial** (IOE 30189), que se encuentra dentro de la temática Mercado laboral y salarios. Concretamente en este dataset tenemos las siguientes variables (que nos interesan para este análisis):
 
 -   **CCAA**: Comunidades Autónomas.
 -   **Salmedmuj**: Salario medio anual (mujeres).
