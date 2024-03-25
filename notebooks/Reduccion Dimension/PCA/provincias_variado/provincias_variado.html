@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.551">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -79,7 +79,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -88,6 +94,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -102,33 +109,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../../../index.html">
     <span class="navbar-title">Datasets</span>
     </a>
   </div>
-        <div class="quarto-navbar-tools ms-auto">
+        <div class="quarto-navbar-tools tools-end">
 </div>
           <div id="quarto-search" class="" title="Search"></div>
       </div> <!-- /container-fluid -->
     </nav>
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Notebooks</li><li class="breadcrumb-item">Reduccion Dimension</li><li class="breadcrumb-item">PCA</li><li class="breadcrumb-item"><a href="../../../../notebooks/Reduccion Dimension/PCA/provincias_variado/provincias_variado.html">Provincias Variado</a></li><li class="breadcrumb-item"><a href="../../../../notebooks/Reduccion Dimension/PCA/provincias_variado/provincias_variado.html">Reducción Dimensionalidad - PCA: provincias_variado</a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Notebooks</li><li class="breadcrumb-item">Reduccion Dimension</li><li class="breadcrumb-item">PCA</li><li class="breadcrumb-item"><a href="../../../../notebooks/Reduccion Dimension/PCA/provincias_variado/provincias_variado.html">Provincias Variado</a></li><li class="breadcrumb-item"><a href="../../../../notebooks/Reduccion Dimension/PCA/provincias_variado/provincias_variado.html">Reducción Dimensionalidad - PCA: provincias_variado</a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
     </div>
   </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
       <a href="../../../../index.html" class="sidebar-logo-link">
       <img src="../../../../img/LogoINE.svg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -750,7 +757,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -778,7 +785,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Notebooks</li><li class="breadcrumb-item">Reduccion Dimension</li><li class="breadcrumb-item">PCA</li><li class="breadcrumb-item"><a href="../../../../notebooks/Reduccion Dimension/PCA/provincias_variado/provincias_variado.html">Provincias Variado</a></li><li class="breadcrumb-item"><a href="../../../../notebooks/Reduccion Dimension/PCA/provincias_variado/provincias_variado.html">Reducción Dimensionalidad - PCA: provincias_variado</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Reducción Dimensionalidad - PCA: provincias_variado</h1>
 </div>
@@ -793,7 +800,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
+
 
 <section id="introducción" class="level1">
 <h1>Introducción</h1>
@@ -1306,7 +1315,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="provincias_variado_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="provincias_variado_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1460,74 +1469,74 @@ d_prod -0.1578225102 -0.0552752059 -0.137948082 -0.524360180  0.542818315
 d_cons  0.3051347838  0.5279990672  0.073643342 -0.224962399 -0.032322918
 m_ieag  0.4779735058  0.3740589092  0.096068698  0.045373694 -0.057025896
                 PC11          PC12         PC13         PC14          PC15
-neag   -0.0011642406  0.0535876293 -0.003587603  0.008702605 -0.0088207614
-sagt   -0.5384363343  0.0201525721  0.152777613  0.016949628 -0.0368195759
-sagu    0.6913268975 -0.0009838613  0.025612818 -0.049154388  0.0235504136
-benf    0.0778059553  0.0166171043 -0.223463020 -0.437661655 -0.1844294743
-acem   -0.1434755408  0.2115156338 -0.800851717 -0.079880449  0.0085045450
-acti    0.0090474886  0.0899730086  0.105952933  0.167775346  0.0310804490
-ocup    0.0002516397  0.0802453472  0.125817085  0.182996570 -0.0004190218
-para    0.0702432830  0.1639853286 -0.045396107  0.092039239  0.3246330860
-ejec   -0.0518914404  0.1874420729  0.093989284  0.015986936 -0.0139851888
-inds   -0.0525696075 -0.8441067042 -0.060276232 -0.068972403  0.3237750008
-cnst   -0.0311681278 -0.1282127274  0.223356927 -0.238665029 -0.7194147327
-ctrh    0.0323340838 -0.1997179251 -0.010190351  0.020915853 -0.1254129755
-serv   -0.0254289130  0.1911372018  0.149746563  0.048866433 -0.0410875909
-pibc    0.0767242340  0.0474288876 -0.024309177 -0.084114391 -0.0154515186
-ipib    0.0767242340  0.0474288876 -0.024309177 -0.084114391 -0.0154515186
-inmi   -0.0800589037  0.2402968139  0.362203691 -0.540082596  0.4584377875
-pobl    0.0367541275  0.0262302384  0.084541442  0.308217121  0.0003495038
-espa    0.0670822639  0.0268354928  0.021513582  0.499046521 -0.0288103770
-d_migr  0.0827407189 -0.0361408516 -0.101217861  0.050613416 -0.0473954559
-d_prod -0.2132910478 -0.0034363236  0.042725328  0.105011778  0.0347451470
-d_cons -0.0919821263  0.0468918077 -0.127529588  0.021556443  0.0425306346
-m_ieag -0.3279387644 -0.0510319010 -0.048713110  0.021136187 -0.0289352769
+neag   -0.0011642406  0.0535876293 -0.003587603  0.008702605  0.0088207614
+sagt   -0.5384363343  0.0201525721  0.152777613  0.016949628  0.0368195759
+sagu    0.6913268975 -0.0009838613  0.025612818 -0.049154388 -0.0235504136
+benf    0.0778059553  0.0166171043 -0.223463020 -0.437661655  0.1844294743
+acem   -0.1434755408  0.2115156338 -0.800851717 -0.079880449 -0.0085045450
+acti    0.0090474886  0.0899730086  0.105952933  0.167775346 -0.0310804490
+ocup    0.0002516397  0.0802453472  0.125817085  0.182996570  0.0004190218
+para    0.0702432830  0.1639853286 -0.045396107  0.092039239 -0.3246330860
+ejec   -0.0518914404  0.1874420729  0.093989284  0.015986936  0.0139851888
+inds   -0.0525696075 -0.8441067042 -0.060276232 -0.068972403 -0.3237750008
+cnst   -0.0311681278 -0.1282127274  0.223356927 -0.238665029  0.7194147327
+ctrh    0.0323340838 -0.1997179251 -0.010190351  0.020915853  0.1254129755
+serv   -0.0254289130  0.1911372018  0.149746563  0.048866433  0.0410875909
+pibc    0.0767242340  0.0474288876 -0.024309177 -0.084114391  0.0154515186
+ipib    0.0767242340  0.0474288876 -0.024309177 -0.084114391  0.0154515186
+inmi   -0.0800589037  0.2402968139  0.362203691 -0.540082596 -0.4584377875
+pobl    0.0367541275  0.0262302384  0.084541442  0.308217121 -0.0003495038
+espa    0.0670822639  0.0268354928  0.021513582  0.499046521  0.0288103770
+d_migr  0.0827407189 -0.0361408516 -0.101217861  0.050613416  0.0473954559
+d_prod -0.2132910478 -0.0034363236  0.042725328  0.105011778 -0.0347451470
+d_cons -0.0919821263  0.0468918077 -0.127529588  0.021556443 -0.0425306346
+m_ieag -0.3279387644 -0.0510319010 -0.048713110  0.021136187  0.0289352769
                PC16         PC17         PC18          PC19         PC20
-neag    0.028280641 -0.031270874  0.003937319 -0.0113906345  0.003567678
-sagt    0.014486739 -0.011924533  0.025953716 -0.0002686759 -0.006380276
-sagu    0.007013293  0.012975035 -0.012380037  0.0026777669  0.001585427
-benf   -0.441599019  0.066918737  0.052027801 -0.0038209310  0.002160965
-acem    0.085530140  0.082530476 -0.015013315  0.0294884298  0.019430189
-acti   -0.072631066  0.183444129 -0.191019557 -0.4706669141 -0.058428689
-ocup   -0.161635945  0.214744834 -0.189329803 -0.5529285131 -0.041279368
-para    0.654490486 -0.133100176 -0.277084961  0.0765155301 -0.007649426
-ejec   -0.010062902 -0.015277930 -0.006916257  0.0112412604 -0.014062637
-inds   -0.067715629  0.027844625 -0.221419616  0.0877284129 -0.005087322
-cnst    0.369077443  0.186531284 -0.184396274  0.1666115674 -0.006561403
-ctrh    0.207940901 -0.494244724  0.665266888 -0.3445469570 -0.091813887
-serv   -0.348805373 -0.695217496 -0.373281347  0.2321195460 -0.044270279
-pibc    0.030506268 -0.016345407 -0.006390075  0.0034842214  0.001992897
-ipib    0.030506268 -0.016345407 -0.006390075  0.0034842214  0.001992897
-inmi    0.005747106  0.194045761  0.261419680  0.1294941066 -0.060912866
-pobl   -0.090754164  0.118341886  0.211162818  0.2094261635  0.834022532
-espa   -0.140389714  0.271730744  0.260203084  0.4438655342 -0.533269338
-d_migr -0.029490415 -0.015541335 -0.010622030  0.0021557611 -0.001170864
-d_prod -0.005451515  0.011843054  0.027909507  0.0001228453 -0.004411171
-d_cons -0.004407126 -0.008864201  0.008448205 -0.0035154671  0.003884002
-m_ieag -0.016990069 -0.006379824  0.020955305 -0.0026142462  0.002256564
+neag    0.028280641  0.031270874  0.003937319 -0.0113906345  0.003567678
+sagt    0.014486739  0.011924533  0.025953716 -0.0002686759 -0.006380276
+sagu    0.007013293 -0.012975035 -0.012380037  0.0026777669  0.001585427
+benf   -0.441599019 -0.066918737  0.052027801 -0.0038209310  0.002160965
+acem    0.085530140 -0.082530476 -0.015013315  0.0294884298  0.019430189
+acti   -0.072631066 -0.183444129 -0.191019557 -0.4706669141 -0.058428689
+ocup   -0.161635945 -0.214744834 -0.189329803 -0.5529285131 -0.041279368
+para    0.654490486  0.133100176 -0.277084961  0.0765155301 -0.007649426
+ejec   -0.010062902  0.015277930 -0.006916257  0.0112412604 -0.014062637
+inds   -0.067715629 -0.027844625 -0.221419616  0.0877284129 -0.005087322
+cnst    0.369077443 -0.186531284 -0.184396274  0.1666115674 -0.006561403
+ctrh    0.207940901  0.494244724  0.665266888 -0.3445469570 -0.091813887
+serv   -0.348805373  0.695217496 -0.373281347  0.2321195460 -0.044270279
+pibc    0.030506268  0.016345407 -0.006390075  0.0034842214  0.001992897
+ipib    0.030506268  0.016345407 -0.006390075  0.0034842214  0.001992897
+inmi    0.005747106 -0.194045761  0.261419680  0.1294941066 -0.060912866
+pobl   -0.090754164 -0.118341886  0.211162818  0.2094261635  0.834022532
+espa   -0.140389714 -0.271730744  0.260203084  0.4438655342 -0.533269338
+d_migr -0.029490415  0.015541335 -0.010622030  0.0021557611 -0.001170864
+d_prod -0.005451515 -0.011843054  0.027909507  0.0001228453 -0.004411171
+d_cons -0.004407126  0.008864201  0.008448205 -0.0035154671  0.003884002
+m_ieag -0.016990069  0.006379824  0.020955305 -0.0026142462  0.002256564
                 PC21          PC22
-neag    2.325632e-04  2.657384e-16
-sagt   -2.289433e-04  1.094984e-16
-sagu    6.422103e-05 -2.420369e-16
-benf   -7.159194e-03  2.370891e-16
-acem    4.356527e-04 -3.474734e-16
-acti    7.488779e-01 -9.235126e-15
-ocup   -6.573444e-01  9.461450e-15
-para   -8.170016e-02  2.192355e-15
-ejec   -2.769442e-04 -1.146157e-16
-inds    1.329953e-03 -2.579568e-16
-cnst   -3.981757e-03 -6.810053e-17
-ctrh   -1.114550e-05  2.120356e-15
-serv    3.314180e-03  1.928032e-15
+neag    2.325632e-04 -9.424210e-17
+sagt   -2.289433e-04  6.983831e-17
+sagu    6.422103e-05  7.280692e-17
+benf   -7.159194e-03 -1.307441e-16
+acem    4.356527e-04 -1.752889e-16
+acti    7.488779e-01 -5.137830e-15
+ocup   -6.573444e-01 -1.534483e-15
+para   -8.170016e-02  9.325957e-17
+ejec   -2.769442e-04 -9.508544e-18
+inds    1.329953e-03  4.498068e-16
+cnst   -3.981757e-03  5.246307e-16
+ctrh   -1.114550e-05 -2.453126e-15
+serv    3.314180e-03  5.811103e-16
 pibc   -1.612389e-04 -7.071068e-01
 ipib   -1.612389e-04  7.071068e-01
-inmi   -4.256775e-03 -1.167460e-15
-pobl    9.689444e-03 -1.806911e-15
-espa   -1.459524e-02 -3.035670e-15
-d_migr  1.544843e-04 -4.477048e-17
-d_prod  1.396581e-04 -2.141031e-16
-d_cons  1.484576e-04  9.031508e-18
-m_ieag  1.993842e-04 -6.968747e-17</code></pre>
+inmi   -4.256775e-03  1.455391e-15
+pobl    9.689444e-03  5.405497e-15
+espa   -1.459524e-02  9.795462e-16
+d_migr  1.544843e-04 -4.905046e-17
+d_prod  1.396581e-04 -8.815050e-17
+d_cons  1.484576e-04 -1.175607e-16
+m_ieag  1.993842e-04 -1.266090e-17</code></pre>
 </div>
 </div>
 <p>Podemos observar aquí nuestras variables en el nuevo sistema de cordenadas (las componentes principales), dando lugar a ecuaciones de cada eje como combinación lineal del total de variables. Analizar el vector que crea cada componente y cuáles son los pesos que tienen las variables en cada componente, ayuda a interpretar qué tipo de información recoge cada una de ellas.</p>
@@ -1690,158 +1699,158 @@ Bizkaia               -0.52802332 -0.323376848  0.333688501 -0.293725334
 Guipuzkoa             -0.14881051 -0.514567563  0.319057881 -0.323540722
 Rioja, La              0.04371102  0.498293190  0.255255677 -0.115850337
                               PC13         PC14          PC15          PC16
-Almería                0.243256304  0.023197548 -0.0918354752 -0.0864457317
-Cádiz                  0.058838642  0.226679222  0.1334812512  0.0276735027
-Córdoba               -0.082782684 -0.093383607  0.0209288936 -0.0699858197
-Granada                0.074704621 -0.046549251  0.0108945631 -0.0205651179
-Huelva                 0.193895641 -0.109812043  0.0604883225 -0.1312752870
-Jaén                  -0.155290169  0.008539545 -0.0193559326 -0.0472725390
-Málaga                 0.113937586 -0.104167043 -0.2347149437  0.0032440254
-Sevilla               -0.279142401  0.049771125 -0.0483271642 -0.0807590026
-Huesca                -0.015187386  0.045845707  0.0038943232 -0.0000289523
-Teruel                 0.114446897 -0.183100299  0.0591818945  0.0155027336
-Zaragoza              -0.007316974  0.079574879 -0.0135980360  0.0090214890
-Asturias              -0.103268919  0.149765834 -0.0974963950  0.1246925963
-Balears                0.067412217 -0.312786181 -0.2527344599  0.0706809591
-Palmas, Las           -0.340577799  0.054812963  0.0685313116  0.2297666058
-Sta. Cruz de Tenerife -0.089252701 -0.226520085  0.2164235530  0.0369171135
-Cantabria             -0.288407669 -0.006698810 -0.0218048670 -0.0116105406
-Ávila                 -0.220370725  0.115376013 -0.0387523918 -0.1064725169
-Burgos                -0.057614449 -0.122168057  0.0236274156  0.0083248286
-León                  -0.039545102  0.017638522  0.0021933969  0.0646999008
-Palencia              -0.098517836  0.007542103  0.0942570636 -0.0065010393
-Salamanca              0.358592918 -0.031080675 -0.0197916061 -0.0209360706
-Segovia               -0.033822299 -0.047194691  0.0847764781 -0.0225991634
-Soria                 -0.060867274  0.072913264  0.1017211904 -0.0485846831
-Valladolid            -0.037886772  0.123702005 -0.0056208119  0.0199385765
-Zamora                 0.150489581  0.020646501  0.1047602744 -0.0060099717
-Albacete               0.306045350  0.001369938  0.0327167190  0.0471789455
-Ciudad Real            0.271635520 -0.030959851  0.0471297014  0.1080990728
-Cuenca                -0.003677958 -0.018001270 -0.0117999112 -0.0107916798
-Guadalajara           -0.286227495  0.108304062  0.0026570347 -0.0936267361
-Toledo                 0.159341618  0.157705076 -0.0460566429  0.0480747498
-Barcelona             -0.461872434 -0.058871190  0.0612856830  0.0010192472
-Girona                -0.145867549 -0.048662093 -0.0830727014  0.0002817880
-Lleida                -0.062957303  0.018103580  0.0006148988  0.0334752851
-Tarragona             -0.165055214 -0.087586282  0.0240318943  0.0440645931
-Alacant                0.532278711 -0.155960165  0.0775878862  0.0044472527
-Castelló               0.393719215  0.040820347 -0.0133198844  0.0376363920
-València              -0.316885416 -0.023996092  0.1237916806  0.0011157925
-Badajoz               -0.205176771 -0.144432481 -0.0809322042  0.0219498492
-Cáceres               -0.082734251 -0.063117768 -0.0548941442 -0.0157765960
-Coruña                -0.128303420  0.148392486 -0.2077448796  0.0002856532
-Lugo                  -0.023708395 -0.019398422  0.0002416294 -0.0031629889
-Ourense               -0.175629670 -0.015063975  0.0540800888 -0.0168161067
-Pontevedra            -0.016956952  0.103058755 -0.1502294457 -0.0200890991
-Madrid                 0.431138869  0.079723890  0.0020457785 -0.0507573883
-Murcia                 0.248271351  0.104235265  0.0173682690  0.0310126071
-Nafarroa               0.241538000  0.014325265  0.0579872456 -0.0109843279
-Araba                 -0.130451064 -0.145799946 -0.0592446243 -0.0268608784
-Bizkaia                0.191397603  0.224462209 -0.0267948573  0.0258592618
-Guipuzkoa             -0.040766676  0.043677863  0.0368317525 -0.0628978921
-Rioja, La              0.005181081  0.055126309  0.0545911850 -0.0441526926
+Almería                0.243256304  0.023197548  0.0918354752 -0.0864457317
+Cádiz                  0.058838642  0.226679222 -0.1334812512  0.0276735027
+Córdoba               -0.082782684 -0.093383607 -0.0209288936 -0.0699858197
+Granada                0.074704621 -0.046549251 -0.0108945631 -0.0205651179
+Huelva                 0.193895641 -0.109812043 -0.0604883225 -0.1312752870
+Jaén                  -0.155290169  0.008539545  0.0193559326 -0.0472725390
+Málaga                 0.113937586 -0.104167043  0.2347149437  0.0032440254
+Sevilla               -0.279142401  0.049771125  0.0483271642 -0.0807590026
+Huesca                -0.015187386  0.045845707 -0.0038943232 -0.0000289523
+Teruel                 0.114446897 -0.183100299 -0.0591818945  0.0155027336
+Zaragoza              -0.007316974  0.079574879  0.0135980360  0.0090214890
+Asturias              -0.103268919  0.149765834  0.0974963950  0.1246925963
+Balears                0.067412217 -0.312786181  0.2527344599  0.0706809591
+Palmas, Las           -0.340577799  0.054812963 -0.0685313116  0.2297666058
+Sta. Cruz de Tenerife -0.089252701 -0.226520085 -0.2164235530  0.0369171135
+Cantabria             -0.288407669 -0.006698810  0.0218048670 -0.0116105406
+Ávila                 -0.220370725  0.115376013  0.0387523918 -0.1064725169
+Burgos                -0.057614449 -0.122168057 -0.0236274156  0.0083248286
+León                  -0.039545102  0.017638522 -0.0021933969  0.0646999008
+Palencia              -0.098517836  0.007542103 -0.0942570636 -0.0065010393
+Salamanca              0.358592918 -0.031080675  0.0197916061 -0.0209360706
+Segovia               -0.033822299 -0.047194691 -0.0847764781 -0.0225991634
+Soria                 -0.060867274  0.072913264 -0.1017211904 -0.0485846831
+Valladolid            -0.037886772  0.123702005  0.0056208119  0.0199385765
+Zamora                 0.150489581  0.020646501 -0.1047602744 -0.0060099717
+Albacete               0.306045350  0.001369938 -0.0327167190  0.0471789455
+Ciudad Real            0.271635520 -0.030959851 -0.0471297014  0.1080990728
+Cuenca                -0.003677958 -0.018001270  0.0117999112 -0.0107916798
+Guadalajara           -0.286227495  0.108304062 -0.0026570347 -0.0936267361
+Toledo                 0.159341618  0.157705076  0.0460566429  0.0480747498
+Barcelona             -0.461872434 -0.058871190 -0.0612856830  0.0010192472
+Girona                -0.145867549 -0.048662093  0.0830727014  0.0002817880
+Lleida                -0.062957303  0.018103580 -0.0006148988  0.0334752851
+Tarragona             -0.165055214 -0.087586282 -0.0240318943  0.0440645931
+Alacant                0.532278711 -0.155960165 -0.0775878862  0.0044472527
+Castelló               0.393719215  0.040820347  0.0133198844  0.0376363920
+València              -0.316885416 -0.023996092 -0.1237916806  0.0011157925
+Badajoz               -0.205176771 -0.144432481  0.0809322042  0.0219498492
+Cáceres               -0.082734251 -0.063117768  0.0548941442 -0.0157765960
+Coruña                -0.128303420  0.148392486  0.2077448796  0.0002856532
+Lugo                  -0.023708395 -0.019398422 -0.0002416294 -0.0031629889
+Ourense               -0.175629670 -0.015063975 -0.0540800888 -0.0168161067
+Pontevedra            -0.016956952  0.103058755  0.1502294457 -0.0200890991
+Madrid                 0.431138869  0.079723890 -0.0020457785 -0.0507573883
+Murcia                 0.248271351  0.104235265 -0.0173682690  0.0310126071
+Nafarroa               0.241538000  0.014325265 -0.0579872456 -0.0109843279
+Araba                 -0.130451064 -0.145799946  0.0592446243 -0.0268608784
+Bizkaia                0.191397603  0.224462209  0.0267948573  0.0258592618
+Guipuzkoa             -0.040766676  0.043677863 -0.0368317525 -0.0628978921
+Rioja, La              0.005181081  0.055126309 -0.0545911850 -0.0441526926
                                PC17         PC18          PC19          PC20
-Almería               -0.0290603932  0.023297482 -0.0261788636  0.0021592582
-Cádiz                  0.0573358452  0.020537862  0.0242553850  0.0110931846
-Córdoba                0.0116373353 -0.047303902  0.0094304309 -0.0009709308
-Granada               -0.0555551741 -0.021137305  0.0114845390 -0.0057839489
-Huelva                 0.0668103091  0.006994846 -0.0204765617  0.0029332837
-Jaén                  -0.0269862219 -0.010160811 -0.0076101351  0.0132002321
-Málaga                -0.0971477762  0.095364029  0.0321342957  0.0109561717
-Sevilla               -0.0298117912 -0.049693063 -0.0176335912 -0.0117112244
-Huesca                -0.0671876017  0.018546486  0.0053989330 -0.0051672590
-Teruel                -0.0183776583 -0.016495600  0.0101574794  0.0004769062
-Zaragoza               0.0759782539  0.033006164 -0.0176598284  0.0123128589
-Asturias               0.0037136818  0.020392665  0.0183658100  0.0059505213
-Balears                0.1270417678 -0.050749115 -0.0079195331 -0.0104075047
-Palmas, Las           -0.0653780205 -0.066881548 -0.0256405118  0.0043369059
-Sta. Cruz de Tenerife  0.0506080490  0.076044887 -0.0313227418 -0.0219382357
-Cantabria              0.0516286389 -0.021123954 -0.0042540018  0.0099561552
-Ávila                 -0.0367798461  0.006988128  0.0028674196  0.0011440612
-Burgos                 0.0065373066 -0.009819506  0.0073406099  0.0081256418
-León                   0.0291366556 -0.006688017  0.0051578876  0.0001156972
-Palencia              -0.0008175788  0.067492861  0.0101435389  0.0017472671
-Salamanca              0.0030847479  0.007636628  0.0089367166 -0.0086519231
-Segovia               -0.0096177927 -0.015281774 -0.0127344868  0.0047183153
-Soria                 -0.0377207743 -0.006429529  0.0117062106 -0.0103247456
-Valladolid             0.0436617085  0.030107916 -0.0208394860  0.0039401719
-Zamora                -0.0025741863 -0.027819156  0.0040603510 -0.0037825961
-Albacete              -0.0111057266 -0.055612628  0.0134175239 -0.0120152120
-Ciudad Real           -0.0353877687  0.010403098 -0.0121534524  0.0027465264
-Cuenca                -0.0614068055 -0.008334674 -0.0095199686 -0.0012502887
-Guadalajara            0.0459104329 -0.045364678 -0.0189013014  0.0062093887
-Toledo                 0.0213896936 -0.044381177  0.0231274520 -0.0095785929
-Barcelona             -0.0596478456  0.008450191 -0.0197780746 -0.0000885052
-Girona                -0.0049317323 -0.051576982  0.0094151185  0.0071898729
-Lleida                -0.0593307112  0.026020817 -0.0118541063 -0.0061720694
-Tarragona              0.0447424817  0.005296798  0.0359760839  0.0009822919
-Alacant               -0.0142503120  0.006607664 -0.0024707108  0.0163688078
-Castelló              -0.0889779142 -0.013551168 -0.0218059226 -0.0039166944
-València               0.0506912239  0.058879432  0.0400020927 -0.0108557448
-Badajoz                0.0450806290  0.021763198 -0.0006869546  0.0047945629
-Cáceres               -0.0016302717  0.044902961  0.0016832324  0.0026281758
-Coruña                 0.0232121134  0.011928371 -0.0272604925 -0.0117490811
-Lugo                  -0.0558768195  0.038304089 -0.0248784625  0.0016975742
-Ourense               -0.0127508472 -0.009264926  0.0274629751  0.0054288723
-Pontevedra             0.0085150921  0.023858922  0.0184202969 -0.0209693638
-Madrid                 0.0014938079 -0.035053495  0.0093977092  0.0014234824
-Murcia                 0.0942960417 -0.029298396 -0.0092425686  0.0123501848
-Nafarroa               0.0069749897  0.007711255 -0.0050800672 -0.0034177350
-Araba                 -0.0432025338 -0.016301915  0.0083365903  0.0098990113
-Bizkaia                0.0576446976  0.069886689 -0.0144708332 -0.0031350775
-Guipuzkoa              0.0104548562 -0.010284076  0.0043133862  0.0035820479
-Rioja, La             -0.0120662556 -0.071816043  0.0173805884 -0.0065806985
+Almería                0.0290603932  0.023297482 -0.0261788636  0.0021592582
+Cádiz                 -0.0573358452  0.020537862  0.0242553850  0.0110931846
+Córdoba               -0.0116373353 -0.047303902  0.0094304309 -0.0009709308
+Granada                0.0555551741 -0.021137305  0.0114845390 -0.0057839489
+Huelva                -0.0668103091  0.006994846 -0.0204765617  0.0029332837
+Jaén                   0.0269862219 -0.010160811 -0.0076101351  0.0132002321
+Málaga                 0.0971477762  0.095364029  0.0321342957  0.0109561717
+Sevilla                0.0298117912 -0.049693063 -0.0176335912 -0.0117112244
+Huesca                 0.0671876017  0.018546486  0.0053989330 -0.0051672590
+Teruel                 0.0183776583 -0.016495600  0.0101574794  0.0004769062
+Zaragoza              -0.0759782539  0.033006164 -0.0176598284  0.0123128589
+Asturias              -0.0037136818  0.020392665  0.0183658100  0.0059505213
+Balears               -0.1270417678 -0.050749115 -0.0079195331 -0.0104075047
+Palmas, Las            0.0653780205 -0.066881548 -0.0256405118  0.0043369059
+Sta. Cruz de Tenerife -0.0506080490  0.076044887 -0.0313227418 -0.0219382357
+Cantabria             -0.0516286389 -0.021123954 -0.0042540018  0.0099561552
+Ávila                  0.0367798461  0.006988128  0.0028674196  0.0011440612
+Burgos                -0.0065373066 -0.009819506  0.0073406099  0.0081256418
+León                  -0.0291366556 -0.006688017  0.0051578876  0.0001156972
+Palencia               0.0008175788  0.067492861  0.0101435389  0.0017472671
+Salamanca             -0.0030847479  0.007636628  0.0089367166 -0.0086519231
+Segovia                0.0096177927 -0.015281774 -0.0127344868  0.0047183153
+Soria                  0.0377207743 -0.006429529  0.0117062106 -0.0103247456
+Valladolid            -0.0436617085  0.030107916 -0.0208394860  0.0039401719
+Zamora                 0.0025741863 -0.027819156  0.0040603510 -0.0037825961
+Albacete               0.0111057266 -0.055612628  0.0134175239 -0.0120152120
+Ciudad Real            0.0353877687  0.010403098 -0.0121534524  0.0027465264
+Cuenca                 0.0614068055 -0.008334674 -0.0095199686 -0.0012502887
+Guadalajara           -0.0459104329 -0.045364678 -0.0189013014  0.0062093887
+Toledo                -0.0213896936 -0.044381177  0.0231274520 -0.0095785929
+Barcelona              0.0596478456  0.008450191 -0.0197780746 -0.0000885052
+Girona                 0.0049317323 -0.051576982  0.0094151185  0.0071898729
+Lleida                 0.0593307112  0.026020817 -0.0118541063 -0.0061720694
+Tarragona             -0.0447424817  0.005296798  0.0359760839  0.0009822919
+Alacant                0.0142503120  0.006607664 -0.0024707108  0.0163688078
+Castelló               0.0889779142 -0.013551168 -0.0218059226 -0.0039166944
+València              -0.0506912239  0.058879432  0.0400020927 -0.0108557448
+Badajoz               -0.0450806290  0.021763198 -0.0006869546  0.0047945629
+Cáceres                0.0016302717  0.044902961  0.0016832324  0.0026281758
+Coruña                -0.0232121134  0.011928371 -0.0272604925 -0.0117490811
+Lugo                   0.0558768195  0.038304089 -0.0248784625  0.0016975742
+Ourense                0.0127508472 -0.009264926  0.0274629751  0.0054288723
+Pontevedra            -0.0085150921  0.023858922  0.0184202969 -0.0209693638
+Madrid                -0.0014938079 -0.035053495  0.0093977092  0.0014234824
+Murcia                -0.0942960417 -0.029298396 -0.0092425686  0.0123501848
+Nafarroa              -0.0069749897  0.007711255 -0.0050800672 -0.0034177350
+Araba                  0.0432025338 -0.016301915  0.0083365903  0.0098990113
+Bizkaia               -0.0576446976  0.069886689 -0.0144708332 -0.0031350775
+Guipuzkoa             -0.0104548562 -0.010284076  0.0043133862  0.0035820479
+Rioja, La              0.0120662556 -0.071816043  0.0173805884 -0.0065806985
                                PC21          PC22
-Almería               -1.769168e-03 -1.421946e-17
-Cádiz                 -4.102063e-05 -5.030948e-17
-Córdoba               -2.930831e-03  3.427793e-16
-Granada               -1.380124e-03  6.255177e-16
-Huelva                -7.879173e-04  3.451187e-16
-Jaén                   1.165412e-04  1.038062e-15
-Málaga                 4.558678e-04  1.049924e-15
-Sevilla                1.516729e-03  8.460908e-16
-Huesca                 8.136195e-04  1.651875e-16
-Teruel                -5.043557e-04  1.116885e-16
-Zaragoza              -7.124357e-04 -4.587248e-16
-Asturias              -3.586382e-04  6.264662e-17
-Balears                3.003175e-04 -3.206901e-16
-Palmas, Las           -6.451246e-04  7.163669e-16
-Sta. Cruz de Tenerife  2.909563e-04  3.006673e-16
-Cantabria             -4.717381e-04  8.403426e-17
-Ávila                  9.427784e-04 -2.023357e-16
-Burgos                 1.045217e-03 -2.460639e-16
-León                   8.818798e-05  9.872016e-17
-Palencia               1.343752e-04 -2.618771e-16
-Salamanca             -4.823569e-04 -5.448951e-16
-Segovia                3.979363e-04 -1.465119e-16
-Soria                  4.416088e-04 -4.889732e-16
-Valladolid             9.652706e-04 -1.425103e-16
-Zamora                 3.077992e-04  1.410830e-16
-Albacete               5.132887e-04  3.838086e-16
-Ciudad Real            4.625934e-04  3.867916e-16
-Cuenca                 5.127048e-04  1.206170e-16
-Guadalajara            8.714265e-04 -2.461529e-16
-Toledo                -1.171346e-03 -1.981620e-16
-Barcelona             -7.789622e-04 -4.621301e-16
-Girona                -1.755479e-04  3.101654e-16
-Lleida                -1.352872e-03  1.273283e-16
-Tarragona             -5.358905e-04 -7.147345e-17
-Alacant                1.656053e-03  9.723097e-17
-Castelló               7.785871e-04  2.627155e-16
-València               9.704024e-04 -2.879010e-16
-Badajoz                8.804314e-04 -9.134278e-17
-Cáceres               -5.698375e-04 -4.332262e-17
-Coruña                 5.184729e-04  2.456918e-16
-Lugo                  -2.016251e-04  2.736029e-16
-Ourense               -4.945385e-04  1.362154e-16
-Pontevedra             4.975490e-04 -1.824550e-17
-Madrid                 6.439874e-05 -1.050320e-15
-Murcia                 8.088999e-04 -4.077497e-16
-Nafarroa              -7.896884e-04 -3.380951e-16
-Araba                  1.158608e-04  8.596988e-17
-Bizkaia               -1.039056e-03 -4.079704e-16
-Guipuzkoa             -1.413750e-04 -5.999986e-17
-Rioja, La              8.665755e-04  5.463738e-17</code></pre>
+Almería               -1.769168e-03 -5.659712e-17
+Cádiz                 -4.102063e-05  2.091484e-16
+Córdoba               -2.930831e-03 -1.345576e-16
+Granada               -1.380124e-03  6.235390e-17
+Huelva                -7.879173e-04  8.023850e-18
+Jaén                   1.165412e-04 -3.469890e-16
+Málaga                 4.558678e-04  3.687160e-16
+Sevilla                1.516729e-03 -4.816864e-16
+Huesca                 8.136195e-04  2.157779e-16
+Teruel                -5.043557e-04  3.653912e-16
+Zaragoza              -7.124357e-04  3.948470e-16
+Asturias              -3.586382e-04  1.089640e-16
+Balears                3.003175e-04 -7.137619e-16
+Palmas, Las           -6.451246e-04 -5.453732e-16
+Sta. Cruz de Tenerife  2.909563e-04  6.114977e-17
+Cantabria             -4.717381e-04  2.658787e-17
+Ávila                  9.427784e-04  8.880847e-17
+Burgos                 1.045217e-03  1.694051e-16
+León                   8.818798e-05  2.593243e-16
+Palencia               1.343752e-04  1.586339e-16
+Salamanca             -4.823569e-04  2.670583e-16
+Segovia                3.979363e-04 -1.524239e-16
+Soria                  4.416088e-04 -3.839118e-16
+Valladolid             9.652706e-04  3.131621e-16
+Zamora                 3.077992e-04  2.815086e-16
+Albacete               5.132887e-04  1.240523e-16
+Ciudad Real            4.625934e-04  2.318143e-16
+Cuenca                 5.127048e-04  1.369508e-16
+Guadalajara            8.714265e-04  4.841850e-17
+Toledo                -1.171346e-03  4.150121e-16
+Barcelona             -7.789622e-04 -6.194659e-16
+Girona                -1.755479e-04 -1.070159e-16
+Lleida                -1.352872e-03 -8.370366e-17
+Tarragona             -5.358905e-04  1.135030e-16
+Alacant                1.656053e-03 -3.307671e-17
+Castelló               7.785871e-04 -3.793194e-16
+València               9.704024e-04  1.818606e-16
+Badajoz                8.804314e-04 -1.163872e-17
+Cáceres               -5.698375e-04  1.323958e-17
+Coruña                 5.184729e-04 -3.072331e-16
+Lugo                  -2.016251e-04 -2.227411e-16
+Ourense               -4.945385e-04  1.257808e-16
+Pontevedra             4.975490e-04  1.544283e-16
+Madrid                 6.439874e-05  5.786848e-16
+Murcia                 8.088999e-04  3.027072e-16
+Nafarroa              -7.896884e-04 -9.989832e-17
+Araba                  1.158608e-04  7.955217e-17
+Bizkaia               -1.039056e-03  1.805423e-17
+Guipuzkoa             -1.413750e-04 -4.448294e-18
+Rioja, La              8.665755e-04  2.112864e-16</code></pre>
 </div>
 </div>
 <p>Dando una interpretación a cada eje, podremos determinar qué perfil tiene cada provincia dentro del estudio.</p>
@@ -1864,7 +1873,7 @@ Standard deviation     0.08876 0.05995 0.04795 0.03760 0.01773 0.00854
 Proportion of Variance 0.00036 0.00016 0.00010 0.00006 0.00001 0.00000
 Cumulative Proportion  0.99965 0.99981 0.99992 0.99998 1.00000 1.00000
                             PC21      PC22
-Standard deviation     0.0008774 2.128e-16
+Standard deviation     0.0008774 1.745e-16
 Proportion of Variance 0.0000000 0.000e+00
 Cumulative Proportion  1.0000000 1.000e+00</code></pre>
 </div>
@@ -1883,7 +1892,7 @@ Cumulative Proportion  1.0000000 1.000e+00</code></pre>
  [6] 7.690832e-01 4.622873e-01 2.958583e-01 1.563377e-01 1.067539e-01
 [11] 8.791102e-02 5.135091e-02 4.534131e-02 1.200170e-02 7.877692e-03
 [16] 3.593488e-03 2.299134e-03 1.413591e-03 3.143363e-04 7.292756e-05
-[21] 7.697824e-07 4.527823e-32</code></pre>
+[21] 7.697824e-07 3.044759e-32</code></pre>
 </div>
 </div>
 </section>
@@ -1895,7 +1904,7 @@ Cumulative Proportion  1.0000000 1.000e+00</code></pre>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="provincias_variado_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="provincias_variado_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1906,7 +1915,7 @@ Cumulative Proportion  1.0000000 1.000e+00</code></pre>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="provincias_variado_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="provincias_variado_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1917,7 +1926,7 @@ Cumulative Proportion  1.0000000 1.000e+00</code></pre>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="provincias_variado_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="provincias_variado_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1966,7 +1975,7 @@ m_ieag -0.003008870 -0.185386385  0.37995131 -0.562708171</code></pre>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="provincias_variado_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="provincias_variado_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1993,7 +2002,7 @@ m_ieag -0.003008870 -0.185386385  0.37995131 -0.562708171</code></pre>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="provincias_variado_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="provincias_variado_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2001,7 +2010,7 @@ m_ieag -0.003008870 -0.185386385  0.37995131 -0.562708171</code></pre>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="provincias_variado_files/figure-html/unnamed-chunk-19-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="provincias_variado_files/figure-html/unnamed-chunk-19-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2020,7 +2029,7 @@ m_ieag -0.003008870 -0.185386385  0.37995131 -0.562708171</code></pre>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="provincias_variado_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="provincias_variado_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2036,7 +2045,7 @@ m_ieag -0.003008870 -0.185386385  0.37995131 -0.562708171</code></pre>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="provincias_variado_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="provincias_variado_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2046,7 +2055,7 @@ m_ieag -0.003008870 -0.185386385  0.37995131 -0.562708171</code></pre>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="provincias_variado_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="provincias_variado_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2153,10 +2162,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/uvima\.github\.io\/datasets\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -2166,8 +2192,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -2179,7 +2214,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -2223,6 +2381,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -2248,6 +2407,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -2308,6 +2493,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 
