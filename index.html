@@ -78,9 +78,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-title','listing-tecnica','listing-href','listing-notebook','listing-categories','listing-description','listing-cleaning',{ data: ['index'] },{ data: ['categories'] }],
+      valueNames: ['listing-title','listing-tecnica','listing-href','listing-notebook','listing-categories','listing-description','listing-operation','listing-tema','listing-cleaning',{ data: ['index'] },{ data: ['categories'] }],
       
-      searchColumns: ["listing-title","listing-tecnica","listing-href","listing-notebook","listing-categories","listing-description","listing-cleaning"],
+      searchColumns: ["listing-title","listing-tecnica","listing-href","listing-notebook","listing-categories","listing-description","listing-operation","listing-tema","listing-cleaning"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -787,7 +787,7 @@ window.Quarto = {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(25)</span></div><div class="category" data-category="Análisis Discriminante">Análisis Discriminante <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Cluster Jerárquico">Cluster Jerárquico <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Cluster K-Means">Cluster K-Means <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Reducción Dimensionalidad">Reducción Dimensionalidad <span class="quarto-category-count">(6)</span></div><div class="category" data-category="Regresión Lineal">Regresión Lineal <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Regresión Logística">Regresión Logística <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Series Temporales">Series Temporales <span class="quarto-category-count">(3)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(25)</span></div><div class="category" data-category="Tema: Agricultura y medio ambiente">Tema: Agricultura y medio ambiente <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Tema: Demografía y población">Tema: Demografía y población <span class="quarto-category-count">(11)</span></div><div class="category" data-category="Tema: Economía">Tema: Economía <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Tema: Experimental">Tema: Experimental <span class="quarto-category-count">(8)</span></div><div class="category" data-category="Tema: Mercado laboral">Tema: Mercado laboral <span class="quarto-category-count">(5)</span></div><div class="category" data-category="Tema: Nivel y condiciones de vida">Tema: Nivel y condiciones de vida <span class="quarto-category-count">(12)</span></div><div class="category" data-category="Tema: Servicios">Tema: Servicios <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Tema: Sociedad">Tema: Sociedad <span class="quarto-category-count">(8)</span></div><div class="category" data-category="Técnica: Análisis Discriminante">Técnica: Análisis Discriminante <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Técnica: Cluster Jerárquico">Técnica: Cluster Jerárquico <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Técnica: Cluster K-Means">Técnica: Cluster K-Means <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Técnica: Reducción Dimensionalidad">Técnica: Reducción Dimensionalidad <span class="quarto-category-count">(6)</span></div><div class="category" data-category="Técnica: Regresión Lineal">Técnica: Regresión Lineal <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Técnica: Regresión Logística">Técnica: Regresión Logística <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Técnica: Series Temporales">Técnica: Series Temporales <span class="quarto-category-count">(3)</span></div></div></div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -825,6 +825,9 @@ window.Quarto = {
          <option value="listing-title" data-direction="asc">
           Título
         </option>
+         <option value="listing-tema" data-direction="asc">
+          Tema
+        </option>
      </select>
   </div>
     <div class="input-group input-group-sm quarto-listing-filter">
@@ -835,172 +838,13 @@ window.Quarto = {
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
   <div class="list quarto-listing-default">
     
-      <div class="quarto-post" data-index="0" data-categories="Cluster Jerárquico">
-        <div class="body">
-          <h3 class="no-anchor listing-title">Cluster Jerárquico: desigualdad_CCAA</h3>
-          <div class="listing-description">Este dataset presenta un conjunto de datos sobre el salario medio anual de hombres y mujeres en España, relativos a años 2017/18.</div>
-          <span class="listing-tecnica"><b>Técnica estadística:</b> Cluster Jerárquico<span><br><br>
-          <div class="listing-categories">
-            <div class="listing-category">
-              <a href="files/desigualdad_ccaa.xlsx">Fichero</a>
-            </div>
-            <div class="listing-category">
-              <a href="notebooks/Cluster Jerarquico/desigualdad_ccaa/desigualdad_ccaa.html">Notebook</a>
-            </div>
-            
-          </div>
-        </span></span></div>
-      </div>
-    
-      <div class="quarto-post" data-index="1" data-categories="Cluster K-Means">
-        <div class="body">
-          <h3 class="no-anchor listing-title">Cluster K-Means: desigualdad_CCAA</h3>
-          <div class="listing-description">Este dataset presenta un conjunto de datos sobre el salario medio anual de hombres y mujeres en España, relativos a años 2017/18.</div>
-          <span class="listing-tecnica"><b>Técnica estadística:</b> Cluster K-Means<span><br><br>
-          <div class="listing-categories">
-            <div class="listing-category">
-              <a href="files/desigualdad_ccaa.xlsx">Fichero</a>
-            </div>
-            <div class="listing-category">
-              <a href="notebooks/Cluster K-Means/desigualdad_ccaa/desigualdad_ccaa.html">Notebook</a>
-            </div>
-            
-          </div>
-        </span></span></div>
-      </div>
-    
-      <div class="quarto-post" data-index="2" data-categories="Regresión Logística">
-        <div class="body">
-          <h3 class="no-anchor listing-title">Regresión Logística: ECV_microdatos</h3>
-          <div class="listing-description">Microdatos extraidos de la  Encuesta de Condiciones de Vida (ECV) del año 2019. El objetivo es  estimar si la calidad de vida de una persona ha mejorado respecto a su infancia , de acuerdo con su año de nacimiento y su nivel de estudios.</div>
-          <span class="listing-tecnica"><b>Técnica estadística:</b> Regresión Logística<span><br><br>
-          <div class="listing-categories">
-            <div class="listing-category">
-              <a href="files/ECV.xlsx">Fichero</a>
-            </div>
-            <div class="listing-category">
-              <a href="notebooks/Logistic Regression/ECV/ECV.html">Notebook</a>
-            </div>
-            
-              <div class="listing-category">
-                <a href="notebooks/Logistic Regression/ECV/Dataset_cleaning.html">Limpieza de datos</a>
-              </div>
-            
-          </div>
-        </span></span></div>
-      </div>
-    
-      <div class="quarto-post" data-index="3" data-categories="Cluster Jerárquico">
-        <div class="body">
-          <h3 class="no-anchor listing-title">Cluster Jerárquico: ecv_cluster</h3>
-          <div class="listing-description">Datos por Comunidades Autónomas sobre la tasa de riesgo de pobreza, la carencia material o la situación laboral que encontramos dentro de la Encuesta de Condiciones de Vida (ECV). Datos correspondientes al año 2021.</div>
-          <span class="listing-tecnica"><b>Técnica estadística:</b> Cluster Jerárquico<span><br><br>
-          <div class="listing-categories">
-            <div class="listing-category">
-              <a href="files/ecv_cluster.xlsx">Fichero</a>
-            </div>
-            <div class="listing-category">
-              <a href="notebooks/Cluster Jerarquico/ecv_cluster/ecv_cluster.html">Notebook</a>
-            </div>
-            
-          </div>
-        </span></span></div>
-      </div>
-    
-      <div class="quarto-post" data-index="4" data-categories="Cluster K-Means">
-        <div class="body">
-          <h3 class="no-anchor listing-title">Cluster K-Means: ecv_cluster</h3>
-          <div class="listing-description">Datos por Comunidades Autónomas sobre la tasa de riesgo de pobreza, la carencia material o la situación laboral que encontramos dentro de la Encuesta de Condiciones de Vida (ECV). Datos correspondientes al año 2021.</div>
-          <span class="listing-tecnica"><b>Técnica estadística:</b> Cluster K-Means<span><br><br>
-          <div class="listing-categories">
-            <div class="listing-category">
-              <a href="files/ecv_cluster.xlsx">Fichero</a>
-            </div>
-            <div class="listing-category">
-              <a href="notebooks/Cluster K-Means/ecv_cluster/ecv_cluster.html">Notebook</a>
-            </div>
-            
-          </div>
-        </span></span></div>
-      </div>
-    
-      <div class="quarto-post" data-index="5" data-categories="Reducción Dimensionalidad">
-        <div class="body">
-          <h3 class="no-anchor listing-title">Reducción Dimensionalidad - Análisis Factorial: ECV_factorial</h3>
-          <div class="listing-description">Este dataset presenta un conjunto de microdatos  relativos a la ECV donde se puntua el nivel de satisfacción en determinados ámbitos de la vida (laboral, económico, relaciones personales..). El objetivo es llevar a cabo un análisis factorial</div>
-          <span class="listing-tecnica"><b>Técnica estadística:</b> Reducción Dimensionalidad - Análisis Factorial<span><br><br>
-          <div class="listing-categories">
-            <div class="listing-category">
-              <a href="files/ECV_factorial.xlsx">Fichero</a>
-            </div>
-            <div class="listing-category">
-              <a href="notebooks/Reduccion Dimension/Analisis Factorial/ECV_factorial/ECV_factorial.html">Notebook</a>
-            </div>
-            
-              <div class="listing-category">
-                <a href="notebooks/Reduccion Dimension/Analisis Factorial/ECV_factorial/Dataset_cleaning.html">Limpieza de datos</a>
-              </div>
-            
-          </div>
-        </span></span></div>
-      </div>
-    
-      <div class="quarto-post" data-index="6" data-categories="Reducción Dimensionalidad">
-        <div class="body">
-          <h3 class="no-anchor listing-title">Reducción Dimensionalidad - PCA: IMCV_pca</h3>
-          <div class="listing-description">Datos por Comunidades Autónomas de las nueve dimensiones relativos a la calidad de vida que componen el Índice Multidimensional de Calidad de Vida (IMCV), una estadística con carácter experimental. Datos correspondientes al año 2020.</div>
-          <span class="listing-tecnica"><b>Técnica estadística:</b> Reducción Dimensionalidad - PCA<span><br><br>
-          <div class="listing-categories">
-            <div class="listing-category">
-              <a href="files/IMCV_pca.xlsx">Fichero</a>
-            </div>
-            <div class="listing-category">
-              <a href="notebooks/Reduccion Dimension/PCA/IMCV_pca/IMCV_pca.html">Notebook</a>
-            </div>
-            
-          </div>
-        </span></span></div>
-      </div>
-    
-      <div class="quarto-post" data-index="7" data-categories="Regresión Lineal">
-        <div class="body">
-          <h3 class="no-anchor listing-title">Regresión Lineal: IMCV_reg</h3>
-          <div class="listing-description">Datos por Comunidades Autónomas de ocho de las nueve dimensiones relativas a la calidad de vida que componen el Índice Multidimensional de Calidad de Vida (IMCV), una estadística con carácter experimental. Datos correspondientes al año 2020.</div>
-          <span class="listing-tecnica"><b>Técnica estadística:</b> Regresión Lineal<span><br><br>
-          <div class="listing-categories">
-            <div class="listing-category">
-              <a href="files/IMCV_reg.xlsx">Fichero</a>
-            </div>
-            <div class="listing-category">
-              <a href="notebooks/Linear Regression/IMCV/IMCV.html">Notebook</a>
-            </div>
-            
-          </div>
-        </span></span></div>
-      </div>
-    
-      <div class="quarto-post" data-index="8" data-categories="Series Temporales">
-        <div class="body">
-          <h3 class="no-anchor listing-title">Series Temporales - ARIMA: ipc_series</h3>
-          <div class="listing-description">Datos relativos a la serie del IPC mensual en españa desde 2002 hasta 2022.</div>
-          <span class="listing-tecnica"><b>Técnica estadística:</b> Series Temporales - ARIMA<span><br><br>
-          <div class="listing-categories">
-            <div class="listing-category">
-              <a href="files/ipc_series.xlsx">Fichero</a>
-            </div>
-            <div class="listing-category">
-              <a href="notebooks/Series Temporales/ARIMA/ipc_series/ipc_series.html">Notebook</a>
-            </div>
-            
-          </div>
-        </span></span></div>
-      </div>
-    
-      <div class="quarto-post" data-index="9" data-categories="Análisis Discriminante">
+      <div class="quarto-post" data-index="0" data-categories="Técnica: Análisis Discriminante,Tema: Mercado laboral">
         <div class="body">
           <h3 class="no-anchor listing-title">Análisis Discriminante: laboral</h3>
           <div class="listing-description">Microdatos relativos a la encuesta de estructura salarial de las personas en 2018. Salario bruto, Edad y Antigüedad en el trabajo y días de vacaciones al año del encuestado con el fin de clasificar los estudios (o bien tienen pocos estudios o bien muchos) de una persona en función de las anteriores variables.</div>
-          <span class="listing-tecnica"><b>Técnica estadística:</b> Análisis Discriminante<span><br><br>
+          <span class="listing-tecnica"><b>Técnica estadística:</b> Análisis Discriminante<span><br>
+          <span class="listing-tema"><b>Temas:</b> Mercado laboral<span><br>
+          <span class="listing-operation"><b>Operaciones:</b> 30189 + Encuesta Anual de Estructura Salarial<span><br><br>
           <div class="listing-categories">
             <div class="listing-category">
               <a href="files/laboral.xlsx">Fichero</a>
@@ -1014,147 +858,16 @@ window.Quarto = {
               </div>
             
           </div>
-        </span></span></div>
+        </span></span></span></span></span></span></div>
       </div>
     
-      <div class="quarto-post" data-index="10" data-categories="Regresión Logística">
-        <div class="body">
-          <h3 class="no-anchor listing-title">Regresión Logística: laboral</h3>
-          <div class="listing-description">Microdatos relativos a la encuesta de estructura salarial de las personas en 2018. Salario bruto, Edad y Antigüedad en el trabajo y días de vacaciones al año del encuestado con el fin de clasificar los estudios (o bien tienen pocos estudios o bien muchos) de una persona en función de las anteriores variables.</div>
-          <span class="listing-tecnica"><b>Técnica estadística:</b> Regresión Logística<span><br><br>
-          <div class="listing-categories">
-            <div class="listing-category">
-              <a href="files/laboral.xlsx">Fichero</a>
-            </div>
-            <div class="listing-category">
-              <a href="notebooks/Logistic Regression/laboral/laboral.html">Notebook</a>
-            </div>
-            
-              <div class="listing-category">
-                <a href="notebooks/Logistic Regression/laboral/Dataset_cleaning.html">Limpieza de datos</a>
-              </div>
-            
-          </div>
-        </span></span></div>
-      </div>
-    
-      <div class="quarto-post" data-index="11" data-categories="Series Temporales">
-        <div class="body">
-          <h3 class="no-anchor listing-title">Series Temporales - ARIMA: madrid_series</h3>
-          <div class="listing-description">Datos relativos a la población de la CCAA de Madrid desde 1971 hasta 2021 desagregados por sexo y con cáracter bianual.</div>
-          <span class="listing-tecnica"><b>Técnica estadística:</b> Series Temporales - ARIMA<span><br><br>
-          <div class="listing-categories">
-            <div class="listing-category">
-              <a href="files/madrid_series.xlsx">Fichero</a>
-            </div>
-            <div class="listing-category">
-              <a href="notebooks/Series Temporales/ARIMA/Madrid/madrid_series.html">Notebook</a>
-            </div>
-            
-          </div>
-        </span></span></div>
-      </div>
-    
-      <div class="quarto-post" data-index="12" data-categories="Reducción Dimensionalidad">
-        <div class="body">
-          <h3 class="no-anchor listing-title">Reducción Dimensionalidad - PCA: MercadoHipotecas</h3>
-          <div class="listing-description">Este dataset presenta los datos de estudio del mercado de adquisición de viviendas en propiedad en todas las comunidades autónomas durante el ejercicio 2021, relacionando las transmisiones inmobiliarias con las hipotecas constituidas, los índices de precio de vivienda y otras variables económicas y sociodemográficas. 
-Orientado a escalamiento multidimensional, técnicas de clusterización y análisis de componentes principales.</div>
-          <span class="listing-tecnica"><b>Técnica estadística:</b> Reducción Dimensionalidad - PCA<span><br><br>
-          <div class="listing-categories">
-            <div class="listing-category">
-              <a href="files/MercadoHipotecas.xlsx">Fichero</a>
-            </div>
-            <div class="listing-category">
-              <a href="notebooks/Reduccion Dimension/PCA/MercadoHipotecas/MercadoHipotecas.html">Notebook</a>
-            </div>
-            
-          </div>
-        </span></span></div>
-      </div>
-    
-      <div class="quarto-post" data-index="13" data-categories="Series Temporales">
-        <div class="body">
-          <h3 class="no-anchor listing-title">Series Temporales - ARIMA: navarra</h3>
-          <div class="listing-description">Datos relativos a la población de la CCAA Navarra desde 1971 hasta 2021 desagregados por sexo y con cáracter bianual.</div>
-          <span class="listing-tecnica"><b>Técnica estadística:</b> Series Temporales - ARIMA<span><br><br>
-          <div class="listing-categories">
-            <div class="listing-category">
-              <a href="files/navarra_series.xlsx">Fichero</a>
-            </div>
-            <div class="listing-category">
-              <a href="notebooks/Series Temporales/ARIMA/Navarra/navarra_series.html">Notebook</a>
-            </div>
-            
-          </div>
-        </span></span></div>
-      </div>
-    
-      <div class="quarto-post" data-index="14" data-categories="Regresión Logística">
-        <div class="body">
-          <h3 class="no-anchor listing-title">Regresión Logística: ECV_microdatos</h3>
-          <div class="listing-description">Datos relativos a partos en 2022 en la Comunidad Autónoma de Navarra. El objetivo es clasificarlos partos en si hubo o no una cesárea en función de la edad de la madre, las complicaciones en el parto y las semanas de gestación.</div>
-          <span class="listing-tecnica"><b>Técnica estadística:</b> Regresión Logística<span><br><br>
-          <div class="listing-categories">
-            <div class="listing-category">
-              <a href="files/partos.xlsx">Fichero</a>
-            </div>
-            <div class="listing-category">
-              <a href="notebooks/Logistic Regression/Partos/Partos.html">Notebook</a>
-            </div>
-            
-              <div class="listing-category">
-                <a href="notebooks/Logistic Regression/Partos/Dataset_cleaning.html">Limpieza de datos</a>
-              </div>
-            
-          </div>
-        </span></span></div>
-      </div>
-    
-      <div class="quarto-post" data-index="15" data-categories="Reducción Dimensionalidad">
-        <div class="body">
-          <h3 class="no-anchor listing-title">Reducción Dimensionalidad - Análisis Factorial: pisa_factorial</h3>
-          <div class="listing-description">Este dataset presenta un conjunto de microdatos  relativos a la prueba PISA  que trata de medir la existencia de variables socioeconómicas, metacognitivas, motivacionales e, incluso, emocionales, que pueden tener impacto sobre el rendimiento académico. El objetivo es llevar a cabo un análisis factorial.</div>
-          <span class="listing-tecnica"><b>Técnica estadística:</b> Reducción Dimensionalidad - Análisis Factorial<span><br><br>
-          <div class="listing-categories">
-            <div class="listing-category">
-              <a href="files/pisa_factorial.xlsx">Fichero</a>
-            </div>
-            <div class="listing-category">
-              <a href="notebooks/Reduccion Dimension/Analisis Factorial/pisa_factorial/pisa_factorial.html">Notebook</a>
-            </div>
-            
-              <div class="listing-category">
-                <a href="notebooks/Reduccion Dimension/Analisis Factorial/pisa_factorial/Dataset_cleaning.html">Limpieza de datos</a>
-              </div>
-            
-          </div>
-        </span></span></div>
-      </div>
-    
-      <div class="quarto-post" data-index="16" data-categories="Reducción Dimensionalidad">
-        <div class="body">
-          <h3 class="no-anchor listing-title">Reducción Dimensionalidad - PCA: provincias_variado</h3>
-          <div class="listing-description">El conjunto de datos abarca información diversa sobre variables socioeconómicas en provincias y ciudades autónomas. Contiene datos como número de explotaciones agrícolas, superficies agrícolas, indicadores de empleo, ejecuciones hipotecarias, empresas por sector, PIB per cápita y datos demográficos. 
-Este conjunto de variables puede ser útil para aplicar técnicas de reducir la dimensionalidad y entender las relaciones entre las diferentes variables.</div>
-          <span class="listing-tecnica"><b>Técnica estadística:</b> Reducción Dimensionalidad - PCA<span><br><br>
-          <div class="listing-categories">
-            <div class="listing-category">
-              <a href="files/provincias_variado.xlsx">Fichero</a>
-            </div>
-            <div class="listing-category">
-              <a href="notebooks/Reduccion Dimension/PCA/provincias_variado/provincias_variado.html">Notebook</a>
-            </div>
-            
-          </div>
-        </span></span></div>
-      </div>
-    
-      <div class="quarto-post" data-index="17" data-categories="Análisis Discriminante">
+      <div class="quarto-post" data-index="1" data-categories="Técnica: Análisis Discriminante,Tema: Sociedad">
         <div class="body">
           <h3 class="no-anchor listing-title">Análisis Discriminante: salud</h3>
           <div class="listing-description">Microdatos relativos a la encuesta de Salud a personas en 2017. Altura, Peso y Edad del encuestado con el fin de clasificar el sexo de una persona en función de las anteriores variables.</div>
-          <span class="listing-tecnica"><b>Técnica estadística:</b> Análisis Discriminante<span><br><br>
+          <span class="listing-tecnica"><b>Técnica estadística:</b> Análisis Discriminante<span><br>
+          <span class="listing-tema"><b>Temas:</b> Sociedad<span><br>
+          <span class="listing-operation"><b>Operaciones:</b> 54009 - Encuesta Nacional de Salud (ENSE)<span><br><br>
           <div class="listing-categories">
             <div class="listing-category">
               <a href="files/salud.xlsx">Fichero</a>
@@ -1168,35 +881,311 @@ Este conjunto de variables puede ser útil para aplicar técnicas de reducir la 
               </div>
             
           </div>
-        </span></span></div>
+        </span></span></span></span></span></span></div>
       </div>
     
-      <div class="quarto-post" data-index="18" data-categories="Regresión Logística">
+      <div class="quarto-post" data-index="2" data-categories="Técnica: Cluster Jerárquico,Tema: Demografía y población,Tema: Sociedad">
         <div class="body">
-          <h3 class="no-anchor listing-title">Regresión Logística: salud</h3>
-          <div class="listing-description">Microdatos relativos a la encuesta de Salud a personas en 2017. Altura, Peso y Edad del encuestado con el fin de clasificar el sexo de una persona en función de las anteriores variables.</div>
-          <span class="listing-tecnica"><b>Técnica estadística:</b> Regresión Logística<span><br><br>
+          <h3 class="no-anchor listing-title">Cluster Jerárquico: VarCovid</h3>
+          <div class="listing-description">Este dataset presenta un conjunto de datos de las Tasas de variación de fallecidos en 2020 respecto al año anterior. Destacar que que 2020 fue el año del COVID y 1Ola, 2Ola, 3Ola corresponden a las semanas en las que se dieron dichas olas.</div>
+          <span class="listing-tecnica"><b>Técnica estadística:</b> Cluster Jerárquico<span><br>
+          <span class="listing-tema"><b>Temas:</b> Demografía y población, Sociedad<span><br>
+          <span class="listing-operation"><b>Operaciones:</b> 30324 Estimación de Defunciones Semanales<span><br><br>
           <div class="listing-categories">
             <div class="listing-category">
-              <a href="files/salud.xlsx">Fichero</a>
+              <a href="files/VarCovid.xlsx">Fichero</a>
             </div>
             <div class="listing-category">
-              <a href="notebooks/Logistic Regression/salud/salud.html">Notebook</a>
+              <a href="notebooks/Cluster Jerarquico/VarCovid/VarCovid.html">Notebook</a>
+            </div>
+            
+          </div>
+        </span></span></span></span></span></span></div>
+      </div>
+    
+      <div class="quarto-post" data-index="3" data-categories="Técnica: Cluster Jerárquico,Tema: Demografía y población,Tema: Experimental">
+        <div class="body">
+          <h3 class="no-anchor listing-title">Cluster Jerárquico: VarCovid_provincias</h3>
+          <div class="listing-description">Datos por provincias del exceso de mortalidad durante las cinco primeras olas de COVID-19 en comparación con las personas fallecidas en el mismo periodo de los años 2017, 2018 y 2019, años previos a la pandemia, una estadística con carácter experimental.</div>
+          <span class="listing-tecnica"><b>Técnica estadística:</b> Cluster Jerárquico<span><br>
+          <span class="listing-tema"><b>Temas:</b> Demografía y población, Experimental<span><br>
+          <span class="listing-operation"><b>Operaciones:</b> Experimental<span><br><br>
+          <div class="listing-categories">
+            <div class="listing-category">
+              <a href="files/VarCovid_provincias.xlsx">Fichero</a>
+            </div>
+            <div class="listing-category">
+              <a href="notebooks/Cluster Jerarquico/VarCovid_provincias/VarCovid_provincias.html">Notebook</a>
+            </div>
+            
+          </div>
+        </span></span></span></span></span></span></div>
+      </div>
+    
+      <div class="quarto-post" data-index="4" data-categories="Técnica: Cluster Jerárquico,Tema: Demografía y población,Tema: Nivel y condiciones de vida,Tema: Sociedad">
+        <div class="body">
+          <h3 class="no-anchor listing-title">Cluster Jerárquico: desigualdad_CCAA</h3>
+          <div class="listing-description">Este dataset presenta un conjunto de datos sobre el salario medio anual de hombres y mujeres en España, relativos a años 2017/18.</div>
+          <span class="listing-tecnica"><b>Técnica estadística:</b> Cluster Jerárquico<span><br>
+          <span class="listing-tema"><b>Temas:</b> Demografía y población, Nivel y condiciones de vida, Sociedad<span><br>
+          <span class="listing-operation"><b>Operaciones:</b> 30025&nbsp;Contabilidad Regional de España&nbsp;(INE), 30453&nbsp;Encuesta de Condiciones de Vida (ECV)&nbsp;(INE), 30271&nbsp;Tablas de Mortalidad&nbsp;(INE), 54009&nbsp;Encuesta Nacional de Salud&nbsp;(MSND), 30308&nbsp;Encuesta de Población Activa (EPA)&nbsp;(INE), 30189&nbsp;Encuesta Anual de Estructura Salarial&nbsp;(INE), 30274&nbsp;Encuesta Continua de Hogares&nbsp;(INE), 30458&nbsp;Encuesta de Presupuestos Familiares (EPF)&nbsp;(INE), 30467&nbsp;Estadística de Condenados: Menores&nbsp;(INE), 54088&nbsp;Encuesta Europea de Salud&nbsp;(INE), 30203&nbsp;Explotación Estadística del Directorio Central de Empresas&nbsp;(INE), 30320&nbsp;Estadística del Empleo de las Personas con Discapacidad&nbsp;(INE), 30450&nbsp;Encuesta sobre Equipamiento y Uso de Tecnologías de Información y Comunicación en los Hogares&nbsp;(INE), 30169&nbsp;Encuesta sobre el Uso de Tecnologías de la Información y las Comunicaciones y del Comercio Electrónico en las Empresas&nbsp;(INE)<span><br><br>
+          <div class="listing-categories">
+            <div class="listing-category">
+              <a href="files/desigualdad_ccaa.xlsx">Fichero</a>
+            </div>
+            <div class="listing-category">
+              <a href="notebooks/Cluster Jerarquico/desigualdad_ccaa/desigualdad_ccaa.html">Notebook</a>
+            </div>
+            
+          </div>
+        </span></span></span></span></span></span></div>
+      </div>
+    
+      <div class="quarto-post" data-index="5" data-categories="Técnica: Cluster Jerárquico,Tema: Nivel y condiciones de vida">
+        <div class="body">
+          <h3 class="no-anchor listing-title">Cluster Jerárquico: ecv_cluster</h3>
+          <div class="listing-description">Datos por Comunidades Autónomas sobre la tasa de riesgo de pobreza, la carencia material o la situación laboral que encontramos dentro de la Encuesta de Condiciones de Vida (ECV). Datos correspondientes al año 2021.</div>
+          <span class="listing-tecnica"><b>Técnica estadística:</b> Cluster Jerárquico<span><br>
+          <span class="listing-tema"><b>Temas:</b> Nivel y condiciones de vida<span><br>
+          <span class="listing-operation"><b>Operaciones:</b> 30453&nbsp;Encuesta de Condiciones de Vida (ECV)&nbsp;(INE)<span><br><br>
+          <div class="listing-categories">
+            <div class="listing-category">
+              <a href="files/ecv_cluster.xlsx">Fichero</a>
+            </div>
+            <div class="listing-category">
+              <a href="notebooks/Cluster Jerarquico/ecv_cluster/ecv_cluster.html">Notebook</a>
+            </div>
+            
+          </div>
+        </span></span></span></span></span></span></div>
+      </div>
+    
+      <div class="quarto-post" data-index="6" data-categories="Técnica: Cluster K-Means,Tema: Demografía y población,Tema: Sociedad">
+        <div class="body">
+          <h3 class="no-anchor listing-title">Cluster K-Means: VarCovid</h3>
+          <div class="listing-description">Este dataset presenta un conjunto de datos de las Tasas de variación de fallecidos en 2020 respecto al año anterior. Destacar que que 2020 fue el año del COVID y 1Ola, 2Ola, 3Ola corresponden a las semanas en las que se dieron dichas olas.</div>
+          <span class="listing-tecnica"><b>Técnica estadística:</b> Cluster K-Means<span><br>
+          <span class="listing-tema"><b>Temas:</b> Demografía y población, Sociedad<span><br>
+          <span class="listing-operation"><b>Operaciones:</b> 30324 Estimación de Defunciones Semanales<span><br><br>
+          <div class="listing-categories">
+            <div class="listing-category">
+              <a href="files/VarCovid.xlsx">Fichero</a>
+            </div>
+            <div class="listing-category">
+              <a href="notebooks/Cluster K-Means/VarCovid/VarCovid.html">Notebook</a>
+            </div>
+            
+          </div>
+        </span></span></span></span></span></span></div>
+      </div>
+    
+      <div class="quarto-post" data-index="7" data-categories="Técnica: Cluster K-Means,Tema: Demografía y población,Tema: Nivel y condiciones de vida,Tema: Sociedad">
+        <div class="body">
+          <h3 class="no-anchor listing-title">Cluster K-Means: desigualdad_CCAA</h3>
+          <div class="listing-description">Este dataset presenta un conjunto de datos sobre el salario medio anual de hombres y mujeres en España, relativos a años 2017/18.</div>
+          <span class="listing-tecnica"><b>Técnica estadística:</b> Cluster K-Means<span><br>
+          <span class="listing-tema"><b>Temas:</b> Demografía y población, Nivel y condiciones de vida, Sociedad<span><br>
+          <span class="listing-operation"><b>Operaciones:</b> 30025&nbsp;Contabilidad Regional de España&nbsp;(INE), 30453&nbsp;Encuesta de Condiciones de Vida (ECV)&nbsp;(INE), 30271&nbsp;Tablas de Mortalidad&nbsp;(INE), 54009&nbsp;Encuesta Nacional de Salud&nbsp;(MSND), 30308&nbsp;Encuesta de Población Activa (EPA)&nbsp;(INE), 30189&nbsp;Encuesta Anual de Estructura Salarial&nbsp;(INE), 30274&nbsp;Encuesta Continua de Hogares&nbsp;(INE), 30458&nbsp;Encuesta de Presupuestos Familiares (EPF)&nbsp;(INE), 30467&nbsp;Estadística de Condenados: Menores&nbsp;(INE), 54088&nbsp;Encuesta Europea de Salud&nbsp;(INE), 30203&nbsp;Explotación Estadística del Directorio Central de Empresas&nbsp;(INE), 30320&nbsp;Estadística del Empleo de las Personas con Discapacidad&nbsp;(INE), 30450&nbsp;Encuesta sobre Equipamiento y Uso de Tecnologías de Información y Comunicación en los Hogares&nbsp;(INE), 30169&nbsp;Encuesta sobre el Uso de Tecnologías de la Información y las Comunicaciones y del Comercio Electrónico en las Empresas&nbsp;(INE)<span><br><br>
+          <div class="listing-categories">
+            <div class="listing-category">
+              <a href="files/desigualdad_ccaa.xlsx">Fichero</a>
+            </div>
+            <div class="listing-category">
+              <a href="notebooks/Cluster K-Means/desigualdad_ccaa/desigualdad_ccaa.html">Notebook</a>
+            </div>
+            
+          </div>
+        </span></span></span></span></span></span></div>
+      </div>
+    
+      <div class="quarto-post" data-index="8" data-categories="Técnica: Cluster K-Means,Tema: Nivel y condiciones de vida">
+        <div class="body">
+          <h3 class="no-anchor listing-title">Cluster K-Means: ecv_cluster</h3>
+          <div class="listing-description">Datos por Comunidades Autónomas sobre la tasa de riesgo de pobreza, la carencia material o la situación laboral que encontramos dentro de la Encuesta de Condiciones de Vida (ECV). Datos correspondientes al año 2021.</div>
+          <span class="listing-tecnica"><b>Técnica estadística:</b> Cluster K-Means<span><br>
+          <span class="listing-tema"><b>Temas:</b> Nivel y condiciones de vida<span><br>
+          <span class="listing-operation"><b>Operaciones:</b> 30453&nbsp;Encuesta de Condiciones de Vida (ECV)&nbsp;(INE)<span><br><br>
+          <div class="listing-categories">
+            <div class="listing-category">
+              <a href="files/ecv_cluster.xlsx">Fichero</a>
+            </div>
+            <div class="listing-category">
+              <a href="notebooks/Cluster K-Means/ecv_cluster/ecv_cluster.html">Notebook</a>
+            </div>
+            
+          </div>
+        </span></span></span></span></span></span></div>
+      </div>
+    
+      <div class="quarto-post" data-index="9" data-categories="Técnica: Reducción Dimensionalidad,Tema: Nivel y condiciones de vida">
+        <div class="body">
+          <h3 class="no-anchor listing-title">Reducción Dimensionalidad - Análisis Factorial: ECV_factorial</h3>
+          <div class="listing-description">Este dataset presenta un conjunto de microdatos  relativos a la ECV donde se puntua el nivel de satisfacción en determinados ámbitos de la vida (laboral, económico, relaciones personales..). El objetivo es llevar a cabo un análisis factorial</div>
+          <span class="listing-tecnica"><b>Técnica estadística:</b> Reducción Dimensionalidad - Análisis Factorial<span><br>
+          <span class="listing-tema"><b>Temas:</b> Nivel y condiciones de vida<span><br>
+          <span class="listing-operation"><b>Operaciones:</b> 30453&nbsp;Encuesta de Condiciones de Vida (ECV)&nbsp;(INE)<span><br><br>
+          <div class="listing-categories">
+            <div class="listing-category">
+              <a href="files/ECV_factorial.xlsx">Fichero</a>
+            </div>
+            <div class="listing-category">
+              <a href="notebooks/Reduccion Dimension/Analisis Factorial/ECV_factorial/ECV_factorial.html">Notebook</a>
             </div>
             
               <div class="listing-category">
-                <a href="notebooks/Logistic Regression/salud/Dataset_cleaning.html">Limpieza de datos</a>
+                <a href="notebooks/Reduccion Dimension/Analisis Factorial/ECV_factorial/Dataset_cleaning.html">Limpieza de datos</a>
               </div>
             
           </div>
-        </span></span></div>
+        </span></span></span></span></span></span></div>
       </div>
     
-      <div class="quarto-post" data-index="19" data-categories="Regresión Lineal">
+      <div class="quarto-post" data-index="10" data-categories="Técnica: Reducción Dimensionalidad,Tema: Nivel y condiciones de vida">
+        <div class="body">
+          <h3 class="no-anchor listing-title">Reducción Dimensionalidad - Análisis Factorial: pisa_factorial</h3>
+          <div class="listing-description">Este dataset presenta un conjunto de microdatos  relativos a la prueba PISA  que trata de medir la existencia de variables socioeconómicas, metacognitivas, motivacionales e, incluso, emocionales, que pueden tener impacto sobre el rendimiento académico. El objetivo es llevar a cabo un análisis factorial.</div>
+          <span class="listing-tecnica"><b>Técnica estadística:</b> Reducción Dimensionalidad - Análisis Factorial<span><br>
+          <span class="listing-tema"><b>Temas:</b> Nivel y condiciones de vida<span><br>
+          <span class="listing-operation"><b>Operaciones:</b> Ministerio Educación<span><br><br>
+          <div class="listing-categories">
+            <div class="listing-category">
+              <a href="files/pisa_factorial.xlsx">Fichero</a>
+            </div>
+            <div class="listing-category">
+              <a href="notebooks/Reduccion Dimension/Analisis Factorial/pisa_factorial/pisa_factorial.html">Notebook</a>
+            </div>
+            
+              <div class="listing-category">
+                <a href="notebooks/Reduccion Dimension/Analisis Factorial/pisa_factorial/Dataset_cleaning.html">Limpieza de datos</a>
+              </div>
+            
+          </div>
+        </span></span></span></span></span></span></div>
+      </div>
+    
+      <div class="quarto-post" data-index="11" data-categories="Técnica: Reducción Dimensionalidad,Tema: Nivel y condiciones de vida,Tema: Experimental">
+        <div class="body">
+          <h3 class="no-anchor listing-title">Reducción Dimensionalidad - PCA: IMCV_pca</h3>
+          <div class="listing-description">Datos por Comunidades Autónomas de las nueve dimensiones relativos a la calidad de vida que componen el Índice Multidimensional de Calidad de Vida (IMCV), una estadística con carácter experimental. Datos correspondientes al año 2020.</div>
+          <span class="listing-tecnica"><b>Técnica estadística:</b> Reducción Dimensionalidad - PCA<span><br>
+          <span class="listing-tema"><b>Temas:</b> Nivel y condiciones de vida, Experimental<span><br>
+          <span class="listing-operation"><b>Operaciones:</b> Estadística experimental <span><br><br>
+          <div class="listing-categories">
+            <div class="listing-category">
+              <a href="files/IMCV_pca.xlsx">Fichero</a>
+            </div>
+            <div class="listing-category">
+              <a href="notebooks/Reduccion Dimension/PCA/IMCV_pca/IMCV_pca.html">Notebook</a>
+            </div>
+            
+          </div>
+        </span></span></span></span></span></span></div>
+      </div>
+    
+      <div class="quarto-post" data-index="12" data-categories="Técnica: Reducción Dimensionalidad,Tema: Demografía y población,Tema: Economía,Tema: Mercado laboral,Tema: Experimental">
+        <div class="body">
+          <h3 class="no-anchor listing-title">Reducción Dimensionalidad - PCA: MercadoHipotecas</h3>
+          <div class="listing-description">Este dataset presenta los datos de estudio del mercado de adquisición de viviendas en propiedad en todas las comunidades autónomas durante el ejercicio 2021, relacionando las transmisiones inmobiliarias con las hipotecas constituidas, los índices de precio de vivienda y otras variables económicas y sociodemográficas. 
+Orientado a escalamiento multidimensional, técnicas de clusterización y análisis de componentes principales.</div>
+          <span class="listing-tecnica"><b>Técnica estadística:</b> Reducción Dimensionalidad - PCA<span><br>
+          <span class="listing-tema"><b>Temas:</b> Demografía y población, Economía, Mercado laboral, Experimental<span><br>
+          <span class="listing-operation"><b>Operaciones:</b> 30149 Estadística de Hipotecas, 30457 Índice de Precios de la Vivienda (IPV), 30308 Encuesta de Población Activa (EPA)., 30264 Indicadores Demográficos Básicos, Censos de Población y Viviendas 2021 - INE, 30271 Tablas de mortalidad , 30168 Estadística de Transmisiones de Derechos de la Propiedad<span><br><br>
+          <div class="listing-categories">
+            <div class="listing-category">
+              <a href="files/MercadoHipotecas.xlsx">Fichero</a>
+            </div>
+            <div class="listing-category">
+              <a href="notebooks/Reduccion Dimension/PCA/MercadoHipotecas/MercadoHipotecas.html">Notebook</a>
+            </div>
+            
+          </div>
+        </span></span></span></span></span></span></div>
+      </div>
+    
+      <div class="quarto-post" data-index="13" data-categories="Técnica: Reducción Dimensionalidad,Tema: Nivel y condiciones de vida,Tema: Experimental">
+        <div class="body">
+          <h3 class="no-anchor listing-title">Reducción Dimensionalidad - PCA: Situacion_sanitaria</h3>
+          <div class="listing-description">Datos para las Comunidades Autónomas, abordando sobre aspectos demográficos y de salud. Contiene variables como la tasa de natalidad y mortalidad, el índice de envejecimiento, tasas de profesionales de la salud (médicos y enfermeros) por cada 100,000 habitantes, el porcentaje de inaccesibilidad a medicamentos recetados por razones económicas y la tasa media de morbilidad hospitalaria debido a enfermedades.</div>
+          <span class="listing-tecnica"><b>Técnica estadística:</b> Reducción Dimensionalidad - PCA<span><br>
+          <span class="listing-tema"><b>Temas:</b> Nivel y condiciones de vida, Experimental<span><br>
+          <span class="listing-operation"><b>Operaciones:</b> 30264 Indicadores demográficos básicos, 30416 Estadística de profesionales sanitarios colegiados, 54088 Encuesta europea de salud en España<span><br><br>
+          <div class="listing-categories">
+            <div class="listing-category">
+              <a href="files/Situacion_sanitaria.xlsx">Fichero</a>
+            </div>
+            <div class="listing-category">
+              <a href="notebooks/Reduccion Dimension/PCA/Situacion_sanitaria/Situacion_sanitaria.html">Notebook</a>
+            </div>
+            
+          </div>
+        </span></span></span></span></span></span></div>
+      </div>
+    
+      <div class="quarto-post" data-index="14" data-categories="Técnica: Reducción Dimensionalidad,Tema: Agricultura y medio ambiente,Tema: Demografía y población,Tema: Mercado laboral,Tema: Nivel y condiciones de vida,Tema: Experimental">
+        <div class="body">
+          <h3 class="no-anchor listing-title">Reducción Dimensionalidad - PCA: provincias_variado</h3>
+          <div class="listing-description">El conjunto de datos abarca información diversa sobre variables socioeconómicas en provincias y ciudades autónomas. Contiene datos como número de explotaciones agrícolas, superficies agrícolas, indicadores de empleo, ejecuciones hipotecarias, empresas por sector, PIB per cápita y datos demográficos. 
+Este conjunto de variables puede ser útil para aplicar técnicas de reducir la dimensionalidad y entender las relaciones entre las diferentes variables.</div>
+          <span class="listing-tecnica"><b>Técnica estadística:</b> Reducción Dimensionalidad - PCA<span><br>
+          <span class="listing-tema"><b>Temas:</b> Agricultura y medio ambiente, Demografía y población, Mercado laboral, Nivel y condiciones de vida, Experimental<span><br>
+          <span class="listing-operation"><b>Operaciones:</b> 30042 Censo Agrario, 58021 Estadística de prestaciones por desempleo. (Ministerio de Trabajo y Economía Social), 58007 Estadística de apoyo a la creación de empleo.(Ministerio de Trabajo y Economía Social), 30308 Encuesta de Población Activa, 30153 Estadística sobre Ejecuciones Hipotecarias. (INE), 30203 Explotación Estadística del Directorio Central de Empresas, 30025 Contabilidad Regional de España, 30277 Estadística de migraciones, 30260 Estadística del Padrón Continuo<span><br><br>
+          <div class="listing-categories">
+            <div class="listing-category">
+              <a href="files/provincias_variado.xlsx">Fichero</a>
+            </div>
+            <div class="listing-category">
+              <a href="notebooks/Reduccion Dimension/PCA/provincias_variado/provincias_variado.html">Notebook</a>
+            </div>
+            
+          </div>
+        </span></span></span></span></span></span></div>
+      </div>
+    
+      <div class="quarto-post" data-index="15" data-categories="Técnica: Regresión Lineal,Tema: Nivel y condiciones de vida,Tema: Experimental">
+        <div class="body">
+          <h3 class="no-anchor listing-title">Regresión Lineal: IMCV_reg</h3>
+          <div class="listing-description">Datos por Comunidades Autónomas de ocho de las nueve dimensiones relativas a la calidad de vida que componen el Índice Multidimensional de Calidad de Vida (IMCV), una estadística con carácter experimental. Datos correspondientes al año 2020.</div>
+          <span class="listing-tecnica"><b>Técnica estadística:</b> Regresión Lineal<span><br>
+          <span class="listing-tema"><b>Temas:</b> Nivel y condiciones de vida, Experimental<span><br>
+          <span class="listing-operation"><b>Operaciones:</b> Estadística experimental <span><br><br>
+          <div class="listing-categories">
+            <div class="listing-category">
+              <a href="files/IMCV_reg.xlsx">Fichero</a>
+            </div>
+            <div class="listing-category">
+              <a href="notebooks/Linear Regression/IMCV/IMCV.html">Notebook</a>
+            </div>
+            
+          </div>
+        </span></span></span></span></span></span></div>
+      </div>
+    
+      <div class="quarto-post" data-index="16" data-categories="Técnica: Regresión Lineal,Tema: Demografía y población,Tema: Economía,Tema: Mercado laboral,Tema: Servicios,Tema: Nivel y condiciones de vida,Tema: Sociedad">
+        <div class="body">
+          <h3 class="no-anchor listing-title">Regresión Lineal: Sucidios</h3>
+          <div class="listing-description">Este dataset presenta la tasa de suicidios que ocurre en España con distintas variables demográficas y económicas que pueden llegar a influir o no,  por Comunidades Autónomas.</div>
+          <span class="listing-tecnica"><b>Técnica estadística:</b> Regresión Lineal<span><br>
+          <span class="listing-tema"><b>Temas:</b> Demografía y población, Economía, Mercado laboral, Servicios, Nivel y condiciones de vida, Sociedad<span><br>
+          <span class="listing-operation"><b>Operaciones:</b> 30308 Encuesta de Población Activa (EPA), 30417&nbsp;Estadística de Defunciones según la Causa de Muerte, 30219Estadística del Procedimiento Concursal, 8701 (Ficha plan)&nbsp;Estadística sobre Actividades en I+D, 30458 Encuesta de Presupuestos Familiares (EPF),  30066 Estadísticas sobre las Actividades de Protección Medioambiental, &nbsp;30245 Cifras Oficiales de Población de los Municipios Españoles: Revisión del Padrón Municipal, 30138 Índice de Precios de Consumo, 30467&nbsp;Estadística de Condenados: Menores&nbsp;(INE), 30025 Contabilidad Regional de España, 8113&nbsp;Estadísticas sobre Recogida y Tratamiento de Residuos, &nbsp;30151 Estadística de Sociedades Mercantiles, 8740 Estadística de Defunciones según la Causa de Muerte, 16028 Estadística de Movimientos Turísticos en Frontera (FRONTUR), &nbsp;30468 Estadística de Violencia Doméstica y Violencia de Género<span><br><br>
+          <div class="listing-categories">
+            <div class="listing-category">
+              <a href="files/suicidios2019CCAA.xlsx">Fichero</a>
+            </div>
+            <div class="listing-category">
+              <a href="notebooks/Linear Regression/Suicidios_2019CCAA/Suicidios_2019.html">Notebook</a>
+            </div>
+            
+          </div>
+        </span></span></span></span></span></span></div>
+      </div>
+    
+      <div class="quarto-post" data-index="17" data-categories="Técnica: Regresión Lineal,Tema: Sociedad">
         <div class="body">
           <h3 class="no-anchor listing-title">Regresión Lineal: salud_reg</h3>
           <div class="listing-description">Microdatos relativos a la encuesta de Salud a personas en 2017. Altura, Peso, Edad Sexo e IMC del encuestado con el fin de hacer una regresión del Peso en función del resto de variables y explicar por qué es interesante este estudio.</div>
-          <span class="listing-tecnica"><b>Técnica estadística:</b> Regresión Lineal<span><br><br>
+          <span class="listing-tecnica"><b>Técnica estadística:</b> Regresión Lineal<span><br>
+          <span class="listing-tema"><b>Temas:</b> Sociedad<span><br>
+          <span class="listing-operation"><b>Operaciones:</b> 54009 - Encuesta Nacional de Salud (ENSE)<span><br><br>
           <div class="listing-categories">
             <div class="listing-category">
               <a href="files/salud_reg.xlsx">Fichero</a>
@@ -1210,92 +1199,156 @@ Este conjunto de variables puede ser útil para aplicar técnicas de reducir la 
               </div>
             
           </div>
-        </span></span></div>
+        </span></span></span></span></span></span></div>
       </div>
     
-      <div class="quarto-post" data-index="20" data-categories="Reducción Dimensionalidad">
+      <div class="quarto-post" data-index="18" data-categories="Técnica: Regresión Logística,Tema: Nivel y condiciones de vida,Tema: Experimental">
         <div class="body">
-          <h3 class="no-anchor listing-title">Reducción Dimensionalidad - PCA: Situacion_sanitaria</h3>
-          <div class="listing-description">Datos para las Comunidades Autónomas, abordando sobre aspectos demográficos y de salud. Contiene variables como la tasa de natalidad y mortalidad, el índice de envejecimiento, tasas de profesionales de la salud (médicos y enfermeros) por cada 100,000 habitantes, el porcentaje de inaccesibilidad a medicamentos recetados por razones económicas y la tasa media de morbilidad hospitalaria debido a enfermedades.</div>
-          <span class="listing-tecnica"><b>Técnica estadística:</b> Reducción Dimensionalidad - PCA<span><br><br>
+          <h3 class="no-anchor listing-title">Regresión Logística: ECV_microdatos</h3>
+          <div class="listing-description">Microdatos extraidos de la  Encuesta de Condiciones de Vida (ECV) del año 2019. El objetivo es  estimar si la calidad de vida de una persona ha mejorado respecto a su infancia , de acuerdo con su año de nacimiento y su nivel de estudios.</div>
+          <span class="listing-tecnica"><b>Técnica estadística:</b> Regresión Logística<span><br>
+          <span class="listing-tema"><b>Temas:</b> Nivel y condiciones de vida, Experimental<span><br>
+          <span class="listing-operation"><b>Operaciones:</b> 30453 Encuesta de Condiciones de Vida (ECV), 30454 Encuesta de Condiciones de Vida (ECV), 30455 Encuesta de Condiciones de Vida (ECV), 30456 Encuesta de Condiciones de Vida (ECV), 30457 Encuesta de Condiciones de Vida (ECV)<span><br><br>
           <div class="listing-categories">
             <div class="listing-category">
-              <a href="files/Situacion_sanitaria.xlsx">Fichero</a>
+              <a href="files/ECV.xlsx">Fichero</a>
             </div>
             <div class="listing-category">
-              <a href="notebooks/Reduccion Dimension/PCA/Situacion_sanitaria/Situacion_sanitaria.html">Notebook</a>
+              <a href="notebooks/Logistic Regression/ECV/ECV.html">Notebook</a>
+            </div>
+            
+              <div class="listing-category">
+                <a href="notebooks/Logistic Regression/ECV/Dataset_cleaning.html">Limpieza de datos</a>
+              </div>
+            
+          </div>
+        </span></span></span></span></span></span></div>
+      </div>
+    
+      <div class="quarto-post" data-index="19" data-categories="Técnica: Regresión Logística,Tema: Demografía y población,Tema: Experimental">
+        <div class="body">
+          <h3 class="no-anchor listing-title">Regresión Logística: ECV_microdatos</h3>
+          <div class="listing-description">Datos relativos a partos en 2022 en la Comunidad Autónoma de Navarra. El objetivo es clasificarlos partos en si hubo o no una cesárea en función de la edad de la madre, las complicaciones en el parto y las semanas de gestación.</div>
+          <span class="listing-tecnica"><b>Técnica estadística:</b> Regresión Logística<span><br>
+          <span class="listing-tema"><b>Temas:</b> Demografía y población, Experimental<span><br>
+          <span class="listing-operation"><b>Operaciones:</b> 30304 Estadística de nacimientos. Movimiento natural de la población<span><br><br>
+          <div class="listing-categories">
+            <div class="listing-category">
+              <a href="files/partos.xlsx">Fichero</a>
+            </div>
+            <div class="listing-category">
+              <a href="notebooks/Logistic Regression/Partos/Partos.html">Notebook</a>
+            </div>
+            
+              <div class="listing-category">
+                <a href="notebooks/Logistic Regression/Partos/Dataset_cleaning.html">Limpieza de datos</a>
+              </div>
+            
+          </div>
+        </span></span></span></span></span></span></div>
+      </div>
+    
+      <div class="quarto-post" data-index="20" data-categories="Técnica: Regresión Logística,Tema: Mercado laboral">
+        <div class="body">
+          <h3 class="no-anchor listing-title">Regresión Logística: laboral</h3>
+          <div class="listing-description">Microdatos relativos a la encuesta de estructura salarial de las personas en 2018. Salario bruto, Edad y Antigüedad en el trabajo y días de vacaciones al año del encuestado con el fin de clasificar los estudios (o bien tienen pocos estudios o bien muchos) de una persona en función de las anteriores variables.</div>
+          <span class="listing-tecnica"><b>Técnica estadística:</b> Regresión Logística<span><br>
+          <span class="listing-tema"><b>Temas:</b> Mercado laboral<span><br>
+          <span class="listing-operation"><b>Operaciones:</b> 30189 + Encuesta Anual de Estructura Salarial<span><br><br>
+          <div class="listing-categories">
+            <div class="listing-category">
+              <a href="files/laboral.xlsx">Fichero</a>
+            </div>
+            <div class="listing-category">
+              <a href="notebooks/Logistic Regression/laboral/laboral.html">Notebook</a>
+            </div>
+            
+              <div class="listing-category">
+                <a href="notebooks/Logistic Regression/laboral/Dataset_cleaning.html">Limpieza de datos</a>
+              </div>
+            
+          </div>
+        </span></span></span></span></span></span></div>
+      </div>
+    
+      <div class="quarto-post" data-index="21" data-categories="Técnica: Regresión Logística,Tema: Sociedad">
+        <div class="body">
+          <h3 class="no-anchor listing-title">Regresión Logística: salud</h3>
+          <div class="listing-description">Microdatos relativos a la encuesta de Salud a personas en 2017. Altura, Peso y Edad del encuestado con el fin de clasificar el sexo de una persona en función de las anteriores variables.</div>
+          <span class="listing-tecnica"><b>Técnica estadística:</b> Regresión Logística<span><br>
+          <span class="listing-tema"><b>Temas:</b> Sociedad<span><br>
+          <span class="listing-operation"><b>Operaciones:</b> 54009 - Encuesta Nacional de Salud (ENSE)<span><br><br>
+          <div class="listing-categories">
+            <div class="listing-category">
+              <a href="files/salud.xlsx">Fichero</a>
+            </div>
+            <div class="listing-category">
+              <a href="notebooks/Logistic Regression/salud/salud.html">Notebook</a>
+            </div>
+            
+              <div class="listing-category">
+                <a href="notebooks/Logistic Regression/salud/Dataset_cleaning.html">Limpieza de datos</a>
+              </div>
+            
+          </div>
+        </span></span></span></span></span></span></div>
+      </div>
+    
+      <div class="quarto-post" data-index="22" data-categories="Técnica: Series Temporales,Tema: Economía">
+        <div class="body">
+          <h3 class="no-anchor listing-title">Series Temporales - ARIMA: ipc_series</h3>
+          <div class="listing-description">Datos relativos a la serie del IPC mensual en españa desde 2002 hasta 2022.</div>
+          <span class="listing-tecnica"><b>Técnica estadística:</b> Series Temporales - ARIMA<span><br>
+          <span class="listing-tema"><b>Temas:</b> Economía<span><br>
+          <span class="listing-operation"><b>Operaciones:</b> 30138  Índice de Precios de Consumo (IPC)<span><br><br>
+          <div class="listing-categories">
+            <div class="listing-category">
+              <a href="files/ipc_series.xlsx">Fichero</a>
+            </div>
+            <div class="listing-category">
+              <a href="notebooks/Series Temporales/ARIMA/ipc_series/ipc_series.html">Notebook</a>
             </div>
             
           </div>
-        </span></span></div>
+        </span></span></span></span></span></span></div>
       </div>
     
-      <div class="quarto-post" data-index="21" data-categories="Regresión Lineal">
+      <div class="quarto-post" data-index="23" data-categories="Técnica: Series Temporales,Tema: Demografía y población">
         <div class="body">
-          <h3 class="no-anchor listing-title">Regresión Lineal: Sucidios</h3>
-          <div class="listing-description">Este dataset presenta la tasa de suicidios que ocurre en España con distintas variables demográficas y económicas que pueden llegar a influir o no,  por Comunidades Autónomas.</div>
-          <span class="listing-tecnica"><b>Técnica estadística:</b> Regresión Lineal<span><br><br>
+          <h3 class="no-anchor listing-title">Series Temporales - ARIMA: madrid_series</h3>
+          <div class="listing-description">Datos relativos a la población de la CCAA de Madrid desde 1971 hasta 2021 desagregados por sexo y con cáracter bianual.</div>
+          <span class="listing-tecnica"><b>Técnica estadística:</b> Series Temporales - ARIMA<span><br>
+          <span class="listing-tema"><b>Temas:</b> Demografía y población<span><br>
+          <span class="listing-operation"><b>Operaciones:</b> 8893&nbsp;Estadística Continua de Población (ECP)<span><br><br>
           <div class="listing-categories">
             <div class="listing-category">
-              <a href="files/suicidios2019CCAA.xlsx">Fichero</a>
+              <a href="files/madrid_series.xlsx">Fichero</a>
             </div>
             <div class="listing-category">
-              <a href="notebooks/Linear Regression/Suicidios_2019CCAA/Suicidios_2019.html">Notebook</a>
+              <a href="notebooks/Series Temporales/ARIMA/Madrid/madrid_series.html">Notebook</a>
             </div>
             
           </div>
-        </span></span></div>
+        </span></span></span></span></span></span></div>
       </div>
     
-      <div class="quarto-post" data-index="22" data-categories="Cluster Jerárquico">
+      <div class="quarto-post" data-index="24" data-categories="Técnica: Series Temporales,Tema: Demografía y población">
         <div class="body">
-          <h3 class="no-anchor listing-title">Cluster Jerárquico: VarCovid</h3>
-          <div class="listing-description">Este dataset presenta un conjunto de datos de las Tasas de variación de fallecidos en 2020 respecto al año anterior. Destacar que que 2020 fue el año del COVID y 1Ola, 2Ola, 3Ola corresponden a las semanas en las que se dieron dichas olas.</div>
-          <span class="listing-tecnica"><b>Técnica estadística:</b> Cluster Jerárquico<span><br><br>
+          <h3 class="no-anchor listing-title">Series Temporales - ARIMA: navarra</h3>
+          <div class="listing-description">Datos relativos a la población de la CCAA Navarra desde 1971 hasta 2021 desagregados por sexo y con cáracter bianual.</div>
+          <span class="listing-tecnica"><b>Técnica estadística:</b> Series Temporales - ARIMA<span><br>
+          <span class="listing-tema"><b>Temas:</b> Demografía y población<span><br>
+          <span class="listing-operation"><b>Operaciones:</b> 8893&nbsp;Estadística Continua de Población (ECP)<span><br><br>
           <div class="listing-categories">
             <div class="listing-category">
-              <a href="files/VarCovid.xlsx">Fichero</a>
+              <a href="files/navarra_series.xlsx">Fichero</a>
             </div>
             <div class="listing-category">
-              <a href="notebooks/Cluster Jerarquico/VarCovid/VarCovid.html">Notebook</a>
+              <a href="notebooks/Series Temporales/ARIMA/Navarra/navarra_series.html">Notebook</a>
             </div>
             
           </div>
-        </span></span></div>
-      </div>
-    
-      <div class="quarto-post" data-index="23" data-categories="Cluster K-Means">
-        <div class="body">
-          <h3 class="no-anchor listing-title">Cluster K-Means: VarCovid</h3>
-          <div class="listing-description">Este dataset presenta un conjunto de datos de las Tasas de variación de fallecidos en 2020 respecto al año anterior. Destacar que que 2020 fue el año del COVID y 1Ola, 2Ola, 3Ola corresponden a las semanas en las que se dieron dichas olas.</div>
-          <span class="listing-tecnica"><b>Técnica estadística:</b> Cluster K-Means<span><br><br>
-          <div class="listing-categories">
-            <div class="listing-category">
-              <a href="files/VarCovid.xlsx">Fichero</a>
-            </div>
-            <div class="listing-category">
-              <a href="notebooks/Cluster K-Means/VarCovid/VarCovid.html">Notebook</a>
-            </div>
-            
-          </div>
-        </span></span></div>
-      </div>
-    
-      <div class="quarto-post" data-index="24" data-categories="Cluster Jerárquico">
-        <div class="body">
-          <h3 class="no-anchor listing-title">Cluster Jerárquico: VarCovid_provincias</h3>
-          <div class="listing-description">Datos por provincias del exceso de mortalidad durante las cinco primeras olas de COVID-19 en comparación con las personas fallecidas en el mismo periodo de los años 2017, 2018 y 2019, años previos a la pandemia, una estadística con carácter experimental.</div>
-          <span class="listing-tecnica"><b>Técnica estadística:</b> Cluster Jerárquico<span><br><br>
-          <div class="listing-categories">
-            <div class="listing-category">
-              <a href="files/VarCovid_provincias.xlsx">Fichero</a>
-            </div>
-            <div class="listing-category">
-              <a href="notebooks/Cluster Jerarquico/VarCovid_provincias/VarCovid_provincias.html">Notebook</a>
-            </div>
-            
-          </div>
-        </span></span></div>
+        </span></span></span></span></span></span></div>
       </div>
     
   </div>
