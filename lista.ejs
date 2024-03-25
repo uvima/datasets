@@ -6,7 +6,9 @@
         <div class="body">
           <h3 class="no-anchor listing-title"><%= item.title %></h3>
           <div class="listing-description"><%= item.description %></div>
-          <span class="listing-tecnica"><b>Técnica estadística:</b> <%= item['tecnica'] %><span><br/><br/>
+          <span class="listing-tecnica"><b>Técnica estadística:</b> <%= item['tecnica'] %><span><br/>
+          <span class="listing-tema"><b>Temas:</b> <%= item['tema'] %><span><br/>
+          <span class="listing-operation"><b>Operaciones:</b> <%= item['operation'] %><span><br/><br/>
           <div class="listing-categories">
             <div class="listing-category" >
               <a href="<%- item.href %>" >Fichero</a>

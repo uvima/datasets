@@ -2,12 +2,15 @@
 title: "Lista de datasets"
 listing:
   filter-ui: true
-  sort-ui: [title]
+  sort-ui: [title, tema]
+  sort: [title]
   page-size: 50
   categories: true
   field-display-names:
     tecnica: "Técnica estadística"
     notebook: Notebook
+    operation: Operación
+    tema: Tema
     title: Título
     categories: "Técnica estadística"
     
