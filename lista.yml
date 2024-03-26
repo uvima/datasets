@@ -9,17 +9,40 @@
   - 'Tema: Sociedad'
   description: Este dataset presenta un conjunto de datos sobre el salario medio anual
     de hombres y mujeres en España, relativos a años 2017/18.
-  operation: '30025 Contabilidad Regional de España (INE), 30453 Encuesta de Condiciones
-    de Vida (ECV) (INE), 30271 Tablas de Mortalidad (INE), 54009 Encuesta Nacional
-    de Salud (MSND), 30308 Encuesta de Población Activa (EPA) (INE), 30189 Encuesta
-    Anual de Estructura Salarial (INE), 30274 Encuesta Continua de Hogares (INE),
-    30458 Encuesta de Presupuestos Familiares (EPF) (INE), 30467 Estadística de Condenados:
-    Menores (INE), 54088 Encuesta Europea de Salud (INE), 30203 Explotación Estadística
-    del Directorio Central de Empresas (INE), 30320 Estadística del Empleo de las
-    Personas con Discapacidad (INE), 30450 Encuesta sobre Equipamiento y Uso de Tecnologías
-    de Información y Comunicación en los Hogares (INE), 30169 Encuesta sobre el Uso
-    de Tecnologías de la Información y las Comunicaciones y del Comercio Electrónico
-    en las Empresas (INE)'
+  operation:
+  - Encuesta de Población Activa (EPA) (INE)
+  - Encuesta Anual de Estructura Salarial (INE)
+  - Encuesta Continua de Hogares (INE)
+  - Encuesta de Presupuestos Familiares (EPF) (INE)
+  - Encuesta de Condiciones de Vida (ECV) (INE)
+  - 'Estadística de Condenados: Menores (INE)'
+  - Encuesta Europea de Salud (INE)
+  - Explotación Estadística del Directorio Central de Empresas (INE)
+  - Contabilidad Regional de España (INE)
+  - Estadística del Empleo de las Personas con Discapacidad (INE)
+  - Encuesta sobre Equipamiento y Uso de Tecnologías de Información y Comunicación
+    en los Hogares (INE)
+  - Encuesta Nacional de Salud (MSND)
+  - Encuesta sobre el Uso de Tecnologías de la Información y las Comunicaciones y
+    del Comercio Electrónico en las Empresas (INE)
+  - Tablas de Mortalidad (INE)
+  - Encuesta Nacional de Salud (MSND)
+  hoperation:
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931120732
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931120231
+  - blank
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931130921
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931119237
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931147553
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931139603
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259930989826
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259937889657
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259930978853
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931064762
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931112035
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931061252
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931152707
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931120732
   tema: Demografía y población, Nivel y condiciones de vida, Sociedad
 - title: 'Cluster K-Means: desigualdad_CCAA'
   tecnica: Cluster K-Means
@@ -32,17 +55,40 @@
   - 'Tema: Sociedad'
   description: Este dataset presenta un conjunto de datos sobre el salario medio anual
     de hombres y mujeres en España, relativos a años 2017/18.
-  operation: '30025 Contabilidad Regional de España (INE), 30453 Encuesta de Condiciones
-    de Vida (ECV) (INE), 30271 Tablas de Mortalidad (INE), 54009 Encuesta Nacional
-    de Salud (MSND), 30308 Encuesta de Población Activa (EPA) (INE), 30189 Encuesta
-    Anual de Estructura Salarial (INE), 30274 Encuesta Continua de Hogares (INE),
-    30458 Encuesta de Presupuestos Familiares (EPF) (INE), 30467 Estadística de Condenados:
-    Menores (INE), 54088 Encuesta Europea de Salud (INE), 30203 Explotación Estadística
-    del Directorio Central de Empresas (INE), 30320 Estadística del Empleo de las
-    Personas con Discapacidad (INE), 30450 Encuesta sobre Equipamiento y Uso de Tecnologías
-    de Información y Comunicación en los Hogares (INE), 30169 Encuesta sobre el Uso
-    de Tecnologías de la Información y las Comunicaciones y del Comercio Electrónico
-    en las Empresas (INE)'
+  operation:
+  - Encuesta de Población Activa (EPA) (INE)
+  - Encuesta Anual de Estructura Salarial (INE)
+  - Encuesta Continua de Hogares (INE)
+  - Encuesta de Presupuestos Familiares (EPF) (INE)
+  - Encuesta de Condiciones de Vida (ECV) (INE)
+  - 'Estadística de Condenados: Menores (INE)'
+  - Encuesta Europea de Salud (INE)
+  - Explotación Estadística del Directorio Central de Empresas (INE)
+  - Contabilidad Regional de España (INE)
+  - Estadística del Empleo de las Personas con Discapacidad (INE)
+  - Encuesta sobre Equipamiento y Uso de Tecnologías de Información y Comunicación
+    en los Hogares (INE)
+  - Encuesta Nacional de Salud (MSND)
+  - Encuesta sobre el Uso de Tecnologías de la Información y las Comunicaciones y
+    del Comercio Electrónico en las Empresas (INE)
+  - Tablas de Mortalidad (INE)
+  - Encuesta Nacional de Salud (MSND)
+  hoperation:
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931120732
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931120231
+  - blank
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931130921
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931119237
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931147553
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931139603
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259930989826
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259937889657
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259930978853
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931064762
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931112035
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931061252
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931152707
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931120732
   tema: Demografía y población, Nivel y condiciones de vida, Sociedad
 - title: 'Regresión Logística: ECV_microdatos'
   tecnica: Regresión Logística
@@ -55,9 +101,18 @@
   description: Microdatos extraidos de la  Encuesta de Condiciones de Vida (ECV) del
     año 2019. El objetivo es  estimar si la calidad de vida de una persona ha mejorado
     respecto a su infancia , de acuerdo con su año de nacimiento y su nivel de estudios.
-  operation: 30453 Encuesta de Condiciones de Vida (ECV), 30454 Encuesta de Condiciones
-    de Vida (ECV), 30455 Encuesta de Condiciones de Vida (ECV), 30456 Encuesta de
-    Condiciones de Vida (ECV), 30457 Encuesta de Condiciones de Vida (ECV)
+  operation:
+  - Encuesta de Condiciones de Vida (ECV)
+  - Encuesta de Condiciones de Vida (ECV)
+  - Encuesta de Condiciones de Vida (ECV)
+  - Encuesta de Condiciones de Vida (ECV)
+  - Encuesta de Condiciones de Vida (ECV)
+  hoperation:
+  - blank
+  - blank
+  - blank
+  - blank
+  - blank
   tema: Nivel y condiciones de vida, Experimental
   cleaning: notebooks/Logistic Regression/ECV/Dataset_cleaning.html
 - title: 'Cluster Jerárquico: ecv_cluster'
@@ -70,7 +125,8 @@
   description: Datos por Comunidades Autónomas sobre la tasa de riesgo de pobreza,
     la carencia material o la situación laboral que encontramos dentro de la Encuesta
     de Condiciones de Vida (ECV). Datos correspondientes al año 2021.
-  operation: 30453 Encuesta de Condiciones de Vida (ECV) (INE)
+  operation: [Encuesta de Condiciones de Vida (ECV) (INE)]
+  hoperation: [https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931119237]
   tema: Nivel y condiciones de vida
 - title: 'Cluster K-Means: ecv_cluster'
   tecnica: Cluster K-Means
@@ -82,7 +138,8 @@
   description: Datos por Comunidades Autónomas sobre la tasa de riesgo de pobreza,
     la carencia material o la situación laboral que encontramos dentro de la Encuesta
     de Condiciones de Vida (ECV). Datos correspondientes al año 2021.
-  operation: 30453 Encuesta de Condiciones de Vida (ECV) (INE)
+  operation: [Encuesta de Condiciones de Vida (ECV) (INE)]
+  hoperation: [https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931119237]
   tema: Nivel y condiciones de vida
 - title: 'Reducción Dimensionalidad - Análisis Factorial: ECV_factorial'
   tecnica: Reducción Dimensionalidad - Análisis Factorial
@@ -95,7 +152,8 @@
     donde se puntua el nivel de satisfacción en determinados ámbitos de la vida (laboral,
     económico, relaciones personales..). El objetivo es llevar a cabo un análisis
     factorial
-  operation: 30453 Encuesta de Condiciones de Vida (ECV) (INE)
+  operation: [Encuesta de Condiciones de Vida (ECV) (INE)]
+  hoperation: [https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931119237]
   tema: Nivel y condiciones de vida
   cleaning: notebooks/Reduccion Dimension/Analisis Factorial/ECV_factorial/Dataset_cleaning.html
 - title: 'Reducción Dimensionalidad - PCA: IMCV_pca'
@@ -110,7 +168,8 @@
     a la calidad de vida que componen el Índice Multidimensional de Calidad de Vida
     (IMCV), una estadística con carácter experimental. Datos correspondientes al año
     2020.
-  operation: 'Estadística experimental '
+  operation: [Estadística experimental]
+  hoperation: [blank]
   tema: Nivel y condiciones de vida, Experimental
 - title: 'Regresión Lineal: IMCV_reg'
   tecnica: Regresión Lineal
@@ -124,7 +183,8 @@
     a la calidad de vida que componen el Índice Multidimensional de Calidad de Vida
     (IMCV), una estadística con carácter experimental. Datos correspondientes al año
     2020.
-  operation: 'Estadística experimental '
+  operation: [Estadística experimental]
+  hoperation: [blank]
   tema: Nivel y condiciones de vida, Experimental
 - title: 'Series Temporales - ARIMA: ipc_series'
   tecnica: Series Temporales - ARIMA
@@ -135,7 +195,8 @@
   - 'Tema: Economía'
   description: Datos relativos a la serie del IPC mensual en españa desde 2002 hasta
     2022.
-  operation: 30138  Índice de Precios de Consumo (IPC)
+  operation: [Índice de Precios de Consumo (IPC)]
+  hoperation: [https://www.ine.es/dyngs/IOE/es/operacion.htm?numinv=30138]
   tema: Economía
 - title: 'Análisis Discriminante: laboral'
   tecnica: Análisis Discriminante
@@ -148,7 +209,8 @@
     en 2018. Salario bruto, Edad y Antigüedad en el trabajo y días de vacaciones al
     año del encuestado con el fin de clasificar los estudios (o bien tienen pocos
     estudios o bien muchos) de una persona en función de las anteriores variables.
-  operation: 30189 + Encuesta Anual de Estructura Salarial
+  operation: [Encuesta Anual de Estructura Salarial]
+  hoperation: [blank]
   tema: Mercado laboral
   cleaning: notebooks/Analisis Discriminante/Lineal_y_Cuadratico/laboral/Dataset_cleaning.html
 - title: 'Regresión Logística: laboral'
@@ -162,7 +224,8 @@
     en 2018. Salario bruto, Edad y Antigüedad en el trabajo y días de vacaciones al
     año del encuestado con el fin de clasificar los estudios (o bien tienen pocos
     estudios o bien muchos) de una persona en función de las anteriores variables.
-  operation: 30189 + Encuesta Anual de Estructura Salarial
+  operation: [Encuesta Anual de Estructura Salarial]
+  hoperation: [blank]
   tema: Mercado laboral
   cleaning: notebooks/Logistic Regression/laboral/Dataset_cleaning.html
 - title: 'Series Temporales - ARIMA: madrid_series'
@@ -174,7 +237,8 @@
   - 'Tema: Demografía y población'
   description: Datos relativos a la población de la CCAA de Madrid desde 1971 hasta
     2021 desagregados por sexo y con cáracter bianual.
-  operation: 8893 Estadística Continua de Población (ECP)
+  operation: [Estadística Continua de Población (ECP)]
+  hoperation: [https://www.ine.es/dyngs/IOE/es/fichaProg.htm?cid=1259946013552]
   tema: Demografía y población
 - title: 'Reducción Dimensionalidad - PCA: MercadoHipotecas'
   tecnica: Reducción Dimensionalidad - PCA
@@ -192,10 +256,22 @@
     los índices de precio de vivienda y otras variables económicas y sociodemográficas.
     \nOrientado a escalamiento multidimensional, técnicas de clusterización y análisis
     de componentes principales."
-  operation: 30149 Estadística de Hipotecas, 30457 Índice de Precios de la Vivienda
-    (IPV), 30308 Encuesta de Población Activa (EPA)., 30264 Indicadores Demográficos
-    Básicos, Censos de Población y Viviendas 2021 - INE, 30271 Tablas de mortalidad
-    , 30168 Estadística de Transmisiones de Derechos de la Propiedad
+  operation:
+  - Censos de Población y Viviendas 2021  INE
+  - Indicadores Demográficos Básicos
+  - Tablas de mortalidad
+  - Encuesta de Población Activa (EPA).
+  - Estadística de Transmisiones de Derechos de la Propiedad
+  - Estadística de Hipotecas
+  - Índice de Precios de la Vivienda (IPV)
+  hoperation:
+  - blank
+  - blank
+  - blank
+  - blank
+  - blank
+  - blank
+  - blank
   tema: Demografía y población, Economía, Mercado laboral, Experimental
 - title: 'Series Temporales - ARIMA: navarra'
   tecnica: Series Temporales - ARIMA
@@ -206,7 +282,8 @@
   - 'Tema: Demografía y población'
   description: Datos relativos a la población de la CCAA Navarra desde 1971 hasta
     2021 desagregados por sexo y con cáracter bianual.
-  operation: 8893 Estadística Continua de Población (ECP)
+  operation: [Estadística Continua de Población (ECP)]
+  hoperation: [https://www.ine.es/dyngs/IOE/es/fichaProg.htm?cid=1259946013552]
   tema: Demografía y población
 - title: 'Regresión Logística: ECV_microdatos'
   tecnica: Regresión Logística
@@ -219,7 +296,8 @@
   description: Datos relativos a partos en 2022 en la Comunidad Autónoma de Navarra.
     El objetivo es clasificarlos partos en si hubo o no una cesárea en función de
     la edad de la madre, las complicaciones en el parto y las semanas de gestación.
-  operation: 30304 Estadística de nacimientos. Movimiento natural de la población
+  operation: [Estadística de nacimientos. Movimiento natural de la población]
+  hoperation: [blank]
   tema: Demografía y población, Experimental
   cleaning: notebooks/Logistic Regression/Partos/Dataset_cleaning.html
 - title: 'Reducción Dimensionalidad - Análisis Factorial: pisa_factorial'
@@ -233,7 +311,8 @@
     PISA  que trata de medir la existencia de variables socioeconómicas, metacognitivas,
     motivacionales e, incluso, emocionales, que pueden tener impacto sobre el rendimiento
     académico. El objetivo es llevar a cabo un análisis factorial.
-  operation: Ministerio Educación
+  operation: [Ministerio Educación]
+  hoperation: [https://www.educacionyfp.gob.es/inee/evaluaciones-internacionales/pisa.html]
   tema: Nivel y condiciones de vida
   cleaning: notebooks/Reduccion Dimension/Analisis Factorial/pisa_factorial/Dataset_cleaning.html
 - title: 'Reducción Dimensionalidad - PCA: provincias_variado'
@@ -253,12 +332,27 @@
     empresas por sector, PIB per cápita y datos demográficos. \nEste conjunto de variables
     puede ser útil para aplicar técnicas de reducir la dimensionalidad y entender
     las relaciones entre las diferentes variables."
-  operation: 30042 Censo Agrario, 58021 Estadística de prestaciones por desempleo.
-    (Ministerio de Trabajo y Economía Social), 58007 Estadística de apoyo a la creación
-    de empleo.(Ministerio de Trabajo y Economía Social), 30308 Encuesta de Población
-    Activa, 30153 Estadística sobre Ejecuciones Hipotecarias. (INE), 30203 Explotación
-    Estadística del Directorio Central de Empresas, 30025 Contabilidad Regional de
-    España, 30277 Estadística de migraciones, 30260 Estadística del Padrón Continuo
+  operation:
+  - Encuesta de Población Activa
+  - Estadística sobre Ejecuciones Hipotecarias. (INE)
+  - Explotación Estadística del Directorio Central de Empresas
+  - Contabilidad Regional de España
+  - Estadística de migraciones
+  - Estadística del Padrón Continuo
+  - Censo Agrario
+  - Estadística de prestaciones por desempleo. (Ministerio de Trabajo y Economía Social)
+  - Estadística de apoyo a la creación de empleo.(Ministerio de Trabajo y Economía
+    Social)
+  hoperation:
+  - https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736176918&menu=resultados&secc=1254736195128&idp=1254735976595
+  - https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736176993&menu=resultados&idp=1254735576757
+  - https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736160707&menu=ultiDatos&idp=1254735576550
+  - https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736167628&menu=resultados&idp=1254735576581
+  - https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177000&menu=resultados&idp=1254735573002
+  - https://www.ine.es/dynt3/inebase/es/index.htm?type=pcaxis&path=/t20/e245/p08/&file=pcaxis&dh=0&capsel=1
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?numinv=30042
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?numinv=58021
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?numinv=58007
   tema: Agricultura y medio ambiente, Demografía y población, Mercado laboral, Nivel
     y condiciones de vida, Experimental
 - title: 'Análisis Discriminante: salud'
@@ -271,7 +365,8 @@
   description: Microdatos relativos a la encuesta de Salud a personas en 2017. Altura,
     Peso y Edad del encuestado con el fin de clasificar el sexo de una persona en
     función de las anteriores variables.
-  operation: 54009 - Encuesta Nacional de Salud (ENSE)
+  operation: [Encuesta Nacional de Salud (ENSE)]
+  hoperation: [blank]
   tema: Sociedad
   cleaning: notebooks/Analisis Discriminante/Lineal_y_Cuadratico/salud/Dataset_cleaning.html
 - title: 'Regresión Logística: salud'
@@ -284,7 +379,8 @@
   description: Microdatos relativos a la encuesta de Salud a personas en 2017. Altura,
     Peso y Edad del encuestado con el fin de clasificar el sexo de una persona en
     función de las anteriores variables.
-  operation: 54009 - Encuesta Nacional de Salud (ENSE)
+  operation: [Encuesta Nacional de Salud (ENSE)]
+  hoperation: [blank]
   tema: Sociedad
   cleaning: notebooks/Logistic Regression/salud/Dataset_cleaning.html
 - title: 'Regresión Lineal: salud_reg'
@@ -297,7 +393,8 @@
   description: Microdatos relativos a la encuesta de Salud a personas en 2017. Altura,
     Peso, Edad Sexo e IMC del encuestado con el fin de hacer una regresión del Peso
     en función del resto de variables y explicar por qué es interesante este estudio.
-  operation: 54009 - Encuesta Nacional de Salud (ENSE)
+  operation: [Encuesta Nacional de Salud (ENSE)]
+  hoperation: [blank]
   tema: Sociedad
   cleaning: notebooks/Linear Regression/salud_reg/Dataset_cleaning.html
 - title: 'Reducción Dimensionalidad - PCA: Situacion_sanitaria'
@@ -313,8 +410,14 @@
     de envejecimiento, tasas de profesionales de la salud (médicos y enfermeros) por
     cada 100,000 habitantes, el porcentaje de inaccesibilidad a medicamentos recetados
     por razones económicas y la tasa media de morbilidad hospitalaria debido a enfermedades.
-  operation: 30264 Indicadores demográficos básicos, 30416 Estadística de profesionales
-    sanitarios colegiados, 54088 Encuesta europea de salud en España
+  operation:
+  - Indicadores demográficos básicos
+  - Estadística de profesionales sanitarios colegiados
+  - Encuesta europea de salud en España
+  hoperation:
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?numinv=30264
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?numinv=30416
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?numinv=54088
   tema: Nivel y condiciones de vida, Experimental
 - title: 'Regresión Lineal: Sucidios'
   tecnica: Regresión Lineal
@@ -331,17 +434,39 @@
   description: Este dataset presenta la tasa de suicidios que ocurre en España con
     distintas variables demográficas y económicas que pueden llegar a influir o no,  por
     Comunidades Autónomas.
-  operation: '30308 Encuesta de Población Activa (EPA), 30417 Estadística de Defunciones
-    según la Causa de Muerte, 30219Estadística del Procedimiento Concursal, 8701 (Ficha
-    plan) Estadística sobre Actividades en I+D, 30458 Encuesta de Presupuestos Familiares
-    (EPF),  30066 Estadísticas sobre las Actividades de Protección Medioambiental,
-     30245 Cifras Oficiales de Población de los Municipios Españoles: Revisión del
-    Padrón Municipal, 30138 Índice de Precios de Consumo, 30467 Estadística de Condenados:
-    Menores (INE), 30025 Contabilidad Regional de España, 8113 Estadísticas sobre
-    Recogida y Tratamiento de Residuos,  30151 Estadística de Sociedades Mercantiles,
-    8740 Estadística de Defunciones según la Causa de Muerte, 16028 Estadística de
-    Movimientos Turísticos en Frontera (FRONTUR),  30468 Estadística de Violencia
-    Doméstica y Violencia de Género'
+  operation:
+  - 'Cifras Oficiales de Población de los Municipios Españoles: Revisión del Padrón
+    Municipal'
+  - Encuesta de Población Activa (EPA)
+  - Índice de Precios de Consumo
+  - 'Estadística de Condenados: Menores (INE)'
+  - Contabilidad Regional de España
+  - Estadísticas sobre Recogida y Tratamiento de Residuos
+  - Estadística de Sociedades Mercantiles
+  - Estadística de Defunciones según la Causa de Muerte
+  - Estadística de Movimientos Turísticos en Frontera (FRONTUR)
+  - Estadística de Violencia Doméstica y Violencia de Género
+  - Estadística de Defunciones según la Causa de Muerte
+  - Estadística del Procedimiento Concursal
+  - (Ficha plan) Estadística sobre Actividades en ID
+  - Encuesta de Presupuestos Familiares (EPF)
+  - Estadísticas sobre las Actividades de Protección Medioambiental
+  hoperation:
+  - https://www.ine.es/dyngs/IOE/es/fichaProg.htm?cid=1259946011386
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931120732
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931062915
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931147553
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259937889657
+  - https://www.ine.es/dyngs/IOE/es/fichaPlan.htm?cid=1259946127157
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931118899
+  - https://www.ine.es/dyngs/IOE/es/fichaPlan.htm?cid=1259946127417
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931087472
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931147724
+  - https://www.ine.es/dyngs/IOE/es/fichaPlan.htm?cid=1259946127417
+  - https://www.ine.es/dyngs/IOE/es/fichaPlan.htm?cid=1259946127222
+  - https://www.ine.es/dyngs/IOE/es/fichaProg.htm?cid=1259946011315
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931130921
+  - https://www.ine.es/dyngs/IOE/es/fichaPlan.htm?cid=1259946127294
   tema: Demografía y población, Economía, Mercado laboral, Servicios, Nivel y condiciones
     de vida, Sociedad
 - title: 'Cluster Jerárquico: VarCovid'
@@ -356,7 +481,8 @@
     de fallecidos en 2020 respecto al año anterior. Destacar que que 2020 fue el año
     del COVID y 1Ola, 2Ola, 3Ola corresponden a las semanas en las que se dieron dichas
     olas.
-  operation: 30324 Estimación de Defunciones Semanales
+  operation: [Estimación de Defunciones Semanales]
+  hoperation: [blank]
   tema: Demografía y población, Sociedad
 - title: 'Cluster K-Means: VarCovid'
   tecnica: Cluster K-Means
@@ -370,7 +496,8 @@
     de fallecidos en 2020 respecto al año anterior. Destacar que que 2020 fue el año
     del COVID y 1Ola, 2Ola, 3Ola corresponden a las semanas en las que se dieron dichas
     olas.
-  operation: 30324 Estimación de Defunciones Semanales
+  operation: [Estimación de Defunciones Semanales]
+  hoperation: [blank]
   tema: Demografía y población, Sociedad
 - title: 'Cluster Jerárquico: VarCovid_provincias'
   tecnica: Cluster Jerárquico
@@ -384,6 +511,7 @@
     olas de COVID-19 en comparación con las personas fallecidas en el mismo periodo
     de los años 2017, 2018 y 2019, años previos a la pandemia, una estadística con
     carácter experimental.
-  operation: Experimental
+  operation: [Experimental]
+  hoperation: [blank]
   tema: Demografía y población, Experimental
 
