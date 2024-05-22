@@ -63,7 +63,7 @@ Ahora cargamos los datos del excel correspondientes a la pestaña *"Datos"* y ve
 
 ```{r}
 #| label: cargar_datos
-datos <- read_excel("../../../files/desigualdad_CCAA.xlsx", sheet = "Datos")
+datos <- read_excel("../../../files/desigualdad_ccaa.xlsx", sheet = "Datos")
 ```
 
 ```{r}
