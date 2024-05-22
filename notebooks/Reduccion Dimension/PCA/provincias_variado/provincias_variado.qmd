@@ -13,7 +13,12 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = "center", warning = FALSE, messag
 # message = FALSE para que no muestre mensajes automáticos cuando carga paquetes y demás en el output
 ```
 
+
 # Introducción
+
+A continuación se expondrá como llevar a cabo una Reducción de Dimensionalidad utilizando el método de Componentes Principales. Para ello se utilizará un dataset sobre el que se irán explicando los sucesivos pasos a llevar a cabo.
+
+
 
 ## dataset
 
@@ -43,45 +48,15 @@ Concretamente en este dataset tenemos las siguientes variables:
   - **inmi**:	Personas nacidas fuera de España y nacionalidad distinta a la española que inmigran instalándose en la provincia.
   - **pobl**:	Población total independientemente de la nacionalidad.
   - **espa**:	Población de nacionalidad española.
-  - **d_mi**:gr	Provincia de alta recepción de inmigración.
-  - **d_pr**:od	Provincia con un PIB per cápita superior al del conjunto del Estado.
-  - **d_co**:ns	Provincia con alta dedicación a la construcción.
-  - **m_ie**:ag	Intensividad de explotación agrícola.
+  - **d_migr**:	Provincia de alta recepción de inmigración.
+  - **d_prod**:	Provincia con un PIB per cápita superior al del conjunto del Estado.
+  - **d_cons**:	Provincia con alta dedicación a la construcción.
+  - **m_ieag**:	Intensividad de explotación agrícola.
 
-
-
-
-
-Si tomamos demasiadas variables es difícil visualizar relaciones entre
-ellas. Otro problema que se presenta es la fuerte correlación. Se hace
-necesario, pues, reducir el número de variables sin perder información.
-Es importante resaltar el hecho de que el concepto de mayor información
-se relaciona con el de mayor variabilidad o varianza.
-
-```{r}
-#| label: librerias
-#| message: false
-#| warning: false
-# Librerias
-library(readxl) # Para leer los excels
-library(dplyr) # Para tratamiento de dataframes
-library(ggplot2) # Nice plots
-library(factoextra) # fviz_cluster function
-library(skimr) # Para funcion skim
-library(ggcorrplot) # Para funcion ggcorrplot
-library(corrplot) # Para corrplot
-```
-
-Cargamos entonces el conjunto de datos:
-
-```{r}
-#| label: cargar_datos
-datos <- read_excel("../../../../files/provincias_variado.xlsx", sheet = "Datos")
-```
 
 ## Descripción del trabajo a realizar
 
-**(Esto irá en la web de explica)** Se pretende hacer un Análisis de
+Se pretende hacer un Análisis de
 Reducción de la Dimensionalidad empleando el procedimiento de
 Componentes Principales. El objetivo es conocer que variables
 independientes son de interés para estudiar las variables socioeconómicas de las provincias y ver cuáles son las más parecidas y las más diferentes.
@@ -93,18 +68,61 @@ independientes son de interés para estudiar las variables socioeconómicas de l
     las variables en estas.
 -   Interpretar componentes y resultados.
 
-# Análisis Exploratorio (EDA[^1])
 
-[^1]: EDA viene del Inglés *Exploratory Data Analysis* y son los pasos
-    relativos en los que se exploran las variables para tener una idea
-    de que forma toma el dataset.
+Si tomamos demasiadas variables es difícil visualizar relaciones entre
+ellas. Otro problema que se presenta es la fuerte correlación. Se hace
+necesario, pues, reducir el número de variables sin perder información.
+Es importante resaltar el hecho de que el concepto de mayor información
+se relaciona con el de mayor variabilidad o varianza.
+
+
+
+
+
+
+# Análisis Exploratorio (EDA)
+
+
+
+EDA viene del Inglés *Exploratory Data Analysis* y son los pasos relativos en los que se exploran las variables para tener una idea de que forma toma el dataset.
+
+
+
+## Cargar Librerías
+Lo primero de todo vamos a cargar las librerías necesarias para ejecutar el resto del código del trabajo:
+
+```{r}
+#| label: librerias
+#| message: false
+#| warning: false
+# Librerías
+library(readxl) # Para leer los excels
+library(dplyr) # Para tratamiento de dataframes
+library(ggplot2) # Nice plots
+library(factoextra) # fviz_cluster function
+library(ggcorrplot) # Para funcion ggcorrplot
+library(corrplot) # Para corrplot
+```
+
+## Lectura datos
+
+Ahora cargamos los datos del excel correspondientes a la pestaña *"Datos"* y vemos si hay algún NA o algún valor igual a 0 en nuestro dataset. Vemos que no han ningún NA (missing value) en el dataset luego no será necesario realizar ninguna técnica para imputar los missing values o borrar observaciones.
+
+Cargamos entonces el conjunto de datos:
+
+```{r}
+#| label: cargar_datos
+datos <- read_excel("../../../../files/provincias_variado.xlsx", sheet = "Datos")
+```
+
+
 
 En primer lugar, cargamos los datos que vamos a utilizar. En este caso,
 se trata de un conjunto de datos compuesto por 52 filas y 23 columnas.
-Las filas corresponden a las 52 provincias de España.
+Las filas corresponden a las 50 provincias de España, más Ceuta y Melilla.
 
 Antes de comenzar a aplicar la técnica, comprobamos si hay valores
-perdidos, por si fuera necesario realizar algún preproceso. En este
+faltantes, por si fuera necesario realizar algún preproceso. En este
 caso, y como vemos a continuación, no hay ningún NA en los datos que
 vamos a utilizar.
 
@@ -124,22 +142,21 @@ dim(datos)
 str(datos)
 
 # Descripción de las variables
-skim(datos)
+summary(datos)
 ```
 
-Vemos que hay alguna provincia como Ceuta y Melilla con datos faltantes, luego los eliminamos y posteriormente convertimos a variable numérica las que han sido consideradas como caracter(debido a los fallos para Ceuta y Melilla) y deberían ser variables numéricas.
+Vemos que hay alguna observación como Ceuta y Melilla con datos faltantes, luego los eliminamos y posteriormente convertimos a variable numérica las que han sido consideradas como carácter(debido a los fallos para Ceuta y Melilla) y deberían ser variables numéricas.
 
 ```{r}
 # Ceuta y Melilla tienen datos faltantes luego eliminamos observaciones
-datos <-datos[ datos$prov != "Ceuta" ,]
-datos <-datos[ datos$prov != "Melilla" ,]
+datos <- datos[datos$prov != "Ceuta", ]
+datos <- datos[datos$prov != "Melilla", ]
 
 # Convertimos a variables numéricas
 datos$acem <- as.numeric(datos$acem)
 datos$neag <- as.numeric(datos$neag)
 datos$sagt <- as.numeric(datos$sagt)
 datos$sagu <- as.numeric(datos$sagu)
-
 ```
 
 
@@ -166,7 +183,7 @@ del 100%. En términos absolutos, vemos lo siguiente:
 - Además, las variables *inmi*, *pobl*, *espa* que hablan sobre población se encuentran correlacionadas con las variables socioeconómicas citadas antes.
 
 
-En general es un dataset que presenta variables con bastante correlación luego esto, probablemente, nos permitirá reducir bastante el numéro de variables finales.
+En general es un dataset que presenta variables con bastante correlación luego esto, probablemente, nos permitirá reducir bastante el numero de variables finales.
 
 # Reducción Dimensionalidad: Componentes Principales
 
@@ -376,7 +393,7 @@ existen varios criterios con sus respectivas propuestas.
     aquellas componentes cuyo autovalor sea superior a 1 (cuando las
     variables han sido generadas a partir de la matriz de
     correlaciones). Según este criterio y mirando el gráfico anterior de
-    la varianza (igual a eigenvalues), eligiríamos las 4 primeras
+    la varianza (igual a eigenvalues), elegiríamos las 4 primeras
     componentes.
 
 3.  Para relajar el criterio de Kaisser, existe la **modificación de Jollife**, que elige aquellas componentes cuyo autovalor sea
@@ -396,10 +413,10 @@ cuáles son los valores más altos (en valor absoluto), para así poder dar
 una interpretación a cada eje.
 
 ```{r}
-pca$rotation[, 1:4]
+pca$rotation[, 1:3]
 
 corr_var <- pca$rotation %*% diag(pca$sdev)
-colnames(corr_var) <- c("PC1", "PC2", "PC3", "PC4", "PC5", "PC6", "PC7","PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14", "PC15", "PC16", "PC17", "PC18", "PC19", "PC20", "PC21", "PC22")
+colnames(corr_var) <- c("PC1", "PC2", "PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14", "PC15", "PC16", "PC17", "PC18", "PC19", "PC20", "PC21", "PC22")
 corrplot(corr_var)
 ```
 
@@ -411,7 +428,7 @@ a cada eje. Por ejemplo:
     relativos a las variables socio-demográficas que hemos comentado antes, y son los que esencialmente está capturando la Componente 1.
 Teniendo en cuenta los signos podemos concluir que todas ellas influyen negativamente en la componente 1 ya que la correlación es negativa.
 
--   La **segunda componente** explica un 16.9% de variación adicional, los pesos más elevados corresponden con las variables *pibpc* e *ibipc* y puesto que tienen signo positivo, estás están correlacionadas positivamente con la Componente 2. Vemos que esta componente describe principalmente esas dos variables, que hablan del comportamiento economico del país.
+-   La **segunda componente** explica un 16.9% de variación adicional, los pesos más elevados corresponden con las variables *pibpc* e *ibipc* y puesto que tienen signo positivo, estás están correlacionadas positivamente con la Componente 2. Vemos que esta componente describe principalmente esas dos variables, que hablan del comportamiento económico del país.
 
 
 
@@ -454,7 +471,7 @@ fviz_pca_var(pca, axes = c(1, 2), col.var = "cos2", gradient.cols = c("#00AFBB",
 fviz_pca_var(pca, axes = c(1, 3), col.var = "cos2", gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), repel = TRUE)
 ```
 
-  - Si nos fijamos en el eje de abscisas, todas variables que hemos visto correlacionadas con la componente 1 de manera alta se situan con menor ángulo respecto a él, indicando que han contribuído a la formación de la PC1. Además hay muy poco ángulo entre ellas puesto que se encuentran altamente correlacionadas entre sí. 
+  - Si nos fijamos en el eje de abscisas, todas variables que hemos visto correlacionadas con la componente 1 de manera alta se situan con menor ángulo respecto a él, indicando que han contribuido a la formación de la PC1. Además hay muy poco ángulo entre ellas puesto que se encuentran altamente correlacionadas entre sí. 
   
   
   - En cuanto al eje de ordenadas, vemos que las variables que forman un menor ángulo respecto a él, son las que más contribuían a la formación de la PC2, tanto de forma positiva como negativa.
@@ -482,7 +499,7 @@ variables con las componentes principales, como ya hemos comentado.
 
 ```{r}
 corr_var <- pca$rotation %*% diag(pca$sdev)
-colnames(corr_var) <- c("PC1", "PC2", "PC3", "PC4", "PC5", "PC6", "PC7","PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14", "PC15", "PC16", "PC17", "PC18", "PC19", "PC20", "PC21", "PC22")
+colnames(corr_var) <- c("PC1", "PC2", "PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "PC13", "PC14", "PC15", "PC16", "PC17", "PC18", "PC19", "PC20", "PC21", "PC22")
 corrplot(corr_var)
 ```
 
@@ -509,16 +526,16 @@ fviz_pca_ind(pca, col.ind = "cos2", gradient.cols = c("#00AFBB", "#E7B800", "#FC
 ```
 
 
-Las provinicias que se encuentren cerca indican similutd para las componentes que se están representando en el gráfico.
+Las provincias que se encuentren cerca indican similitud para las componentes que se están representando en el gráfico.
 
 
 
 
 
 
-# Conclusiones
+# Conclusión
 
-El objetivo de este estudio era, partiendo de un conjunto de datos demográfico-económicos sobre la población en provincias en españa, extraer en qué situación se encuentra cada provincia y así identificar cuáles son las provincias con un perfil más parecido entre sí.
+El objetivo de este estudio era, partiendo de un conjunto de datos demográfico-económicos sobre la población en provincias en España, extraer en qué situación se encuentra cada provincia y así identificar cuáles son las provincias con un perfil más parecido entre sí.
 
 Tras haber aplicado la técnica de PCA, hemos concluido que:
 
@@ -526,8 +543,21 @@ Tras haber aplicado la técnica de PCA, hemos concluido que:
     relativos a las variables socio-demográficas que hemos comentado antes.
 Teniendo en cuenta los signos podemos concluir que todas ellas influyen negativamente en la componente 1 ya que la correlación es negativa.
 
--   La **segunda componente** resume para cada provincia los datos que corresponden con las variables *pibpc* e *ibipc* , que hablan del comportamiento economico del país.
+-   La **segunda componente** resume para cada provincia los datos que corresponden con las variables *pibpc* e *ibipc* , que hablan del comportamiento económico del país.
 
 
 
 -   La **tercera componente**resume para cada provincia los datos que corresponden con las variables *sagt* e *sagu* (correlacionada positivamente) y que describe principalmente las características agrícolas del país.
+
+
+
+
+
+
+
+
+# Bibliografía
+
+  - <https://rpubs.com/Joaquin_AR/287787>
+  - <http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/118-principal-component-analysis-in-r-prcomp-vs-princomp/>
+  - <https://www.datacamp.com/es/tutorial/pca-analysis-r>

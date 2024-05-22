@@ -5,20 +5,22 @@ title: 'Regresión Lineal: Sucidios'
 ```{r}
 #| label: setup
 #| include: false
-knitr::opts_chunk$set(echo = TRUE,fig.align='center',warning=FALSE,message=FALSE)
+knitr::opts_chunk$set(echo = TRUE, fig.align = "center", warning = FALSE, message = FALSE)
 
 
 # fig.align= 'center para que nos centre todas figuras que se muestran
 # warning = FALSE para que no muestre mensajes de warning
 # message = FALSE para que no muestre mensajes automáticos cuando carga paquetes y demás en el output
-
 ```
 
 # Introducción
 
+En este notebook se expondrá como llevar a cabo una Regresión Lineal a partir de un conjunto de datos, explicando las hipótesis que se deben satisfacer y un posterior análisis de bondad del modelo. Por último se explicará como utilizar el modelo creado para predecir nuevas observaciones.
+
+
 ## dataset
 
-En el siguiente dataset presenta la **tasa de suicidios que ocurre en España con distintas variables demográficas y económicas que pueden llegar a influir o no**,  por Comunidades Autónomas.Concretamente tenemos las siguietnes variables:
+En el siguiente dataset presenta la **tasa de suicidios que ocurre en España con distintas variables demográficas y económicas que pueden llegar a influir o no**,  por Comunidades Autónomas.Concretamente tenemos las siguientes variables:
 
 
 
@@ -54,18 +56,24 @@ En el siguiente dataset presenta la **tasa de suicidios que ocurre en España co
  -   **suic** : Indicador sobre las condiciones materiales de vida.
  -   **habitantes** : Indicador sobre el trabajo.
  -   **deu_nec** : Indicador sobre la salud.
- -   **ipc** : Indicador sobre la eduación.
- -   **defpc** : Indicador sobre el ocio y relaciones sociales.\
- -   **gastoprotecpc** : Indicador sobre la seguridad física y personal.\
- -   **pibpc** : Indicador sobre la gobernanza y los derechos básicos.\
+ -   **ipc** : Indicador sobre la educación.
+ -   **defpc** : Indicador sobre el ocio y relaciones sociales.
+ -   **gastoprotecpc** : Indicador sobre la seguridad física y personal.
+ -   **pibpc** : Indicador sobre la gobernanza y los derechos básicos.
  -   **paropc** : Indicador sobre el entorno y el medioambiente.
  -   **CCAA**: Comunidades Autónomas.
 
 En este caso de uso, vamos a intentar explicar qué variables $(x1,x2,...,xk) $ pueden afectar al número de suicidios $(y)$  que ocurren en España.
 
+Los datos relativos a este estudio corresponden a una serie de estadísticas relacionadas con el suicidio y la población  como pueden ser la [Estadística de Defunciones según la Causa de Muerte](https://www.ine.es/dyngs/IOE/es/fichaPlan.htm?cid=1259946127417) o la [Encuesta de Población Activa (EPA)](https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931120732). Aunque el dataset presente muchas variables, sólo se usaran las relativas a términos per cápita puesto que las demás tienen una correlación bastante alta y esto puede causar problemas.
+
+**Nota**: Notar que en este dataset no se tiene la variable **dim9** ya
+que en ese caso el ajuste de la regresión sería prefecto puesto que la
+variable **índice_total** es la media aritmética de las 9 dimensiones.
+
 ## Descripción del trabajo a realizar
 
-**(Esto irá en la web de explica)** Se pretende hacer una regresión ineal que explique el número de suicpc en función del resto de variables que sean pertinentes.
+Se pretende hacer una regresión lineal que explique el número de *suicpc* en función del resto de variables que sean pertinentes.
 
   - Hacer un análisis exploratorio. Ver que las variables que no son per cápita tienen una correlación muy altas y por tanto, no considerarlas.
   - Plantear las hipótesis de una regresión. 
@@ -74,101 +82,99 @@ En este caso de uso, vamos a intentar explicar qué variables $(x1,x2,...,xk) $ 
   - Selección de variables.
   - Hacer una conclusión.
 
-## Técncnica Estadística
-
-El objetivo es realizar una regresión lineal múltiple para predecir los suicidios en función de las demás variables.
-
-
-# Análisis Exploratorio (EDA[^1])
-
-[^1]: EDA viene del Inglés *Exploratory Data Analysis* y son los pasos
-    relativos en los que se exploran las variables para tener una idea
-    de que forma toma el dataset.
 
 
 
-Lo primero de todo vamos a cargar las librearias necesarias para ejecutar el resto del código del trabajo:
+# Análisis Exploratorio (EDA)
 
+ EDA viene del Inglés *Exploratory Data Analysis* y son los pasos relativos en los que se exploran las variables para tener una idea de que forma toma el dataset.
+
+## Cargar Librerías
+Lo primero de todo vamos a cargar las librerías necesarias para ejecutar el resto del código del trabajo:
 
 ```{r }
 #| label: librerias
-library(readxl)  # Para leer los excels
+library(readxl) # Para leer los excels
 library(kableExtra) # Para dar formato a las tablas html
 library(knitr)
-library(gridExtra)  # Para cargar bien las tab
-library(car)   # for bonfferroni test
-
+library(gridExtra) # Para cargar bien las tab
+library(car) # for bonfferroni test
+library(reshape2) # Para manejar los datos
+library(dplyr) # Para manejar los datos
+library(ggplot2)
+library(lmtest) # Test Homocedasticidad
+library(corrplot) # Para el gráfico de correlaciones
 ```
 Ahora leemos los datos del excel correspondientes a la pestaña *"Datos"* y vemos si hay algún NA en nuestro dataset. Vemos que no han ningún NA (missing value) en el dataset luego no será necesario realizar ninguna técnica para imputar los missing values o borrar observaciones.
 
 
+
+## Lectura datos
+
+Ahora cargamos los datos del excel correspondientes a la pestaña *"Datos"* y vemos si hay algún NA o algún valor igual a 0 en nuestro dataset. Vemos que no han ningún NA (missing value) en el dataset luego no será necesario realizar ninguna técnica para imputar los missing values o borrar observaciones.
+
 ```{r}
 #| label: datos
-suicidios <- read_excel("../../../files/suicidios2019CCAA.xlsx",sheet = "Datos")
+suicidios <- read_excel("../../../files/suicidios2019CCAA.xlsx", sheet = "Datos")
 ```
 
 
 ```{r}
-anyNA(suicidios)    #Any missing data 
+anyNA(suicidios) # Any missing data
 ```
 
+## Análisis
 
-
-Realizando un **resumen numérico** vemos que todas las dimensiones toman valores en torno a $[90,110]$. Recordar que estas representan índices. Para ninguna de ellas parece haber valores atípicos en relación a los demas luego no parece necesario hacer ningún tipo de ajuste a los datos. Además las medias y medianas son muy parecidas. Junto con los **histogramas y los boxplots** se podría concluir que no parece haber ningún dato atípico/outlier y tampoco parece haber mucha asímetria, hecho que se puede ver en los histogramas y en los boxplots (mirando las distancias entre máximo/tercer cuartil y mínimo/1er cuartil son parecidas).
 
 ```{r}
 #| echo: false
-mmary_stats <- function(data) {
-  # Inicializa un dataframe vacío para almacenar los resultados
-  result <- data.frame()
+summary_stats <- function(data) {
+  # Filtra solo las columnas numéricas del dataframe
+  num_data <- data[, sapply(data, is.numeric)]
 
-  # Itera sobre cada columna del dataframe
-  for (col in colnames(data)) {
-    if (is.numeric(data[[col]])) {
-      # Si la columna es numérica, calcula las estadísticas descriptivas
-      stats <- c(
-        column = col,
-        Min = format(round(min(data[[col]], na.rm = TRUE)), nsmall = 1),
-        Q1 = format(round(quantile(data[[col]], 0.25, na.rm = TRUE)), nsmall = 1),
-        Mean = format(round(mean(data[[col]], na.rm = TRUE)), nsmall = 1),
-        Median = format(round(median(data[[col]], na.rm = TRUE)), nsmall = 1),
-        Q3 =format(round( quantile(data[[col]], 0.75, na.rm = TRUE)), nsmall = 1),
-        Max = format(round(max(data[[col]], na.rm = TRUE)), nsmall = 1))
+  # Calcula las estadísticas descriptivas para cada columna
+  stats <- sapply(num_data, function(col) {
+    c(
+      Min = format(round(min(col, na.rm = TRUE)), nsmall = 1),
+      Q1 = format(round(quantile(col, 0.25, na.rm = TRUE)), nsmall = 1),
+      Mean = format(round(mean(col, na.rm = TRUE)), nsmall = 1),
+      Median = format(round(median(col, na.rm = TRUE)), nsmall = 1),
+      Q3 = format(round(quantile(col, 0.75, na.rm = TRUE)), nsmall = 1),
+      Max = format(round(max(col, na.rm = TRUE), 6), nsmall = 1)
+    )
+  })
 
-      result <- rbind(result, stats)
-    }
-    
-  }
+  # Transpone el resultado y conviértelo en un dataframe
+  result <- as.data.frame(t(stats))
 
-  # Establece los nombres de las filas como las medidas
-  colnames(result) <- c("variable","Min", "Q1", "Mean", "Median", "Q3", "Max")
+  # Agrega una columna con los nombres de las variables
+  result <- cbind(variable = rownames(result), result)
+
+  # Establece los nombres de las columnas
+  colnames(result) <- c("variable", "Min", "Q1", "Mean", "Median", "Q3", "Max")
 
   return(result)
 }
 
 
+
+
 # Ejemplo de uso con un data frame 'df'
 # Reemplaza 'df' con el nombre de tu data frame
-result_df <- mmary_stats(suicidios)
+result_df <- summary_stats(suicidios)
 
 # Convierte la salida a una tabla utilizando kable
-kable(result_df, format = "pipe", caption = "Table showing the measures of interest for each variable.")
-
-
-
+kable(result_df, format = "pipe", caption = "Tabla mostrando las medidas de interés para cada variable.")
 ```
 
 
 
 
-Lo primero vamos a ver correlaciones para ver si podemos reducir la dimensionalidad ya que tenemos un número muy alto de variables. En el siguiente gráfico se muestra la correlación entre distintas variables, que puede ser positiva o negativa. Concretamente, la **matriz de coeficientes de correlación** es una tabla de doble entrada que muestra una lista multivariable horizontalmente y la misma lista verticalmente, con el correspondiente coeficiente de correlación “r” expresada con un número que va desde $-1$ a $1$. La diagonal es siempre $1$ pues es trivial que una variable esta $100\%$ correlada con si misma. Además, se dice que dos variables están **altamente correlacionadas** si su valor $\geq 0,7$.
+Lo primero vamos a ver correlaciones para ver si podemos reducir la dimensionalidad ya que tenemos un número muy alto de variables. En el siguiente gráfico se muestra la correlación entre distintas variables, que puede ser positiva o negativa. Concretamente, la **matriz de coeficientes de correlación**, expresada con un número que va desde $-1$ a $1$. La diagonal es siempre $1$ pues es trivial que una variable esta $100\%$ correlada con si misma. Además, se dice que dos variables están **altamente correlacionadas** si su valor $\geq 0,7$.
 
 ```{r}
 #| echo: false
 #| fig-cap: Correlaciones entre variables
-library(ggplot2)
-library(reshape2) # Para manejar los datos
-
 correlation_matrix <- cor(suicidios[, -1]) # Calcula la matriz de correlación excluyendo 'ccaa'
 
 # Transforma la matriz en formato de datos largo para ggplot
@@ -182,10 +188,9 @@ ggplot(melted_correlation, aes(Var1, Var2, fill = value, label = round(value, 2)
   labs(title = "Heatmap de correlación entre variables", x = "Variables", y = "Variables") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5))
-
 ```
 
-Podemos observar que las variables que no son *per cápita* presentan una correlación bastante alta. Esto es debido al "efecto tamaño"[^2] que produce dependientes del tamaño de la población considerada. Es por ello que se van a usar medidas **per cápita** que eliminan esta correlación.
+Podemos observar que las variables que no son *per cápita* presentan una correlación bastante alta. Esto es debido al "efecto tamaño"[^2] que produce dependientes del tamaño de la población considerada. Es por ello que se van a usar medidas **per cápita** que eliminan esta correlación, siendo la variable a predecir **suicpc**.
 
 
 
@@ -215,7 +220,6 @@ ggplot(melted_correlation2, aes(Var1, Var2, fill = value, label = round(value, 2
   labs(title = "Heatmap de correlación entre variables", x = "Variables", y = "Variables") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5))
-
 ```
 
 
@@ -223,7 +227,6 @@ ggplot(melted_correlation2, aes(Var1, Var2, fill = value, label = round(value, 2
 #| echo: false
 #| fig-cap: Correlaciones entre variables que no son per cápita
 # Tomamos todas columnas menos las per cápita
-library(dplyr)
 columnas_a_excluir <- c("ccaa", per_capita)
 
 correlation_matrix3 <- cor(select(suicidios, -any_of(columnas_a_excluir))) # Calcula la matriz de correlación excluyendo 'ccaa'
@@ -239,7 +242,6 @@ ggplot(melted_correlation3, aes(Var1, Var2, fill = value, label = round(value, 2
   labs(title = "Heatmap de correlación entre variables", x = "Variables", y = "Variables") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5))
-
 ```
 
 Como se comentaba, debido a que las medidas per cápita tienen una correlación mucho menor, serán estas las que intentemos usar para la regresión lineal con objetivo de explicar el número de suicidios per cápita. En las siguientes Figuras podemos observar que no parece haber datos atípicos en cuanto a esta magnitud, aunque para ser precisos se tienen un número muy bajo de observaciones.
@@ -260,20 +262,16 @@ Como se comentaba, debido a que las medidas per cápita tienen una correlación 
 #| out-width: 50%
 #| fig-align: center
 #| fig-cap: 'Suicidios per cápita. '
-
-
-library(gridExtra)
-
 # Histogram suicpc
 histogram13 <- ggplot(suicidios, aes(x = suicpc)) +
-  geom_histogram(fill = "lightgreen", color = "black", bins = 5) +
+  geom_histogram(fill = "lightgreen", color = "springgreen3", bins = 5) +
   labs(title = "Histogram of suicpc", x = "suicpc", y = "Frequency") +
   theme_minimal(base_size = 8)
 
 # Box Plot suicpc
 boxplot13 <- ggplot(suicidios, aes(x = "d", y = suicpc)) +
-  geom_boxplot(fill = "lightgreen", color = "black") +
-  stat_boxplot(geom = "errorbar", width = 0.2) +
+  geom_boxplot(fill = "lightgreen", color = "springgreen3") +
+  stat_boxplot(geom = "errorbar", width = 0.2, color = "springgreen3") +
   labs(title = "Box Plot of suicpc", x = "", y = "suicpc") +
   theme_minimal(base_size = 8) +
   theme(
@@ -284,8 +282,6 @@ boxplot13 <- ggplot(suicidios, aes(x = "d", y = suicpc)) +
 
 
 grid.arrange(histogram13, boxplot13, widths = c(0.3, 0.2), nrow = 1)
-
-
 ```
 
 
@@ -293,14 +289,32 @@ grid.arrange(histogram13, boxplot13, widths = c(0.3, 0.2), nrow = 1)
 
 # Regresión Lineal
 
+Una Regresión Lineal es una técnica estadística que busca ajustar un conjunto de datos a una recta. Es decir, dada una observación *x*, se proyecta sobre la recta y se obtiene un valor *y*, de tal manera que si el ajuste por regresión es bueno entonces la $\hat{y}$ obtenida se parece mucho al valor real $y$. 
+
+Antes de explicar las hipótesis que deben cumplir los datos para que el ajuste y como llevarlo a cabo, se va a mostrar un ejemplo de buen y mal ajuste. Intuitivamente cuanto mejor sea el ajuste de los datos a una recta cuando se representen las observaciones en un gráfico, mejor será el ajuste.
+
+
+```{r}
+par(mfrow = c(1, 2)) # Dos gráficos misma fila
+
+# Poca variabilidad
+x <- seq(1, 100, 1)
+y <- rnorm(100, x, 5)
+p1 <- plot(y, col = "lightblue", main = "BUENO Ajuste") + abline(lm(y ~ x), col = "navy")
+
+# Mucha variabilidad
+x_malo <- seq(1, 100, 1)
+y_malo <- rnorm(100, x, 35)
+p2 <- plot(y_malo, col = "lightblue", main = "MAL Ajuste") + abline(lm(y_malo ~ x_malo), col = "navy")
+```
 
 ## Hipótesis y indicadores de bondad
 
-Para que una regresión lineal proporcione un buen ajsute a los datos debe cumplir una serie de requisitos que por tanto deben ser verificados al llevar a cabo el estudio. Recordar que la regresión lineal se expresa como:
+Para que una regresión lineal proporcione un buen ajuste a los datos debe cumplir una serie de requisitos que por tanto deben ser verificados al llevar a cabo el estudio. Recordar que la regresión lineal se expresa como:
 $$
 \mathbf{Y}=\mathbf{X} \boldsymbol{\beta}+\boldsymbol{\varepsilon}
 $$
-donde $\mathbf{Y}$ es la variable respuesta, $\mathbf{X}$ los predictores, $\boldsymbol{\beta}$ los coeficientes de la regresión y $\boldsymbol{\varepsilon}$ el error.
+donde $\mathbf{Y}$ es la variable respuesta, $\mathbf{X}$ los predictores (hay $k$ variables predictoras), $\boldsymbol{\beta}$ los coeficientes de la regresión y $\boldsymbol{\varepsilon}$ el error.
 $$
 \mathbf{Y}=\left[\begin{array}{c}
 y_1 \\
@@ -327,47 +341,57 @@ $$
 Las hipótesis que se deben cumplir son:
 
   - **Linealidad**: La media de la respuesta es función lineal de los predictores. En términos matemáticos:
-  $$E\left[\mathbf{Y} \mid \mathbf{X}_1=x_1, \ldots, \mathbf{X}_k=x_k\right]=\beta_0+\beta_1 x_1+\ldots+\beta_k x_k$$
+  $$E\left[\mathbf{Y} \mid \mathbf{X}_1=x_1, \ldots, \mathbf{X}_k=x_k\right]=\beta_0+\beta_1 x_1+\ldots+\beta_k x_k $$
   
 - **Independencia de errores**: Los errores $\varepsilon_i$ deben ser independientes, es decir, $Cov[\varepsilon_i,\varepsilon_j] =0, \; \forall i\neq j$.
 
-- **Homocedasticidad**: Cuando la varianza del error es constante, condicionada a los predictores.
+- **Homocedasticidad**: La varianza del error debe ser constante.
 
-$$\operatorname{Var}\left[\varepsilon_i \mid \mathbf{X}_1=x_1, \ldots, \mathbf{X}_k=x_k\right]=\sigma^2$$
+$$Var\left[\varepsilon_i \mid \mathbf{X}_1=x_1, \ldots, \mathbf{X}_k=x_k\right]=\sigma^2 \quad \forall \;i $$
 
 - **Normalidad** : Los errores deben estar distribuidos normalmente, es decir, $\varepsilon_i \sim N(0,\sigma^2)\; \forall i$.
 
 
-Además hay algunas medidas indicadores como el $R^2\_adj$ que indican la variabiliad de la variable respueta que es eescplicada por el modelo, siendo mejor el modelo cuanto más grande sea este valor.
+
+Para analizar la bondad, hay algunos indicadores como el **Coeficiente de Determinación** o $R^2$ que representa el porcentaje de variabilidad de la variable respuesta que es capaz de explicar el modelo. Es decir, si toma valor 1 hay una dependencia lineal exacta entre los predictores y la variable respuesta y por tanto las predicciones serán perfectas. Por el contrario, si toma valor 0 habrá que desechar el modelo puesto que no es capaz de predecir con nada de exactitud.
+
+
+En caso de que haya más de un predictor ($k >1$, Regresión Lineal Múltiple), es más recomendable usar el **Coeficiente de Determinación Ajustado** $R^2\_adj$ como indicador de bondad, pues el $R^2$ puede inflarse artificialmente debido a la presencia de varios predictores. Su interpretación es similar.
+
 
 
 
 
 
 ## Modelo
+En este caso nos encontramos ante una Regresión Lineal Múltiple puesto que tenemos más de una variable predictora. Inicialmente vamos a considerar un modelo con todas variables predictoras para intentar predecir el $suicpc$ y veremos si este modelo cumple las hipótesis necesarias y cuan bueno es.
 
-
-Inicialmente vamos a considerar un modelo con todas variables predictoras para intentar predecir el $indice\_total$ y veremos si este modelo cumple las hipótesis necesarias y cuan bueno es.
 ```{r}
 #| label: modelo1
 #| class-source: fold-show
-
-#Modelo inicial
-lm1<-lm(suicpc~defpc+gastoprotecpc+pibpc+paropc+soc_conspc+turpc,suicidios)
+# Modelo inicial
+lm1 <- lm(suicpc ~ defpc + gastoprotecpc + pibpc + paropc + soc_conspc + turpc, suicidios)
 
 summary(lm1)
 ```
-A primera vista vemos un valor de **Multiple R-squared:  0.7711,**, lo cual es bastante alto y por tanto nuestro modelo parece capturar bien la variabilidad de la variable respuesta, concretamente un $77\%$. Sin embargo, en los sucesivos modelos que planteemos no podemos usar como criterio de comparación el $R-squared$ pues aumenta a la vez que lo hace el número de variables, y por tanto para comparar modelos entre si se debe usar el **Adjusted R-squared** (que tiene en cuenta el número de variables). 
+A primera vista vemos un valor de **Múltiple R-squared:  0.8569,**, lo cual es bastante alto y por tanto nuestro modelo parece capturar bien la variabilidad de la variable respuesta, concretamente un $85\%$. Sin embargo, en los sucesivos modelos que planteemos no podemos usar como criterio de comparación el $R-squared$ pues aumenta a la vez que lo hace el número de variables, y por tanto para comparar modelos entre si se debe usar el **Adjusted R-squared** (que tiene en cuenta el número de variables) que toma un valor de **77%**. 
 
-En la línea de los residuos no parece haber contraindicaciones a que estos sigan una distribución normal centrada en cero puesto que tenemos unas medidas de dispersión bastante simétricas. No osbtante, más adelante se procederán a hacer los test pertinentes. 
+En la línea de los residuos no parece haber contraindicaciones a que estos sigan una distribución normal centrada en cero puesto que tenemos unas medidas de dispersión bastante simétricas. No obstante, más adelante se procederán a hacer los test pertinentes. 
 
-En la última linea el $F-test$ lo que considera es la hipótesis nula de $H0: \beta_i =0\; \forall i$ y $H1: al\; menos \; un \; \beta_i \neq 0$. Para un nivel de significancia de $0.05$ podemos rechazar la hipótesis nula y por tanto aceptar la alternativa, lo cual es buena señal.
+En la última linea se lleva a cabo un **Test de Significación Global** $F-Test$ lo que considera es la hipótesis nula de 
+
+$$H_0: \beta_i =0\; \forall i
+\\
+H_1: al\; menos \; un \; \beta_i \neq 0$$. 
+
+Para un nivel de confianza de $0.95$ podemos rechazar la hipótesis nula (puesto que p_val< 0.05) y por tanto aceptar la alternativa, lo cual es buena señal.
 
 No obstante es necesario analizar que se cumplan las hipótesis iniciales para poder asegurar que estamos ante un buen modelo. 
 
 ## Test de Bonferroni (datos atípicos)
 
-La idea principal es verificar si los residuos de las observaciones son significativamente diferentes de cero. Si un residuo tiene un valor studentizado grande en comparación con una distribución t, puede considerarse como un posible valor atípico. En este caso parece no haber indiacción de valores atípicos.
+
+La idea principal es verificar si los residuos de las observaciones son significativamente diferentes de cero. Si un residuo tiene un valor "studentizado" grande en comparación con una distribución t, puede considerarse como un posible valor atípico. Esto se debe a que teóricamente se demuestra que los **residuos "studentizados"** $r^* _i \sim t_{n-k-1}$ con *k* el número de predictores. En este caso parece haber un posible valor atípico.
 
 
 ```{r}
@@ -376,30 +400,36 @@ outlierTest(lm1)
 ```
 
 ## Test homocedasticidad
-En términos sencillos, la prueba de Breusch-Pagan evalúa si la varianza de los errores en un modelo de regresión es constante o si varía a lo largo de los valores de las variables predictoras. Una violación de la homocedasticidad puede afectar la validez de las inferencias realizadas a partir del modelo.
+
+En términos sencillos, la **Prueba de Breusch-Pagan** evalúa si la varianza de los errores en un modelo de regresión es constante o si varía a lo largo de los valores de las variables predictoras. Una violación de la homocedasticidad puede afectar la validez de las inferencias realizadas a partir del modelo.
 
 
 El test funciona de la siguiente manera: se obtienen los residuos al cuadrado y se realiza una regresión auxiliar para determinar si hay una relación significativa entre los residuos al cuadrado y las variables predictoras. Si se encuentra evidencia significativa, puede indicar la presencia de heterocedasticidad.
 
 ```{r}
 #| class-source: fold-show
-library(lmtest)
-
-bptest(suicpc~defpc+gastoprotecpc+pibpc+paropc+soc_conspc+turpc,suicidios, varformula = ~fitted.values(lm1), studentize=FALSE)
+bptest(suicpc ~ defpc + gastoprotecpc + pibpc + paropc + soc_conspc + turpc, suicidios, varformula = ~ fitted.values(lm1), studentize = FALSE)
 ```
+
+$$H_0: Var[\varepsilon_i ] =\sigma^2 \; \forall \;i
+\\
+H_1: Var[\varepsilon_i ] \neq \sigma^2 \; \forall \;i$$. 
 
 Si el valor p obtenido de la prueba de Breusch-Pagan es $0.8$,  interpretaríamos esto como evidencia insuficiente para rechazar la hipótesis nula de homocedasticidad (a nivel de significancia de $0.05$). En otras palabras, no tendríamos suficiente evidencia estadística para decir que hay heterocedasticidad en los errores del modelo de regresión.
 
-En términos prácticos, esto sugiere que la varianza de los errores parece ser constante a lo largo de los valores de las variables predictoras.
+En términos prácticos, esto sugiere que **la varianza de los errores parece ser constante** a lo largo de los valores de las variables predictoras.
 
 ## Normalidad de residuos
 
-El test de Shapiro es una prueba de normalidad que se utiliza para evaluar si una muestra proviene de una población con una distribución normal. La hipótesis nula del test es que la muestra sigue una distribución normal. Si el valor p obtenido en la prueba es menor que el nivel de significancia (comúnmente establecido en $0.05$), se rechaza la hipótesis nula, indicando que la muestra no sigue una distribución normal.
+El **Test de Shapiro** es una prueba de normalidad que se utiliza para evaluar si una muestra proviene de una población con una distribución normal. La hipótesis nula del test es que la muestra sigue una distribución normal. Si el valor p obtenido en la prueba es menor que el nivel de significancia (comúnmente establecido en $0.05$), se rechaza la hipótesis nula, indicando que la muestra no sigue una distribución normal.
+
+$$H_0: \varepsilon_i  \sim N(\;,\;) \; \forall 
+\\
+H_1: \varepsilon_i  \nsim N(\;,\;) \; \forall $$. 
 
 ```{r}
 #| class-source: fold-show
 shapiro.test(lm1$residuals)
-
 ```
 Aceptamos la normalidad de los residuos puesto que el $p-value>0.05$.
 
@@ -408,47 +438,52 @@ Aceptamos la normalidad de los residuos puesto que el $p-value>0.05$.
 La hipótesis alternativa analiza si la inclusión de términos cuadráticos (potencia 2) de las variables predictoras mejora significativamente el modelo en comparación con un modelo que solo incluye términos lineales. 
 
 ```{r}
-resettest(suicpc~defpc+gastoprotecpc+pibpc+paropc+soc_conspc+turpc,suicidios, power=2, type="regressor")
+resettest(suicpc ~ defpc + gastoprotecpc + pibpc + paropc + soc_conspc + turpc, suicidios, power = 2, type = "regressor")
 ```
-Aceptamos la linealidad  puesto que el $p-value>0.05$, a un nivel de significancia de $\alpha =0.05$.
+Aceptamos la linealidad  puesto que el $p-value>0.05$, a un nivel de significancia de $\alpha =0.05$, luego no es necesario incluir términos cuadráticos.
 
 
 ## Gráfico de influencia del modelo porpuesto
 
-En el siguiente gráfico se muestran los residuos studentizados, es decir, los residuos transofmrados a una $N(0,1)$. Es por ello, que debido a el cuantil $z_{\alpha/2}=-1.96\; con \; \alpha=0.05$ de una normal, sabemos que el $95\%$ de elementos deben estar contenidos en $(-1,96,1.96)$ que son las rayas verticales del gráfico.
+En el siguiente gráfico se muestran los residuos "studentizados", es decir, los residuos transformados a una $N(0,1)$. Es por ello, que debido a el cuantil $z_{\alpha/2}=-1.96\; con \; \alpha=0.05$ de una normal, sabemos que el $95\%$ de elementos deben estar contenidos en $(-1,96,1.96)$ que son las rayas horizontales del gráfico.
 ```{r}
 #| out-width: 50%
-influencePlot(lm1,id=list(method="noteworth",n=2))
+influencePlot(lm1, id = list(method = "noteworth", n = 2))
 ```
 
-- Los **residuos** bajo hipótesis de RLM siguen una N(0,sigma) y los studentizados un N(0,1), es decir el $95\%$ de datos están entre $(-1.96,1.96)$, las líneas horizontales. Tenemos 20 obs. y 2 datos fuera de la línea lo que a priori podría ser correcto.
-- Las **líneas verticales** indican los datos con apalancamiento en el modelo. Es decir los datos fuera de la línea vertical dcha. No vemos ni siquiera las lineas entonces no parece haber apalancamiento.
-- El **área de las burbujas** es proporcional a la dist. de cook (mide cómo cambian los parámetros del modelo cuando se excluye una observación específic)., vemos que hay uno con una gran distancia de cook (tienen residuo grande), luego esto nos indica que epodría considerarse en cierto modo atípico. Como no hemos encontrado más evidencias de que fuera atípicio lo vamos a dejar así.
+- Los **residuos** bajo hipótesis de RLM siguen una N(0,sigma) y los "studentizados" un N(0,1), es decir el $95\%$ de datos están entre $(-1.96,1.96)$, las líneas horizontales. Tenemos 20 observaciones y 2 o 3 datos fuera de la línea lo que a priori podría ser correcto.
+- Las **líneas verticales** indican los datos con apalancamiento en el modelo. Es decir los datos fuera de la línea vertical derecha No vemos ni siquiera las lineas entonces no parece haber apalancamiento.
+- El **área de las burbujas** es proporcional a la dist. de cook (mide cómo cambian los parámetros del modelo cuando se excluye una observación específica). Vemos que hay uno con una gran distancia de cook (tienen residuo grande), luego esto nos indica que podría considerarse en cierto modo atípico. Como no hemos encontrado más evidencias de que fuera atípico lo vamos a dejar así.
 
 
 
 ## Colinealidad
 
+Cuando los regresores no tienen una relación lineal, se consideran ortogonales. Sin embargo, en la mayoría de las aplicaciones de regresión, los regresores no cumplen con esta condición. En algunos casos, la falta de ortogonalidad no representa un problema significativo, pero en otros, los regresores pueden estar tan estrechamente relacionados linealmente de manera que las predicciones del modelo de regresión se vuelven poco fiables o incorrectas.
+
+Este fenómeno, en el que los regresores presentan dependencias lineales casi perfectas, se conoce como el problema de colinealidad. Se realiza la matriz de correlaciones para ver la dependencia lineal entre las distintas variables.
+
+
+
+
 
 ```{r}
+mat_cor <- cor(suicidios[, c("defpc", "gastoprotecpc", "pibpc", "paropc", "soc_conspc", "turpc")]) %>% round(digits = 2)
+corrplot(mat_cor, type = "upper", order = "hclust", tl.col = "black", tl.srt = 45)
+```
+No parece haber ningún rastro de colinealidad (al menos directa), entre los predictores. Para estar más seguros vamos a realizar un análisis del VIF.
 
-# Descomposición ANOVA
-anova(lm1)
 
+
+El **factor de inflación de la varianza (FIV)** detecta si una variable independiente es colineal con el resto. Es decir, mira cuanto se infla la varianza de los estimadores por culpa de la colinealidad de unas variables respecto a otras. **Decisión**: Un Valor del FIV mayor de 10 requiere actuación.
+
+
+```{r}
 # Inflación de la varianza
 vif(lm1)
-
-
-
 ```
 
-
-
-Vemos en la descomposición ANOVA que todas las variables aportan significativamente a la **variabilidad explicada** por el modelo luego parece razonable retenerlas ahí. Nuestro objetivo es que esa Variabilidad Explicada (Sum of Squares) sea lo mas grande posible, pues eso indica que nuestro modelo es capaz de explicar muy bien esa variabilidad o dispersión de los datos.
-
-El **factor de inflación de la varianza (FIV)** detecta si una variable independiente es colineal con el resto. Hablando en plata, mira cuanto se infla la varianza de los estimadores por culpa de la colinealidad de unas variables respecto a otras. **Decisión**: Un Valor del FIV mayor de 10 requiere actuación, incluso varios por encima de 5 pueden ser un problema.
-
-Posibles soluciones:
+Vemos que la primera dimensión podría presentar problemas de colinealidad.Posibles soluciones:
 
   - Eliminar una de las variables, p.ej. la de mayor FIV.
   - Utilizar regresión sobre componentes principales (esto es una transformación
@@ -460,21 +495,65 @@ incorreladas entre sí y de varianza decreciente) o bien
 En nuestro caso no hay ninguna grande lo cual no tenemos ningún indicio para alarmarnos.
 
 
+
+
+
 ### Selección de variables
  
- Vamos a realizar un método de Stepwise que lo que hace es irncluyendo/sacando variables sobre el modelo inicial hasta encontrar el mejor AIC(el más bajo).
+
+ A la hora de realizar un modelo de acuerdo a una lista de variables estadísticas, suele ser frecuente estudiar la relevancia de todas ellas, o si por el contrario con un número reducido de predictores es suficiente. Además del $R^2_{adj}$, el **Criterio de Información de Akaike (AIC)**, es una medida para comparar diferentes modelos. Comparando dos modelos, el que tenga un AIC más bajo se puede considerar mejor modelo.
+ 
+ Vamos a realizar un método de Stepwise que lo que hace es incluyendo/sacando variables sobre el modelo inicial hasta encontrar el modelo con el mejor AIC(el más bajo). No se ejecuta en el notebook dicha función puesto que tiene una salida muy larga, aunque es recomendable su uso.
 
 ```{r}
+#| eval: false
 library(Rcmdr)
-stepwise(lm1,direction='backward/forward',criterion='AIC')
+stepwise(lm1, direction = "backward/forward", criterion = "AIC")
 ```
 
 
 Nos ha quitado una variable pero el AIC tampoco ha bajado tanto por lo que podríamos considerar ambos modelos como buenos.
 
 
-# Conclusion
-
-El modelo inicial considerado tiene buenos inidcadores de bondad de ajuste y además pasa toas las hipótesis requeridas para una regresión lineal. Es por ello que parece razonable tomarlo como bueno. Destacar que se han eliminado las variables que dependian de la estructura poblacional ya que había una alta correlación entre ellas (debido al tamaño de la población considerada).
 
 
+# Predicción
+
+Una vez que hemos seleccionado un modelo, en este caso `lm1`, se podría predecir nuevas observaciones y calcular intervalos de confianza para estas. Para predecir usaremos la función `predict()`, que además nos puede proporcionar un intervalo de confianza para los valores predichos.
+
+
+Posteriormente se puede  calcular el **Mean Absolute Error (MAE)**, que se calcula como la diferencia absoluta promedio entre los valores ajustados por el modelo (un paso por delante de la previsión de muestra) y los datos históricos observados.
+
+
+
+NOTA: En este caso, debido al bajo número de observaciones no vamos a particionar el conjunto de datos en train/test y predecir sobre el segundo puesto que sería un número de observaciones muy pequeño. No obstante dejamos aquí, el código de como hacerlo en un caso genérico:
+
+```{r}
+#| eval: false
+prediccion <- predict(lm1, ........, interval = "confidence", level = 0.95)
+valor_real <- ..............
+
+# Calculamos el MAE
+MAE <- sum(abs(prediccion[, 1] - valor_real)) / 11
+MAE
+```
+
+
+
+
+
+
+
+
+
+# Conclusión
+
+El modelo inicial considerado tiene buenos indicadores de bondad de ajuste y además pasa toas las hipótesis requeridas para una regresión lineal. Es por ello que parece razonable tomarlo como bueno. Destacar que se han eliminado las variables que dependían de la estructura poblacional ya que había una alta correlación entre ellas (debido al tamaño de la población considerada).
+
+
+# Bibliografía
+
+  - <https://en.wikipedia.org/wiki/Linear_regression>
+  - <https://www.datacamp.com/tutorial/linear-regression-R>
+  - <http://r-statistics.co/Linear-Regression.html>
+  - <https://rpubs.com/Sergio_Garcia/linear_regression>  

@@ -2,7 +2,7 @@
 title: "Lista de datasets"
 listing:
   filter-ui: true
-  sort-ui: [title, tema]
+  sort-ui: [title, tema, observaciones]
   sort: [title]
   page-size: 50
   categories: true
@@ -11,8 +11,9 @@ listing:
     notebook: Notebook
     operation: Operación
     tema: Tema
+    observaciones: "Número de observaciones"
     title: Título
-    categories: "Técnica estadística"
+    categories: Categorías
     
   template: lista.ejs
   contents:

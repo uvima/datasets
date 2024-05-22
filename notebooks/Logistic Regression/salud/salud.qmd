@@ -21,6 +21,11 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = "center", warning = FALSE, messag
 
 # Introducción
 
+
+En este cuaderno vamos a procesar un conjunto de datos mediante una Regresión Logística para discriminar el sexo de una persona a partir de los microdatos de la **Encuesta Nacional de Salud. Resultados**
+Concretamente, se han tomado los datos relativos a **2017**.
+
+
 ## dataset
 
 
@@ -34,32 +39,12 @@ Este contiene microdatos relativos a la **Encuesta Nacional de Salud. Resultados
   - **Peso**: Peso en kg.
 
 
-El objetivo es mostrar en qué consiste una regresión logística y cómo llevarla a cabo en R.
-
-```{r}
-#| label: librerias
-#| message: false
-#| warning: false
-# Librerias
-library(readxl) # Para leer los excels
-library(dplyr) # Para tratamiento de dataframes
-library(ggplot2) # Nice plots
-library(Epi) # Para la ROC curve
-```
-
-Cargamos entonces el conjunto de datos:
-
-```{r}
-#| label: cargar_datos
-datos <- read_excel("../../../files/salud.xlsx", sheet = "Datos")
-```
-
 
 
 
 ## Descripción del trabajo a realizar
 
-**(Esto irá en la web de explica)** Se pretende hacer una regresión logística que clasifique la variable respuesta *Sexo* en función de varios predictores, todos ellos continuos: *Edad*, *Altura*, *Peso*.
+ Se pretende hacer una regresión logística que clasifique la variable respuesta *Sexo* en función de varios predictores, todos ellos continuos: *Edad*, *Altura*, *Peso*.
 
   - Hacer un análisis exploratorio.
   - **IMPORTANTE**: Convertir a factor las variables que lo sean.
@@ -68,24 +53,43 @@ datos <- read_excel("../../../files/salud.xlsx", sheet = "Datos")
   - Para el modelo seleccionado, explicar los coeficientes, odds ratio,…
 
 
-# Análisis Exploratorio (EDA[^1])
 
-[^1]: EDA viene del Inglés *Exploratory Data Analysis* y son los pasos
+# Análisis Exploratorio (EDA)
+
+EDA viene del Inglés *Exploratory Data Analysis* y son los pasos
     relativos en los que se exploran las variables para tener una idea
     de que forma toma el dataset.
 
-Lo primero de todo vamos a cargar las librearias necesarias para
-ejecutar el resto del código del trabajo:
 
-```{r }
-#| label: librerias2
+## Cargar Librerías
+
+Lo primero de todo vamos a cargar las librerías necesarias para ejecutar el resto del código del trabajo:
+
+
+```{r}
+#| label: librerias
+#| message: false
+#| warning: false
+# Librerías
+library(readxl) # Para leer los excels
 library(dplyr) # Para tratamiento de dataframes
 library(ggplot2) # Nice plots
+library(Epi) # Para la ROC curve
+library(caret) # para la confusion matrix
 ```
+
+## Lectura de datos
+Ahora cargamos los datos del excel correspondientes a la pestaña *"Datos"* y vemos si hay algún NA o algún valor igual a 0 en nuestro dataset. Vemos que no han ningún NA (missing value) en el dataset luego no será necesario realizar ninguna técnica para imputar los missing values o borrar observaciones.
+
+```{r}
+#| label: cargar_datos
+datos <- read_excel("../../../files/salud.xlsx", sheet = "Datos")
+```
+
+
 
 ```{r}
 #| label: porcentaje
-#| echo: false
 #| out-width: 50%
 # Creamos un gráfico de quesito o de sectores para ver qué proporción de personas ha mejorado su situación económica:
 
@@ -100,15 +104,46 @@ pie(datos_quesito, labels = porcentajes, col = colores, radius = 1.05, cex = 1)
 legend("topleft", etiquetas, cex = 0.7, fill = colores)
 ```
 
+
+
+
+
+```{r}
+datos <- na.omit(datos)
+datos %>% ggplot(aes(x = Peso)) +
+  geom_density(aes(group = Sexo, colour = Sexo, fill = Sexo),
+    alpha = 0.2
+  )
+```
+
+
+```{r}
+datos <- na.omit(datos)
+datos %>% ggplot(aes(x = Altura)) +
+  geom_density(
+    aes(
+      group = Sexo,
+      colour = Sexo,
+      fill = Sexo
+    ),
+    alpha = 0.2
+  )
+```
+
+
+Vemos la distribución de la altura y el peso distinguiendo entre sexos, se observa como parte de su rango es común pero en los extremos de cada uno se puede distinguir con cierta facilidad si es Hombre/Mujer.
+
+
+
+
+
 # Clasificación: Regresión Logística
 
 ## Introducción 
 Un análisis de regresión logística es una técnica estadística
-multivariante que tiene como finalidad pronosticar o explicar los
-valores de una variable dependiente categórica a partir de una
-(regresión logística simple) o más (regresión logística múltiple)
+multivariante que tiene como finalidad clasificar las observaciones de una variable dependiente categórica a partir de una o varias
 variables independientes categóricas o continuas. Dichas variables
-independientes reciben el nombre de covariables. **Asimismo, a diferencia de lo que suele hacerse cuando tenemos una variable dependiente continua, cuando ésta es categórica, no interesa describir o pronosticar los valores concretos de dicha variable, sino la probabilidad de pertenecer a cada una de las categorías de la misma.**
+independientes reciben el nombre de covariables. **Asimismo, a diferencia de lo que suele hacerse cuando tenemos una variable respuesta continua, cuando esta es categórica, no interesa describir o pronosticar los valores concretos de dicha variable, sino la probabilidad de pertenecer a cada una de las categorías de la misma.**
 
 Aunque matemáticamente se pueda ajustar un modelo de regresión lineal
 clásico a la relación entre una variable dependiente categórica y una o
@@ -131,7 +166,7 @@ $$\begin{align}
 Es decir, **estamos estimando con una regresión lineal el valor de $\eta$, que sí es una v.a. continua - a diferencia de Y que es binaria-**.
 
 Esto es, $p=\frac{e^\eta}{1+e^\eta}=\frac{1}{1+e^{-\eta}}$.
-De esta forma, para valores positivos muy grandes de $\eta$ llamado **odds**, $e^{\eta}$ es
+De esta forma, para valores positivos muy grandes de $\eta$ llamado **odds**, $e^{-\eta}$ es
 aproximadamente cero, por lo que el valor de la función es 1; mientras
 que para valores negativos muy grandes de $\eta$, $e^{-\eta}$ tiende a infinito, haciendo que el valor de la función sea 0.
 
@@ -153,13 +188,48 @@ inclinada, mayor capacidad de discriminar entre los dos valores de la
 variable dependiente).
 
 
+
+
+**Ejemplo sencillo** Vamos a mostrar como una variable binaria no tiene sentido predecirla con una Regresión Lineal sino Logística.
+
+```{r}
+# Generación de datos para el ejemplo
+set.seed(123)
+n <- 200
+Altura <- rnorm(n, mean = 165, sd = 10)
+
+# Crear una variable binaria 'Sexo' en función de Altura
+Sexo <- as.factor(ifelse(Altura + rnorm(n) > 165, 1, 0))
+datos_ejemplo <- data.frame(Altura, Sexo)
+
+# Regresión lineal
+modelo_lineal <- lm(Sexo ~ Altura, data = datos_ejemplo)
+
+# Regresión logística
+modelo_logistico <- glm(Sexo ~ Altura, data = datos_ejemplo, family = binomial)
+
+
+# Regresión Lineal
+par(mfrow = c(1, 2))
+plot(datos_ejemplo$Altura, datos_ejemplo$Sexo, col = "lightblue", main = "Ajuste por Regresión Lineal")
+abline(modelo_lineal, col = "navy")
+
+# Regresión Logística
+
+plot(datos_ejemplo$Altura, as.numeric(datos_ejemplo$Sexo) - 1, col = "lightblue", main = "Regresión Logística", xlab = "Altura", ylab = "Sexo")
+curve(predict(modelo_logistico, data.frame(Altura = x), type = "response"), add = TRUE, col = "navy", lwd = 2)
+```
+
+En este ejemplo, se muestra cómo un ajuste por regresión lineal no se adapta bien a datos binarios, produciendo predicciones que pueden ser mayores que 1 o menores que 0. En cambio, la regresión logística produce una curva en forma de S que se adapta mejor a los datos, con predicciones que están siempre entre 0 y 1. Esto demuestra que para problemas de clasificación binaria, la regresión logística es una mejor opción que la regresión lineal.
+
+
 ## Bondad de Ajuste e Interpretación Modelo
 
 ### Interpretación Modelo
 
 Recordar que el modelo tomaba la forma $$\eta=\log \left(\frac{p}{1-p}\right)= \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots , \quad \text{with } \quad p=P(Y=1)$$, es decir, estamos estimando el **log(odds)**. Esto nos lleva a las siguientes apreciaciones:
 
-Aunque tanto $P(Y=1)$, como  $Odds(Y=1)$, como $\operatorname{logit}(Y=1)$ expresan la misma idea, están en distinta escala:
+Aunque tanto $P(Y=1)$, como  $Odds(Y=1)$, como $Logit(Y=1)$ expresan la misma idea, están en distinta escala:
 
   - La **probabilidad** toma valores comprendidos entre 0 y 1.
   - La **odds** tiene un valor mínimo de cero y no tiene máximo.
@@ -185,7 +255,7 @@ La **especificidad** y la **sensibilidad** son medidas utilizadas para evaluar e
   - **Sensibilidad** (Sensitivity): Es la proporción de verdaderos positivos (casos positivos correctamente identificados) respecto al total de casos positivos reales. Es la capacidad del modelo para identificar correctamente los casos positivos. 
   - **Especificidad** (Specificity): Es la proporción de verdaderos negativos (casos negativos correctamente identificados) respecto al total de casos negativos reales. Representa la capacidad del modelo para identificar correctamente los casos negativos.
   
-Un equilibrio entre ambas es deseable, pero depende del contexto específico del problema y de las consecuencias de los falsos positivos y falsos negativos. En el caso, por ejemplo, de detectar si un paciente tiene cáncer o no, parece más razonable centrarse en los Falsos Negativos, ya que un paciente que tiene cáncer no lo estamos detectando, lo que lleva un riesgo ímplicito muy alto.
+Un equilibrio entre ambas es deseable, pero depende del contexto específico del problema y de las consecuencias de los falsos positivos y falsos negativos. En el caso, por ejemplo, de detectar si un paciente tiene cáncer o no, parece más razonable centrarse en los Falsos Negativos, ya que un paciente que tiene cáncer no lo estamos detectando, lo que lleva un riesgo implícito muy alto.
 
 |                  | **Clasificado como Positivo** | **Clasificado como Negativo** | **Total** |
 |------------------|--------------------------------|--------------------------------|-----------|
@@ -202,7 +272,7 @@ Un equilibrio entre ambas es deseable, pero depende del contexto específico del
 
 La **curva ROC** es una representación gráfica de la sensibilidad frente a la tasa de falsos positivos a varios umbrales de clasificación. Se utiliza comúnmente en análisis de clasificación para evaluar el rendimiento de un modelo.
 
-Para calcular el área bajo la curva ROC (AUC-ROC), se utiliza el área debajo de la curva generada por la representación de la sensibilidad y la tasa de falsos positivos. **Cuanto más cerca esté el AUC-ROC de 1, mejor será el rendimiento del modelo**, ya que indica una mayor capacidad de distinguir entre clases.
+Para calcular el área bajo la curva ROC (AUC-ROC), se utiliza la tasa de falsos positivos y de falsos negativos.  **Cuanto más cerca esté el AUC-ROC de 1, mejor será el rendimiento del modelo**, ya que indica una mayor capacidad de distinguir entre clases.
 
 Es una medida de bondad porque evalúa qué tan bien puede discriminar un modelo entre las clases positivas y negativas. Cuanto más se acerque el AUC a 1, mejor será la capacidad del modelo para distinguir entre las clases. Se utiliza para comparar y seleccionar modelos, donde un AUC mayor indica un mejor rendimiento predictivo.
 
@@ -214,7 +284,7 @@ Es una medida de bondad porque evalúa qué tan bien puede discriminar un modelo
 
 ## Formulación
 
-**IMPORTANTE**: Convertir a factor las variables que tengan que ser tratadas como tal, de lo contrario R las tratará como numéricas. Además, la variable respuesta debe tener los niveles codificados como $0$ y $1$ para poder usar la funcion `glm`. El resto de variables convertirlas a numéricas en caso de que aplique.
+**IMPORTANTE**: Convertir a factor las variables que tengan que ser tratadas como tal, de lo contrario R las tratará como numéricas. Además, la variable respuesta debe tener los niveles codificados como $0$ y $1$ para poder usar la función `glm`. El resto de variables convertirlas a numéricas en caso de que aplique.
 
 ```{r}
 datos$Edad <- as.numeric(datos$Edad)
@@ -235,7 +305,7 @@ datos <- na.omit(datos)
 
 Como hemos visto que había na's en el conjunto de datos, los quitamos para que no haya posibles problemas (eliminamos esas observaciones).
 
-Vemos que si hay algun 
+Vemos que si hay algún 
 
 
 
@@ -266,15 +336,14 @@ En este caso, el Modelo 3 tiene el **AIC** más bajo, lo que sugiere que podría
 
 
 
-Para este modelo vamos a calcular la matriz de confusión y el área ROC. Hemos calculado la matriz de confusión utilizando un **threshold** de 0.51. Es decir, si hay mas de un 0.51 de probabilidad de que una observación pertenezca a la clase 1 (Mujer), entonces lo clasficamos como tal.
+Para este modelo vamos a calcular la matriz de confusión y el área ROC. Hemos calculado la matriz de confusión utilizando un **threshold** de 0.5. Es decir, si hay mas de un 0.51 de probabilidad de que una observación pertenezca a la clase 1 (Mujer), entonces lo clasificamos como tal.
 
 Luego veremos el valor óptimo para este threshold.
 
 ```{r}
 #| eval: false
 # confusion matrices
-predicted2 <- predict(lmod3, data.frame(Edad = datos$Edad, Altura = datos$Altura, Peso = datos$Peso), type = "response")
-library(caret)
+predicted2 <- predict(lmod3, datos[, c("Edad", "Altura", "Peso")], type = "response")
 confusionMatrix(data = as.factor(ifelse(predicted2 > 0.5, 1, 0)), reference = datos$Sexo, positive = "1")
 ```
 
@@ -282,14 +351,11 @@ Realicemos ahora la curva ROC con la función ROC del paquete `Epi`.
 ```{r}
 ROC(form = Sexo ~ Edad + Altura + Peso, data = datos, plot = "ROC", lwd = 3, cex = 1.5)
 ```
-Observamos una Especifidad del 82% y una Sensibilidad del 84%. Esto quiere decir que nuestro modelo es mejor evitando falsos negativos, que falsos positivos Es decir, que es mejor evitando clasificar a alguien como hombre cuando es mujer, que al revés. 
+Observamos una Especifidad del 82% y una Sensibilidad del 84%. Esto quiere decir que nuestro modelo es mejor evitando falsos negativos, que falsos positivos.
+
+Destacar que el elemento **Ir.eta** que aparece arriba, es el punto de corte óptimo (**threshold óptimo**) de la probabilidad. Es decir, si nuestra regresión logística predice que hay una probabilidad mayor de $0.516$ de que una observación sea mujer, entonces la clasificaremos como tal.
 
 
-Destacar que el elemtno **Ir.eta** que aparece arriba, es el punto de corte óptimo (**threshold óptimo**) de la probabilidad. Es decir, si nuestra regresión logística predice que hay una probabilidad mayor de $0.516$ de que una observación sea mujer, entonces la clasificaremos como tal.
-
-
-
-## Otras consideraciones
 
 Podemos usar el presente modelo para predecir la probabilidad de ser mujer en función de las variables predictoras de nuevas observaciones. 
 
@@ -307,7 +373,7 @@ summary(lmod3)
   
   - **Altura**: Por cada incremento unitario en la altura, el logaritmo de odds de éxito en Sexo disminuye aproximadamente en 0.25, manteniendo constante el resto de variables. 
     
-    - **Peso**: Por cada incremento unitario en el peso, el logaritmo de odds de éxito en Sexo disminuye aproximadamente en 0.039, manteniendo constante el resto de variables. 
+  - **Peso**: Por cada incremento unitario en el peso, el logaritmo de odds de éxito en Sexo disminuye aproximadamente en 0.039, manteniendo constante el resto de variables. 
 
 
 **Interpretación coeficiente Edad** 
@@ -321,45 +387,27 @@ Es verdad, que conforme aumenta la edad, la mortalidad es más grave en hombres,
 
 **Interpretación coeficiente Peso** 
 
-El **coeficiente para Peso**, tiene un valor negativo. Esto implica que la probablidad de clasificar a una observación como mujer disminuye conforme aumenta la variable Peso (manteniendo el resto de variables constantes). Esto parece razonable ya que dentro de un mismo grupo de edad, incluso de altura, los hombres tienden generalmente a ser más corpulentos que las mujeres y por tnato a pesar más. De todas maneras sería la combinación Peso/Altura la que nos ayudaría a discriminar bien.
+El **coeficiente para Peso**, tiene un valor negativo. Esto implica que la probabilidad de clasificar a una observación como mujer disminuye conforme aumenta la variable Peso (manteniendo el resto de variables constantes). Esto parece razonable ya que dentro de un mismo grupo de edad, incluso de altura, los hombres tienden generalmente a ser más corpulentos que las mujeres y por tanto a pesar más. De todas maneras sería la combinación Peso/Altura la que nos ayudaría a discriminar bien.
 
 
 **Interpretación coeficiente Altura** 
 
-El **coeficiente para Altura**, tiene un valor negativo. Esto implica que la probablidad de clasificar a una observación como mujer disminuye conforme aumenta la variable altura (manteniendo el resto de variables constantes). Esto parece razonable ya que dentro de un mismo grupo de edad, incluso de peso, los hombres tienden generalmente a ser más altos que las mujeres. De todas maneras sería la combinación Peso/Altura la que nos ayudaría a discriminar bien.
+El **coeficiente para Altura**, tiene un valor negativo. Esto implica que la probabilidad de clasificar a una observación como mujer disminuye conforme aumenta la variable altura (manteniendo el resto de variables constantes). Esto parece razonable ya que dentro de un mismo grupo de edad, incluso de peso, los hombres tienden generalmente a ser más altos que las mujeres. De todas maneras sería la combinación Peso/Altura la que nos ayudaría a discriminar bien.
+
+
+
+
+# Conclusión
+
+
+Aquí se han explicado los supuestos de la regresión logística con un dataset en el que se pretende clasificar la variable respuesta *Sexo* en función de varios predictores continuos: *Edad*, *Altura* y *Peso*. La evidencia nos ha mostrado que la combinación de estas variables tienen un poder predictivo significativo para determinar el sexo de los individuos. Este modelo permite identificar patrones y diferencias clave entre las características físicas de hombres y mujeres, proporcionando una herramienta útil para clasificaciones y análisis en estudios demográficos y de salud.
 
 
 
 
 
+# Bibliografía
 
-```{r}
-datos <- na.omit(datos)
-datos %>% ggplot(aes(x = Peso)) +
-  geom_density(
-    aes(
-      group = Sexo,
-      colour = Sexo,
-      fill = Sexo
-    ),
-    alpha = 0.2
-  )
-```
-
-
-```{r}
-datos <- na.omit(datos)
-datos %>% ggplot(aes(x = Altura)) +
-  geom_density(
-    aes(
-      group = Sexo,
-      colour = Sexo,
-      fill = Sexo
-    ),
-    alpha = 0.2
-  )
-```
-
-# Conclusiones
-
-Este modelo de regresión logística parece haber pasado todos los supuestos de dicha regresión, no obstante, con muy buenos valores en las métricas. Sería posible usarlo para clasificar en la vida real.
+  - <https://en.wikipedia.org/wiki/Logistic_regression>
+  - <https://rpubs.com/Joaquin_AR/229736>
+  - <https://raymondltremblay.github.io/ANALITICA/TF5_Regresion_logistica.html>

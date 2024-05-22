@@ -15,12 +15,16 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = "center", warning = FALSE, messag
 
 # Introducción
 
+En este notebook se va a explicar el método de Análisis de Discriminante Lineal y Cuadrático con el objetivo de clasificar una variable binaria. Mediante un ejemplo práctico se mostrará como llevar a cabo dichas técnicas.
+
+
+
 ## dataset
 
 
 En este cuaderno vamos a analizar el dataset llamado
 [*salud.xlsx*](../../../../files/salud.xlsx).
-Este contiene microdatos relativos a la **Encuesta Nacional de Salud. Resultados**. Concretamente, datos correspondientes al año 2017. Las variables de interés son las siguientes:
+Este contiene microdatos relativos a la [Encuesta Nacional de Salud](https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736176783&menu=resultados&idp=1254735573175). Concretamente, datos correspondientes al año 2017. Las variables de interés son las siguientes:
 
   - **EDAD**: Identificación del adulto seleccionado: Edad.
   - **SEXO**: Identificación del adulto seleccionado: Sexo.
@@ -31,11 +35,39 @@ Este contiene microdatos relativos a la **Encuesta Nacional de Salud. Resultados
 El objetivo de este estudio será aplicar un Análisis **Discriminante** para intentar
 clasificar el sexo de la población a partir del resto de variables.
 
+
+
+
+
+## Descripción del trabajo a realizar
+
+Se pretende hacer un Análisis
+de Discriminante empleando los procedimientos de LDA (Análisis de Discriminante Lineal) y  QDA (Análisis de Discriminante Cuadrático).
+
+  -   Hacer un análisis exploratorio. Ver si las variables separan bien las clases.
+  - Convertir a factor la variable respuesta.
+  - Realizar una partición de datos Train/Test.
+  -   Fijar semilla cuando se usen números aleatorios (para la reproductividad).
+  - Ejecutar algoritmos lda/qda y evaluar su bondad.
+
+
+
+
+
+# Análisis Exploratorio (EDA)
+
+EDA viene del Inglés *Exploratory Data Analysis* y son los pasos relativos en los que se exploran las variables para tener una idea de que forma toma el dataset.
+
+
+
+## Cargar Librerías
+Lo primero de todo vamos a cargar las librerías necesarias para ejecutar el resto del código del trabajo:
+
 ```{r}
 #| label: librerias
 #| message: false
 #| warning: false
-# Librerias
+# Librerías
 library(readxl) # Para leer los excels
 library(dplyr) # Para tratamiento de dataframes
 library(ggplot2) # Nice plots
@@ -44,27 +76,27 @@ library(MASS) # funciones lda() y qda()
 library(klaR) # partimat
 ```
 
+## Lectura datos
+
+Ahora cargamos los datos del excel correspondientes a la pestaña *"Datos"* y vemos si hay algún NA o algún valor igual a 0 en nuestro dataset. Vemos que no han ningún NA (missing value) en el dataset luego no será necesario realizar ninguna técnica para imputar los missing values o borrar observaciones.
+
 Cargamos entonces el conjunto de datos:
+
 
 ```{r}
 #| label: cargar_datos
 datos <- read_excel("../../../../files/salud.xlsx", sheet = "Datos")
 ```
 
+Veamos un resumen de los datos y si hay algún NA para quitarlo/imputarlo. 
+```{r}
+datos$Edad <- as.numeric(datos$Edad)
+datos$Altura <- as.numeric(datos$Altura)
+datos$Peso <- as.numeric(datos$Peso)
+summary(datos)
 
-
-
-## Descripción del trabajo a realizar
-
-**(Esto irá en la web de explica)** Se pretende hacer un Análisis
-de Discriminante empleando los procedimientos de LDA (Análsis de Discriminante Lineal) y  QDA (Análisis de Discriminante Cuadrático).
-
-  -   Hacer un análisis exploratorio. Ver si las variables separan bien las clases.
-  - Convertir a factor la variable respuesta.
-  - Realizar una partición de datos Train/Test.
-  -   Fijar semilla cuando se usen números aleatorios (para la reproductividad).
-  - Ejecutar algoritmos lda/qda y evaluar su bondad.
-
+cat("Hay un número de NA's igual a: ",sum(is.na(datos)),"\n")
+```
 
 
 # Análisis de Discrminante: LDA y QDA 
@@ -91,31 +123,16 @@ El análisis discriminante se puede dividir en dos tipos principales:
 
 
 
-## Análisis Exploratorio (EDA[^1])
 
-[^1]: EDA viene del Inglés *Exploratory Data Analysis* y son los pasos
-    relativos en los que se exploran las variables para tener una idea
-    de que forma toma el dataset.
-
-
-
-Veamos un resumen de los datos y si hay algún NA para quitarlo/imputarlo. 
-```{r}
-datos$Edad  <- as.numeric(datos$Edad)
-datos$Altura  <- as.numeric(datos$Altura )
-datos$Peso  <- as.numeric(datos$Peso)
-summary(datos)
-sum(is.na(datos))
-```
 
 Ahora grafiquemos los histogramas de las variables distinguiendo entre variable respuesta a ver si alguno de ellos parece separar bien las variables y por tanto es susceptible de que funcione luego bien en LDA/QDA.
 
-Vamos a dibujar las denisdades de las variables distinguiendo entre las clases de la variable respuesta para ver si alguna de las variables permite una clara separación entre variables.
+Vamos a dibujar las densidades de las variables distinguiendo entre las clases de la variable respuesta para ver si alguna de las variables permite una clara separación entre variables.
 
 ```{r}
 library(ggplot2)
 ggplot(datos, aes(Edad)) +
-  geom_density(aes(group = Sexo, colour = Sexo, fill = Sexo), alpha = 0.1)  +
+  geom_density(aes(group = Sexo, colour = Sexo, fill = Sexo), alpha = 0.1) +
   theme(text = element_text(size = 9))
 ```
 
@@ -123,14 +140,14 @@ ggplot(datos, aes(Edad)) +
 ```{r}
 library(ggplot2)
 ggplot(datos, aes(Altura)) +
-  geom_density(aes(group = Sexo, colour = Sexo, fill = Sexo), alpha = 0.1)  +
+  geom_density(aes(group = Sexo, colour = Sexo, fill = Sexo), alpha = 0.1) +
   theme(text = element_text(size = 9))
 ```
 
 ```{r}
 library(ggplot2)
 ggplot(datos, aes(Peso)) +
-  geom_density(aes(group = Sexo, colour = Sexo, fill = Sexo), alpha = 0.1)  +
+  geom_density(aes(group = Sexo, colour = Sexo, fill = Sexo), alpha = 0.1) +
   theme(text = element_text(size = 9))
 ```
 
@@ -143,7 +160,7 @@ Veamos ahora en 2D las clasificaciones y observamos que hay buenas discriminacio
 datos$Sexo <- as.factor(datos$Sexo)
 Label <- datos$Sexo
 colo <- c("pink", "#1874CD")[Label]
-X <- datos[, c(1,3:4)]
+X <- datos[, c(1, 3:4)]
 pairs(X, main = "Diabetes data set", pch = 20, col = colo, lower.panel = NULL, cex = 0.2, oma = c(1, 3, 3, 15))
 ```
 
@@ -160,7 +177,7 @@ datos$Sexo <- as.factor(datos$Sexo)
 
 Para evitar el **overffiting** debido a que el modelo se ha entrenado demasiado con los datos proporcionados, vamos a realizar una partición de datos y una vez entrenado el modelo, lo evaluaremos con la partición segunda.
 
-Para ello usamos la función `caret::createDataPartition()` que nos permite mantener la proporción de la variable binaria respuesta. En caso de no usar esta función podriamos estar dejando en la partición de entreno observaciones con la misma variable respueta y dejar la clase minoritaria infrarepresnetada, lo que podría incurrir en un mal ajsute del modelo para dicha clase.
+Para ello usamos la función `caret::createDataPartition()` que nos permite mantener la proporción de la variable binaria respuesta. En caso de no usar esta función podríamos estar dejando en la partición de entreno observaciones con la misma variable respueta y dejar la clase minoritaria infrarepresnetada, lo que podría incurrir en un mal ajuste del modelo para dicha clase.
 
 ```{r}
 set.seed(785248) # For Reproducibility
@@ -183,10 +200,10 @@ Como se ha comentado previamente:
 ```{r}
 set.seed(785248) # For Reproducibility
 
-lda.class.salud <- lda(Sexo ~ Altura + Peso + Edad , data = saludTrain)
+lda.class.salud <- lda(Sexo ~ Altura + Peso + Edad, data = saludTrain)
 # qda.class.diabetes
 
-plot <- partimat(Sexo ~ Altura + Peso + Edad , data = saludTrain, method = "lda")
+plot <- partimat(Sexo ~ Altura + Peso + Edad, data = saludTrain, method = "lda")
 ```
 
 ```{r}
@@ -227,14 +244,13 @@ Como se ha comentado previamente:
 ```{r}
 set.seed(785248) # For Reproducibility
 
-qda.class.salud <- qda(Sexo ~ Altura + Peso + Edad , data = saludTrain)
+qda.class.salud <- qda(Sexo ~ Altura + Peso + Edad, data = saludTrain)
 # qda.class.diabetes
 
-plot <- partimat(Sexo ~ Altura + Peso + Edad , data = saludTrain, method = "qda")
+plot <- partimat(Sexo ~ Altura + Peso + Edad, data = saludTrain, method = "qda")
 ```
 
 ```{r}
-
 set.seed(785248)
 
 # predict with the lda model and test data
@@ -254,7 +270,15 @@ confusionMatrix(pred.qda, saludTest$Sexo)
 
 **Comparando** estos resultados con los del modelo LDA, observamos ambos modelos tienen una  exactitud, sensibilidad y valor predictivo negativo parecidos. 
 
-# Conclusiones
+# Conclusión
 
 
 En el presente estudio se ha visto como poder clasificar el Sexo de individuos en sus respectivas clases, de acuerdo a variables de edad, altura y peso. Se ha certificado que esto es posible y que la variable Edad no tiene sentido incluirla ya que en función de la Edad de una persona no es posible clasificar su sexo.Estos hechos han permitido discriminar bastante bien la variable respuesta mediante modelos de Análisis de Discriminante Lineal y Cuadrático.
+
+
+
+
+# Bibliografía
+
+  - <https://rpubs.com/Joaquin_AR/233932>
+  - <https://rpubs.com/jaimeisaacp/775949>

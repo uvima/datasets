@@ -1,24 +1,13 @@
-En este cuaderno vamos a procesar un conjunto de datos para
-posteriormente analizar el nivel de estudios de una población(con gente
-con muchos esudios y gente con muy pocos) a partir de los microdatos de
-la **Encuestas de estructura salarial. Resultados** Concretamente, se
-han tomado los datos relativos a **2018**.
+En este cuaderno vamos a procesar un conjunto de datos para posteriormente analizar el nivel de estudios de una población (con gente con muchos estudios y gente con muy pocos) a partir de los microdatos de la **Encuestas de estructura salarial. Resultados** Concretamente, se han tomado los datos relativos a **2018**.
 
-Los microdatos de la *Encuestas de estructura salarial. Resultados*
-pueden descargarse en el siguiente link:
-<https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177025&menu=resultados&secc=1254736061996&idp=1254735976596#!tabs-1254736195110>.
-De dichos microdatos leemos el fichero en formato .RData y vamos a tomar
-las siguientes variables:
+Los microdatos de la *Encuestas de estructura salarial. Resultados* pueden descargarse en el siguiente link: <https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177025&menu=resultados&secc=1254736061996&idp=1254735976596#!tabs-1254736195110>. De dichos microdatos leemos el fichero en formato .RData y vamos a tomar las siguientes variables:
 
-# Variables de Intés
+# Variables de Interés
 
-Aquí se muestran las variables que vamos a escoger para el estudio de un
-anaálisis de discriminante y el nombre que tomará en el dataset
-exportado.
+Aquí se muestran las variables que vamos a escoger para el estudio de un anaálisis de discriminante y el nombre que tomará en el dataset exportado.
 
 -   **ESTU**: Nivel de estudios del encuestado.
--   **RETRINOIN**: Sueldo bruto anual (sin incluir subsidios por
-    incapacidad).
+-   **RETRINOIN**: Sueldo bruto anual (sin incluir subsidios por incapacidad).
 -   **RETRIIN**: Sueldo bruto anual por incapacidad.
 -   **ANOS2**: Edad en años cumplidos del encuestado.
 -   **ANOANTI**: Años de antigüedad.
@@ -57,8 +46,7 @@ datos2 <- datos2[, c("Estudios", "Antiguedad", "Salario", "Edad", "Vacaciones")]
 
 # Creamos excel con datos
 library("writexl")
-write_xlsx(datos2, "/Users/davpero/Desktop/laboral.xlsx")
+write_xlsx(datos2, "../../../../files/laboral.xlsx")
 ```
 
-Este dataset será el que se proporcione para el estudiante para hacer
-sus análisis.
+Este dataset será el que se proporcione para el estudiante para hacer sus análisis.

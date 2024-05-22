@@ -15,158 +15,157 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = "center", warning = FALSE, messag
 
 # Introducción
 
+En este notebook se expondrá como llevar a cabo un Análisis Cluster de tipo Jerárquico a partir de un conjunto de datos, explicando los fundamentos teóricos en el que se basa para agrupar los datos.
+
 ## dataset
 
-En este cuaderno vamos a analizar el dataset llamado
-[*ecv_cluster.xlsx*](../../../files/ecv_cluster.xlsx).
-Este contiene datos por Comunidades Autónomas sobre la tasa de riesgo de pobreza, la carencia material o la situación laboral que encontramos dentro de la Encuesta de Condiciones de Vida (ECV). Datos correspondientes al año 2021. Las variables de interés son las siguientes:
-
-
+En este cuaderno vamos a analizar el dataset llamado [*ecv_cluster.xlsx*](../../../files/ecv_cluster.xlsx). Este contiene datos por Comunidades Autónomas sobre la tasa de riesgo de pobreza, la carencia material o la situación laboral que encontramos dentro de la [Encuesta de Condiciones de Vida (ECV)](https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.ine.es/dyngs/INEbase/es/operacion.htm%3Fc%3DEstadistica_C%26cid%3D1254736176807%26menu%3DultiDatos%26idp%3D1254735976608&ved=2ahUKEwifjNG7yZGGAxWcVKQEHeTjDs8QFnoECAYQAQ&usg=AOvVaw0SHHG9Z7tm62Y7fE5HapVb). Datos correspondientes al año 2021. Las variables de interés son las siguientes:
 
 -   **CCAA**: Comunidades Autónomas
 -   **taspobex**: Tasa de riesgo de pobreza o exclusión social (indicador AROPE).
 -   **taspob**: Tasa en riesgo de pobreza (renta año anterior a la entrevista).
--   **tascar**: Tasa peresonas con carencia material severa.
+-   **tascar**: Tasa personas con carencia material severa.
 -   **tasvivtrab**: Tasa de hogares viviendo con baja intensidad en el trabajo (de 0 a 59 años).
 
+El objetivo de este estudio será aplicar un Análisis **Cluster** para hacer grupos de comunidades autónomas en función de las variables definidas arriba. Concretamente usaremos un cluster jerárquico.
 
-El objetivo de este estudio será aplicar un Análisis **Cluster** para
-hacer grupos de comunidades autónomas en función de las variables definidas arriba. Concretamente usaremos un cluster jerárquico.
+## Descripción del trabajo a realizar
+
+Se pretende hacer un Análisis Cluster empleando el procedimiento Cluster Jerárquico de las **CCAA** en función a las variables **taspobex** y **tascar** .
+
+-   Hacer un análisis exploratorio.Ver si hay NA's y si es necesario escalar los datos.
+-   Variables sobre las que se buscan cluster (*taspobex*, *tascar*).
+-   Estandarizar datos y probar cluster jerárquico con k=3.
+-   Elegir Función Distancia y Método de Enlace (o comparar varias).
+-   Interpretar resultados.
+-   Ver métodos Elbow y Silhouette si hay otro número óptimo de clusters y en ese caso repetir el estudio.
+
+# Análisis Exploratorio (EDA)
+
+EDA viene del Inglés *Exploratory Data Analysis* y son los pasos relativos en los que se exploran las variables para tener una idea de que forma toma el dataset.
+
+## Cargar Librerías
+
+Lo primero de todo vamos a cargar las librerías necesarias para ejecutar el resto del código del trabajo:
 
 ```{r}
 #| label: librerias
 #| message: false
 #| warning: false
-# Librerias
+# Librerías
 library(readxl) # Para leer los excels
 library(dendextend) # Para dendogramas
 library(dplyr) # Para tratamiento de dataframes
 library(ggplot2) # Nice plots
 library(stats) # hclust package
-
 library(factoextra) # fviz_cluster function
-
+library(gridExtra) # layout de los gráficos
 ```
 
-Cargamos entonces el conjunto de datos:
+## Lectura de datos
+
+Ahora cargamos los datos del excel correspondientes a la pestaña *"Datos"* y vemos si hay algún NA o algún valor igual a 0 en nuestro dataset. Vemos que no han ningún NA (missing value) en el dataset luego no será necesario realizar ninguna técnica para imputar los missing values o borrar observaciones.
 
 ```{r}
 #| label: cargar_datos
 datos <- read_excel("../../../files/ecv_cluster.xlsx", sheet = "Datos")
 ```
 
-
-
-
-## Descripción del trabajo a realizar
-
-**(Esto irá en la web de explica)** Se pretende hacer un Análisis
-Cluster empleando el procedimiento Cluster Jerárquico de las **CCAA** en
-función a las variables **taspobex** y **tascar** .
-
--   Hacer un análisis exploratorio.Ver si hay NA's y si es necesario escalar los datos.
--   Variables sobre las que se buscan cluster (*taspobex*, *tascar*).
-- Estandarizar datos y probar cluster jerárquico con k=3.
--  Elegir Función Distancia y Método de Enlace (o comparar varias).
--  Interpretar resultados.
--  Ver métodos Elbrow y Silhouette si hay otro número óptimo de clusters y en ese caso repetir el estudio.
-
-
 # Análisis Exploratorio (EDA[^1])
 
-[^1]: EDA viene del Inglés *Exploratory Data Analysis* y son los pasos
-    relativos en los que se exploran las variables para tener una idea
-    de que forma toma el dataset.
+[^1]: EDA viene del Inglés *Exploratory Data Analysis* y son los pasos relativos en los que se exploran las variables para tener una idea de que forma toma el dataset.
 
-Lo primero de todo vamos a cargar las librearias necesarias para
-ejecutar el resto del código del trabajo:
+Lo primero de todo vamos a cargar las librearías necesarias para ejecutar el resto del código del trabajo:
 
+```{r}
+# Histogram dim1
+histogram <- ggplot(datos, aes(x = taspobex)) +
+  geom_histogram(fill = "deepskyblue2", color = "navy", bins = 5) +
+  labs(title = "Histogram of Salmedmuj", x = "taspobex", y = "Frequency") +
+  theme_minimal(base_size = 8)
+
+# Box Plot dim1
+boxplot <- ggplot(datos, aes(x = "d", y = taspobex)) +
+  geom_boxplot(fill = "deepskyblue2", color = "navy") +
+  stat_boxplot(geom = "errorbar", width = 0.2) +
+  labs(title = "Box Plot of taspobex", x = "", y = "taspobex") +
+  theme_minimal(base_size = 8) +
+  theme(
+    axis.title.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank()
+  )
+
+
+# Histogram dim2
+histogram2 <- ggplot(datos, aes(x = tascar)) +
+  geom_histogram(fill = "deepskyblue2", color = "navy", bins = 5) +
+  labs(title = "Histogram of tascar", x = "tascar", y = "Frequency") +
+  theme_minimal(base_size = 8)
+
+# Box Plot dim2
+boxplot2 <- ggplot(datos, aes(x = "d", y = tascar)) +
+  geom_boxplot(fill = "deepskyblue2", color = "navy") +
+  stat_boxplot(geom = "errorbar", width = 0.2) +
+  labs(title = "Box Plot of tascar", x = "", y = "tascar") +
+  theme_minimal(base_size = 8) +
+  theme(
+    axis.title.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank()
+  )
+
+
+
+grid.arrange(histogram, histogram2, boxplot, boxplot2, nrow = 2, ncol = 2, widths = c(0.3, 0.3))
+```
+
+```{r}
+#| label: factor
+ifelse(sum(is.na(datos)) == 0, print("There is no NA in the dataset."), print("There is some NA in the dataset."))
+```
 
 # Clustering: Cluster Jerárquico
 
 ## Introducción
 
-El **Análisis de clúster** es una técnica de aprendizaje no supervisado
-que agrupa datos similares en conjuntos, llamados clústeres. El objetivo
-es dividir un conjunto de datos en grupos homogéneos, donde los miembros
-de cada grupo son más similares entre sí que con los miembros de otros
-grupos, según algún criterio de similitud predefinido.
+El **Análisis Cluster** es una técnica de aprendizaje no supervisado que agrupa datos similares en conjuntos, llamados clusteres. El objetivo es dividir un conjunto de datos en grupos homogéneos, donde los miembros de cada grupo son más similares entre sí que con los miembros de otros grupos, según algún criterio de similitud predefinido.
 
-Concretamente, el **Cluster Jerárquico** realiza estos grupos -o
-clusters- de manera jerárquica y ascendente, es decir que sucesivamente
-van fusionando grupos desde el elemento individual (mayor nivel de
-grupos, uno por individuo) hacia arriba.
+Concretamente, el **Cluster Jerárquico** realiza estos grupos -o clusters- de manera jerárquica y ascendente, es decir que sucesivamente van fusionando grupos desde el elemento individual (mayor nivel de grupos, uno por individuo) hacia arriba.
 
-La **representación** de la jerarquía de clúster se representa por medio
-de un **dendograma**, en el que las sucesivas fusiones de las ramas a
-los distintos niveles nos informan de las sucesivas fusiones de los
-grupos en grupos de superior nivel (mayor tamaño, menor homogeneidad)
-sucesivamente:
+La **representación** de la jerarquía de cluster se representa por medio de un **dendograma**, en el que las sucesivas fusiones de las ramas a los distintos niveles nos informan de las sucesivas fusiones de los grupos en grupos de superior nivel (mayor tamaño, menor homogeneidad) sucesivamente:
 
-Los **pasos** conretos del Cluster Jerárquico son:
+Los **pasos** concretos del Cluster Jerárquico son:
 
-1.  **Matriz de distancia o similitud**: Se calcula una matriz que mide
-    la distancia o similitud entre cada par de observaciones. Algunas de
-    las medidas comunes son:
-    -   **Euclidiana**: Mide la distancia más corta entre dos puntos en
-        un espacio euclidiano. Es útil cuando las dimensiones tienen una
-        **escala similar** y se desea tener en cuenta la magnitud
-        absoluta de las diferencias.
-    -   **Manhattan (o Cityblock)**: Calcula la suma de las diferencias
-        absolutas entre las coordenadas de dos puntos. Es útil cuando
-        las dimensiones **no están en la misma escala** y se quiere
-        una medida robusta a los valores atípicos.
-    -   **Gower**: métrica de distancia utilizada específicamente para
-        conjuntos de **datos mixtos** que contienen variables
-        numéricas y categóricas. Esta distancia tiene en cuenta
-        diferentes tipos de variables al calcular la similitud entre dos
-        observaciones. Se define como una combinación ponderada de las
-        distancias entre variables.
-2.  **Fusión de clústeres**: En el enfoque aglomerativo, se fusionan
-    gradualmente los clústeres más cercanos según la medida de distancia
-    o similitud elegida. Esto nos lleva a la pregunta, ¿Cómo se calcula
-    la distancia entre Clusters calcular la distancia o similitud entre
-    clústeres en el proceso de agrupamiento jerárquico?. Existen varios **métodos de enlace**, destacando:
-    -   **Enlace Simple (Single Linkage)**: Calcula la distancia entre clústeres como la distancia más corta entre cualquier punto de un clúster y cualquier punto del otro clúster. Es sensible a la presencia de valores atípicos y al fenómeno del encadenamiento.
-    -   **Enlace Completo (Complete Linkage)**: Mide la distancia entre clústeres como la distancia más larga entre cualquier punto de un clúster y cualquier punto del otro clúster. Menos sensible a valores atípicos, pero puede generar clústeres de tamaño desigual.
-    -   **Enlace Promedio (Average Linkage)**: Calcula la distancia entre clústeres como la media de todas las distancias entre pares de puntos, uno de cada clúster. Más robusto frente a valores atípicos que el enlace simple y menos propenso al encadenamiento que el enlace completo.
-    -   **Enlace de Ward**: Minimiza la varianza dentro de los clústeres al fusionarlos. Intenta minimizar la suma de cuadrados dentro de cada clúster después de la fusión.
-3.  **Representación jerárquica**: Esto resulta en un dendrograma que
-    muestra la jerarquía de agrupamiento, donde la altura en el
-    dendrograma indica la distancia o disimilitud en la que se unen los
-    clústeres.
+1.  **Matriz de distancia o similitud**: Se calcula una matriz que mide la distancia o similitud entre cada par de observaciones. Algunas de las medidas comunes son:
+    -   **Euclidiana**: Mide la distancia más corta entre dos puntos en un espacio euclidiano. Es útil cuando las dimensiones tienen una **escala similar** y se desea tener en cuenta la magnitud absoluta de las diferencias.
+    -   **Manhattan (o Cityblock)**: Calcula la suma de las diferencias absolutas entre las coordenadas de dos puntos. Es útil cuando las dimensiones **no están en la misma escala** y se quiere una medida robusta a los valores atípicos.
+    -   **Gower**: métrica de distancia utilizada específicamente para conjuntos de **datos mixtos** que contienen variables numéricas y categóricas. Esta distancia tiene en cuenta diferentes tipos de variables al calcular la similitud entre dos observaciones. Se define como una combinación ponderada de las distancias entre variables.
+2.  **Fusión de clusteres**: En el enfoque aglomerativo, se fusionan gradualmente los clusteres más cercanos según la medida de distancia o similitud elegida. Esto nos lleva a la pregunta, ¿Cómo se calcula la distancia entre Clusters calcular la distancia o similitud entre clusteres en el proceso de agrupamiento jerárquico?. Existen varios **métodos de enlace**, destacando:
+    -   **Enlace Simple (Single Linkage)**: Calcula la distancia entre clusteres como la distancia más corta entre cualquier punto de un cluster y cualquier punto del otro cluster. Es sensible a la presencia de valores atípicos y al fenómeno del encadenamiento.
+    -   **Enlace Completo (Complete Linkage)**: Mide la distancia entre clusteres como la distancia más larga entre cualquier punto de un cluster y cualquier punto del otro cluster. Menos sensible a valores atípicos, pero puede generar clusteres de tamaño desigual.
+    -   **Enlace Promedio (Average Linkage)**: Calcula la distancia entre clusteres como la media de todas las distancias entre pares de puntos, uno de cada cluster. Más robusto frente a valores atípicos que el enlace simple y menos propenso al encadenamiento que el enlace completo.
+    -   **Enlace de Ward**: Minimiza la varianza dentro de los clusteres al fusionarlos. Intenta minimizar la suma de cuadrados dentro de cada cluster después de la fusión.
+3.  **Representación jerárquica**: Esto resulta en un dendrograma que muestra la jerarquía de agrupamiento, donde la altura en el dendrograma indica la distancia o disimilitud en la que se unen los clusteres.
 
-El clustering jerárquico permite explorar diferentes niveles de
-granularidad en los datos, pero puede ser computacionalmente costoso
-para grandes conjuntos de datos. Es **crucial** elegir la medida de
-similitud adecuada y el método de enlace (criterio para unir clústeres,
-single linkage, complete linkage, average linkage,...) para obtener
-resultados significativos.
+El clustering jerárquico permite explorar diferentes niveles de granularidad en los datos, pero puede ser computacionalmente costoso para grandes conjuntos de datos. Es **crucial** elegir la medida de similitud adecuada y el método de enlace (criterio para unir clusteres, single linkage, complete linkage, average linkage,...) para obtener resultados significativos.
 
 # Modelo
 
 ## Formulación
 
-**IMPORTANTE**: 
- 
--   Ver que no hay ningún **NA** en el dataset.
--    El **escalado** es un paso esencial en la fase de preprocesamiento de datos para los algoritmos de agrupación. Garantiza que cada característica contribuya por igual al proceso de decisión del algoritmo, lo que lleva a resultados de agrupación más precisos e interpretables.
+**IMPORTANTE**:
 
-```{r}
-#| label: factor
-ifelse(sum(is.na(data)) == 0, print("There is no NA in the dataset."), print("There is some NA in the dataset."))
-```
+-   El **escalado** es un paso esencial en la fase de preprocesamiento de datos para los algoritmos de agrupación. Garantiza que cada característica contribuya por igual al proceso de decisión del algoritmo, lo que lleva a resultados de agrupación más precisos e interpretables.
 
-Notar que la distancia más apropiada para usar es la Euclidea ya que ambas variables  son del mismo tipo, tasas, y representan el mismo fenómeno demográfico y en la misma escala (una vez hayamos escalado). 
-En cuanto al método para hacer los clusters, vamos a dejar el que viene por defecto, el complete. Este se basa en medir la distancia entre clústeres como la distancia más larga entre cualquier punto de un clúster y cualquier punto del otro clúster. Menos sensible a valores atípicos, pero puede generar clústeres de tamaño desigual.
+Notar que la distancia más apropiada para usar es la Euclidea ya que ambas variables son del mismo tipo, tasas, y representan el mismo fenómeno demográfico y en la misma escala (una vez hayamos escalado). En cuanto al método para hacer los clusters, vamos a dejar el que viene por defecto, el complete. Este se basa en medir la distancia entre clusteres como la distancia más larga entre cualquier punto de un cluster y cualquier punto del otro cluster. Menos sensible a valores atípicos, pero puede generar clusteres de tamaño desigual.
 
 ```{r}
 # Preparación de los datos
-resultado <- datos[, c("taspobex","tascar")]
+resultado <- datos[, c("taspobex", "tascar")]
 
-resultado <- scale(resultado) #scaling/standardizing
+resultado <- scale(resultado) # scaling/standardizing
 rownames(resultado) <- datos$CCAA # Para que nos salgan luego los nombres
-comunidades <- datos$CCAA
 
 # Matriz de distancias
 d <- dist(resultado, method = "euclidean")
@@ -179,135 +178,100 @@ plot(hc1, cex = 0.6, hang = -1)
 abline(h = 2, col = "red", lty = 2)
 ```
 
-
 En el dendrograma mostrado arriba, cada hoja corresponde a una observación. A medida que avanzamos en el árbol, las observaciones similares se combinan en ramas, las cuales a su vez se fusionan a una altura mayor.
 
 La altura de la fusión, representada en el eje vertical, indica la (des) similitud entre dos observaciones. Cuanto mayor sea la altura de la fusión, menos similares son las observaciones. Es importante destacar que las conclusiones sobre la proximidad de dos observaciones solo se pueden inferir en función de la altura donde las ramas que contienen esas dos observaciones se fusionan inicialmente. No podemos usar la proximidad de dos observaciones a lo largo del eje horizontal como criterio de su similitud.
 
 La altura del corte en el dendrograma controla el número de clusters obtenidos. **Cumple el mismo papel que 'k'** en la agrupación **k-means**. Para identificar subgrupos (es decir, clusters), podemos cortar el dendrograma con la función `cutree`. Suponer que queremos 3 clusteres:
 
-
 ```{r}
-# Cut tree into 4 groups
+# Cut tree into 3 groups
 sub1 <- cutree(hc1, k = 3)
 
 # Number of members in each cluster
 table(sub1)
 ```
 
-
-Podemos añadir los clusters junto al dataframe con la función `dplyr::mutate`.  El gráfico de puntos dibujando los clusters por colores vamos a dibujarlo para los valores origianles sin escalar (ya que el escalado sólo lo hemos hecho a la hora de definir los clusters).
+Podemos añadir los clusters junto al dataframe con la función `dplyr::mutate`. El gráfico de puntos dibujando los clusters por colores vamos a dibujarlo para los valores originales sin escalar (ya que el escalado sólo lo hemos hecho a la hora de definir los clusters).
 
 ```{r}
 # Mostrar Clusters
 datos %>%
   mutate(cluster = sub1) %>%
-  select("CCAA", "taspobex", "tascar","cluster")
-
-
+  select("CCAA", "taspobex", "tascar", "cluster")
 ```
-
 
 ```{r}
 #| echo: false
-
-colnames(resultado)<-c( "taspobex","tascar" ) # Damos el nombre de las CCAA como columnas
-resultado<-as.data.frame(resultado)
-resultado$CCAA<-rownames(resultado)
-
-
-
+colnames(resultado) <- c("taspobex", "tascar") # Damos el nombre de las CCAA como columnas
+resultado <- as.data.frame(resultado)
+resultado$CCAA <- rownames(resultado)
 ```
 
 ```{r}
 #| fig-align: center
-
-
-#Graficamos datos diferenciando clusters 
-
-
-g1<- ggplot(datos, aes(taspobex, tascar, label=CCAA))+ geom_point(aes(colour = factor(sub1)))+geom_text(hjust=0, vjust=0, size = 2,aes(colour = factor(sub1)))+labs(colour="Clusters")
+# Graficamos datos diferenciando clusters
+g1 <- ggplot(datos, aes(taspobex, tascar, label = CCAA)) +
+  geom_point(aes(colour = factor(sub1))) +
+  geom_text(hjust = 0, vjust = 0, size = 2, aes(colour = factor(sub1))) +
+  labs(colour = "Clusters")
 
 g1
-
-
 ```
 
+Se puede destacar lo siguiente:
 
-Parece haber 3 clusters claros.
+-   Por un lado, en **azul** las CCAA que presentan una tasa de riesgo de pobreza y una tasa de personas con carencia material severa muy alta. Estas son Canarias, Ceuta y Melilla, lo cual cabría pensar que tiene sentido ya que ambas tres regiones contienen fuertes corrientes migratorias debido a que se encuentran en puntos fronterizos en el que hay mucha inmigración ilegal procedente de países como Marruecos. Esta población es más propensa a prior a sufrir pobreza y carencia material debido a su situación precaria e irregular.
 
--   Por un lado, en **azul** las CCAA que presentan  una tasa de riesgo de probeza y una tasa de personas con carencia material severa muy alta. Estas son Canarias, Ceuta y Melilla, lo cual cabría pensar que tiene sentido ya que ambas tres regiones contienen fuertes corrientes migratorias debido a que se encuentran en puntos fronterizos en el que hay mucha inmigración ilegal procedente de países como Marruecos.
+-   En **rojo** se encuentran las CCAA que presentan una tasa de riesgo de pobreza similares a las anteriores pero la de personas con carencia material alta no es tan grande como en las citadas anteriormente. Estas son Andalucía, Murcia y Extremadura, que efectivamente es común que aparezcan en la prensa anualmente como regiones con más pobreza dentro de España (a excepción de Murica) y sin embargo presentan una tasa de personas con carencia material no tan alta como las anteriores puesto que no hay tanta población en situación irregular que pueda derivar en una carencia material sustancial.
 
-- En **rojo** se encuentran las CCAA que presentan una tasa de riesgo de probeza similares a las anteriores pero la de personas con carencia materil alta no es tan grande como en las citadas anteriormente. Estas son Andalucía, Murica y Extremadura, que efectivamnete es común que aparezcan en la prensa anualmente como regiones con más pobreza dentro de España (a excepción de Murica) y sin embargo presentan una tasa de personas con carencia material no tan alta como las anteriores peusto que no hay tanta población en situació irregular que pueda derivar en una carencia material sustancial.
+-   Por último, en **verde** encontramos el resto de CCAA que tienen valores más razonables para ambos indicadores.
 
-- Por último, en **verde** encontramos el resto de CCAA que tienen valores más razonables para ambos indicadores.
-
-
-
-- Por último, el **cluster rojo** presenta comunidades que tuvieron una incidencia parecida en la primera y segunda ola. 
-
-
-
-
-
-
-
-#  Número Clusters Óptimo
+# Número Clusters Óptimo
 
 Encontrar el número óptimo de clusters implica identificar la cantidad ideal de grupos en los que se pueden dividir los datos de manera significativa y coherente. Es crucial porque determina la calidad y utilidad de los resultados del análisis de agrupamiento.
 
-En este apartado revisaremos si el número de clusters que hemos seleccionado anteriormente (3) es el óoptimo, y de lo contrario haremos de nuevo el análisis con el número que se obtenga.
+En este apartado revisaremos si el número de clusters que hemos seleccionado anteriormente (3) es el óptimo, y de lo contrario haremos de nuevo el análisis con el número que se obtenga.
 
-## Método Elbrow
-
+## Método Elbow
 
 Una de las formas comunes de determinar este número es a través del método del **codo** o **elbow** en inglés. Este método busca identificar el punto donde la adición de más clusters ya no proporciona un beneficio significativo en la varianza explicada o la cohesión dentro de los grupos.
 
-
 Al representar la variación explicada en función del número de clusters, observamos un **gráfico** que se asemeja a la **forma** de un codo. A medida que aumentamos el número de clusters, la varianza explicada tiende a disminuir. El punto en el que esta disminución se estabiliza o se aplana marca el número óptimo de clusters, indicando un equilibrio entre una mayor partición (más clusters) y una adecuada interpretabilidad de los grupos.
 
-
 ```{r}
-#  Método Elbrow
+#  Método Elbow
 set.seed(785248)
-factoextra::fviz_nbclust(resultado,hcut,method="wss")
+factoextra::fviz_nbclust(resultado, hcut, method = "wss")
 ```
 
-El número óptimo de k parece ser 3 que es donde más se reduce la pendiente y la variabilidad explicada no parece disminuir de forma tan rápida. De todos modos, también podría parecer razonable tomar 2. Es por ello que vamos a usar algún método adicional. 
+En el gráfico proporcionado, buscamos el "codo" del gráfico, que es el punto donde la suma total de cuadrados dentro de los clusters (total within-cluster sum of squares) deja de decrecer significativamente con la adición de más clusters.
+
+Observando el gráfico, el punto de inflexión más claro se encuentra en **k = 2**. Aquí es donde la disminución en la suma de cuadrados empieza a ser menos pronunciada en comparación con la disminución entre 1 y 2 clusters. De todos modos, también podría parecer razonable tomar el 3. Es por ello que vamos a usar algún método adicional.
 
 ## Método Silhouette
-
 
 El **método Silhouette** es una técnica utilizada para determinar la calidad de la agrupación en un conjunto de datos. Consiste en calcular el valor de la silueta para cada punto de datos, que mide qué tan similar es un punto a su propio grupo (cohesión) en comparación con otros grupos vecinos (separación).
 
 El proceso implica:
 
-1. **Cálculo de la silueta individual**: Para cada punto de datos, se calcula la silueta, que es la diferencia entre la distancia media intra-cluster (distancia al resto de puntos en su mismo grupo) y la distancia media al cluster más cercano (distancia a los puntos del grupo más próximo, excluyendo el propio grupo).
+1.  **Cálculo de la silueta individual**: Para cada punto de datos, se calcula la silueta, que es la diferencia entre la distancia media intra-cluster (distancia al resto de puntos en su mismo grupo) y la distancia media al cluster más cercano (distancia a los puntos del grupo más próximo, excluyendo el propio grupo).
 
-2. **Valor de la silueta global**: Se obtiene el promedio de las siluetas individuales de todos los puntos de datos en el conjunto. Contra más cercano a 1, mejor formado estará el clsuter.
-
+2.  **Valor de la silueta global**: Se obtiene el promedio de las siluetas individuales de todos los puntos de datos en el conjunto. Contra más cercano a 1, mejor formado estará el cluster.
 
 La siguiente función generará un gráfico que muestra los valores de Silhouette en función del número de clusters. El número óptimo de clusters es típicamente aquel que maximiza el valor de Silhouette, representando una mejor cohesión intra-cluster y separación inter-cluster.
-
 
 ```{r}
 #  Método Silhouette
 set.seed(785248)
-factoextra::fviz_nbclust(resultado,hcut,method="silhouette")
-
+factoextra::fviz_nbclust(resultado, hcut, method = "silhouette")
 ```
 
+Este método nos reafirma que el número óptimo es 2 puesto que es el caso cuyos clusters maximiza el valor de Silhouette, representando una mejor cohesión intra-cluster y separación inter-cluster. No obstante, k=3 también presenta valores muy altos luego también podría ser una buena elección.
 
+**NOTA**: Ahora vamos repetir el estudio anterior con el número de clusters igual a 2 e intentar analizar de nuevo los resultados.
 
-Este método nos reafirma que el número óptimo es 2 puesto que es el caso cuyos clusters maximiza el valor de Silhouette, representando una mejor cohesión intra-cluster y separación inter-cluster. No obstante k=3,también presnta valores muy altos leugo los podríamos tomar.
-
-
-**NOTA**: Ahora vamos repetir el estudio anterior con el número de clusters igual a 2 e intentar analizar de neuvo los resultados.
-
-Vamos a utilizar en todos casos la distancia euclídea como ya se ha razonado antes y vamos a usar diferentes métodos de Fusión de Clusters para ver si obtenemos resutlados significativos. 
-
-
-
+Vamos a utilizar en todos casos la distancia euclídea como ya se ha razonado antes y vamos a usar diferentes métodos de Fusión de Clusters para ver si obtenemos resultados significativos.
 
 ```{r }
 # For Complete method
@@ -331,36 +295,63 @@ sub3 <- cutree(hc3, k = 2)
 # Single method
 hc4 <- hclust(d, method = "single")
 sub4 <- cutree(hc4, k = 2)
-
 ```
-
-
 
 ```{r}
 #| echo: false
+g1 <- ggplot(datos, aes(taspobex, tascar, label = CCAA)) +
+  geom_point(aes(colour = factor(sub1))) +
+  geom_text(hjust = 0, vjust = 0, size = 2, aes(colour = factor(sub1))) +
+  labs(colour = "Clusters") +
+  theme(
+    axis.text = element_text(size = 6),
+    axis.title = element_text(size = 6, face = "bold"), legend.title = element_text(size = 6)
+  )
 
- g1<-ggplot(datos, aes(taspobex, tascar, label=CCAA))+ geom_point(aes(colour = factor(sub1)))+geom_text(hjust=0, vjust=0, size = 2,aes(colour = factor(sub1)))+labs(colour="Clusters")+theme(axis.text=element_text(size=6),
-        axis.title=element_text(size=6,face="bold"),legend.title=element_text(size=6))
- g2<-ggplot(datos, aes(taspobex, tascar, label=CCAA))+ geom_point(aes(colour = factor(sub2)))+geom_text(hjust=0, vjust=0, size = 2,aes(colour = factor(sub2)))+labs(colour="Clusters")+theme(axis.text=element_text(size=6),
-        axis.title=element_text(size=6,face="bold"),legend.title=element_text(size=6))
+g2 <- ggplot(datos, aes(taspobex, tascar, label = CCAA)) +
+  geom_point(aes(colour = factor(sub2))) +
+  geom_text(hjust = 0, vjust = 0, size = 2, aes(colour = factor(sub2))) +
+  labs(colour = "Clusters") +
+  theme(
+    axis.text = element_text(size = 6),
+    axis.title = element_text(size = 6, face = "bold"), legend.title = element_text(size = 6)
+  )
 
- g3<-ggplot(datos, aes(taspobex, tascar, label=CCAA))+ geom_point(aes(colour = factor(sub3)))+geom_text(hjust=0, vjust=0, size = 2,aes(colour = factor(sub3)))+labs(colour="Clusters")+theme(axis.text=element_text(size=6),
-        axis.title=element_text(size=6,face="bold"),legend.title=element_text(size=6))
- 
-  g4<-ggplot(datos, aes(taspobex, tascar, label=CCAA))+ geom_point(aes(colour = factor(sub4)))+geom_text(hjust=0, vjust=0, size = 2,aes(colour = factor(sub4)))+labs(colour="Clusters")+theme(axis.text=element_text(size=6),
-        axis.title=element_text(size=6,face="bold"),legend.title=element_text(size=6))
-  
-  
-  library(ggpubr)
-  ggarrange(g1,g2, g3, g4 + rremove("x.text"), 
-          labels = c("Complete", "ward.D", "Average", "Simple"),
-          ncol = 2, nrow = 2,vjust=0.9,
-          font.label = list(size = 8, color = "black"))
-  
+g3 <- ggplot(datos, aes(taspobex, tascar, label = CCAA)) +
+  geom_point(aes(colour = factor(sub3))) +
+  geom_text(hjust = 0, vjust = 0, size = 2, aes(colour = factor(sub3))) +
+  labs(colour = "Clusters") +
+  theme(
+    axis.text = element_text(size = 6),
+    axis.title = element_text(size = 6, face = "bold"), legend.title = element_text(size = 6)
+  )
+
+g4 <- ggplot(datos, aes(taspobex, tascar, label = CCAA)) +
+  geom_point(aes(colour = factor(sub4))) +
+  geom_text(hjust = 0, vjust = 0, size = 2, aes(colour = factor(sub4))) +
+  labs(colour = "Clusters") +
+  theme(
+    axis.text = element_text(size = 6),
+    axis.title = element_text(size = 6, face = "bold"), legend.title = element_text(size = 6)
+  )
+
+
+library(ggpubr)
+ggarrange(g1, g2, g3, g4 + rremove("x.text"),
+  labels = c("Complete", "ward.D", "Average", "Simple"),
+  ncol = 2, nrow = 2, vjust = 0.9,
+  font.label = list(size = 8, color = "black")
+)
 ```
 
-Notar que en todos casos hemos obtenido (a expeción de con `simple`) distribuciones similares en los clusters, que viene siendo lo mismo que en el caso de k=3 clusters pero agrupando los dos primeros tipos que habíamos visto. Es por ello que los resutlados parecen coherentes.
+Notar que en todos casos hemos obtenido (a excepción de con `simple`) distribuciones similares en los clusters, que viene siendo lo mismo que en el caso de k=3 clusters pero agrupando los dos primeros clusters que habíamos visto. Es por ello que los resultados parecen coherentes.
 
-# Conclusiones
+# Conclusión
 
-Aquí se han explicado los supuestos del cluster jerárquico con un dataset en el que se han creado clusters de CCAA según tasa de riesgo de pobreza y la carencia material. La evidencia nos ha mostrado que se tiende a grupar las comunidades con incidencias más altas por un lado y más bajas por otro.
+Aquí se han explicado los supuestos del cluster jerárquico con un dataset en el que se han creado clusters de CCAA según tasa de riesgo de pobreza y la carencia material. La evidencia nos ha mostrado que se tiende agrupar las comunidades con incidencias más altas por un lado y más bajas por otro.
+
+# Bibliografía
+
+-   <https://rpubs.com/mjimcua/clustering-jerarquico-en-r>
+-   <https://rpubs.com/jaimeisaacp/760355>
+-   <https://www.datacamp.com/es/tutorial/hierarchical-clustering-R>

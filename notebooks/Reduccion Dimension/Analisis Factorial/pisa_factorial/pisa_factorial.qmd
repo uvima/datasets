@@ -15,6 +15,11 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = "center", warning = FALSE, messag
 
 # Introducción
 
+A continuación se expondrá como llevar a cabo una Reducción de Dimensionalidad utilizando un Análisis Factorial. Para ello se utilizará un dataset sobre el que se irán explicando los sucesivos pasos a llevar a cabo.
+
+
+
+
 ## dataset
 
 En este cuaderno vamos a analizar el dataset llamado
@@ -44,7 +49,40 @@ Concretamente en este dataset tenemos las siguientes variables (La escala de res
   - ST183Q03HA: Cuando me he equivocado, dudo sobre mis planes para el futuro.
 
 
+## Descripción del trabajo a realizar
 
+ Se pretende hacer un Análisis
+de Reducción de la Dimensionalidad empleando el procedimiento de Análisis Factorial. 
+
+
+-   Hacer un análisis exploratorio.
+-   Dividir datos en dos partes
+-   Análisis Factorial Exploratorio (EFA)
+
+    -   Estimación matriz correlaciones.
+    -   Verificar que la matriz sea factorizable.
+    -   Método de extracción de factores.
+    -   Número de factores a extraer.
+    -   Extracción factores + rotación.
+    
+-   Análisis Factorial Confirmatorio (CFA)
+
+    -   Método de extracción de factores.
+    -   Probar una o varias estructuras factoriales.
+
+
+
+
+# Análisis Exploratorio (EDA)
+
+
+
+EDA viene del Inglés *Exploratory Data Analysis* y son los pasos relativos en los que se exploran las variables para tener una idea de que forma toma el dataset.
+
+
+
+## Cargar Librerías
+Lo primero de todo vamos a cargar las librerías necesarias para ejecutar el resto del código del trabajo:
 
 ```{r}
 #| label: librerias
@@ -53,66 +91,24 @@ Concretamente en este dataset tenemos las siguientes variables (La escala de res
 # Librerias
 library(readxl) # Para leer los excels
 library(dplyr) # Para tratamiento de dataframes
-library(skimr) # Para funcion skim
-
- # Para llevar a cabo la división de la muestra en dos mitades mediante muestreo de las observaciones
-library(caret)
-
- # Para realizar el AFE, el Análisis Paralelo y otras operaciones como el test de Mardia o el KMO
-library(psych)
-
-# Para graficar las correlaciones obtenidas mediante un mapa de calor
+library(caret) # train/test data
+library(psych) # test mardia /kmo
 library(ggcorrplot)
-
- # Para poder rotar los factores
-library(GPArotation)
-
- # Para realizar el CFA
-library(lavaan)
-
-# Para realizar el diagrama de los CFA
-library(semPlot)
+library(GPArotation) # Para poder rotar los factores
+library(lavaan) # cfa
+library(semPlot) # diagrama cfa
 ```
 
-Cargamos entonces el conjunto de datos:
+
+## Lectura datos
+
+Ahora cargamos los datos del excel correspondientes a la pestaña *"Datos"* y vemos si hay algún NA o algún valor igual a 0 en nuestro dataset. Vemos que no han ningún NA (missing value) en el dataset luego no será necesario realizar ninguna técnica para imputar los missing values o borrar observaciones.
+
 
 ```{r}
 #| label: cargar_datos
 datos <- read_excel("../../../../files/pisa_factorial.xlsx", sheet = "Datos")
 ```
-
-
-
-
-## Descripción del trabajo a realizar
-
-**(Esto irá en la web de explica)** Se pretende hacer un Análisis
-de Reducción de la Dimensionalidad empleando el procedimiento de Análisis Factorial. 
-
-
--   Hacer un análisis exploratorio.
--   Dividir datos en dos partes (una para el análisis exploratorio y otra para el confirmatorio).
-
--   Análisis Factorial Exploratorio (EFA)
-    -   Estimación matriz correlaciones.
-    -   Verificar que la matriz sea factorizable.
-    -   Método de extracción de factores.
-    -   Número de factores a extraer.
-    -   Extracción factores + rotación.
--   Análisis Factorial Confirmatorio (CFA)
-
-    -   Método de extracción de factores.
-    -   Probar una o varias estructuras factoriales.
-
-
-
-# Análisis Exploratorio (EDA[^1])
-
-[^1]: EDA viene del Inglés *Exploratory Data Analysis* y son los pasos
-    relativos en los que se exploran las variables para tener una idea
-    de que forma toma el dataset.
-    
-
 
 
 En primer lugar, cargamos los datos que vamos a utilizar. En este caso, se trata de un conjunto de datos compuesto por 35943 filas y 11 columnas. Las filas corresponden a individuos concertos y las 11 columnas a variables mencionadas previamente.
@@ -128,14 +124,11 @@ Por otra parte, para tener una noción general que nos permita describir el conj
 
 
 ```{r}
-# Dimensión del conjunto de datos
-dim(datos)
-
 # Tipo de variables que contiene
 str(datos)
 
 # Descripción de las variables
-skim(datos)
+summary(datos)
 ```
 
 
@@ -143,16 +136,24 @@ skim(datos)
   Como vamos a hacer un doble Análisis Factorial - Exploratorio y Confirmatorio - vamos a **dividir la muestra en aproximadamente el 50%**, realizando el Exploratorio sobre una mitad, y el Confirmatorio sobre la otra, para ver si los resultados concuerdan.
   
 ```{r}
-#Vamos a extraer simplemente las columnas de identificador del alumno y las de los items que nos interesan (los que miden la competitividad, la perseverancia y el miedo al fracaso):
-subconjunto <- datos[,c("CNTSTUID", "ST181Q02HA", "ST181Q03HA", "ST181Q04HA", "ST182Q03HA", "ST182Q04HA", "ST182Q05HA", "ST182Q06HA", "ST183Q01HA", "ST183Q02HA", "ST183Q03HA")]
-set.seed(2021) #Establecemos una semilla para facilitar la reproductibilidad de los resultados
-subconjunto.ids <- createDataPartition(subconjunto$CNTSTUID, p=0.5, list=F)
-#Obtenemos mediante muestreo aleatorio el 50% de las observaciones (identificadas mediante la columna de ID del alumno)
-datos_AFE <- subconjunto[subconjunto.ids, ] #Para el Exploratorio solo conservamos las observaciones cuyos IDs han sido muestreados
-dim(datos_AFE) #17972 observaciones
-datos_AFC <- subconjunto[-subconjunto.ids, ] #Para el Confirmatorio solo conservamos las observaciones cuyos IDs no han sido muestreados
-dim(datos_AFC) #17971 observaciones
-#Eliminamos la columna de IDs, ya que no nos hace falta:
+# Extraer columnas de identificador del alumno y  de los items que(miden la competitividad, la perseverancia y el miedo al fracaso):
+
+subconjunto <- datos[, c("CNTSTUID", "ST181Q02HA", "ST181Q03HA", "ST181Q04HA", "ST182Q03HA", "ST182Q04HA", "ST182Q05HA", "ST182Q06HA", "ST183Q01HA", "ST183Q02HA", "ST183Q03HA")]
+
+# Seed para garantizar la reproducibilidad
+set.seed(2021)
+# Partición de datos
+subconjunto.ids <- createDataPartition(subconjunto$CNTSTUID, p = 0.5, list = F)
+
+# Para el Exploratorio solo conservamos las observaciones cuyos IDs han sido muestreados
+datos_AFE <- subconjunto[subconjunto.ids, ]
+dim(datos_AFE) # 17972 observaciones
+
+# Para el Confirmatorio solo conservamos las observaciones cuyos IDs no han sido muestreados
+datos_AFC <- subconjunto[-subconjunto.ids, ]
+dim(datos_AFC) # 17971 observaciones
+
+# Eliminamos IDs, ya que no hacen falta:
 datos_AFE$CNTSTUID <- NULL
 datos_AFC$CNTSTUID <- NULL
 ```
@@ -187,6 +188,7 @@ Los pasos generales son:
 
 
 ## Paso 1: Estimación de la matriz de correlaciones.
+
 Dependiendo del tipo de datos que tengamos, debemos utilizar un tipo de correlación u otro:
 
  - **Datos continuos**: La matriz de correlaciones de Pearson y la de Spearman son las más apropiadas ante continuos o ante datos ordinales (categóricos) con más de 7 categorías de respuesta (tienden a la continuidad).
@@ -219,12 +221,12 @@ Entre los métodos para comprobar si la matriz es factorizable destacan:
   - **Calcular el determinante de la matriz de correlaciones**: valores cercanos a cero indican que la matriz es factorizable.
 
 ```{r}
-#Test de esfericidad de Bartlett:
-p_esf <- cortest.bartlett(matriz_correlaciones, n=nrow(datos_AFE))
-cat("El p-valor del test de esfiricidad de Bartlett es: ", p_esf$p.value)
-#KMO:
+# Test de esfericidad de Bartlett:
+p_esf <- cortest.bartlett(matriz_correlaciones, n = nrow(datos_AFE))
+cat("El p-valor del test de esfericidad de Bartlett es: ", p_esf$p.value, "\n")
+# KMO:
 KMO(matriz_correlaciones)
-#Determinante de la matriz:
+# Determinante de la matriz:
 cat("El valor del determinante de la matriz es: ", det(matriz_correlaciones))
 ```
 
@@ -242,9 +244,8 @@ Los test muestran que la matriz es factorizable.
 La ecuación del modelo factorial es la siguiente:
 
 
-\[X_j = a_{j1}F_1 + a_{j2}F_2
-+ ... +a_{j n}F_n + u_j
-\]
+$$X_j = a_{j1}F_1 + a_{j2}F_2+ ... +a_{j n}F_n + u_j$$
+
 
 Donde $X_j$ (variable j) es una combinación lineal de factores comunes y del factor único (especificidad). Los $a_{jh}$ son los pesos factoriales, que representan la importancia que cada factor común tiene en explicar la variable $X_j$.
 
@@ -258,7 +259,7 @@ Existen varios métodos de extracción de factores. Los más comunes son:
 
   - **Ejes principales**. Tampoco requiere de datos que sigan una normal multivariante.
   
-  - **Componentes principales.** Como hemos dicho en la introducción, no es método de ánalisis factorial propiamente dicho, ya que su objetivo es intentar explicar toda la varianza, y no solo la varianza común o compartida. Sin embargo, su uso, aunque no se recomiende, está bastante extendido, pues es la opción por defecto de muchos programas estadísticos.
+  - **Componentes principales.** Como hemos dicho en la introducción, no es método de análisis factorial propiamente dicho, ya que su objetivo es intentar explicar toda la varianza, y no solo la varianza común o compartida. Sin embargo, su uso, aunque no se recomiende, está bastante extendido, pues es la opción por defecto de muchos programas estadísticos.
 
 ```{r}
 # Test de Mardia:
@@ -270,7 +271,7 @@ Como los p-valores son inferiores a los niveles de significación habituales (10
 
 También podemos comprobar este hecho haciendo uso del Q-Q plot, ya que la línea de puntos está bastante alejada de la recta que refleja la normal.
 
-Como no existe normalidad, debemos emplear un método de extracción de factores robusto la inexistencia de la misma, como es ULS (Mínimos Cuadrados No Ponderados).
+Como no existe normalidad, debemos emplear un método de extracción de factores robusto, como es ULS (Mínimos Cuadrados No Ponderados).
 
 
 ## Paso 4: Determinamos el número de factores a extraer:
@@ -285,20 +286,19 @@ Existen cuatro métodos principales:
 Emplearemos el Análisis Paralelo al ser el método más recomendado.
 
 ```{r}
-
-
-#Gráfico de sedimentación con la regla de Kaiser marcada:
+# Gráfico de sedimentación con la regla de Kaiser marcada:
 scree(matriz_correlaciones)
 
 
-#Análisis paralelo:
+# Análisis paralelo:
 
 fa.parallel(matriz_correlaciones, n.obs = nrow(datos_AFE), n.iter = 500, fa = "fa", fm = "uls")
 
 # uls lleva a cabo un método de minimal residuals
-# fa = "fa" show the eigen values for  a principal axis factor analysis 
+# fa = "fa" show the eigen values for  a principal axis factor analysis
 ```
-El Análisis Paralelo sugiere la extracción de tres factores, la regla de Kaiser, de 2, y el gráfico de sedimentación podríamos decir que de 3.
+
+El Análisis Paralelo sugiere la extracción de tres factores, la regla de Kaiser, de 3, y el gráfico de sedimentación podríamos decir que de 3 ó 4.
 
 Haremos caso al Análisis Paralelo, por ser la técnica más recomendada actualmente.
 
@@ -359,12 +359,12 @@ La estructura factorial obtenida concuerda con la estructura factorial teórica 
 
 
 # Análisis Factorial Confirmatorio (CFA):
-La diferencia fundamental entre el EFA y el CFA, es que el EFA, como su propio nombre indica, es una técnica exploratoria: con ella queremos conocer la estructura de factores o variables latentes subyacente a los datos. Sin embargo, con el CFA, nosotros testamos si una determinada estructura factorial ajusta bien o no a los datos. Esto es, en este segundo caso, nosotros debemos imponer una estructura fatorial de antemano. Recurriendo a los índices de bondad del ajusto comprobaremos si dicha estructura es o no correcta.
+La diferencia fundamental entre el EFA y el CFA, es que el EFA, como su propio nombre indica, es una técnica exploratoria: con ella queremos conocer la estructura de factores o variables latentes subyacente a los datos. Sin embargo, con el CFA, nosotros testamos si una determinada estructura factorial ajusta bien o no a los datos. Esto es, en este segundo caso, nosotros debemos imponer una estructura factorial de antemano. Recurriendo a los índices de bondad del ajusto comprobaremos si dicha estructura es o no correcta.
 
 
 
 ## Paso 1: determinar un método de extracción de factores:
-Al igual que hacíamos con el EFA, con el CFA también debemos determinar un método concreto para extraer los factores. Con el fin de establecer un método u otro, llevaremos a cabo un test de Mardia: si existiera normalidad multivariante, podríamos utilizar Máxima Verosimilitud. Si nuestros datos no fuesen normales, Mínimo Cuadrados No Ponderados sería una buena opción.
+Al igual que hacíamos con el EFA, con el CFA también debemos determinar un método concreto para extraer los factores. Con el fin de establecer un método u otro, llevaremos a cabo un test de Mardia: **si existiera normalidad multivariante, podríamos utilizar Máxima Verosimilitud**. Si nuestros datos no fuesen normales, Mínimo Cuadrados No Ponderados sería una buena opción.
 
 ```{r}
 mardia(datos_AFC, na.rm = TRUE)
@@ -382,23 +382,26 @@ Para comparar modelos nos vamos a fijar en los índices de bondad del ajuste. Al
 ## Modelo con tres factores teóricos:
 
 ```{r}
-#Especificamos el modelo: en este modelo se respetan los tres factores teóricos:
-modelo3F <- 'Competitividad =~ ST181Q02HA + ST181Q03HA + ST181Q04HA
+# Especificamos el modelo: en este modelo se respetan los tres factores teóricos:
+modelo3F <- "Competitividad =~ ST181Q02HA + ST181Q03HA + ST181Q04HA
              Perseverancia =~ ST182Q03HA + ST182Q04HA + ST182Q05HA + ST182Q06HA
-             Miedo_al_fracaso =~ ST183Q01HA + ST183Q02HA + ST183Q03HA'
-#Realizamos el factorial:
-factorial3F <- cfa(modelo3F, datos_AFC, estimator="ULS", ordered=TRUE, orthogonal=FALSE)
-#Al usar la opción ordered=TRUE usamos la matriz policórica
-#Al usar la opción orthogonal=FALSE estamos diciendo que puede haber correlación entre factores
-summary(factorial3F, fit.measures=TRUE, standardized=TRUE)
-#Nos despliega una gran cantidad de información, pero lo esencial es fijarse en los índices de bondad del ajuste:
+             Miedo_al_fracaso =~ ST183Q01HA + ST183Q02HA + ST183Q03HA"
+# Realizamos el factorial:
+factorial3F <- cfa(modelo3F, datos_AFC, estimator = "ULS", ordered = TRUE, orthogonal = FALSE)
+# ordered=TRUE usamos la matriz policórica
+# orthogonal=FALSE estamos diciendo que puede haber correlación entre factores
 
-semPlot::semPaths(factorial3F, whatLabels="est",
-        sizeMan = 3.25,
-        node.width = 1,
-        edge.label.cex = .75,
-        style = "ram",
-        mar = c(10, 5, 10, 5))
+summary(factorial3F, fit.measures = TRUE, standardized = TRUE)
+# fijarse en los índices de bondad del ajuste:
+
+semPlot::semPaths(factorial3F,
+  whatLabels = "est",
+  sizeMan = 3.25,
+  node.width = 1,
+  edge.label.cex = .75,
+  style = "ram",
+  mar = c(10, 5, 10, 5)
+)
 ```
 
 
@@ -409,11 +412,11 @@ El ajuste es muy bueno: RMSEA y SRMR < 0,08, y TLI y CFI > 0,95
 
 
 ```{r}
-#Especificamos el modelo: todos los items en un único factor:
-modelo1F <- 'Factor =~ ST181Q02HA + ST181Q03HA + ST181Q04HA + ST182Q03HA + ST182Q04HA + ST182Q05HA + ST182Q06HA + ST183Q01HA + ST183Q02HA + ST183Q03HA'
-#Realizamos el factorial:
-factorial1F <- cfa(modelo1F, datos_AFC, estimator="ULS", ordered=TRUE, orthogonal=FALSE)
-summary(factorial1F, fit.measures=TRUE, standardized=TRUE)
+# Especificamos el modelo: todos los items en un único factor:
+modelo1F <- "Factor =~ ST181Q02HA + ST181Q03HA + ST181Q04HA + ST182Q03HA + ST182Q04HA + ST182Q05HA + ST182Q06HA + ST183Q01HA + ST183Q02HA + ST183Q03HA"
+# Realizamos el factorial:
+factorial1F <- cfa(modelo1F, datos_AFC, estimator = "ULS", ordered = TRUE, orthogonal = FALSE)
+summary(factorial1F, fit.measures = TRUE, standardized = TRUE)
 ```
 
 
@@ -426,21 +429,22 @@ El ajuste no es bueno: RMSEA y SRMR > 0,08, y TLI y CFI < 0,95 (de hecho, es peo
 Planteamos un modelo con dos factores: uno que englobe los tres items relacionados con la vivienda, y otro que englobe el resto de ítems.
 
 ```{r}
+# Especificamos el modelo: en este modelo Competitividad y Perseverancia los introducimos en el mismo factor, ya que con el AFE vimos que tenían correlación:
+modelo2F <- "Competitividad_Perseverancia =~ ST181Q02HA + ST181Q03HA + ST181Q04HA + ST182Q03HA + ST182Q04HA + ST182Q05HA + ST182Q06HA
+             Miedo_al_fracaso =~ ST183Q01HA + ST183Q02HA + ST183Q03HA"
+# Realizamos el factorial:
+factorial2F <- cfa(modelo2F, datos_AFC, estimator = "ULS", ordered = TRUE, orthogonal = FALSE)
+summary(factorial2F, fit.measures = TRUE, standardized = TRUE)
 
-#Especificamos el modelo: en este modelo Competitividad y Perseverancia los introducimos en el mismo factor, ya que con el AFE vimos que tenían correlación:
-modelo2F <- 'Competitividad_Perseverancia =~ ST181Q02HA + ST181Q03HA + ST181Q04HA + ST182Q03HA + ST182Q04HA + ST182Q05HA + ST182Q06HA
-             Miedo_al_fracaso =~ ST183Q01HA + ST183Q02HA + ST183Q03HA'
-#Realizamos el factorial:
-factorial2F <- cfa(modelo2F, datos_AFC, estimator="ULS", ordered=TRUE, orthogonal=FALSE)
-summary(factorial2F, fit.measures=TRUE, standardized=TRUE)
 
-
-semPlot::semPaths(factorial2F, whatLabels="est",
-        sizeMan = 3.25,
-        node.width = 1,
-        edge.label.cex = .75,
-        style = "ram",
-        mar = c(10, 5, 10, 5))
+semPlot::semPaths(factorial2F,
+  whatLabels = "est",
+  sizeMan = 3.25,
+  node.width = 1,
+  edge.label.cex = .75,
+  style = "ram",
+  mar = c(10, 5, 10, 5)
+)
 ```
 
 El ajuste no es bueno: RMSEA y SRMR > 0,08, y TLI y CFI < 0,95
@@ -450,8 +454,8 @@ El ajuste no es bueno: RMSEA y SRMR > 0,08, y TLI y CFI < 0,95
 Los índices de bondad del ajuste muestran que el modelo que refleja la estructura de los tres factores teóricos es el que mejor ajusta ajusta. Su ajuste a los datos es muy bueno.
 
 
-# Conclusiones: Interpretamos los factores obtenidos tanto con el EFA como con el CFA:
-ntentamos darle nombre a los factores, facilitando la interpretación de los resultados.
+# Interpretamos los factores obtenidos tanto con el EFA como con el CFA:
+Intentamos darle nombre a los factores, facilitando la interpretación de los resultados.
 
 Con respecto a nuestro ejemplo, en primer lugar, debemos decir que la estructura factorial obtenida concuerda con la estructura factorial teórica de tres factores: las tres subescalas (los tres conjuntos de ítems) miden variables distinguibles.
 
@@ -461,4 +465,20 @@ Los tres factores serían:
 
   - **Factor 2**: variables ST182Q03HA ("Me siento satisfecho cuando me esfuerzo todo lo que puedo."), ST182Q04HA ("Cuando inicio una tarea continúo hasta terminarla."), ST182Q05HA ("Cuando hago algo, parte de mi satisfacción se debe a que he mejorado mis resultados anteriores.") y ST182Q06HA ("Si algo no se me da bien, prefiero seguir esforzándome para mejorar, en lugar de hacer otra cosa que sí se me da bien."). **Factor "perseverancia"**.
 
-  - **Factor 3**: variables ST183Q01HA ("Cuando me he equivocado, me preocupa lo que otras personas piesen de mí."), ST183Q02HA ("Cuando me he equivocado, me preocupa no tener el talento suficiente.") y ST183Q03HA ("Cuando me he equivocado, dudo sobre mis planes para el futuro."). **Factor "miedo al fracaso"**.
+  - **Factor 3**: variables ST183Q01HA ("Cuando me he equivocado, me preocupa lo que otras personas piensen de mí."), ST183Q02HA ("Cuando me he equivocado, me preocupa no tener el talento suficiente.") y ST183Q03HA ("Cuando me he equivocado, dudo sobre mis planes para el futuro."). **Factor "miedo al fracaso"**.
+
+
+
+
+
+# Conclusión
+
+
+En este notebook se ha explicado como llevar a cabo una Reducción de la Dimensionalidad vía un Análisis Factorial, exponiendo las diferentes vías para hacerlo y las consideraciones a tener en cuenta. Se ha ilustrado con un caso práctico en el que se ha podido ir viendo la bondad del método empleado y que puede ser extrapolado a estudios futuros.
+El modelo inicial considerado tiene buenos indicadores de bondad de ajuste. Además interpretando los resultados parece razonable todos los coeficientes e indicadores obtenidos.
+
+
+# Bibliografía
+
+  - <https://rpubs.com/luis_bolanos/FA>
+  - <https://rpubs.com/JairoAyala/EFA>

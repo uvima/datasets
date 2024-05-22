@@ -3,8 +3,8 @@ project:
 
 website:
   title: "Datasets"
+  back-to-top-navigation: true
   navbar:
-    back-to-top-navigation: true
     background: "#457E76"
 
   sidebar:

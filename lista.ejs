@@ -17,7 +17,8 @@
             <% } %>
             <% if(i < (item['operation'].length -1)) { %>,<% } %>
           <% } %>
-          </span><br/><br/>
+          </span><br/>
+          <span class="listing-observaciones"><b>Número de observaciones:</b> <%= item['observaciones'] %></span><br/><br/>
           <div class="listing-categories">
             <div class="listing-category" >
               <a href="<%- item.href %>" >Fichero</a>

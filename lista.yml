@@ -4,9 +4,7 @@
   notebook: notebooks/Cluster Jerarquico/desigualdad_ccaa/desigualdad_ccaa.html
   categories:
   - 'Técnica: Cluster Jerárquico'
-  - 'Tema: Demografía y población'
-  - 'Tema: Nivel y condiciones de vida'
-  - 'Tema: Sociedad'
+  - 'Tema: Mercado laboral y salarios'
   description: Este dataset presenta un conjunto de datos sobre el salario medio anual
     de hombres y mujeres en España, relativos a años 2017/18.
   operation:
@@ -22,7 +20,6 @@
   - Estadística del Empleo de las Personas con Discapacidad (INE)
   - Encuesta sobre Equipamiento y Uso de Tecnologías de Información y Comunicación
     en los Hogares (INE)
-  - Encuesta Nacional de Salud (MSND)
   - Encuesta sobre el Uso de Tecnologías de la Información y las Comunicaciones y
     del Comercio Electrónico en las Empresas (INE)
   - Tablas de Mortalidad (INE)
@@ -34,25 +31,23 @@
   - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931130921
   - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931119237
   - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931147553
-  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931139603
+  - https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736176784&menu=ultiDatos&idp=1254735573175
   - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259930989826
   - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259937889657
   - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259930978853
   - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931064762
-  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931112035
   - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931061252
   - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931152707
-  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931120732
-  tema: Demografía y población, Nivel y condiciones de vida, Sociedad
+  - blank
+  tema: Mercado laboral y salarios
+  observaciones: 17
 - title: 'Cluster K-Means: desigualdad_CCAA'
   tecnica: Cluster K-Means
   href: files/desigualdad_ccaa.xlsx
   notebook: notebooks/Cluster K-Means/desigualdad_ccaa/desigualdad_ccaa.html
   categories:
   - 'Técnica: Cluster K-Means'
-  - 'Tema: Demografía y población'
-  - 'Tema: Nivel y condiciones de vida'
-  - 'Tema: Sociedad'
+  - 'Tema: Mercado laboral y salarios'
   description: Este dataset presenta un conjunto de datos sobre el salario medio anual
     de hombres y mujeres en España, relativos a años 2017/18.
   operation:
@@ -68,7 +63,6 @@
   - Estadística del Empleo de las Personas con Discapacidad (INE)
   - Encuesta sobre Equipamiento y Uso de Tecnologías de Información y Comunicación
     en los Hogares (INE)
-  - Encuesta Nacional de Salud (MSND)
   - Encuesta sobre el Uso de Tecnologías de la Información y las Comunicaciones y
     del Comercio Electrónico en las Empresas (INE)
   - Tablas de Mortalidad (INE)
@@ -80,40 +74,32 @@
   - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931130921
   - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931119237
   - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931147553
-  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931139603
+  - blank
   - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259930989826
   - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259937889657
   - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259930978853
   - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931064762
-  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931112035
   - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931061252
   - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931152707
-  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931120732
-  tema: Demografía y población, Nivel y condiciones de vida, Sociedad
+  - blank
+  tema: Mercado laboral y salarios
+  observaciones: 17
 - title: 'Regresión Logística: ECV_microdatos'
   tecnica: Regresión Logística
   href: files/ECV.xlsx
   notebook: notebooks/Logistic Regression/ECV/ECV.html
   categories:
   - 'Técnica: Regresión Logística'
-  - 'Tema: Nivel y condiciones de vida'
-  - 'Tema: Experimental'
+  - "Tema: Nivel - calidad y condiciones de vida"
   description: Microdatos extraidos de la  Encuesta de Condiciones de Vida (ECV) del
     año 2019. El objetivo es  estimar si la calidad de vida de una persona ha mejorado
     respecto a su infancia , de acuerdo con su año de nacimiento y su nivel de estudios.
   operation:
   - Encuesta de Condiciones de Vida (ECV)
-  - Encuesta de Condiciones de Vida (ECV)
-  - Encuesta de Condiciones de Vida (ECV)
-  - Encuesta de Condiciones de Vida (ECV)
-  - Encuesta de Condiciones de Vida (ECV)
   hoperation:
-  - blank
-  - blank
-  - blank
-  - blank
-  - blank
-  tema: Nivel y condiciones de vida, Experimental
+  - https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736176807&menu=ultiDatos&idp=1254735976608
+  tema: Nivel, calidad y condiciones de vida
+  observaciones: 17463
   cleaning: notebooks/Logistic Regression/ECV/Dataset_cleaning.html
 - title: 'Cluster Jerárquico: ecv_cluster'
   tecnica: Cluster Jerárquico
@@ -121,40 +107,43 @@
   notebook: notebooks/Cluster Jerarquico/ecv_cluster/ecv_cluster.html
   categories:
   - 'Técnica: Cluster Jerárquico'
-  - 'Tema: Nivel y condiciones de vida'
+  - 'Tema: Nivel - calidad y condiciones de vida'
   description: Datos por Comunidades Autónomas sobre la tasa de riesgo de pobreza,
     la carencia material o la situación laboral que encontramos dentro de la Encuesta
     de Condiciones de Vida (ECV). Datos correspondientes al año 2021.
   operation: [Encuesta de Condiciones de Vida (ECV) (INE)]
   hoperation: [https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931119237]
-  tema: Nivel y condiciones de vida
+  tema: Nivel, calidad y condiciones de vida
+  observaciones: 19
 - title: 'Cluster K-Means: ecv_cluster'
   tecnica: Cluster K-Means
   href: files/ecv_cluster.xlsx
   notebook: notebooks/Cluster K-Means/ecv_cluster/ecv_cluster.html
   categories:
   - 'Técnica: Cluster K-Means'
-  - 'Tema: Nivel y condiciones de vida'
+  - 'Tema: Nivel - calidad y condiciones de vida'
   description: Datos por Comunidades Autónomas sobre la tasa de riesgo de pobreza,
     la carencia material o la situación laboral que encontramos dentro de la Encuesta
     de Condiciones de Vida (ECV). Datos correspondientes al año 2021.
   operation: [Encuesta de Condiciones de Vida (ECV) (INE)]
   hoperation: [https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931119237]
-  tema: Nivel y condiciones de vida
+  tema: Nivel, calidad y condiciones de vida
+  observaciones: 19
 - title: 'Reducción Dimensionalidad - Análisis Factorial: ECV_factorial'
   tecnica: Reducción Dimensionalidad - Análisis Factorial
   href: files/ECV_factorial.xlsx
   notebook: notebooks/Reduccion Dimension/Analisis Factorial/ECV_factorial/ECV_factorial.html
   categories:
   - 'Técnica: Reducción Dimensionalidad'
-  - 'Tema: Nivel y condiciones de vida'
+  - 'Tema: Nivel - calidad y condiciones de vida'
   description: Este dataset presenta un conjunto de microdatos  relativos a la ECV
     donde se puntua el nivel de satisfacción en determinados ámbitos de la vida (laboral,
     económico, relaciones personales..). El objetivo es llevar a cabo un análisis
     factorial
   operation: [Encuesta de Condiciones de Vida (ECV) (INE)]
   hoperation: [https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931119237]
-  tema: Nivel y condiciones de vida
+  tema: Nivel, calidad y condiciones de vida
+  observaciones: 26883
   cleaning: notebooks/Reduccion Dimension/Analisis Factorial/ECV_factorial/Dataset_cleaning.html
 - title: 'Reducción Dimensionalidad - PCA: IMCV_pca'
   tecnica: Reducción Dimensionalidad - PCA
@@ -162,56 +151,75 @@
   notebook: notebooks/Reduccion Dimension/PCA/IMCV_pca/IMCV_pca.html
   categories:
   - 'Técnica: Reducción Dimensionalidad'
-  - 'Tema: Nivel y condiciones de vida'
-  - 'Tema: Experimental'
+  - 'Tema: Estadística Experimental'
   description: Datos por Comunidades Autónomas de las nueve dimensiones relativos
     a la calidad de vida que componen el Índice Multidimensional de Calidad de Vida
     (IMCV), una estadística con carácter experimental. Datos correspondientes al año
     2020.
-  operation: [Estadística experimental]
-  hoperation: [blank]
-  tema: Nivel y condiciones de vida, Experimental
+  operation:
+  - Estadística experimental
+  hoperation:
+  - https://www.ine.es/experimental/imcv/experimental_ind_multi_calidad_vida.htm
+  tema: Estadística Experimental
+  observaciones: 20
 - title: 'Regresión Lineal: IMCV_reg'
   tecnica: Regresión Lineal
   href: files/IMCV_reg.xlsx
   notebook: notebooks/Linear Regression/IMCV/IMCV.html
   categories:
   - 'Técnica: Regresión Lineal'
-  - 'Tema: Nivel y condiciones de vida'
-  - 'Tema: Experimental'
+  - 'Tema: Estadística Experimental'
   description: Datos por Comunidades Autónomas de ocho de las nueve dimensiones relativas
     a la calidad de vida que componen el Índice Multidimensional de Calidad de Vida
     (IMCV), una estadística con carácter experimental. Datos correspondientes al año
-    2020.
-  operation: [Estadística experimental]
-  hoperation: [blank]
-  tema: Nivel y condiciones de vida, Experimental
+    2020 y 2021 .
+  operation:
+  - Estadística experimental
+  hoperation:
+  - https://www.ine.es/experimental/imcv/experimental_ind_multi_calidad_vida.htm
+  tema: Estadística Experimental
+  observaciones: 38
 - title: 'Series Temporales - ARIMA: ipc_series'
   tecnica: Series Temporales - ARIMA
   href: files/ipc_series.xlsx
   notebook: notebooks/Series Temporales/ARIMA/ipc_series/ipc_series.html
   categories:
   - 'Técnica: Series Temporales'
-  - 'Tema: Economía'
+  - 'Tema: Precios'
   description: Datos relativos a la serie del IPC mensual en españa desde 2002 hasta
     2022.
   operation: [Índice de Precios de Consumo (IPC)]
   hoperation: [https://www.ine.es/dyngs/IOE/es/operacion.htm?numinv=30138]
-  tema: Economía
+  tema: Precios
+  observaciones: 252
+- title: 'Series Temporales - Holt Winters: ipc_series'
+  tecnica: Series Temporales - Holt Winters
+  href: files/ipc_series.xlsx
+  notebook: notebooks/Series Temporales/Holt Winters/ipc_series/ipc_series.html
+  categories:
+  - 'Técnica: Series Temporales'
+  - 'Tema: Precios'
+  description: Datos relativos a la serie del IPC mensual en españa desde 2002 hasta
+    2022.
+  operation: [Índice de Precios de Consumo (IPC)]
+  hoperation: [https://www.ine.es/dyngs/IOE/es/operacion.htm?numinv=30138]
+  tema: Precios
+  observaciones: 252
 - title: 'Análisis Discriminante: laboral'
   tecnica: Análisis Discriminante
   href: files/laboral.xlsx
   notebook: notebooks/Analisis Discriminante/Lineal_y_Cuadratico/laboral/laboral.html
   categories:
   - 'Técnica: Análisis Discriminante'
-  - 'Tema: Mercado laboral'
+  - 'Tema: Mercado laboral y salarios'
   description: Microdatos relativos a la encuesta de estructura salarial de las personas
     en 2018. Salario bruto, Edad y Antigüedad en el trabajo y días de vacaciones al
     año del encuestado con el fin de clasificar los estudios (o bien tienen pocos
     estudios o bien muchos) de una persona en función de las anteriores variables.
   operation: [Encuesta Anual de Estructura Salarial]
-  hoperation: [blank]
-  tema: Mercado laboral
+  hoperation: [https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931120231]
+  tema: Mercado laboral y salarios
+  observaciones: 99782
   cleaning: notebooks/Analisis Discriminante/Lineal_y_Cuadratico/laboral/Dataset_cleaning.html
 - title: 'Regresión Logística: laboral'
   tecnica: Regresión Logística
@@ -219,37 +227,38 @@
   notebook: notebooks/Logistic Regression/laboral/laboral.html
   categories:
   - 'Técnica: Regresión Logística'
-  - 'Tema: Mercado laboral'
+  - 'Tema: Mercado laboral y salarios'
   description: Microdatos relativos a la encuesta de estructura salarial de las personas
     en 2018. Salario bruto, Edad y Antigüedad en el trabajo y días de vacaciones al
     año del encuestado con el fin de clasificar los estudios (o bien tienen pocos
     estudios o bien muchos) de una persona en función de las anteriores variables.
   operation: [Encuesta Anual de Estructura Salarial]
-  hoperation: [blank]
-  tema: Mercado laboral
+  hoperation: [https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931120231]
+  tema: Mercado laboral y salarios
+  observaciones: 99782
   cleaning: notebooks/Logistic Regression/laboral/Dataset_cleaning.html
 - title: 'Series Temporales - ARIMA: madrid_series'
   tecnica: Series Temporales - ARIMA
-  href: files/madrid_series.xlsx
+  href: files/madrid.xlsx
   notebook: notebooks/Series Temporales/ARIMA/Madrid/madrid_series.html
   categories:
   - 'Técnica: Series Temporales'
   - 'Tema: Demografía y población'
   description: Datos relativos a la población de la CCAA de Madrid desde 1971 hasta
-    2021 desagregados por sexo y con cáracter bianual.
+    2022 desagregados por sexo y con cáracter bianual.
   operation: [Estadística Continua de Población (ECP)]
   hoperation: [https://www.ine.es/dyngs/IOE/es/fichaProg.htm?cid=1259946013552]
   tema: Demografía y población
+  observaciones: 104
 - title: 'Reducción Dimensionalidad - PCA: MercadoHipotecas'
   tecnica: Reducción Dimensionalidad - PCA
   href: files/MercadoHipotecas.xlsx
   notebook: notebooks/Reduccion Dimension/PCA/MercadoHipotecas/MercadoHipotecas.html
   categories:
   - 'Técnica: Reducción Dimensionalidad'
+  - 'Tema: Construcción y vivienda'
   - 'Tema: Demografía y población'
-  - 'Tema: Economía'
-  - 'Tema: Mercado laboral'
-  - 'Tema: Experimental'
+  - 'Tema: Nivel - calidad y condiciones de vida'
   description: "Este dataset presenta los datos de estudio del mercado de adquisición
     de viviendas en propiedad en todas las comunidades autónomas durante el ejercicio
     2021, relacionando las transmisiones inmobiliarias con las hipotecas constituidas,
@@ -265,17 +274,19 @@
   - Estadística de Hipotecas
   - Índice de Precios de la Vivienda (IPV)
   hoperation:
-  - blank
-  - blank
-  - blank
-  - blank
-  - blank
-  - blank
-  - blank
-  tema: Demografía y población, Economía, Mercado laboral, Experimental
+  - https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736176992&menu=ultiDatos&idp=1254735576757
+  - https://www.ine.es/dyngs/INEbase/operacion.htm?c=Estadistica_C&cid=1254736177003&menu=ultiDatos&idp=1254735573002
+  - https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177004&menu=ultiDatos&idp=1254735573002
+  - https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736176918&menu=ultiDatos&idp=1254735976595
+  - https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736171438&idp=1254735576606
+  - https://www.ine.es/dyngs/INEbase/operacion.htm?c=Estadistica_C&cid=1254736170236&menu=ultiDatos&idp=1254735576606
+  - https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736152838&menu=ultiDatos&idp=1254735976607
+  tema: Construcción y vivienda. Demografía y población. Nivel, calidad y condiciones
+    de vida
+  observaciones: 19
 - title: 'Series Temporales - ARIMA: navarra'
   tecnica: Series Temporales - ARIMA
-  href: files/navarra_series.xlsx
+  href: files/navarra.xlsx
   notebook: notebooks/Series Temporales/ARIMA/Navarra/navarra_series.html
   categories:
   - 'Técnica: Series Temporales'
@@ -285,20 +296,23 @@
   operation: [Estadística Continua de Población (ECP)]
   hoperation: [https://www.ine.es/dyngs/IOE/es/fichaProg.htm?cid=1259946013552]
   tema: Demografía y población
-- title: 'Regresión Logística: ECV_microdatos'
+  observaciones: 101
+- title: 'Regresión Logística: Partos'
   tecnica: Regresión Logística
   href: files/partos.xlsx
   notebook: notebooks/Logistic Regression/Partos/Partos.html
   categories:
   - 'Técnica: Regresión Logística'
   - 'Tema: Demografía y población'
-  - 'Tema: Experimental'
   description: Datos relativos a partos en 2022 en la Comunidad Autónoma de Navarra.
     El objetivo es clasificarlos partos en si hubo o no una cesárea en función de
     la edad de la madre, las complicaciones en el parto y las semanas de gestación.
-  operation: [Estadística de nacimientos. Movimiento natural de la población]
-  hoperation: [blank]
-  tema: Demografía y población, Experimental
+  operation:
+  - Estadística de nacimientos. Movimiento natural de la población
+  hoperation:
+  - https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177007&menu=ultiDatos&idp=1254735573002
+  tema: Demografía y población
+  observaciones: 2809
   cleaning: notebooks/Logistic Regression/Partos/Dataset_cleaning.html
 - title: 'Reducción Dimensionalidad - Análisis Factorial: pisa_factorial'
   tecnica: Reducción Dimensionalidad - Análisis Factorial
@@ -306,14 +320,15 @@
   notebook: notebooks/Reduccion Dimension/Analisis Factorial/pisa_factorial/pisa_factorial.html
   categories:
   - 'Técnica: Reducción Dimensionalidad'
-  - 'Tema: Nivel y condiciones de vida'
+  - 'Tema: Educación y formación'
   description: Este dataset presenta un conjunto de microdatos  relativos a la prueba
     PISA  que trata de medir la existencia de variables socioeconómicas, metacognitivas,
     motivacionales e, incluso, emocionales, que pueden tener impacto sobre el rendimiento
     académico. El objetivo es llevar a cabo un análisis factorial.
   operation: [Ministerio Educación]
   hoperation: [https://www.educacionyfp.gob.es/inee/evaluaciones-internacionales/pisa.html]
-  tema: Nivel y condiciones de vida
+  tema: Educación y formación
+  observaciones: 35943
   cleaning: notebooks/Reduccion Dimension/Analisis Factorial/pisa_factorial/Dataset_cleaning.html
 - title: 'Reducción Dimensionalidad - PCA: provincias_variado'
   tecnica: Reducción Dimensionalidad - PCA
@@ -321,11 +336,10 @@
   notebook: notebooks/Reduccion Dimension/PCA/provincias_variado/provincias_variado.html
   categories:
   - 'Técnica: Reducción Dimensionalidad'
-  - 'Tema: Agricultura y medio ambiente'
+  - 'Tema: Agricultura - ganadería - selvicultura y caza'
+  - 'Tema: Construcción y vivienda'
   - 'Tema: Demografía y población'
-  - 'Tema: Mercado laboral'
-  - 'Tema: Nivel y condiciones de vida'
-  - 'Tema: Experimental'
+  - 'Tema: Nivel - calidad y condiciones de vida'
   description: "El conjunto de datos abarca información diversa sobre variables socioeconómicas
     en provincias y ciudades autónomas. Contiene datos como número de explotaciones
     agrícolas, superficies agrícolas, indicadores de empleo, ejecuciones hipotecarias,
@@ -353,21 +367,23 @@
   - https://www.ine.es/dyngs/IOE/es/operacion.htm?numinv=30042
   - https://www.ine.es/dyngs/IOE/es/operacion.htm?numinv=58021
   - https://www.ine.es/dyngs/IOE/es/operacion.htm?numinv=58007
-  tema: Agricultura y medio ambiente, Demografía y población, Mercado laboral, Nivel
-    y condiciones de vida, Experimental
+  tema: Agricultura, ganadería, selvicultura y caza. Construcción y vivienda. Demografía
+    y población. Nivel, calidad y condiciones de vida
+  observaciones: 52
 - title: 'Análisis Discriminante: salud'
   tecnica: Análisis Discriminante
   href: files/salud.xlsx
   notebook: notebooks/Analisis Discriminante/Lineal_y_Cuadratico/salud/salud.html
   categories:
   - 'Técnica: Análisis Discriminante'
-  - 'Tema: Sociedad'
+  - 'Tema: Salud'
   description: Microdatos relativos a la encuesta de Salud a personas en 2017. Altura,
     Peso y Edad del encuestado con el fin de clasificar el sexo de una persona en
     función de las anteriores variables.
   operation: [Encuesta Nacional de Salud (ENSE)]
   hoperation: [blank]
-  tema: Sociedad
+  tema: Salud
+  observaciones: 229
   cleaning: notebooks/Analisis Discriminante/Lineal_y_Cuadratico/salud/Dataset_cleaning.html
 - title: 'Regresión Logística: salud'
   tecnica: Regresión Logística
@@ -375,13 +391,14 @@
   notebook: notebooks/Logistic Regression/salud/salud.html
   categories:
   - 'Técnica: Regresión Logística'
-  - 'Tema: Sociedad'
+  - 'Tema: Salud'
   description: Microdatos relativos a la encuesta de Salud a personas en 2017. Altura,
     Peso y Edad del encuestado con el fin de clasificar el sexo de una persona en
     función de las anteriores variables.
   operation: [Encuesta Nacional de Salud (ENSE)]
   hoperation: [blank]
-  tema: Sociedad
+  tema: Salud
+  observaciones: 229
   cleaning: notebooks/Logistic Regression/salud/Dataset_cleaning.html
 - title: 'Regresión Lineal: salud_reg'
   tecnica: Regresión Lineal
@@ -389,13 +406,14 @@
   notebook: notebooks/Linear Regression/salud_reg/salud_reg.html
   categories:
   - 'Técnica: Regresión Lineal'
-  - 'Tema: Sociedad'
+  - 'Tema: Salud'
   description: Microdatos relativos a la encuesta de Salud a personas en 2017. Altura,
     Peso, Edad Sexo e IMC del encuestado con el fin de hacer una regresión del Peso
     en función del resto de variables y explicar por qué es interesante este estudio.
   operation: [Encuesta Nacional de Salud (ENSE)]
   hoperation: [blank]
-  tema: Sociedad
+  tema: Salud
+  observaciones: 22019
   cleaning: notebooks/Linear Regression/salud_reg/Dataset_cleaning.html
 - title: 'Reducción Dimensionalidad - PCA: Situacion_sanitaria'
   tecnica: Reducción Dimensionalidad - PCA
@@ -403,8 +421,7 @@
   notebook: notebooks/Reduccion Dimension/PCA/Situacion_sanitaria/Situacion_sanitaria.html
   categories:
   - 'Técnica: Reducción Dimensionalidad'
-  - 'Tema: Nivel y condiciones de vida'
-  - 'Tema: Experimental'
+  - 'Tema: Demografía y población'
   description: Datos para las Comunidades Autónomas, abordando sobre aspectos demográficos
     y de salud. Contiene variables como la tasa de natalidad y mortalidad, el índice
     de envejecimiento, tasas de profesionales de la salud (médicos y enfermeros) por
@@ -417,20 +434,16 @@
   hoperation:
   - https://www.ine.es/dyngs/IOE/es/operacion.htm?numinv=30264
   - https://www.ine.es/dyngs/IOE/es/operacion.htm?numinv=30416
-  - https://www.ine.es/dyngs/IOE/es/operacion.htm?numinv=54088
-  tema: Nivel y condiciones de vida, Experimental
+  - blank
+  tema: Demografía y población
+  observaciones: 17
 - title: 'Regresión Lineal: Sucidios'
   tecnica: Regresión Lineal
   href: files/suicidios2019CCAA.xlsx
   notebook: notebooks/Linear Regression/Suicidios_2019CCAA/Suicidios_2019.html
   categories:
   - 'Técnica: Regresión Lineal'
-  - 'Tema: Demografía y población'
-  - 'Tema: Economía'
-  - 'Tema: Mercado laboral'
-  - 'Tema: Servicios'
-  - 'Tema: Nivel y condiciones de vida'
-  - 'Tema: Sociedad'
+  - 'Tema: Salud'
   description: Este dataset presenta la tasa de suicidios que ocurre en España con
     distintas variables demográficas y económicas que pueden llegar a influir o no,  por
     Comunidades Autónomas.
@@ -467,51 +480,64 @@
   - https://www.ine.es/dyngs/IOE/es/fichaProg.htm?cid=1259946011315
   - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931130921
   - https://www.ine.es/dyngs/IOE/es/fichaPlan.htm?cid=1259946127294
-  tema: Demografía y población, Economía, Mercado laboral, Servicios, Nivel y condiciones
-    de vida, Sociedad
+  tema: Salud
+  observaciones: 17
 - title: 'Cluster Jerárquico: VarCovid'
   tecnica: Cluster Jerárquico
   href: files/VarCovid.xlsx
   notebook: notebooks/Cluster Jerarquico/VarCovid/VarCovid.html
   categories:
   - 'Técnica: Cluster Jerárquico'
-  - 'Tema: Demografía y población'
-  - 'Tema: Sociedad'
+  - 'Tema: Salud'
   description: Este dataset presenta un conjunto de datos de las Tasas de variación
     de fallecidos en 2020 respecto al año anterior. Destacar que que 2020 fue el año
     del COVID y 1Ola, 2Ola, 3Ola corresponden a las semanas en las que se dieron dichas
     olas.
   operation: [Estimación de Defunciones Semanales]
-  hoperation: [blank]
-  tema: Demografía y población, Sociedad
+  hoperation: [https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177074&menu=ultiDatos&idp=1254735573175]
+  tema: Salud
+  observaciones: 20
 - title: 'Cluster K-Means: VarCovid'
   tecnica: Cluster K-Means
   href: files/VarCovid.xlsx
   notebook: notebooks/Cluster K-Means/VarCovid/VarCovid.html
   categories:
   - 'Técnica: Cluster K-Means'
-  - 'Tema: Demografía y población'
-  - 'Tema: Sociedad'
+  - 'Tema: Salud'
   description: Este dataset presenta un conjunto de datos de las Tasas de variación
     de fallecidos en 2020 respecto al año anterior. Destacar que que 2020 fue el año
     del COVID y 1Ola, 2Ola, 3Ola corresponden a las semanas en las que se dieron dichas
     olas.
   operation: [Estimación de Defunciones Semanales]
-  hoperation: [blank]
-  tema: Demografía y población, Sociedad
+  hoperation: [https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177074&menu=ultiDatos&idp=1254735573175]
+  tema: Salud
+  observaciones: 20
 - title: 'Cluster Jerárquico: VarCovid_provincias'
   tecnica: Cluster Jerárquico
   href: files/VarCovid_provincias.xlsx
   notebook: notebooks/Cluster Jerarquico/VarCovid_provincias/VarCovid_provincias.html
   categories:
   - 'Técnica: Cluster Jerárquico'
-  - 'Tema: Demografía y población'
-  - 'Tema: Experimental'
+  - 'Tema: Salud'
   description: Datos por provincias del exceso de mortalidad durante las cinco primeras
     olas de COVID-19 en comparación con las personas fallecidas en el mismo periodo
     de los años 2017, 2018 y 2019, años previos a la pandemia, una estadística con
     carácter experimental.
-  operation: [Experimental]
-  hoperation: [blank]
-  tema: Demografía y población, Experimental
+  operation: [Estimación de Defunciones Semanales]
+  hoperation: [https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177074&menu=ultiDatos&idp=1254735573175]
+  tema: Salud
+  observaciones: 53
+- title: 'Series Temporales - Holt Winters: madrid_series'
+  tecnica: Series Temporales - Holt Winters
+  href: files/madrid.xlsx
+  notebook: notebooks/Series Temporales/Holt Winters/Madrid/Madrid.html
+  categories:
+  - 'Técnica: Series Temporales'
+  - 'Tema: Demografía y población'
+  description: Datos relativos a la población de la CCAA de Madrid desde 1971 hasta
+    2022 desagregados por sexo y con cáracter bianual.
+  operation: [Estadística Continua de Población (ECP)]
+  hoperation: [https://www.ine.es/dyngs/IOE/es/fichaProg.htm?cid=1259946013552]
+  tema: Demografía y población
+  observaciones: 104
 

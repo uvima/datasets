@@ -15,9 +15,11 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = "center", warning = FALSE, messag
 
 # Introducción
 
+En este notebook se expondrá como llevar a cabo un Análisis Cluster de tipo Jerárquico a partir de un conjunto de datos, explicando los fundamentos teóricos en el que se basa para agrupar los datos.
+
 ## dataset
 
-En este cuaderno vamos a analizar el dataset llamado [desigualdad_ccaa.xlsx](../../../files/desigualdad_ccaa.xlsx). Este dataset presenta un conjunto de datos sobre el salario medio anual de hombres y mujeres en España, relativos a años 2017/18. Los datos (relativos a las variables *salario medio mujeres, hombres* que nos interesan) han sido extraidos de la **Operación** **Encuesta Anual de Estructura Salarial** (IOE 30189), que se encuentra dentro de la temática Mercado laboral y salarios. Concretamente en este dataset tenemos las siguientes variables (que nos interesan para este análisis):
+En este cuaderno vamos a analizar el dataset llamado [*desigualdad_CCAA.xlsx*](../../../files/desigualdad_ccaa.xlsx). Este dataset presenta un conjunto de datos sobre el salario medio anual de hombres y mujeres en España, relativos a años 2017/18. Los datos (relativos a las variables *salario medio mujeres, hombres* que nos interesan) han sido extraídos de la [**Encuesta Anual de Estructura Salarial**](https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177025&menu=ultiDatos&idp=1254735976596) (IOE 30189), que se encuentra dentro de la temática Mercado laboral y salarios. Concretamente en este dataset tenemos las siguientes variables (que nos interesan para este análisis):
 
 -   **CCAA**: Comunidades Autónomas.
 -   **Salmedmuj**: Salario medio anual (mujeres).
@@ -25,68 +27,130 @@ En este cuaderno vamos a analizar el dataset llamado [desigualdad_ccaa.xlsx](../
 
 El objetivo de este estudio será aplicar un Análisis **Cluster** para hacer grupos de comunidades autónomas en función de las variables **Salmedmuj** y **Salmedhom**. Concretamente usaremos un cluster jerárquico.
 
-```{r}
-#| label: librerias
-#| message: false
-#| warning: false
-# Librerias
-library(readxl) # Para leer los excels
-library(dendextend) # Para dendogramas
-library(dplyr) # Para tratamiento de dataframes
-library(ggplot2) # Nice plots
-library(stats) # hclust package
-
-library(factoextra) # fviz_cluster function
-```
-
-Cargamos entonces el conjunto de datos:
-
-```{r}
-#| label: cargar_datos
-datos <- read_excel("../../../files/desigualdad_ccaa.xlsx", sheet = "Datos")
-```
-
 ## Descripción del trabajo a realizar
 
-**(Esto irá en la web de explica)** Se pretende hacer un Análisis Cluster empleando el procedimiento Cluster Jerárquico de las **CCAA** en función a las variables **Salmedmuj** y **Salmedhom** para grupar las comunidades por las diferencias de salarios entre sexos.
+Se pretende hacer un Análisis Cluster empleando el procedimiento Cluster Jerárquico de las **CCAA** en función a las variables **Salmedmuj** y **Salmedhom** para agrupar las comunidades por las diferencias de salarios entre sexos.
 
 -   Hacer un análisis exploratorio.Ver si hay NA's y si es necesario escalar los datos.
 -   Variables sobre las que se buscan cluster (*Salmedmuj*, *Salmedhom*).
 -   Estandarizar datos y probar cluster jerárquico con k=4.
 -   Elegir Función Distancia y Método de Enlace (o comparar varias).
 -   Interpretar resultados.
--   Ver métodos Elbrow y Silhouette si hay otro número óptimo de clusters y en ese caso repetir el estudio.
+-   Ver métodos Elbow y Silhouette si hay otro número óptimo de clusters y en ese caso repetir el estudio.
 
-# Análisis Exploratorio (EDA[^1])
+# Análisis Exploratorio (EDA)
 
-[^1]: EDA viene del Inglés *Exploratory Data Analysis* y son los pasos relativos en los que se exploran las variables para tener una idea de que forma toma el dataset.
+EDA viene del Inglés *Exploratory Data Analysis* y son los pasos relativos en los que se exploran las variables para tener una idea de que forma toma el dataset.
 
-Lo primero de todo vamos a cargar las librearias necesarias para ejecutar el resto del código del trabajo:
+## Cargar Librerías
+
+Lo primero de todo vamos a cargar las librerías necesarias para ejecutar el resto del código del trabajo:
+
+```{r}
+#| label: librerias
+#| message: false
+#| warning: false
+# Librerías
+library(readxl) # Para leer los excels
+library(dendextend) # Para dendogramas
+library(dplyr) # Para tratamiento de dataframes
+library(ggplot2) # Nice plots
+library(stats) # hclust package
+library(factoextra) # fviz_cluster function
+library(gridExtra) # layout de los gráficos
+```
+
+## Lectura de datos
+
+Ahora cargamos los datos del excel correspondientes a la pestaña *"Datos"* y vemos si hay algún NA o algún valor igual a 0 en nuestro dataset. Vemos que no han ningún NA (missing value) en el dataset luego no será necesario realizar ninguna técnica para imputar los missing values o borrar observaciones.
+
+```{r}
+#| label: cargar_datos
+datos <- read_excel("../../../files/desigualdad_CCAA.xlsx", sheet = "Datos")
+```
+
+```{r}
+# Histogram dim1
+histogram <- ggplot(datos, aes(x = Salmedmuj)) +
+  geom_histogram(fill = "deepskyblue2", color = "navy", bins = 5) +
+  labs(title = "Histogram of Salmedmuj", x = "Salmedmuj", y = "Frequency") +
+  theme_minimal(base_size = 8)
+
+# Box Plot dim1
+boxplot <- ggplot(datos, aes(x = "d", y = Salmedmuj)) +
+  geom_boxplot(fill = "deepskyblue2", color = "navy") +
+  stat_boxplot(geom = "errorbar", width = 0.2) +
+  labs(title = "Box Plot of Salmedmuj", x = "", y = "Salmedmuj") +
+  theme_minimal(base_size = 8) +
+  theme(
+    axis.title.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank()
+  )
+
+
+# Histogram dim2
+histogram2 <- ggplot(datos, aes(x = Salmedhom)) +
+  geom_histogram(fill = "deepskyblue2", color = "navy", bins = 5) +
+  labs(title = "Histogram of Salmedhom", x = "Salmedhom", y = "Frequency") +
+  theme_minimal(base_size = 8)
+
+# Box Plot dim2
+boxplot2 <- ggplot(datos, aes(x = "d", y = Salmedhom)) +
+  geom_boxplot(fill = "deepskyblue2", color = "navy") +
+  stat_boxplot(geom = "errorbar", width = 0.2) +
+  labs(title = "Box Plot of Salmedhom", x = "", y = "Salmedhom") +
+  theme_minimal(base_size = 8) +
+  theme(
+    axis.title.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank()
+  )
+
+
+
+grid.arrange(histogram, histogram2, boxplot, boxplot2, nrow = 2, ncol = 2, widths = c(0.3, 0.3))
+```
+
+-   **Distribución Salarial**:
+    -   Los salarios medios de las mujeres muestran una mayor dispersión y variabilidad en comparación con los de los hombres. Esto se evidencia por la presencia de un valor atípico en los salarios de las mujeres.
+    -   Los salarios medios de los hombres están más concentrados y muestran menos variabilidad, sin valores atípicos significativos.
+-   **Medianas Salariales**:
+    -   La mediana del salario medio de los hombres (26,000) es más alta que la de las mujeres (20,000), lo que podría indicar una brecha salarial entre hombres y mujeres en la muestra de datos.
+
+Estos gráficos proporcionan una clara representación visual de las diferencias en la distribución de los salarios medios entre hombres y mujeres, lo que puede ser útil para análisis posteriores y toma de decisiones.
+
+-   Ver que no hay ningún **NA** en el dataset.
+
+```{r}
+#| label: factor
+ifelse(sum(is.na(data)) == 0, print("There is no NA in the dataset."), print("There is some NA in the dataset."))
+```
 
 # Clustering: Cluster Jerárquico
 
 ## Introducción
 
-El **Análisis de clúster** es una técnica de aprendizaje no supervisado que agrupa datos similares en conjuntos, llamados clústeres. El objetivo es dividir un conjunto de datos en grupos homogéneos, donde los miembros de cada grupo son más similares entre sí que con los miembros de otros grupos, según algún criterio de similitud predefinido.
+El **Análisis Cluster** es una técnica de aprendizaje no supervisado que agrupa datos similares en conjuntos, llamados clusteres. El objetivo es dividir un conjunto de datos en grupos homogéneos, donde los miembros de cada grupo son más similares entre sí que con los miembros de otros grupos, según algún criterio de similitud predefinido.
 
 Concretamente, el **Cluster Jerárquico** realiza estos grupos -o clusters- de manera jerárquica y ascendente, es decir que sucesivamente van fusionando grupos desde el elemento individual (mayor nivel de grupos, uno por individuo) hacia arriba.
 
-La **representación** de la jerarquía de clúster se representa por medio de un **dendograma**, en el que las sucesivas fusiones de las ramas a los distintos niveles nos informan de las sucesivas fusiones de los grupos en grupos de superior nivel (mayor tamaño, menor homogeneidad) sucesivamente:
+La **representación** de la jerarquía de cluster se representa por medio de un **dendograma**, en el que las sucesivas fusiones de las ramas a los distintos niveles nos informan de las sucesivas fusiones de los grupos en grupos de superior nivel (mayor tamaño, menor homogeneidad) sucesivamente:
 
-Los **pasos** conretos del Cluster Jerárquico son:
+Los **pasos** concretos del Cluster Jerárquico son:
 
 1.  **Matriz de distancia o similitud**: Se calcula una matriz que mide la distancia o similitud entre cada par de observaciones. Algunas de las medidas comunes son:
     -   **Euclidiana**: Mide la distancia más corta entre dos puntos en un espacio euclidiano. Es útil cuando las dimensiones tienen una **escala similar** y se desea tener en cuenta la magnitud absoluta de las diferencias.
     -   **Manhattan (o Cityblock)**: Calcula la suma de las diferencias absolutas entre las coordenadas de dos puntos. Es útil cuando las dimensiones **no están en la misma escala** y se quiere una medida robusta a los valores atípicos.
     -   **Gower**: métrica de distancia utilizada específicamente para conjuntos de **datos mixtos** que contienen variables numéricas y categóricas. Esta distancia tiene en cuenta diferentes tipos de variables al calcular la similitud entre dos observaciones. Se define como una combinación ponderada de las distancias entre variables.
-2.  **Fusión de clústeres**: En el enfoque aglomerativo, se fusionan gradualmente los clústeres más cercanos según la medida de distancia o similitud elegida. Esto nos lleva a la pregunta, ¿Cómo se calcula la distancia entre Clusters calcular la distancia o similitud entre clústeres en el proceso de agrupamiento jerárquico?. Existen varios **métodos de enlace**, destacando:
-    -   **Enlace Simple (Single Linkage)**: Calcula la distancia entre clústeres como la distancia más corta entre cualquier punto de un clúster y cualquier punto del otro clúster. Es sensible a la presencia de valores atípicos y al fenómeno del encadenamiento.
-    -   **Enlace Completo (Complete Linkage)**: Mide la distancia entre clústeres como la distancia más larga entre cualquier punto de un clúster y cualquier punto del otro clúster. Menos sensible a valores atípicos, pero puede generar clústeres de tamaño desigual.
-    -   **Enlace Promedio (Average Linkage)**: Calcula la distancia entre clústeres como la media de todas las distancias entre pares de puntos, uno de cada clúster. Más robusto frente a valores atípicos que el enlace simple y menos propenso al encadenamiento que el enlace completo.
-    -   **Enlace de Ward**: Minimiza la varianza dentro de los clústeres al fusionarlos. Intenta minimizar la suma de cuadrados dentro de cada clúster después de la fusión.
-3.  **Representación jerárquica**: Esto resulta en un dendrograma que muestra la jerarquía de agrupamiento, donde la altura en el dendrograma indica la distancia o disimilitud en la que se unen los clústeres.
+2.  **Fusión de clusteres**: En el enfoque aglomerativo, se fusionan gradualmente los clusteres más cercanos según la medida de distancia o similitud elegida. Esto nos lleva a la pregunta, ¿Cómo se calcula la distancia entre Clusters calcular la distancia o similitud entre clusteres en el proceso de agrupamiento jerárquico?. Existen varios **métodos de enlace**, destacando:
+    -   **Enlace Simple (Single Linkage)**: Calcula la distancia entre clusteres como la distancia más corta entre cualquier punto de un cluster y cualquier punto del otro cluster. Es sensible a la presencia de valores atípicos y al fenómeno del encadenamiento.
+    -   **Enlace Completo (Complete Linkage)**: Mide la distancia entre clusteres como la distancia más larga entre cualquier punto de un cluster y cualquier punto del otro cluster. Menos sensible a valores atípicos, pero puede generar clusteres de tamaño desigual.
+    -   **Enlace Promedio (Average Linkage)**: Calcula la distancia entre clusteres como la media de todas las distancias entre pares de puntos, uno de cada cluster. Más robusto frente a valores atípicos que el enlace simple y menos propenso al encadenamiento que el enlace completo.
+    -   **Enlace de Ward**: Minimiza la varianza dentro de los clusteres al fusionarlos. Intenta minimizar la suma de cuadrados dentro de cada cluster después de la fusión.
+3.  **Representación jerárquica**: Esto resulta en un dendrograma que muestra la jerarquía de agrupamiento, donde la altura en el dendrograma indica la distancia o disimilitud en la que se unen los clusteres.
 
-El clustering jerárquico permite explorar diferentes niveles de granularidad en los datos, pero puede ser computacionalmente costoso para grandes conjuntos de datos. Es **crucial** elegir la medida de similitud adecuada y el método de enlace (criterio para unir clústeres, single linkage, complete linkage, average linkage,...) para obtener resultados significativos.
+El clustering jerárquico permite explorar diferentes niveles de granularidad en los datos, pero puede ser computacionalmente costoso para grandes conjuntos de datos. Es **crucial** elegir la medida de similitud adecuada y el método de enlace (criterio para unir clusteres, single linkage, complete linkage, average linkage,...) para obtener resultados significativos.
 
 # Modelo
 
@@ -94,24 +158,17 @@ El clustering jerárquico permite explorar diferentes niveles de granularidad en
 
 **IMPORTANTE**:
 
--   Ver que no hay ningún **NA** en el dataset.
 -   El **escalado** es un paso esencial en la fase de preprocesamiento de datos para los algoritmos de agrupación. Garantiza que cada característica contribuya por igual al proceso de decisión del algoritmo, lo que lleva a resultados de agrupación más precisos e interpretables.
-
-```{r}
-#| label: factor
-ifelse(sum(is.na(data)) == 0, print("There is no NA in the dataset."), print("There is some NA in the dataset."))
-```
 
 Notar que la distancia más apropiada para usar es la Euclidea ya que ambas variables *1Ola* y *2Ola* son del mismo tipo y corresponden a meses consecutivos, es decir, representan el mismo fenómeno demográfico y en la misma escala (una vez hayamos escalado). Además como estamos interesados en la diferencia de estas variables a la hora de hacer cluster, esta es la distancia más adecuada.
 
-En cuanto al método para hacer los clusters, vamos a dejar el que viene por defecto, el complete. Este se basa en medir la distancia entre clústeres como la distancia más larga entre cualquier punto de un clúster y cualquier punto del otro clúster. Menos sensible a valores atípicos, pero puede generar clústeres de tamaño desigual.
+En cuanto al método para hacer los clusters, vamos a dejar el que viene por defecto, el **complete**. Este se basa en medir la distancia entre clusteres como la distancia más larga entre cualquier punto de un cluster y cualquier punto del otro cluster. Menos sensible a valores atípicos, pero puede generar clusteres de tamaño desigual.
 
 ```{r}
 # Preparación de los datos
 resultado <- datos[, c("Salmedmuj", "Salmedhom")]
 
 rownames(resultado) <- datos$CCAA # Para que nos salgan luego los nombres
-comunidades <- datos$CCAA
 
 # Matriz de distancias euclidea
 d <- dist(resultado, method = "euclidean")
@@ -126,9 +183,9 @@ abline(h = 1500, col = "red", lty = 2)
 
 En el dendrograma mostrado arriba, cada hoja corresponde a una observación. A medida que avanzamos en el árbol, las observaciones similares se combinan en ramas, las cuales a su vez se fusionan a una altura mayor.
 
-La altura de la fusión, representada en el eje vertical, indica la (des) similitud entre dos observaciones. Cuanto mayor sea la altura de la fusión, menos similares son las observaciones. Es importante destacar que las conclusiones sobre la proximidad de dos observaciones solo se pueden inferir en función de la altura donde las ramas que contienen esas dos observaciones se fusionan inicialmente. No podemos usar la proximidad de dos observaciones a lo largo del eje horizontal como criterio de su similitud.
+La altura de la fusión, representada en el eje vertical, indica la (des)similitud entre dos observaciones. Cuanto mayor sea la altura de la fusión, menos similares son las observaciones. Es importante destacar que las conclusiones sobre la proximidad de dos observaciones solo se pueden inferir en función de la altura donde las ramas que contienen esas dos observaciones se fusionan inicialmente. No podemos usar la proximidad de dos observaciones a lo largo del eje horizontal como criterio de su similitud.
 
-La altura del corte en el dendrograma controla el número de clusters obtenidos. **Cumple el mismo papel que 'k'** en la agrupación **k-means**. Para identificar subgrupos (es decir, clusters), podemos cortar el dendrograma con la función `cutree`. Suponer que queremos 3 clusteres:
+La altura del corte en el dendrograma controla el número de clusters obtenidos. **Cumple el mismo papel que 'k'** en la agrupación **k-means**. Para identificar subgrupos (es decir, clusters), podemos cortar el dendrograma con la función `cutree`. Suponer que queremos 4 clusteres:
 
 ```{r}
 # Cut tree into 4 groups
@@ -138,7 +195,7 @@ sub1 <- cutree(hc1, k = 4)
 table(sub1)
 ```
 
-Podemos mostrar los grupos junto al dataframe con la función mutate.
+Podemos mostrar los grupos junto al dataframe con la función `mutate` del paquete `dplyr`.
 
 ```{r}
 #| fig-align: center
@@ -146,8 +203,6 @@ Podemos mostrar los grupos junto al dataframe con la función mutate.
 datos <- datos %>%
   mutate(cluster = sub1) %>%
   select("CCAA", "Salmedmuj", "Salmedhom")
-
-
 
 
 
@@ -160,7 +215,22 @@ g1 <- ggplot(datos, aes(Salmedmuj, Salmedhom, label = CCAA)) +
 g1
 ```
 
-Podemos observar que las agrupaciones, así como el escalado, no se ha hecho tanto por diferencia salarial entre hombre y mujeres y sí por cuantía salarial en las diferentes comunidades, para estudiarlo sería mejor ver porcentajes que muestren las diferencias. A pesar de ello, podemos destacar que en el cluster **azul** se agrupan las comunidades con menor salario medio y en el cluster **morado** las de mayor salario medio en hombres y mujeres. Por medio, se situan el cluster azul y el cluster rojo, este último es levemente superior.
+Los clusters se forman de manera clara, con diferencias notables en los salarios medios de hombres y mujeres entre ellos.
+
+-   **Cluster 1 (Rojo)**: Representa comunidades autónomas con salarios medios anuales bajos tanto para hombres como para mujeres. Este grupo incluye a comunidades como Andalucía, Murcia y Castilla y León. Estas tienen salarios medios bajos en comparación con otros clusters, pero hay una menor disparidad entre los salarios de hombres y mujeres en comparación con otros clusters.
+-   **Cluster 2 (Verde)**: Incluye comunidades con salarios medios algo superiores, tanto para hombres como para mujeres. Ejemplos incluyen Aragón y Asturias. Estas presentan salarios medios ligeramente más altos que las del cluster 1, pero aún no alcanzan los niveles de los clusters 3 y 4. Hay una mayor equidad salarial entre hombres y mujeres.
+-   **Cluster 3 (Azul)**: Comunidades con los salarios medios más bajos, especialmente destacable en Extremadura y Canarias. La brecha salarial en estas regiones también parece ser más amplia.
+-   **Cluster 4 (Morado)**: Agrupa a las comunidades con los salarios medios más altos para ambos géneros. Este cluster incluye a comunidades como Madrid, País Vasco y Navarra. Se observa una mayor disparidad salarial entre hombres y mujeres en estas regiones, siendo el País Vasco la comunidad con los salarios más altos tanto para hombres como para mujeres.
+
+**Implicaciones**
+
+-   **Equidad Salarial**: El análisis sugiere que las regiones con salarios más altos también tienden a tener una mayor disparidad salarial entre hombres y mujeres, siendo generalmente las mujeres las que presentan en media salarios más bajos. Las políticas de equidad salarial podrían enfocarse en estas regiones y hacer un estudio más profundo para saber si dicha diferencia es estructural o puede ser debida a causas externas.
+
+-   **Desarrollo Regional**: Las regiones en los clusters 1 y 3 podrían beneficiarse de políticas de desarrollo económico y de incremento salarial, para mejorar el bienestar económico de sus habitantes.
+
+-   **Focalización de Políticas**: Las estrategias y políticas pueden ser diseñadas específicamente para cada cluster, atendiendo a sus características y necesidades particulares en términos de salario medio y equidad salarial.
+
+Este análisis proporciona una visión clara de cómo varían los salarios medios de hombres y mujeres entre las diferentes comunidades autónomas y permite identificar áreas específicas que requieren atención para mejorar la equidad y el desarrollo económico.
 
 ## Con otros métodos de Enlace
 
@@ -168,7 +238,7 @@ Vamos a probar a usar otros métodos de Enlace descritos previamente a ver si se
 
 ```{r}
 # For Complete
-plot(hc1, cex = 0.6, sub = "")
+plot(hc1, cex = 0.6, sub = "", main = "complete")
 rect.hclust(hc1, k = 4, border = 2:5)
 
 
@@ -176,7 +246,7 @@ rect.hclust(hc1, k = 4, border = 2:5)
 hc2 <- hclust(d, method = "ward.D")
 sub2 <- cutree(hc2, k = 4)
 
-plot(hc2, cex = 0.6, sub = "")
+plot(hc2, cex = 0.6, sub = "", main = "ward.D")
 rect.hclust(hc2, k = 4, border = 2:5)
 
 
@@ -184,19 +254,18 @@ rect.hclust(hc2, k = 4, border = 2:5)
 hc3 <- hclust(d, method = "average")
 sub3 <- cutree(hc3, k = 4)
 
-plot(hc3, cex = 0.6, sub = "")
+plot(hc3, cex = 0.6, sub = "", main = "average")
 rect.hclust(hc3, k = 4, border = 2:5)
 
 # Single method
 hc4 <- hclust(d, method = "single")
 sub4 <- cutree(hc4, k = 4)
 
-plot(hc4, cex = 0.6, sub = "")
+plot(hc4, cex = 0.6, sub = "", main = "single")
 rect.hclust(hc4, k = 4, border = 2:5)
 ```
 
 ```{r}
-#| echo: false
 g2 <- ggplot(datos, aes(Salmedhom, Salmedmuj, label = CCAA)) +
   geom_point(aes(colour = factor(sub2))) +
   geom_text(hjust = 0, vjust = 0, size = 2, aes(colour = factor(sub2))) +
@@ -227,31 +296,46 @@ g4 <- ggplot(datos, aes(Salmedhom, Salmedmuj, label = CCAA)) +
 
 library(ggpubr)
 ggarrange(g1, g2, g3, g4 + rremove("x.text"),
-  labels = c("Complete", "ward.D", "Average", "Simple"),
+  labels = c("Complete", "ward.D", "Average", "Single"),
   ncol = 2, nrow = 2, vjust = 0.9,
   font.label = list(size = 8, color = "black")
 )
 ```
 
-De 4 tipos diferentes que hemos probado, la mayoría de ellos se han clusterizado de una manera semejante. Es decir, han agrupado por un lado los salarios mas altos de hombre y mujeres y por otro los más bajos.
+El gráfico muestra cuatro agrupaciones de clusters diferentes generadas utilizando distintos métodos de distancia: Complete, Ward.D, Average, y Simple. A continuación, se comparan y analizan los resultados para evaluar su coherencia.
+
+-   **Coherencia General**:
+
+    -   En general, los resultados muestran una tendencia coherente en la agrupación de comunidades con salarios similares, especialmente destacando las comunidades con salarios más altos (País Vasco, Madrid, Navarra) que consistentemente forman un cluster separado.
+    -   Las comunidades con salarios más bajos también tienden a agruparse de manera coherente, aunque la inclusión de algunas comunidades en clusters específicos varía según el método.
+
+-   **Diferencias Específicas**:
+
+    -   **Complete y Average**: Tienden a formar clusters más compactos y visualmente más claros.
+    -   **Ward.D**: Ofrece la separación más clara y significativa, con una estructura de clusters bien definida.
+    -   **Single**: Produce clusters menos compactos y puede mezclar comunidades que no parecen intuitivamente similares en términos de salario.
+
+Los resultados son en general coherentes, pero el método de **Ward.D** parece ofrecer la estructura de clusters más clara y significativa, con una mejor separación de las comunidades autónomas según sus salarios medios. **Complete** y **Average** también proporcionan agrupaciones razonables, aunque no tan claras como Ward.D. **Single**, aunque útil en ciertos contextos, no parece tan adecuado para este análisis debido a su tendencia a crear clusters menos intuitivos.
 
 # Número Clusters Óptimo
 
 Encontrar el número óptimo de clusters implica identificar la cantidad ideal de grupos en los que se pueden dividir los datos de manera significativa y coherente. Es crucial porque determina la calidad y utilidad de los resultados del análisis de agrupamiento.
 
-## Método Elbrow
+## Método Elbow
 
-Una de las formas comunes de determinar este número es a través del método del **codo** o **elbow** en inglés. Este método busca identificar el punto donde la adición de más clusters ya no proporciona un beneficio significativo en la varianza explicada o la cohesión dentro de los grupos.
+Una de las formas comunes de determinar este número es a través del método del **codo** o **elbow** en inglés. Este método busca identificar el punto donde la adición de más clusters ya no proporciona un beneficio significativo en la varianza explicada (distancia promedio de los elementos al centroide del cluster) o la cohesión dentro de los grupos.
 
 Al representar la variación explicada en función del número de clusters, observamos un **gráfico** que se asemeja a la **forma** de un codo. A medida que aumentamos el número de clusters, la varianza explicada tiende a disminuir. El punto en el que esta disminución se estabiliza o se aplana marca el número óptimo de clusters, indicando un equilibrio entre una mayor partición (más clusters) y una adecuada interpretabilidad de los grupos.
 
 ```{r}
-#  Método Elbrow
+#  Método Elbow
 set.seed(785248)
 factoextra::fviz_nbclust(resultado, hcut, method = "wss")
 ```
 
-El número óptimo de k parece ser 2 o 3 que es donde más se reduce la pendiente y la variabilidad explicada no parece disminuir de forma tan rápida. De todos modos, también podría parecer razonable tomar el4. Es por ello que vamos a usar algún método adicional.
+En el gráfico proporcionado, buscamos el "codo" del gráfico, que es el punto donde la suma total de cuadrados dentro de los clusters (total within-cluster sum of squares) deja de decrecer significativamente con la adición de más clusters.
+
+Observando el gráfico, el punto de inflexión más claro se encuentra en **k = 2**. Aquí es donde la disminución en la suma de cuadrados empieza a ser menos pronunciada en comparación con la disminución entre 1 y 2 clusters. De todos modos, también podría parecer razonable tomar el 3. Es por ello que vamos a usar algún método adicional.
 
 ## Método Silhouette
 
@@ -261,7 +345,7 @@ El proceso implica:
 
 1.  **Cálculo de la silueta individual**: Para cada punto de datos, se calcula la silueta, que es la diferencia entre la distancia media intra-cluster (distancia al resto de puntos en su mismo grupo) y la distancia media al cluster más cercano (distancia a los puntos del grupo más próximo, excluyendo el propio grupo).
 
-2.  **Valor de la silueta global**: Se obtiene el promedio de las siluetas individuales de todos los puntos de datos en el conjunto. Contra más cercano a 1, mejor formado estará el clsuter.
+2.  **Valor de la silueta global**: Se obtiene el promedio de las siluetas individuales de todos los puntos de datos en el conjunto. Contra más cercano a 1, mejor formado estará el cluster.
 
 La siguiente función generará un gráfico que muestra los valores de Silhouette en función del número de clusters. El número óptimo de clusters es típicamente aquel que maximiza el valor de Silhouette, representando una mejor cohesión intra-cluster y separación inter-cluster.
 
@@ -273,8 +357,14 @@ factoextra::fviz_nbclust(resultado, hcut, method = "silhouette")
 
 Este método nos afirma que el número óptimo es 2 puesto que es el caso cuyos clusters maximiza el valor de Silhouette, representando una mejor cohesión intra-cluster y separación inter-cluster.
 
-**NOTA**: Ahora podríamos repetir el estudio anterior con el número de clusters igual a 2 e intentar analizar de neuvo los resultados.
+**NOTA**: Ahora podríamos repetir el estudio anterior con el número de clusters igual a 2 e intentar analizar de nuevo los resultados.
 
-# Conclusiones
+# Conclusión
 
-Aquí se han explicado los supuestos del cluster jerárquico por medio de un dataset que contiene el salario medio entre hombres y mujeres por comunidades autónomas.
+Aquí se han explicado los supuestos del cluster jerárquico por medio de un dataset que contiene el salario medio entre hombres y mujeres por comunidades autónomas. Se ha indicado como elegir una función de distancia en función de los datos, un número inicial de clusters de acuerdo a los intereses del usuario y una posterior elección óptima de acuerdo con diversos métodos.
+
+# Bibliografía
+
+-   <https://rpubs.com/mjimcua/clustering-jerarquico-en-r>
+-   <https://rpubs.com/jaimeisaacp/760355>
+-   <https://www.datacamp.com/es/tutorial/hierarchical-clustering-R>

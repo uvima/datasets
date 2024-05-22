@@ -15,13 +15,16 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = "center", warning = FALSE, messag
 
 # Introducción
 
+A continuación se expondrá como llevar a cabo una Reducción de Dimensionalidad utilizando el método de Componentes Principales. Para ello se utilizará un dataset sobre el que se irán explicando los sucesivos pasos a llevar a cabo.
+
+
 ## dataset
 
 En este cuaderno vamos a analizar el dataset llamado
 [*IMCV_pca.xlsx*](../../../../files/IMCV_pca.xlsx).
 
 En el siguiente dataset disponemos de datos por Comunidades Autónomas de
-las nueve **dimensiones relativas a la calidad de vida que componen el Índice Multidimensional de Calidad de Vida (IMCV)**, una estadística con
+las nueve dimensiones relativas a la calidad de vida que componen el [Índice Multidimensional de Calidad de Vida (IMCV)](https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.ine.es/experimental/imcv/experimental_ind_multi_calidad_vida.htm&ved=2ahUKEwjgr7uc2ZuGAxU80AIHHVuUAMgQFnoECBEQAQ&usg=AOvVaw1KXWfcaVNfGPgM7DPIzL_8), una estadística con
 carácter experimental. Datos correspondientes al año 2020.
 
 Concretamente tenemos las siguientes variables:
@@ -31,16 +34,15 @@ Concretamente tenemos las siguientes variables:
 -   **dim1** : Indicador sobre las condiciones materiales de vida.
 -   **dim2** : Indicador sobre el trabajo.
 -   **dim3** : Indicador sobre la salud.
--   **dim4** : Indicador sobre la eduación.
+-   **dim4** : Indicador sobre la educación.
 -   **dim5** : Indicador sobre el ocio y relaciones sociales.\
 -   **dim6** : Indicador sobre la seguridad física y personal.\
 -   **dim7** : Indicador sobre la gobernanza y los derechos básicos.\
--   **dim8** : Indicador sobre el entorno y el medioambiente.
+-   **dim8** : Indicador sobre el entorno y el medio ambiente.
 -   **dim9** : Indicador sobre experiencia general de la vida.
 -   **CCAA**: Comunidades Autónomas.
 
-Los datos relativos a este estudio corresponden, como ya se ha
-comentado, a la estadística experimental sobre el **ÍndiceMultidimensional de Calidad de Vida (IMCV)**. Se construye a partir de
+La estadística experimental sobre el **Índice Multidimensional de Calidad de Vida (IMCV)** se construye a partir de
 los indicadores de calidad del INE, que ofrecen una visión panorámica
 (multidimensional) de la calidad de vida en España, mediante la elección
 de un conjunto amplio pero limitado de indicadores (actualmente 60) que
@@ -54,36 +56,9 @@ cubren nueve dimensiones usadas para describir la calidad de vida.
 Esta técnica de análisis tiene muchas aplicaciones y en esta ocasión la utilizaremos para poder simplificar la tarea de clasificación territorios españoles en base a sus características de calidad vida. El objetivo es reducir el número de variables con las que trabajar sufriendo la menor pérdida posible de información. La agrupación de comunidades autónomas en grupos que compartan unas características similares la realizaremos mediante una técnica de análisis de conglomerados denominada K-medias. El objetivo es agrupar nuestras 17 comunidades y dos ciudades autónomas en un puñado de grupos homogéneos.
 
 
-
-```{r}
-#| label: librerias
-#| message: false
-#| warning: false
-# Librerias
-library(readxl) # Para leer los excels
-library(dplyr) # Para tratamiento de dataframes
-library(ggplot2) # Nice plots
-library(factoextra) # fviz_cluster function
-library(skimr)  # Para funcion skim
-library(ggcorrplot) #Para funcion ggcorrplot
-library(corrplot) #Para corrplot
-
-```
-
-Cargamos entonces el conjunto de datos:
-
-```{r}
-#| label: cargar_datos
-datos <- read_excel("../../../../files/IMCV_pca.xlsx", sheet = "Datos")
-```
-
-
-
-
 ## Descripción del trabajo a realizar
 
-**(Esto irá en la web de explica)** Se pretende hacer un Análisis
-de Reducción de la Dimensionalidad empleando el procedimiento de Componentes Principales. El objetivo es reducir el número de variables de los 9 indicadores globales de calidad de vida sin perder mucha información.
+Realizar una Reducción de la Dimensionalidad empleando el procedimiento de Componentes Principales. El objetivo es reducir el número de variables de los 9 indicadores globales de calidad de vida sin perder mucha información.
 
 -   Hacer un análisis exploratorio explorando matriz de correlaciones.
 -   Ver si es necesario escalar/centrar los datos antes de aplicar pca y decidir si hacerlo con matriz de correlaciones o covarianzas.
@@ -91,11 +66,40 @@ de Reducción de la Dimensionalidad empleando el procedimiento de Componentes Pr
 - Interpretar componentes y resultados.
 
 
-# Análisis Exploratorio (EDA[^1])
+# Análisis Exploratorio (EDA)
 
-[^1]: EDA viene del Inglés *Exploratory Data Analysis* y son los pasos
-    relativos en los que se exploran las variables para tener una idea
-    de que forma toma el dataset.
+
+
+EDA viene del Inglés *Exploratory Data Analysis* y son los pasos relativos en los que se exploran las variables para tener una idea de que forma toma el dataset.
+
+
+
+## Cargar Librerías
+Lo primero de todo vamos a cargar las librerías necesarias para ejecutar el resto del código del trabajo:
+
+```{r}
+#| label: librerias
+#| message: false
+#| warning: false
+# Librerías
+library(readxl) # Para leer los excels
+library(dplyr) # Para tratamiento de dataframes
+library(ggplot2) # Nice plots
+library(factoextra) # fviz_cluster function
+library(ggcorrplot) # Para función ggcorrplot
+library(corrplot) # Para corrplot
+```
+
+## Lectura datos
+
+Ahora cargamos los datos del excel correspondientes a la pestaña *"Datos"* y vemos si hay algún NA o algún valor igual a 0 en nuestro dataset. Vemos que no han ningún NA (missing value) en el dataset luego no será necesario realizar ninguna técnica para imputar los missing values o borrar observaciones.
+
+```{r}
+#| label: cargar_datos
+datos <- read_excel("../../../../files/IMCV_pca.xlsx", sheet = "Datos")
+```
+
+
 
 En primer lugar, cargamos los datos que vamos a utilizar. En este caso, se trata de un conjunto de datos compuesto por 20 filas y 14 columnas. Las filas corresponden a las 19 Comunidades Autónomas de España (17 CCAA, Ceuta y Melilla) y el Total Nacional y las 11 columnas al nombre de dichas CCAA, los 9 indices y el indice total (la media de los anteriores).
 
@@ -118,26 +122,25 @@ dim(datos)
 str(datos)
 
 # Descripción de las variables
-skim(datos)
+summary(datos)
 ```
 Vemos que estas variables (a excepción de las CCAA) son todas de tipo numérico, y además, podemos obtener información como la media, desviación típica, los cuartiles y el histograma de cada una.
 
 **Correlación:** El que existan correlaciones muy elevadas en el conjunto de datos nos permitirá resumir la información en un menor número de componentes principales, pues éstas explicarán una mayor cantidad de información.
 
 ```{r}
-ggcorrplot(cor(datos[,2:11]),type="lower",  lab = T, show.legend = T)
-
+ggcorrplot(cor(datos[, 2:11]), type = "lower", lab = T, show.legend = T)
 ```
 
 En este caso, se ha generado un gráfico entre variables, sin tener en cuenta la correlación de la variable consigo misma, pues siempre será del 100%, o 1 en tanto por uno.
 
 En términos absolutos, vemos lo siguiente:
 
- - Hay varias **correlaciones moderadas/altas**. En general la variable *indice_total* esta muy correlacionada con todas las demas. Esto parece razonable puesto que sabemos que es la media artimética de las otras nueve dimenesiones. Es por ello que no aporta nada de información extra. Además destaca la correlación entre *dim1* (materiales), *dim2* (trabajo), *dim3*(salud) y *dim4* (educacion) entre todas ellas. Esto también podria parecer razonable puesto que una mejor educación suele llevar más satisfacción en los estudios, en el trabajo y en las condiciones materiales (puesto que se suele ganar más dinero) y esto puede derivar en menos problemas de salud debido a una vida "más tranquila. También hay correlaciones altas entre *dim1* y *dim8*, y entre *dim7* y *dim8*.
+ - Hay varias **correlaciones moderadas/altas**. En general la variable *indice_total* esta muy correlacionada con todas las demás. Esto parece razonable puesto que sabemos que es la media aritmética de las otras nueve dimensiones. Es por ello que no aporta nada de información extra. Además destaca la correlación entre *dim1* (materiales), *dim2* (trabajo), *dim3*(salud) y *dim4* (educación) entre todas ellas. Esto también podría parecer razonable puesto que una mejor educación suele llevar más satisfacción en los estudios, en el trabajo y en las condiciones materiales (puesto que se suele ganar más dinero) y esto puede derivar en menos problemas de salud debido a una vida "más tranquila. También hay correlaciones altas entre *dim1* y *dim8*, y entre *dim7* y *dim8*.
   
   - Hay **correlaciones muy bajas** entre *dim8* (entorno y el medioambiente) y *dim9* (satisfacción general).
 
-En resumen, vemos que hay varias variables con una alta correlación absoluta(tanto postivia como negativa), luego esto nos va a permitir resumir la información en un núemro de componentes principales menor al número de variables que tenemos.
+En resumen, vemos que hay varias variables con una alta correlación absoluta (tanto positiva como negativa), luego esto nos va a permitir resumir la información en un número de componentes principales menor al número de variables que tenemos.
 
 # Reducción Dimensionalidad: Componentes Principales
 
@@ -175,17 +178,16 @@ Esta transformación lineal **conserva la mayor parte de la información en un e
 ## Modelo
 En las siguientes lineas haremos que la variable `CCAA` se ponga como nombre de filas y posteriormente eliminaremos esa variable ya que ya la tendremos como nombre de filas.
 ```{r}
-CCAA<-datos$CCAA
-datos<-datos[,-1]         # Eliminamos ahora 
-rownames(datos)<-CCAA # Como nombres de filas las CCAA
-
+CCAA <- datos$CCAA
+datos <- datos[, -1] # Eliminamos ahora
+rownames(datos) <- CCAA # Como nombres de filas las CCAA
 ```
 
 
 
 Escalamos los datos y calculamos la matriz de varianzas covarianzas, mostramos solo la diagonal (debería ser 1).
 ```{r}
-datos2<-scale(datos)
+datos2 <- scale(datos)
 summary(datos2)
 diag(var(datos2))
 ```
@@ -194,8 +196,7 @@ Aplicamos funcion PCA, notar que en este caso no haría falta los argumentos `SC
 
 
 ```{r}
-pca <- prcomp(datos2,center= TRUE,scale = TRUE)  # Scale=T 
-
+pca <- prcomp(datos2, center = TRUE, scale = TRUE) # Scale=T
 ```
 
 
@@ -203,7 +204,6 @@ pca <- prcomp(datos2,center= TRUE,scale = TRUE)  # Scale=T
 
 ```{r}
 pca$rotation
-
 ```
 Podemos observar aquí nuestras variables en el nuevo sistema de cordenadas (las componentes principales), dando lugar a ecuaciones de cada eje como combinación lineal del total de variables. Analizar el vector que crea cada componente y cuáles son los pesos que tienen las variables en cada componente, ayuda a interpretar qué tipo de información recoge cada una de ellas.
 
@@ -218,8 +218,7 @@ $PC_1 = 0.41 {dim1} + 0.39 {dim2} + 0.31dim3 + 0.34 dim4 + 0.21 dim5 + 0.26 dim6
 Además, podemos ver las puntuaciones, que son las coordenadas de cada observación original (Comunidad Autónoma) sobre los nuevos ejes construidos (componentes principales). Esto corresponde a un cambio de coordenadas bajo el paradigma del Álgebra Lineal.
 
 ```{r}
- pca$x
-
+pca$x
 ```
 
 **Varianza explicada por cada componente principal**
@@ -244,25 +243,22 @@ summary(pca)
 Graficando el valor de la varianza de cada componente principal, podemos observar los resultados comentados anteriormente, que las primeras componentes son las que más varianza explican y que a medida que se añaden más, la varianza explicada por cada una es menor.
 
 ```{r}
-fviz_eig(pca, main="Varianza de cada componente", choice = "eigenvalue", addlabels = T)
-
+# fviz_eig(pca, main="Varianza de cada componente", choice = "eigenvalue", addlabels = T)
 ```
-o como el porcentaje de varianza explicada por cada componente sobre el total.
+Como el porcentaje de varianza explicada por cada componente sobre el total.
 
 ```{r}
-fviz_screeplot(pca, addlabels = TRUE, main="Porcentaje de varianza explicada por cada componente (%)")
-
+fviz_screeplot(pca, addlabels = TRUE, main = "Porcentaje de varianza explicada por cada componente (%)")
 ```
 A continuación, representamos las varianzas acumuladas:
 ```{r}
-plot(summary(pca)$importance[3, ], type="o", col="darkblue", lwd=3, main = "Porcentaje de varianza acumulada", xlab = "Componente Principal", ylab = "Porcentaje de varianza acumulada")
-
+plot(summary(pca)$importance[3, ], type = "o", col = "darkblue", lwd = 3, main = "Porcentaje de varianza acumulada", xlab = "Componente Principal", ylab = "Porcentaje de varianza acumulada")
 ```
 Determinar el número de componentes que elegir para continuar con el análisis no tiene unas normas determinadas a seguir. Respecto a ello, existen varios criterios con sus respectivas propuestas.
 
 1. Una opción para determinar el número de componentes principales que seleccionar, es coger aquellas tal que expliquemos un % **determinado de la variabilidad de los datos que nosotros prefijemos**. Generalmente se  pone como umbral mínimo un 80%, entonces necesitaríamos elegir 3 componentes.
 
-2. Otra posibilidad es seguir el **criterio de Kaisser**, que escoge aquellas componentes cuyo autovalor sea superior a 1 (cuando las variables han sido generadas a partir de la matriz de correlaciones). Según este criterio y mirando el gráfico anterior de la varianza (igual a eigenvalues), eligiríamos las 3 primeras componentes. Este criterio, cuando p < 20, tiende a ser estricto e incluir pocas componentes.
+2. Otra posibilidad es seguir el **criterio de Kaisser**, que escoge aquellas componentes cuyo autovalor sea superior a 1 (cuando las variables han sido generadas a partir de la matriz de correlaciones). Según este criterio y mirando el gráfico anterior de la varianza (igual a eigenvalues), elegiríamos las 3 primeras componentes. Este criterio, cuando p < 20, tiende a ser estricto e incluir pocas componentes.
 
 3. Para relajar el criterio de Kaisser, existe la **modificación de Jollife**, que elige aquellas componentes cuyo autovalor sea superior a 0.7. Esta modificación, nos permite elegir igualmente 4 componentes.
 
@@ -277,7 +273,7 @@ Gráficamente, también podemos ver la contribución de las variables a los 3 pr
 
 
 ```{r}
-pca$rotation[,1:3]
+pca$rotation[, 1:3]
 corr_var <- pca$rotation %*% diag(pca$sdev)
 colnames(corr_var) <- c("PC1", "PC2", "PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10")
 corrplot(corr_var)
@@ -290,7 +286,7 @@ Si nos fijamos en los pesos más altos, podemos darle una interpretación a cada
 
 - Para la **tercera componente**, influyen las dimensiones de la 3 a la 6.
 
-- En la **cuarta componente**
+
 
 
 
@@ -313,9 +309,7 @@ En el gráfico, diferenciamos por colores las variables según su calidad de rep
 
 
 ```{r}
-fviz_pca_var(pca,axes=c(1,2), col.var = "cos2", gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), repel = TRUE)
-
-
+fviz_pca_var(pca, axes = c(1, 2), col.var = "cos2", gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), repel = TRUE)
 ```
 
 **RESUMEN DE RESULTADOS**
@@ -347,8 +341,6 @@ En el siguiente gráfico podemos ver las correlaciones de dichas variables con l
 corr_var <- pca$rotation %*% diag(pca$sdev)
 colnames(corr_var) <- c("PC1", "PC2", "PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10")
 corrplot(corr_var)
-
-
 ```
 
 
@@ -363,12 +355,27 @@ Representando los individuos sobre PC1 y PC2, vemos que Comunidades como Ceuta y
 ```{r}
 # Sobre PC1 y PC2
 fviz_pca_ind(pca, col.ind = "cos2", gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), repel = TRUE, axes = c(1, 2))
-
 ```
 
 
 
 
-# Conclusiones
+# Conclusión
+
+
+
+
+En este notebook se ha explicado como llevar a cabo una Reducción de la Dimensionalidad vía Componentes Principales, exponiendo las consideraciones a tener en cuenta. Se ha ilustrado con un caso práctico en el que se ha podido ir viendo la bondad del método empleado y que puede ser extrapolado a estudios futuros.
+
+
 
 Las nuevas componentes han permitido analizar las características más destacadas de las comunidades autónomas en términos de las 9 dimensiones indicadoras de la calidad de vida.
+
+
+
+
+# Bibliografía
+
+  - <https://rpubs.com/Joaquin_AR/287787>
+  - <http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/118-principal-component-analysis-in-r-prcomp-vs-princomp/>
+  - <https://www.datacamp.com/es/tutorial/pca-analysis-r>

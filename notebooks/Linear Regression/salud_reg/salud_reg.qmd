@@ -8,13 +8,12 @@ title: 'Regresión Lineal: salud_reg'
 ```{r}
 #| label: setup
 #| include: false
-knitr::opts_chunk$set(echo = TRUE,fig.align='center',warning=FALSE,message=FALSE)
+knitr::opts_chunk$set(echo = TRUE, fig.align = "center", warning = FALSE, message = FALSE)
 
 
 # fig.align= 'center para que nos centre todas figuras que se muestran
 # warning = FALSE para que no muestre mensajes de warning
 # message = FALSE para que no muestre mensajes automáticos cuando carga paquetes y demás en el output
-
 ```
 
 
@@ -22,6 +21,8 @@ knitr::opts_chunk$set(echo = TRUE,fig.align='center',warning=FALSE,message=FALSE
 
 
 # Introducción
+En este notebook se expondrá como llevar a cabo una Regresión Lineal a partir de un conjunto de datos, explicando las hipótesis que se deben satisfacer y un posterior análisis de bondad del modelo. Por último se explicará como utilizar el modelo creado para predecir nuevas observaciones.
+
 
 ## dataset
 
@@ -29,8 +30,8 @@ En este cuaderno vamos a analizar el dataset llamado
 [*salud_reg.xlsx*](../../../files/salud_reg.xlsx).
  Este contiene **microdatos** relativos a la [**Encuesta Nacional de Salud**](https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736176783&menu=resultados&secc=1254736195295&idp=1254735573175#!tabs-1254736195295) a personas en 2017. Altura, Peso, Edad, Sexo e IMC del encuestado con el fin de hacer una regresión del Peso en función del resto de variables y explicar por qué es interesante este estudio.
 
-
-Concretamente tenemos las siguietnes variables:
+-
+Concretamente tenemos las siguientes variables:
 
 -   **Edad**: Edad en años cumplidos del encuestado.
 -   **Sexo** : Sexo del encuestado (1=Hombre, 0=Mujer).
@@ -47,55 +48,59 @@ Concretamente tenemos las siguietnes variables:
 **Nota**: Notar que el Índice de Masa Corporal (IMC) es un indicador que pone en relación el peso (en kg) de la persona, con su altura en metros (al cuadrado). Informalmente, esta medida se toma como un indicador básico del estado de salud de la persona.
 
 
-Si conocieramos el IMC exacto, no tendría sentido efectuar el Análisis de Regresión puesto que el Peso se podría calcular directamente despejando IMC y Altura. Sin embarago, tenemos categorías para el IMC, que son: Peso Insuficiente, Nomal, Sobrepeso y Obesidad. Bajo este paradigma tiene sentido plantear la regresión para ver si somos capacedes de recuperar el Peso de una persona, sin conocer directamente su IMC, sino la clase en la que cae, junto con su Altura. Además se verá si el resto de variables ayudan a estimar el Peso.
+Si conociéramos el IMC exacto, no tendría sentido efectuar el Análisis de Regresión puesto que el Peso se podría calcular directamente despejando IMC y Altura. Sin embargo, tenemos categorías para el IMC, que son: Peso Insuficiente, Normal, Sobrepeso y Obesidad. Bajo este paradigma tiene sentido plantear la regresión para ver si somos capaces de recuperar el Peso de una persona, sin conocer directamente su IMC, sino la clase en la que cae, junto con su Altura. Además se verá si el resto de variables ayudan a estimar el Peso.
 
 ## Descripción del trabajo a realizar
 
-**(Esto irá en la web de explica)** Se pretende hacer una regresión lineal que explique el Peso en función del resto de las variables.
+Elaborar una Regresión Lineal que explique el Peso en función del resto de las variables.
 
   - Hacer un análisis exploratorio.
+  - Plantear las hipótesis de una regresión (incluyendo todas variables).
   - Analizar el modelo planteado y su ajuste de bondad.
-  - Hacer una conclusión.
+  - Evaluar distintos modelos y seleccionar el más adecuado.
+  - Conclusión.
 
 
 
-
-\newpage
-# Análisis Exploratorio (EDA[^1])
-
-[^1]: EDA viene del Inglés *Exploratory Data Analysis* y son los pasos
-    relativos en los que se exploran las variables para tener una idea
-    de que forma toma el dataset.
+# Análisis Exploratorio (EDA)
 
 
 
-Lo primero de todo vamos a cargar las librearias necesarias para ejecutar el resto del código del trabajo:
+EDA viene del Inglés *Exploratory Data Analysis* y son los pasos relativos en los que se exploran las variables para tener una idea de que forma toma el dataset.
 
+
+
+## Cargar Librerías
+Lo primero de todo vamos a cargar las librerías necesarias para ejecutar el resto del código del trabajo:
 
 ```{r }
 #| label: librerias
-library(readxl)  # Para leer los excels
-#library(kableExtra) # Para dar formato a las tablas html
+library(readxl) # Para leer los excels
+# library(kableExtra) # Para dar formato a las tablas html
 library(knitr)
-library(gridExtra)  # Para cargar bien las tab
-library(car)   # for bonfferroni test
-
+library(gridExtra) # Para cargar bien las tab
+library(car) # for bonfferroni test
+library(ggplot2)
 ```
 
-Ahora leemos los datos del excel correspondientes a la pestaña *"Datos"* y vemos si hay algún NA o algún valor igual a 0 en nuestro dataset. Vemos que no han ningún NA (missing value) en el dataset luego no será necesario realizar ninguna técnica para imputar los missing values o borrar observaciones.
+## Lectura datos
+
+Ahora cargamos los datos del excel correspondientes a la pestaña *"Datos"* y vemos si hay algún NA o algún valor igual a 0 en nuestro dataset. Vemos que no han ningún NA (missing value) en el dataset luego no será necesario realizar ninguna técnica para imputar los missing values o borrar observaciones.
 
 
 ```{r}
 #| label: datos
-salud <- read_excel("../../../files/salud_reg.xlsx",sheet = "Datos")
+salud <- read_excel("../../../files/salud_reg.xlsx", sheet = "Datos")
 ```
 
 
 ```{r}
-anyNA(salud)   #Any missing data 
+anyNA(salud) # Any missing data
 ```
 
+# Análisis
 
+Realizando un **resumen numérico** vemos que:
 
 ```{r}
 summary(salud)
@@ -129,75 +134,85 @@ Hay cuatro categorías de índice de masa corporal (IMC) representadas como "1",
 #| fig-align: center
 #| fig-cap: Plots de todas las dimensiones.
 # Assuming IMV is your data frame and d is the variable of interest
-library(ggplot2)
+
 
 # Histogram Edad
 histogram <- ggplot(salud, aes(x = EDAD)) +
-  geom_histogram(fill = "lightblue", color = "black") +
+  geom_histogram(fill = "deepskyblue2", color = "navy") +
   labs(title = "Histogram of Edad", x = "dim1", y = "Frequency") +
   theme_minimal(base_size = 8)
 
 # Box Plot Edad
 boxplot <- ggplot(salud, aes(x = "d", y = EDAD)) +
-  geom_boxplot(fill = "lightblue", color = "black")+ stat_boxplot(geom = 'errorbar', width = 0.2) +
+  geom_boxplot(fill = "deepskyblue2", color = "navy") +
+  stat_boxplot(geom = "errorbar", width = 0.2) +
   labs(title = "BoxPlot of Edad", x = "", y = "dim1") +
   theme_minimal(base_size = 8) +
-  theme(axis.title.x=element_blank(),
-        axis.text.x=element_blank(),
-        axis.ticks.x=element_blank())
+  theme(
+    axis.title.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank()
+  )
 
 
 
 # Histogram Altura
 histogram2 <- ggplot(salud, aes(x = Altura)) +
-  geom_histogram(fill = "lightblue", color = "black") +
+  geom_histogram(fill = "deepskyblue2", color = "navy") +
   labs(title = "Histogram of Altura", x = "dim2", y = "Frequency") +
   theme_minimal(base_size = 8)
 
 # Box Plot Altura
 boxplot2 <- ggplot(salud, aes(x = "d", y = Altura)) +
-  geom_boxplot(fill = "lightblue", color = "black")+ stat_boxplot(geom = 'errorbar', width = 0.2) +
+  geom_boxplot(fill = "deepskyblue2", color = "navy") +
+  stat_boxplot(geom = "errorbar", width = 0.2) +
   labs(title = "Box Plot of Altura", x = "", y = "dim2") +
   theme_minimal(base_size = 8) +
-  theme(axis.title.x=element_blank(),
-        axis.text.x=element_blank(),
-        axis.ticks.x=element_blank())
+  theme(
+    axis.title.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank()
+  )
 
 
 
 # Histogram Peso
 histogram3 <- ggplot(salud, aes(x = Peso)) +
-  geom_histogram(fill = "lightblue", color = "black") +
+  geom_histogram(fill = "deepskyblue2", color = "navy") +
   labs(title = "Histogram of Peso", x = "dim3", y = "Frequency") +
   theme_minimal(base_size = 8)
 
 # Box Plot Peso
 boxplot3 <- ggplot(salud, aes(x = "d", y = Peso)) +
-  geom_boxplot(fill = "lightblue", color = "black")+ stat_boxplot(geom = 'errorbar', width = 0.2) +
+  geom_boxplot(fill = "deepskyblue2", color = "navy") +
+  stat_boxplot(geom = "errorbar", width = 0.2) +
   labs(title = "Box Plot of Peso", x = "", y = "dim3") +
   theme_minimal(base_size = 8) +
-  theme(axis.title.x=element_blank(),
-        axis.text.x=element_blank(),
-        axis.ticks.x=element_blank())
+  theme(
+    axis.title.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank()
+  )
 
 
 
 
 
 # Arrange plots vertically
-library(gridExtra)
-grid.arrange(histogram, boxplot,histogram2, boxplot2,histogram3,boxplot3, nrow = 2,ncol=4, widths = c(0.3, 0.2,0.3,0.2))
+grid.arrange(histogram, boxplot, histogram2, boxplot2, histogram3, boxplot3, nrow = 2, ncol = 4, widths = c(0.3, 0.2, 0.3, 0.2))
 
 
-# raros 
-sum(salud$Peso>100)
-
+# raros
+sum(salud$Peso > 100)
 ```
 
 
 
 
-En los histogramas vemos la forma de cada distribucion las cuales parecen razonables con la idea que podemos tener preconcebida acerca de dichas variables. En la gráfica de la altura se observamos que es bastante más simétrica que el peso, que presenta asimetría postiva. Esto se puede deber a que sobre nuestra altura nosotros no jugamos ningún papel directo, suele venir influencia por la genética y factores fuera del alcance de nuestra mano, de ahí que sea muy simétrica. Sin embargo, el peso es muy fácil aumentarlo disminuirlo. Generalmente en una sociedad desarollada es normal tener más facilidad para comer por exceso que por deceso, luego parece razonable que esté sesgada hacia la derecha.
+En los histogramas vemos la forma de cada distribución las cuales parecen razonables con la idea que podemos tener preconcebida acerca de dichas variables. 
+
+  - En la gráfica de la altura se observamos que es bastante más simétrica que el peso, que presenta asimetría positiva. Esto se puede deber a que sobre nuestra altura nosotros no jugamos ningún papel directo, suele venir influencia por la genética y factores fuera del alcance de nuestra mano, de ahí que sea muy simétrica. 
+  - Sin embargo, el peso es muy fácil aumentarlo/disminuirlo. Generalmente en una sociedad desatollada es normal tener más facilidad para comer por exceso que por deceso, luego parece razonable que esté sesgada hacia la derecha.
 
 
 
@@ -208,16 +223,34 @@ En los histogramas vemos la forma de cada distribucion las cuales parecen razona
 # Regresión Lineal
 
 
+Una Regresión Lineal es una técnica estadística que busca ajustar un conjunto de datos a una recta. Es decir, dada una observación *x*, se proyecta sobre la recta y se obtiene un valor *y*, de tal manera que si el ajuste por regresión es bueno entonces la $\hat{y}$ obtenida se parece mucho al valor real $y$. 
+
+Antes de explicar las hipótesis que deben cumplir los datos para que el ajuste y como llevarlo a cabo, se va a mostrar un ejemplo de buen y mal ajuste. Intuitivamente cuanto mejor sea el ajuste de los datos a una recta cuando se representen las observaciones en un gráfico, mejor será el ajuste.
+
+
+```{r}
+par(mfrow = c(1, 2)) # Dos gráficos misma fila
+
+# Poca variabilidad
+x <- seq(1, 100, 1)
+y <- rnorm(100, x, 5)
+p1 <- plot(y, col = "lightblue", main = "BUEN Ajuste") + abline(lm(y ~ x), col = "navy")
+
+# Mucha variabilidad
+x_malo <- seq(1, 100, 1)
+y_malo <- rnorm(100, x, 35)
+p2 <- plot(y_malo, col = "lightblue", main = "MAL Ajuste") + abline(lm(y_malo ~ x_malo), col = "navy")
+```
+
 ## Hipótesis y indicadores de bondad
 
-Para que una regresión lineal proporcione un buen ajsute a los datos debe cumplir una serie de requisitos que por tanto deben ser verificados al llevar a cabo el estudio. Recordar que la regresión lineal se expresa como:
+Para que una regresión lineal proporcione un buen ajuste a los datos debe cumplir una serie de requisitos que por tanto deben ser verificados al llevar a cabo el estudio. Recordar que la regresión lineal se expresa como:
 
-
-\[
+$$
 \mathbf{Y}=\mathbf{X} \boldsymbol{\beta}+\boldsymbol{\varepsilon}
-\]
-donde $\mathbf{Y}$ es la variable respuesta, $\mathbf{X}$ los predictores, $\boldsymbol{\beta}$ los coeficientes de la regresión y $\boldsymbol{\varepsilon}$ el error.
-\[
+$$
+donde $\mathbf{Y}$ es la variable respuesta, $\mathbf{X}$ los predictores (hay $k$ variables predictoras), $\boldsymbol{\beta}$ los coeficientes de la regresión y $\boldsymbol{\varepsilon}$ el error.
+$$
 \mathbf{Y}=\left[\begin{array}{c}
 y_1 \\
 y_2 \\
@@ -239,7 +272,26 @@ y_n
 \vdots \\
 \varepsilon_n
 \end{array}\right]
-\]
+$$
+Las hipótesis que se deben cumplir son:
+
+  - **Linealidad**: La media de la respuesta es función lineal de los predictores. En términos matemáticos:
+  $$E\left[\mathbf{Y} \mid \mathbf{X}_1=x_1, \ldots, \mathbf{X}_k=x_k\right]=\beta_0+\beta_1 x_1+\ldots+\beta_k x_k $$
+  
+- **Independencia de errores**: Los errores $\varepsilon_i$ deben ser independientes, es decir, $Cov[\varepsilon_i,\varepsilon_j] =0, \; \forall i\neq j$.
+
+- **Homocedasticidad**: La varianza del error debe ser constante.
+
+$$Var\left[\varepsilon_i \mid \mathbf{X}_1=x_1, \ldots, \mathbf{X}_k=x_k\right]=\sigma^2 \quad \forall \;i $$
+
+- **Normalidad** : Los errores deben estar distribuidos normalmente, es decir, $\varepsilon_i \sim N(0,\sigma^2)\; \forall i$.
+
+
+
+Para analizar la bondad, hay algunos indicadores como el **Coeficiente de Determinación** o $R^2$ que representa el porcentaje de variabilidad de la variable respuesta que es capaz de explicar el modelo. Es decir, si toma valor 1 hay una dependencia lineal exacta entre los predictores y la variable respuesta y por tanto las predicciones serán perfectas. Por el contrario, si toma valor 0 habrá que desechar el modelo puesto que no es capaz de predecir con nada de exactitud.
+
+
+En caso de que haya más de un predictor ($k >1$, Regresión Lineal Múltiple), es más recomendable usar el **Coeficiente de Determinación Ajustado** $R^2\_adj$ como indicador de bondad, pues el $R^2$ puede inflarse artificialmente debido a la presencia de varios predictores. Su interpretación es similar.
 
 
 
@@ -247,49 +299,62 @@ y_n
 
 ## Modelo
 
+En este caso nos encontramos ante una Regresión Lineal Múltiple puesto que tenemos más de una variable predictora. Inicialmente vamos a considerar un modelo con todas variables predictoras para intentar predecir el $peso$ y veremos si este modelo cumple las hipótesis necesarias y cuan bueno es.
 
-Inicialmente vamos a considerar un modelo con todas variables predictoras para intentar predecir el $indice\_total$ y veremos si este modelo cumple las hipótesis necesarias y cuan bueno es.
+**NOTA IMPORTANTE**: Destacar que hay predictores que son variables discretas (no continuas), luego se deberán tratar como variables factor en R. En este notebook se verá como interpretar los resultados cuando están presentes este tipo de variables. La principal diferencia es que los modelos de regresión usan internamente variables dummy para este tipo de variables, luego por cada variable factor habrá tantos coeficientes de regresión como categorías menos uno, es decir, como número de variables dummy. Este tipo de codificación se denomina [One Hot Encoding](https://en.wikipedia.org/wiki/One-hot), para más información leer el link.
+
+
 
 ```{r}
 #| label: modelo1
 #| class-source: fold-show
-#Convertir a factor las que toquen
+# Convertir a factor variables
+salud$SEXO <- as.factor(salud$SEXO)
+salud$IMC <- as.factor(salud$IMC)
 
-salud$SEXO<-as.factor(salud$SEXO)
-salud$IMC<-as.factor(salud$IMC)
 
-#Modelo inicial
-lm1<-lm(Peso~EDAD+Altura+IMC+SEXO,salud)
+
+# Dividimos los datos en Train/Test
+
+salud_test <- salud[22000:22019, ]
+salud <- salud[1:21999, ]
+
+
+
+# Modelo inicial
+lm1 <- lm(Peso ~ EDAD + Altura + IMC + SEXO, salud)
 
 summary(lm1)
 ```
 
-A primera vista vemos un valor de **Multiple R-squared:  0.8521,**, lo cual es bastante alto y por tanto nuestro modelo parece capturar bien la variabilidad de la variable respuesta, concretamente un $85\%$. Sin embargo, en los sucesivos modelos que plantemos no podemos usar como criterio de comparación el $R-squared$ pues aumenta a la vez que lo hace el número de variables, y por tanto para comparar modelos entre si se debe usar el **Adjusted R-squared** (que tiene en cuenta el número de variables). 
+A primera vista vemos un valor de **Múltiple R-squared:  0.8521,**, lo cual es bastante alto y por tanto nuestro modelo parece capturar bien la variabilidad de la variable respuesta, concretamente un $85\%$. Sin embargo, en los sucesivos modelos que plantemos no podemos usar como criterio de comparación el $R-squared$ pues aumenta a la vez que lo hace el número de variables, y por tanto para comparar modelos entre si se debe usar el **Adjusted R-squared** (que tiene en cuenta el número de variables). 
 
-En la línea de los residuos no parece haber contraindicaciones a que estos sigan una distribución normal centrada en cero puesto que tenemos unas medidas de dispersión bastante simétricas. No osbtante, más adelante se procederán a hacer los test pertinentes. 
+En la línea de los residuos no parece haber contraindicaciones a que estos sigan una distribución normal centrada en cero puesto que tenemos unas medidas de dispersión bastante simétricas. No obstante, más adelante se procederán a hacer los test pertinentes. 
 
 
-Vamos a quitarle alguna variable a ver que obtenemos:
-
+Ahora vamos a reducir el número de predictores que incluimos en el modelo y analizaremos que impacto tiene esto en la bondad. 
+  
+  - En el modelo lm2, quitamos en primer lugar la variable *Sexo*, dejando *EDAD*, *Altura*, *IMC*.
+  - En el modelo lm3, quitamos en primer lugar la variable *IMC*, dejando *EDAD*, *Altura*.
 
 
 ```{r}
-
-# Sin Sexo 
-lm2<-lm(Peso~EDAD+Altura+IMC,salud)
+# Sin Sexo
+lm2 <- lm(Peso ~ EDAD + Altura + IMC, salud)
 summary(lm2)
 
 
 # Sin IMC
-lm3<-lm(Peso~EDAD+Altura,salud)
-
-
-
+lm3 <- lm(Peso ~ EDAD + Altura, salud)
+summary(lm3)
 ```
 
+Vemos que el Sexo no parece tener mucha importancia, no así el IMC que cuando lo sustraemos del modelo experimenta una bajada grande de bondad. Sin embargo al sustraer la variable IMC, vemos que el **Adjusted R-squared** baja bastante, por lo que se puede decir que dicha variable es de gran relevancia. Conceptualmente el IMC=peso/altura, y aunque nosotros sólo tengamos 4 categorías de IMC (en vez de la variable continua), es directo ver que dicha variable nos va a servir como gran fuente de información para predecir el peso. De manera contraria, el Sexo de una persona no parece estar muy correlacionado con el peso, hay mujeres y hombres con sobrepeso y mujeres y hombres con pesos bajos. Con la altura cabría esperar una relación más directa puesto que conforme crecemos (nos hacemos más altos), vamos aumentando de peso.
 
-Vemos que el Sexo no parece tener mucha importancia, no así el IMC que cuando lo sustraemos del modelo experimenta una bajada grande de bondad. 
-Vamos a interpretar ahora los parámetros del modelo 1:
+
+
+
+Es por ello que nos vamos a quedar con el modelo **lm1** o **lm2**. Vamos a interpretar ahora los parámetros del modelo 1:
 
 ```{r}
 summary(lm1)
@@ -299,22 +364,59 @@ Vemos los siguientes coeficientes:
 
   - $\beta (EDAD)$: tiene un valor muy bajo (0.02), siendo positivo. Esto indica que no parece tener mucho peso en el modelo y que conforme aumente la edad, aumenta el Peso de la persona muy ligeramente, lo cual podría parecer razonable.
 
-  - $\beta (Altura)$: tiene un valor de (0.85), siendo positivo. Parece razonable que sea mayor que el del beta relativo a la edad puesto que a más altura, más posibilidad de tener mas masa y por tanto más peso. De ahí que además sea positivo.
+  - $\beta (Altura)$: tiene un valor de (0.85), siendo positivo. Parece razonable que sea mayor que el del beta relativo a la edad puesto que a más altura, más posibilidad de tener mas masa y por tanto más peso. De ahí que además sea positivo. Por cada unidad más de altura (cada cm), aumenta el peso en 0.85kg en media.
 
 Destacar que ahora los siguientes betas se refieren a la variable IMC que es categórica. Es por ello que se toma como referencia la primera categoría (IMC=1) y los coeficientes representan el cambio de pasar de una categoría a otra.
 
-  - $\beta (IMC2)$: tiene un valor bastante alto (13.42), siendo positivo. Esto indica que al pasar de la clase IMC=1 A IMC=2, el peso aumenta en 13.42 puntos. Esto parece muy razonable puesto que en IMC=1 se representaba la gente con peso insuficiente y en IMC=2 la gente con peso normal.
+  - $\beta (IMC2)$: tiene un valor bastante alto (13.42), siendo positivo. Esto indica que al pasar de la clase IMC=1 (nivel base) A IMC=2, el peso aumenta en 13.42 puntos. Esto parece muy razonable puesto que en IMC=1 se representaba la gente con peso insuficiente y en IMC=2 la gente con peso normal. Es decir, el modelo nos está indicando que la diferencia entre ambas clases es de 13.42 kg.
 
   - $\beta (IMC3)$:  tiene un valor bastante alto (26), siendo positivo. Esto indica que al pasar de la clase IMC=1 A IMC=3, el peso aumenta en 13.42 puntos. Esto parece muy razonable puesto que en IMC=1 se representaba la gente con peso insuficiente y en IMC=3 la gente con sobrepeso. Además también es más grande que el beta anterior, indicando que es mas grande el cambio de peso entre gente con peso insuficiente y sobrepeso que entre las personas con peso insuficiente y peso normal.
   
-  - $\beta (IMC4)$: tiene un valor bastante alto (43), siendo positivo. Esto indica que al pasar de la clase IMC=1 A IMC=4, el peso aumenta en 13.42 puntos. Esto parece muy razonable puesto que en IMC=1 se representaba la gente con peso insuficiente y en IMC=4 la gente con obesidad.  Además también es más grande que los betas anteriores, indicando que es mas grande el cambio de peso entre gente con peso insuficiente y obesidad que entre el resto de clases.
-  - $\beta (SEXO1)$: tiene un valor igual a 1 (+1), siendo positivo. Puesto que es una variable factor, esto indica que pasar de la categoría base, mujer, a hombre, aumenta el peso. Esto también parece razonable puesto que manteniendo el resto de variables constantes, los hombres suelen tender a estar más musculados y por tanto tienden a pesar más.
+  - $\beta (IMC4)$: tiene un valor bastante alto (43), siendo positivo. Esto indica que al pasar de la clase IMC=1 A IMC=4, el peso aumenta en 13.42 puntos. Esto parece muy razonable puesto que en IMC=1 se representaba la gente con peso insuficiente y en IMC=4 la gente con obesidad.  Además también es más grande que los betas anteriores, i
+  indicando que es mas grande el cambio de peso entre gente con peso insuficiente y obesidad que entre el resto de clases.
+  - $\beta (SEXO1)$: tiene un valor igual a 1 (+1), siendo positivo. Puesto que es una variable factor, esto indica que pasar de la categoría base, mujer, a hombre, aumenta el peso. Esto también podría ser razonable puesto que manteniendo el resto de variables constantes, los hombres suelen tender ser más altos que las mujeres y por tanto tienden a pesar más. Es verdad que como hemos comentado antes, no es una correlación a prior tan evidente.
 
 
 
 
+# Predicción
+
+Una vez que hemos seleccionado un modelo, en este caso `lm1`, vamos a predecir nuevas observaciones y calcular intervalos de confianza para estas. Utilizaremos los datos almacenados en IMCV_test. Para predecir usaremos la función `predict()`, que además nos puede proporcionar un intervalo de confianza para los valores predichos.
 
 
-# Conclusion
+Para evaluar las predicciones vamos calcular:
 
-El modelo inicial considerado tiene buenos inidcadores de bondad de ajuste. Además interpretando los resultados parece razonable todos los coeficientes e indicadores obtenidos.
+  - **Mean Absolute Error (MAE)**, que se calcula como la diferencia absoluta promedio entre los valores ajustados por el modelo (un paso por delante de la previsión de muestra) y los datos históricos observados. **Representa** cuanto esperamos desviarnos en una predicción. En este caso 3.78 puntos, lo cual es bastante preciso puesto que en personas con edades adultas 3kg arriba, 3kg abajo no es mucha diferencia.
+
+
+  - **Mean Absolute Percentage Error (MAPE)**, que se calcula como el promedio de las diferencias absolutas entre los valores pronosticados y los valores reales, expresadas como un porcentaje de los valores reales. **Representa** el error promedio absoluto de las predicciones del modelo, expresado como un porcentaje de los valores reales. En otras palabras, mide la magnitud relativa del error de las predicciones en comparación con los valores reales, permitiendo así una evaluación de la precisión del modelo de pronóstico.
+  
+  En este caso es un 5%, luego no es una desviación muy grande de peso, y por ello se podría decir que el modelo es bueno prediciendo nuevas observaciones.   
+
+```{r}
+prediccion <- predict(lm1, salud_test[, c(1, 3, 5, 2)], interval = "confidence", level = 0.95)
+valor_real <- salud_test[, 4]
+
+# Calculamos el MAE
+MAE <- sum(abs(prediccion[, 1] - valor_real)) / 20
+MAPE <- sum(abs((prediccion[, 1] - valor_real) / valor_real)) * 100 / 20
+paste0("El MAE es: ", round(MAE, 5))
+paste0("El MAPE es de: ", round(MAPE, 5), "%")
+```
+
+
+Vemos un MAE bastante bajo luego vemos que el modelo es bueno para predecir observaciones futuras, que no hay un sobre entrenamiento.
+
+
+
+# Conclusión
+
+El modelo inicial considerado tiene buenos indicadores de bondad de ajuste. Además interpretando los resultados parece razonable todos los coeficientes e indicadores obtenidos.
+
+
+# Bibliografía
+
+  - <https://en.wikipedia.org/wiki/Linear_regression>
+  - <https://www.datacamp.com/tutorial/linear-regression-R>
+  - <http://r-statistics.co/Linear-Regression.html>
+  - <https://rpubs.com/Sergio_Garcia/linear_regression>  
