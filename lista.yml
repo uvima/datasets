@@ -8,37 +8,9 @@
   description: Este dataset presenta un conjunto de datos sobre el salario medio anual
     de hombres y mujeres en España, relativos a años 2017/18.
   operation:
-  - Encuesta de Población Activa (EPA) (INE)
-  - Encuesta Anual de Estructura Salarial (INE)
-  - Encuesta Continua de Hogares (INE)
-  - Encuesta de Presupuestos Familiares (EPF) (INE)
-  - Encuesta de Condiciones de Vida (ECV) (INE)
-  - 'Estadística de Condenados: Menores (INE)'
-  - Encuesta Europea de Salud (INE)
-  - Explotación Estadística del Directorio Central de Empresas (INE)
-  - Contabilidad Regional de España (INE)
-  - Estadística del Empleo de las Personas con Discapacidad (INE)
-  - Encuesta sobre Equipamiento y Uso de Tecnologías de Información y Comunicación
-    en los Hogares (INE)
-  - Encuesta sobre el Uso de Tecnologías de la Información y las Comunicaciones y
-    del Comercio Electrónico en las Empresas (INE)
-  - Tablas de Mortalidad (INE)
-  - Encuesta Nacional de Salud (MSND)
+  - Encuesta Anual de Estructura Salarial (INE)
   hoperation:
-  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931120732
   - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931120231
-  - blank
-  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931130921
-  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931119237
-  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931147553
-  - https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736176784&menu=ultiDatos&idp=1254735573175
-  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259930989826
-  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259937889657
-  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259930978853
-  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931064762
-  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931061252
-  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931152707
-  - blank
   tema: Mercado laboral y salarios
   observaciones: 17
 - title: 'Cluster K-Means: desigualdad_CCAA'
@@ -51,37 +23,10 @@
   description: Este dataset presenta un conjunto de datos sobre el salario medio anual
     de hombres y mujeres en España, relativos a años 2017/18.
   operation:
-  - Encuesta de Población Activa (EPA) (INE)
-  - Encuesta Anual de Estructura Salarial (INE)
-  - Encuesta Continua de Hogares (INE)
-  - Encuesta de Presupuestos Familiares (EPF) (INE)
-  - Encuesta de Condiciones de Vida (ECV) (INE)
-  - 'Estadística de Condenados: Menores (INE)'
-  - Encuesta Europea de Salud (INE)
-  - Explotación Estadística del Directorio Central de Empresas (INE)
-  - Contabilidad Regional de España (INE)
-  - Estadística del Empleo de las Personas con Discapacidad (INE)
-  - Encuesta sobre Equipamiento y Uso de Tecnologías de Información y Comunicación
-    en los Hogares (INE)
-  - Encuesta sobre el Uso de Tecnologías de la Información y las Comunicaciones y
-    del Comercio Electrónico en las Empresas (INE)
-  - Tablas de Mortalidad (INE)
-  - Encuesta Nacional de Salud (MSND)
+  - Encuesta Anual de Estructura Salarial (INE)
+
   hoperation:
-  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931120732
   - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931120231
-  - blank
-  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931130921
-  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931119237
-  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931147553
-  - blank
-  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259930989826
-  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259937889657
-  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259930978853
-  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931064762
-  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931061252
-  - https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931152707
-  - blank
   tema: Mercado laboral y salarios
   observaciones: 17
 - title: 'Regresión Logística: ECV_microdatos'
@@ -125,7 +70,7 @@
   description: Datos por Comunidades Autónomas sobre la tasa de riesgo de pobreza,
     la carencia material o la situación laboral que encontramos dentro de la Encuesta
     de Condiciones de Vida (ECV). Datos correspondientes al año 2021.
-  operation: [Encuesta de Condiciones de Vida (ECV) (INE)]
+  operation: [Encuesta de Condiciones de Vida (ECV) (INE)]
   hoperation: [https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931119237]
   tema: Nivel, calidad y condiciones de vida
   observaciones: 19
@@ -140,7 +85,7 @@
     donde se puntua el nivel de satisfacción en determinados ámbitos de la vida (laboral,
     económico, relaciones personales..). El objetivo es llevar a cabo un análisis
     factorial
-  operation: [Encuesta de Condiciones de Vida (ECV) (INE)]
+  operation: [Encuesta de Condiciones de Vida (ECV) (INE)]
   hoperation: [https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931119237]
   tema: Nivel, calidad y condiciones de vida
   observaciones: 26883
@@ -381,7 +326,7 @@
     Peso y Edad del encuestado con el fin de clasificar el sexo de una persona en
     función de las anteriores variables.
   operation: [Encuesta Nacional de Salud (ENSE)]
-  hoperation: [blank]
+  hoperation: [https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736176783&menu=resultados&idp=1254735573175]
   tema: Salud
   observaciones: 229
   cleaning: notebooks/Analisis Discriminante/Lineal_y_Cuadratico/salud/Dataset_cleaning.html
@@ -396,7 +341,7 @@
     Peso y Edad del encuestado con el fin de clasificar el sexo de una persona en
     función de las anteriores variables.
   operation: [Encuesta Nacional de Salud (ENSE)]
-  hoperation: [blank]
+  hoperation: [https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736176783&menu=resultados&idp=1254735573175]
   tema: Salud
   observaciones: 229
   cleaning: notebooks/Logistic Regression/salud/Dataset_cleaning.html
@@ -411,7 +356,7 @@
     Peso, Edad Sexo e IMC del encuestado con el fin de hacer una regresión del Peso
     en función del resto de variables y explicar por qué es interesante este estudio.
   operation: [Encuesta Nacional de Salud (ENSE)]
-  hoperation: [blank]
+  hoperation: [https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736176783&menu=resultados&idp=1254735573175]
   tema: Salud
   observaciones: 22019
   cleaning: notebooks/Linear Regression/salud_reg/Dataset_cleaning.html
@@ -434,7 +379,7 @@
   hoperation:
   - https://www.ine.es/dyngs/IOE/es/operacion.htm?numinv=30264
   - https://www.ine.es/dyngs/IOE/es/operacion.htm?numinv=30416
-  - blank
+  - https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736176784&menu=resultados&idp=1254735573175
   tema: Demografía y población
   observaciones: 17
 - title: 'Regresión Lineal: Sucidios'
@@ -452,7 +397,7 @@
     Municipal'
   - Encuesta de Población Activa (EPA)
   - Índice de Precios de Consumo
-  - 'Estadística de Condenados: Menores (INE)'
+  - 'Estadística de Condenados: Menores (INE)'
   - Contabilidad Regional de España
   - Estadísticas sobre Recogida y Tratamiento de Residuos
   - Estadística de Sociedades Mercantiles

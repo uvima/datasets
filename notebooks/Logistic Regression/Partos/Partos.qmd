@@ -21,7 +21,7 @@ En este cuaderno se va a explicar los fundamentos de la Regresión Logística, c
 
 En este cuaderno vamos a analizar la presencia de una cesárea en un parto a partir de los microdatos de la **Estadística de nacimientos. Movimiento natural de la población.** Concretamente, se han tomado los datos relativos a **partos, 2022** y los relativos a la Comunidad Autónoma de **Navarra**.. Dicho análisis nos sirve como excusa para tratar de mostrar en qué consiste una regresión logística y cómo llevarla a cabo en R.
 
-Ver fichero [*Dataset_cleaning.rmd*](https://github.com/davidperezros/ine_sg_difusion_explica_datasets/blob/546d12c723434e97ea605ed45e153680f7be834a/Notebooks/Logistic%20Regression/Partos/Dataset_cleaning.md) para ver cómo se han tratado dichos microdatos hasta obtener un conjunto de datos adecuado para la regresión logística, y que tomaremos aquí como punto de partida. El fichero de datos procesado se puede encontrar en [*Partos.xlsx*](../../../files/partos.xlsx)
+Ver fichero [*Dataset_cleaning*](Dataset_cleaning.html) para ver cómo se han tratado dichos microdatos hasta obtener un conjunto de datos adecuado para la regresión logística, y que tomaremos aquí como punto de partida. El fichero de datos procesado se puede encontrar en [*Partos.xlsx*](../../../files/partos.xlsx)
 
 Concretamente tenemos las siguientes variables:
 
@@ -177,7 +177,7 @@ La **especificidad** y la **sensibilidad** son medidas utilizadas para evaluar e
 Un equilibrio entre ambas es deseable, pero depende del contexto específico del problema y de las consecuencias de los falsos positivos y falsos negativos. En el caso, por ejemplo, de detectar si un paciente tiene cáncer o no, parece más razonable centrarse en los Falsos Negativos, ya que un paciente que tiene cáncer no lo estamos detectando, lo que lleva un riesgo implícito muy alto.
 
 |                        | **Clasificado como Positivo** | **Clasificado como Negativo** | **Total** |
-|---------------|---------------------|---------------------|---------------|
+|-----------------|--------------------|--------------------|-----------------|
 | **Realmente Positivo** | Verdadero Positivo (VP)       | Falso Negativo (FN)           | VP + FN   |
 | **Realmente Negativo** | Falso Positivo (FP)           | Verdadero Negativo (VN)       | FP + VN   |
 | **Total**              | VP + FP                       | FN + VN                       |           |
