@@ -897,7 +897,7 @@ window.Quarto = {
 <section id="dataset" class="level2">
 <h2 class="anchored" data-anchor-id="dataset">dataset</h2>
 <p>En este cuaderno vamos a analizar la presencia de una cesárea en un parto a partir de los microdatos de la <strong>Estadística de nacimientos. Movimiento natural de la población.</strong> Concretamente, se han tomado los datos relativos a <strong>partos, 2022</strong> y los relativos a la Comunidad Autónoma de <strong>Navarra</strong>.. Dicho análisis nos sirve como excusa para tratar de mostrar en qué consiste una regresión logística y cómo llevarla a cabo en R.</p>
-<p>Ver fichero <a href="https://github.com/davidperezros/ine_sg_difusion_explica_datasets/blob/546d12c723434e97ea605ed45e153680f7be834a/Notebooks/Logistic%20Regression/Partos/Dataset_cleaning.md"><em>Dataset_cleaning.rmd</em></a> para ver cómo se han tratado dichos microdatos hasta obtener un conjunto de datos adecuado para la regresión logística, y que tomaremos aquí como punto de partida. El fichero de datos procesado se puede encontrar en <a href="../../../files/partos.xlsx"><em>Partos.xlsx</em></a></p>
+<p>Ver fichero <a href="Dataset_cleaning.html"><em>Dataset_cleaning</em></a> para ver cómo se han tratado dichos microdatos hasta obtener un conjunto de datos adecuado para la regresión logística, y que tomaremos aquí como punto de partida. El fichero de datos procesado se puede encontrar en <a href="../../../files/partos.xlsx"><em>Partos.xlsx</em></a></p>
 <p>Concretamente tenemos las siguientes variables:</p>
 <ul>
 <li><strong>bebes</strong>: Número de bebés nacidos en el parto. (categórica)</li>
@@ -1038,10 +1038,10 @@ P(Y=1)=\frac{1}{1+e^{-(\beta_0 + \beta_1X_1 + ϵ)}}
 <p>Un equilibrio entre ambas es deseable, pero depende del contexto específico del problema y de las consecuencias de los falsos positivos y falsos negativos. En el caso, por ejemplo, de detectar si un paciente tiene cáncer o no, parece más razonable centrarse en los Falsos Negativos, ya que un paciente que tiene cáncer no lo estamos detectando, lo que lleva un riesgo implícito muy alto.</p>
 <table class="table">
 <colgroup>
-<col style="width: 20%">
-<col style="width: 29%">
-<col style="width: 29%">
-<col style="width: 20%">
+<col style="width: 22%">
+<col style="width: 27%">
+<col style="width: 27%">
+<col style="width: 22%">
 </colgroup>
 <thead>
 <tr class="header">
