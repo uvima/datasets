@@ -2,150 +2,150 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Cluster K-Means/ecv_cluster/ecv_cluster.html</loc>
-    <lastmod>2024-05-23T15:59:51.753Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.661Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Cluster K-Means/desigualdad_ccaa/desigualdad_ccaa.html</loc>
-    <lastmod>2024-05-23T15:59:51.753Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.661Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Cluster Jerarquico/VarCovid_provincias/VarCovid_provincias.html</loc>
-    <lastmod>2024-05-23T15:59:51.749Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.661Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Cluster Jerarquico/desigualdad_ccaa/desigualdad_ccaa.html</loc>
-    <lastmod>2024-05-23T15:59:51.749Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.661Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Analisis Discriminante/Lineal_y_Cuadratico/salud/Dataset_cleaning.html</loc>
-    <lastmod>2024-05-23T15:59:51.749Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.661Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Analisis Discriminante/Lineal_y_Cuadratico/laboral/Dataset_cleaning.html</loc>
-    <lastmod>2024-05-23T15:59:51.749Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.661Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Logistic Regression/salud/Dataset_cleaning.html</loc>
-    <lastmod>2024-05-23T15:59:51.753Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.661Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Logistic Regression/Partos/Dataset_cleaning.html</loc>
-    <lastmod>2024-05-23T15:59:51.753Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.661Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Logistic Regression/laboral/Dataset_cleaning.html</loc>
-    <lastmod>2024-05-23T15:59:51.753Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.661Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Logistic Regression/ECV/Dataset_cleaning.html</loc>
-    <lastmod>2024-05-23T15:59:51.753Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.661Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Linear Regression/IMCV/IMCV.html</loc>
-    <lastmod>2024-05-23T15:59:51.753Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.661Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Linear Regression/salud_reg/Dataset_cleaning.html</loc>
-    <lastmod>2024-05-23T15:59:51.753Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.661Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Reduccion Dimension/PCA/IMCV_pca/IMCV_pca.html</loc>
-    <lastmod>2024-05-23T15:59:51.753Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.665Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Reduccion Dimension/PCA/Situacion_sanitaria/Situacion_sanitaria.html</loc>
-    <lastmod>2024-05-23T15:59:51.753Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.665Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Reduccion Dimension/Analisis Factorial/ECV_factorial/Dataset_cleaning.html</loc>
-    <lastmod>2024-05-23T15:59:51.753Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.661Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Reduccion Dimension/Analisis Factorial/pisa_factorial/Dataset_cleaning.html</loc>
-    <lastmod>2024-05-23T15:59:51.753Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.665Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Series Temporales/Holt Winters/ipc_series/ipc_series.html</loc>
-    <lastmod>2024-05-23T15:59:51.753Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.665Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Series Temporales/ARIMA/ipc_series/ipc_series.html</loc>
-    <lastmod>2024-05-23T15:59:51.753Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.665Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/index.html</loc>
-    <lastmod>2024-05-23T15:59:51.749Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.661Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Series Temporales/ARIMA/Navarra/navarra_series.html</loc>
-    <lastmod>2024-05-23T15:59:51.753Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.665Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Series Temporales/ARIMA/Madrid/madrid_series.html</loc>
-    <lastmod>2024-05-23T15:59:51.753Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.665Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Series Temporales/Holt Winters/Madrid/Madrid.html</loc>
-    <lastmod>2024-05-23T15:59:51.753Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.665Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Reduccion Dimension/Analisis Factorial/pisa_factorial/pisa_factorial.html</loc>
-    <lastmod>2024-05-23T15:59:51.753Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.665Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Reduccion Dimension/Analisis Factorial/ECV_factorial/ECV_factorial.html</loc>
-    <lastmod>2024-05-23T15:59:51.753Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.665Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Reduccion Dimension/PCA/MercadoHipotecas/MercadoHipotecas.html</loc>
-    <lastmod>2024-05-23T15:59:51.753Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.665Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Reduccion Dimension/PCA/provincias_variado/provincias_variado.html</loc>
-    <lastmod>2024-05-23T15:59:51.753Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.665Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Linear Regression/salud_reg/salud_reg.html</loc>
-    <lastmod>2024-05-23T15:59:51.753Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.661Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Linear Regression/Suicidios_2019CCAA/Suicidios_2019.html</loc>
-    <lastmod>2024-05-23T15:59:51.753Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.661Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Logistic Regression/ECV/ECV.html</loc>
-    <lastmod>2024-05-23T15:59:51.753Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.661Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Logistic Regression/laboral/laboral.html</loc>
-    <lastmod>2024-05-23T15:59:51.753Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.661Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Logistic Regression/Partos/Partos.html</loc>
-    <lastmod>2024-05-23T15:59:51.753Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.661Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Logistic Regression/salud/salud.html</loc>
-    <lastmod>2024-05-23T15:59:51.753Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.661Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Analisis Discriminante/Lineal_y_Cuadratico/laboral/laboral.html</loc>
-    <lastmod>2024-05-23T15:59:51.749Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.661Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Analisis Discriminante/Lineal_y_Cuadratico/salud/salud.html</loc>
-    <lastmod>2024-05-23T15:59:51.749Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.661Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Cluster Jerarquico/VarCovid/VarCovid.html</loc>
-    <lastmod>2024-05-23T15:59:51.749Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.661Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Cluster Jerarquico/ecv_cluster/ecv_cluster.html</loc>
-    <lastmod>2024-05-23T15:59:51.749Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.661Z</lastmod>
   </url>
   <url>
     <loc>https://uvima.github.io/datasets/notebooks/Cluster K-Means/VarCovid/VarCovid.html</loc>
-    <lastmod>2024-05-23T15:59:51.749Z</lastmod>
+    <lastmod>2024-05-24T06:50:40.661Z</lastmod>
   </url>
 </urlset>
