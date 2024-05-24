@@ -20,4 +20,4 @@ listing:
     - lista.yml
 ---
 
-Un dataset es un tabla de datos plana con observaciones por filas y variables por columnas. Los datasets son recursos educativos para universitarios muy utiles para practicar tecnicas multivariantes o de series temporales. Asi por ejemplo, sin necesidad de acudir a los microdatos, se pueden obtener datasets muy interesantes cruzando estadisticas de poblacion, empleo y contabilidad nacional por CCAA.
+Un dataset es un tabla de datos plana con observaciones por filas y variables por columnas. Los datasets son recursos educativos para universitarios muy útiles para practicar técnicas multivariantes o de series temporales. Así por ejemplo, sin necesidad de acudir a los microdatos, se pueden obtener datasets muy interesantes cruzando estadísticas de población, empleo y contabilidad nacional por Comunidades Autónomas.
