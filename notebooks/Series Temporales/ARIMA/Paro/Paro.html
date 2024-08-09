@@ -1,0 +1,2365 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.56">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Series Temporales - ARIMA: Paro – Datasets</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<script src="../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../../index.html">
+    <span class="navbar-title">Datasets</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools tools-end">
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Notebooks</li><li class="breadcrumb-item">Series Temporales</li><li class="breadcrumb-item">ARIMA</li><li class="breadcrumb-item"><a href="../../../../notebooks/Series Temporales/ARIMA/Paro/Paro.html">Paro</a></li><li class="breadcrumb-item"><a href="../../../../notebooks/Series Temporales/ARIMA/Paro/Paro.html">Series Temporales - ARIMA: Paro</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="../../../../index.html" class="sidebar-logo-link">
+      <img src="../../../../img/LogoINE.svg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Notebooks</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Analisis Discriminante</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Lineal Y Cuadratico</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Laboral</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Analisis Discriminante/Lineal_y_Cuadratico/laboral/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variables de Interés</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Analisis Discriminante/Lineal_y_Cuadratico/laboral/laboral.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis Discriminante: laboral</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Salud</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Analisis Discriminante/Lineal_y_Cuadratico/salud/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variables de Interés</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Analisis Discriminante/Lineal_y_Cuadratico/salud/salud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis Discriminante: salud</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Cluster Jerarquico</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
+ <span class="menu-text">Desigualdad Ccaa</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Cluster Jerarquico/desigualdad_ccaa/desigualdad_ccaa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster Jerárquico: desigualdad_CCAA</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false">
+ <span class="menu-text">Ecv Cluster</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Cluster Jerarquico/ecv_cluster/ecv_cluster.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster Jerárquico: ecv_cluster</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
+ <span class="menu-text">VarCovid</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Cluster Jerarquico/VarCovid/VarCovid.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster Jerárquico: VarCovid</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false">
+ <span class="menu-text">VarCovid Provincias</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Cluster Jerarquico/VarCovid_provincias/VarCovid_provincias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster Jerárquico: VarCovid_provincias</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false">
+ <span class="menu-text">Cluster K-Means</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false">
+ <span class="menu-text">Desigualdad Ccaa</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Cluster K-Means/desigualdad_ccaa/desigualdad_ccaa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster K-Means: desigualdad_CCAA</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false">
+ <span class="menu-text">Ecv Cluster</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Cluster K-Means/ecv_cluster/ecv_cluster.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster K-Means: ecv_cluster</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false">
+ <span class="menu-text">Salario Kmeans</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Cluster K-Means/salario_kmeans/salario_kmeans.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster K-Means: salario_kmeans</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false">
+ <span class="menu-text">VarCovid</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Cluster K-Means/VarCovid/VarCovid.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster K-Means: VarCovid</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false">
+ <span class="menu-text">Linear Regression</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false">
+ <span class="menu-text">IMCV</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Linear Regression/IMCV/IMCV.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Lineal: IMCV_reg</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false">
+ <span class="menu-text">Matrimionios Reg</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-18" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Linear Regression/matrimionios_reg/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preproceso</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Linear Regression/matrimionios_reg/matrimonios_reg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Lineal: matrimonios_reg</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" role="navigation" aria-expanded="false">
+ <span class="menu-text">Salud Reg</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-19" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Linear Regression/salud_reg/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variables de Interés</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Linear Regression/salud_reg/salud_reg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Lineal: salud_reg</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" role="navigation" aria-expanded="false">
+ <span class="menu-text">Suicidios 2019CCAA</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-20" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Linear Regression/Suicidios_2019CCAA/Suicidios_2019.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Lineal: Sucidios</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-21" role="navigation" aria-expanded="false">
+ <span class="menu-text">Logistic Regression</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-21" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-21" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-22" role="navigation" aria-expanded="false">
+ <span class="menu-text">ECV</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-22" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-22" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Logistic Regression/ECV/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">¿Cómo determinamos si una persona ha mejorado o no su situación económica?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Logistic Regression/ECV/ECV.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Logística: ECV_microdatos</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-23" role="navigation" aria-expanded="false">
+ <span class="menu-text">Laboral</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-23" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-23" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Logistic Regression/laboral/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variables de Interés</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Logistic Regression/laboral/laboral.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Logística: laboral</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-24" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partos</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-24" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-24" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Logistic Regression/Partos/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variables de Interés</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Logistic Regression/Partos/Partos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Logística: Partos</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-25" role="navigation" aria-expanded="false">
+ <span class="menu-text">Salud</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-25" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-25" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Logistic Regression/salud/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variables de Interés</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Logistic Regression/salud/salud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Logística: salud</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-26" role="navigation" aria-expanded="false">
+ <span class="menu-text">Reduccion Dimension</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-26" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-26" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-27" role="navigation" aria-expanded="false">
+ <span class="menu-text">Analisis Factorial</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-27" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-27" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-28" role="navigation" aria-expanded="false">
+ <span class="menu-text">ECV Factorial</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-28" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-28" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Reduccion Dimension/Analisis Factorial/ECV_factorial/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Procesamos el dataset para adaptarlo a lo de arriba</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Reduccion Dimension/Analisis Factorial/ECV_factorial/ECV_factorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reducción Dimensionalidad - Análisis Factorial: ECV_factorial</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-29" role="navigation" aria-expanded="false">
+ <span class="menu-text">Pisa Factorial</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-29" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-29" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Reduccion Dimension/Analisis Factorial/pisa_factorial/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Procesamos el dataset para adaptarlo a lo de arriba</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Reduccion Dimension/Analisis Factorial/pisa_factorial/pisa_factorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reducción Dimensionalidad - Análisis Factorial: pisa_factorial</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-30" role="navigation" aria-expanded="false">
+ <span class="menu-text">PCA</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-30" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-30" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-31" role="navigation" aria-expanded="false">
+ <span class="menu-text">IMCV Pca</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-31" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-31" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Reduccion Dimension/PCA/IMCV_pca/IMCV_pca.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reducción Dimensionalidad - PCA: IMCV_pca</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-32" role="navigation" aria-expanded="false">
+ <span class="menu-text">MercadoHipotecas</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-32" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-32" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Reduccion Dimension/PCA/MercadoHipotecas/MercadoHipotecas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reducción Dimensionalidad - PCA: MercadoHipotecas</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-33" role="navigation" aria-expanded="false">
+ <span class="menu-text">Provincias Variado</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-33" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-33" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Reduccion Dimension/PCA/provincias_variado/provincias_variado.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reducción Dimensionalidad - PCA: provincias_variado</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-34" role="navigation" aria-expanded="false">
+ <span class="menu-text">Situacion Sanitaria</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-34" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-34" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Reduccion Dimension/PCA/Situacion_sanitaria/Situacion_sanitaria.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reducción Dimensionalidad - PCA: Situacion_sanitaria</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-35" role="navigation" aria-expanded="true">
+ <span class="menu-text">Series Temporales</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-35" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-35" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-36" role="navigation" aria-expanded="true">
+ <span class="menu-text">ARIMA</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-36" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-36" class="collapse list-unstyled sidebar-section depth3 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-37" role="navigation" aria-expanded="false">
+ <span class="menu-text">Ipc Series</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-37" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-37" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Series Temporales/ARIMA/ipc_series/ipc_series.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Series Temporales - ARIMA: ipc_series</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-38" role="navigation" aria-expanded="false">
+ <span class="menu-text">Madrid</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-38" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-38" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Series Temporales/ARIMA/Madrid/madrid_series.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Series Temporales - ARIMA: madrid_series</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-39" role="navigation" aria-expanded="false">
+ <span class="menu-text">Navarra</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-39" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-39" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Series Temporales/ARIMA/Navarra/navarra_series.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Series Temporales - ARIMA: navarra</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-40" role="navigation" aria-expanded="true">
+ <span class="menu-text">Paro</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-40" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-40" class="collapse list-unstyled sidebar-section depth4 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Series Temporales/ARIMA/Paro/Paro.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Series Temporales - ARIMA: Paro</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-41" role="navigation" aria-expanded="false">
+ <span class="menu-text">Holt Winters</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-41" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-41" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-42" role="navigation" aria-expanded="false">
+ <span class="menu-text">Ipc Series</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-42" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-42" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Series Temporales/Holt Winters/ipc_series/ipc_series.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Series Temporales - Holt Winters: ipc_series</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-43" role="navigation" aria-expanded="false">
+ <span class="menu-text">Madrid</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-43" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-43" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Series Temporales/Holt Winters/Madrid/Madrid.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Series Temporales - Holt Winters: madrid_series</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-44" role="navigation" aria-expanded="false">
+ <span class="menu-text">Paro</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-44" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-44" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../notebooks/Series Temporales/Holt Winters/Paro/Paro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Series Temporales - Holt Winters: Paro</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción">Introducción</a>
+  <ul class="collapse">
+  <li><a href="#dataset" id="toc-dataset" class="nav-link" data-scroll-target="#dataset">dataset</a></li>
+  <li><a href="#descripción-del-trabajo-a-realizar" id="toc-descripción-del-trabajo-a-realizar" class="nav-link" data-scroll-target="#descripción-del-trabajo-a-realizar">Descripción del trabajo a realizar</a></li>
+  </ul></li>
+  <li><a href="#análisis-exploratorio-eda" id="toc-análisis-exploratorio-eda" class="nav-link" data-scroll-target="#análisis-exploratorio-eda">Análisis Exploratorio (EDA)</a>
+  <ul class="collapse">
+  <li><a href="#librerías" id="toc-librerías" class="nav-link" data-scroll-target="#librerías">Librerías</a></li>
+  </ul></li>
+  <li><a href="#arima-autoregressive-integrated-moving-average" id="toc-arima-autoregressive-integrated-moving-average" class="nav-link" data-scroll-target="#arima-autoregressive-integrated-moving-average">ARIMA (AutoRegressive Integrated Moving Average)</a>
+  <ul class="collapse">
+  <li><a href="#introducción-1" id="toc-introducción-1" class="nav-link" data-scroll-target="#introducción-1">Introducción</a></li>
+  </ul></li>
+  <li><a href="#seasonal-arima-autoregressive-integrated-moving-average" id="toc-seasonal-arima-autoregressive-integrated-moving-average" class="nav-link" data-scroll-target="#seasonal-arima-autoregressive-integrated-moving-average">Seasonal ARIMA (AutoRegressive Integrated Moving Average)</a></li>
+  <li><a href="#pasos-generales" id="toc-pasos-generales" class="nav-link" data-scroll-target="#pasos-generales">PASOS GENERALES</a>
+  <ul class="collapse">
+  <li><a href="#modelo" id="toc-modelo" class="nav-link" data-scroll-target="#modelo">Modelo</a></li>
+  </ul></li>
+  <li><a href="#plantear-modelos" id="toc-plantear-modelos" class="nav-link" data-scroll-target="#plantear-modelos">Plantear modelos</a>
+  <ul class="collapse">
+  <li><a href="#arima-automático" id="toc-arima-automático" class="nav-link" data-scroll-target="#arima-automático">ARIMA automático</a></li>
+  </ul></li>
+  <li><a href="#conclusión" id="toc-conclusión" class="nav-link" data-scroll-target="#conclusión">Conclusión</a></li>
+  <li><a href="#bibliografía" id="toc-bibliografía" class="nav-link" data-scroll-target="#bibliografía">Bibliografía</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Notebooks</li><li class="breadcrumb-item">Series Temporales</li><li class="breadcrumb-item">ARIMA</li><li class="breadcrumb-item"><a href="../../../../notebooks/Series Temporales/ARIMA/Paro/Paro.html">Paro</a></li><li class="breadcrumb-item"><a href="../../../../notebooks/Series Temporales/ARIMA/Paro/Paro.html">Series Temporales - ARIMA: Paro</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Series Temporales - ARIMA: Paro</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introducción" class="level1">
+<h1>Introducción</h1>
+<p>A continuación se va a explicar como modelizar una serie temporal con un ARIMA y todas las consideraciones que se deben tener en cuenta. Se llevará a cabo un ejemplo práctico a partir de un conjunto de datos, mostrando como interpretar los resultados que se van obteniendo.</p>
+<section id="dataset" class="level2">
+<h2 class="anchored" data-anchor-id="dataset">dataset</h2>
+<p>En este cuaderno vamos a analizar el dataset llamado <a href="../../../../files/paro.xlsx"><em>Paro.xlsx</em></a>. Este dataset presenta los datos de paro por trimestre en España a partir del año 2013, posterior a la crisis económica de 2011.</p>
+<p>Corresponde a la operación estadística del INE <a href="https://www.ine.es/dyngs/IOE/es/operacion.htm?numinv=30308">30308 Encuesta de Población Activa (EPA)</a>. El objetivo de este estudio es intentar modelizar el número de parados a través de un modelo ARIMA y ver si realmente el número de parados se podría aproximar por este modelo sin tener en cuenta variables externas.</p>
+<p>Parece razonable aclarar a priori el concepto de “parado” con el fin de entender que es lo que queremos modelizar. De acuerdo con el informe metodológico presentado por el INE:</p>
+<div>
+<p><em>Se considerarán paradas a todas las personas de 16 o más años que reúnan simultáneamente las siguientes condiciones:</em></p>
+<ul>
+<li><p><em>estar sin trabajo, es decir, que no hayan tenido un empleo por cuenta ajena ni por cuenta propia durante la semana de referencia.</em></p></li>
+<li><p><em>estar buscando trabajo, es decir, que hayan buscado activamente un trabajo por cuenta ajena o hayan hecho gestiones para establecerse por su cuenta durante el mes precedente.</em></p></li>
+<li><p><em>estar disponibles para trabajar, es decir, en condiciones de comenzar a hacerlo en un plazo de dos semanas a partir del domingo de la semana de referencia.</em></p></li>
+</ul>
+<p><em>También se consideran paradas las personas de 16 o más años que durante la semana de referencia han estado sin trabajo, disponibles para trabajar y que no buscan empleo porque ya han encontrado uno al que se incorporarán dentro de los tres meses posteriores a la dicha semana. Por lo tanto, en este caso no se exige el criterio de búsqueda efectiva de empleo.</em></p>
+</div>
+<p>Concretamente en este dataset tenemos las siguientes variables:</p>
+<ul>
+<li><strong>Fecha</strong>: Fecha de medición del número de parados.</li>
+<li><strong>Total</strong>: Número de parados en España en la fecha correspondiente.</li>
+</ul>
+</section>
+<section id="descripción-del-trabajo-a-realizar" class="level2">
+<h2 class="anchored" data-anchor-id="descripción-del-trabajo-a-realizar">Descripción del trabajo a realizar</h2>
+<p>Se pretende ajustar una serie temporal que contiene el número de parados mediante un modelo ARIMA.</p>
+<ul>
+<li>Explorar patrones en la serie temporal.</li>
+<li>Ver que la serie sea estacionaria.</li>
+<li>Aplicar diferenciación si es necesario para estacionarizar la serie.</li>
+<li>Identificar modelos ARIMA/SARIMA utilizando información de la exploración y funciones ACF y PACF.</li>
+<li>Ajustar varios modelos ARIMA/SARIMA y seleccionar el mejor según métricas de ajuste.</li>
+<li>Evaluar la significancia estadística de los coeficientes del modelo ARIMA.</li>
+<li>Interpretar los coeficientes para comprender su influencia en la serie temporal.</li>
+</ul>
+</section>
+</section>
+<section id="análisis-exploratorio-eda" class="level1">
+<h1>Análisis Exploratorio (EDA)</h1>
+<p>EDA viene del Inglés <em>Exploratory Data Analysis</em> y son los pasos relativos en los que se exploran las variables para tener una idea de que forma toma el dataset.</p>
+<section id="librerías" class="level2">
+<h2 class="anchored" data-anchor-id="librerías">Librerías</h2>
+<p>En este apartado se van a cargar todas las librerías necesarias para ejecutar el resto del código. Se recomienda instalarlas en caso de no disponer de ellas.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Librerías</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forecast) <span class="co"># para predecir observaciones futuras. acf() y pacf()</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2) <span class="co"># Nice plots</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl) <span class="co"># Para leer excels</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stats) <span class="co"># Para crear objetos ts()</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tseries) <span class="co"># Para verificar estacionaridad de una serie | función adf.test()</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr) <span class="co"># para map</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Cargamos entonces el conjunto de datos:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"../../../../files/paro.xlsx"</span>,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">sheet =</span> <span class="st">"Datos"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">c</span>(<span class="st">"date"</span>, <span class="st">"numeric"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(data))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
+<p>Por otra parte, para tener una noción general que nos permita describir el conjunto con el que vamos a trabajar, podemos extraer su dimensión, el tipo de variables que contiene o qué valores toma cada una.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dimensión del conjunto de datos</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 46  2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tipo de variables que contiene</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [46 × 2] (S3: tbl_df/tbl/data.frame)
+ $ Fecha: POSIXct[1:46], format: "2024-04-01" "2024-01-01" ...
+ $ Total: num [1:46] 2755 2978 2861 2894 2808 ...</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="arima-autoregressive-integrated-moving-average" class="level1">
+<h1>ARIMA (AutoRegressive Integrated Moving Average)</h1>
+<section id="introducción-1" class="level2">
+<h2 class="anchored" data-anchor-id="introducción-1">Introducción</h2>
+<p>El modelo ARIMA es uno de los modelos más comunes y poderosos para el análisis de series temporales. Se utiliza para modelar y predecir datos que exhiben comportamientos de tendencia y estacionalidad.</p>
+<ul>
+<li><strong>Componentes del modelo ARIMA:</strong>
+<ul>
+<li><p><strong>AR (Auto-regresivo):</strong> Representa la relación entre una observación actual y un número determinado de observaciones anteriores (retardos). <strong>p</strong> es el componente autoregresivo, que indica cuántas observaciones pasadas influyen en la observación actual.</p></li>
+<li><p><strong>I (Integrated):</strong>. Representa el número de diferencias necesarias para hacer estacionaria la serie temporal. <strong>d</strong> es el número de diferenciaciones necesarias para hacer que la serie sea estacionaria. Esto se determina mediante pruebas estadísticas como el test de Dickey-Fuller aumentado (ADF test). Es importante tener cuidado de no sobrediferenciar la serie, lo que se puede observar en el gráfico de la función de autocorrelación (ACF) si los valores comienzan a ser negativos rápidamente.</p></li>
+<li><p><strong>MA (Media Móvil):</strong> Representa la relación entre una observación actual y un error de predicción residual de observaciones anteriores. <strong>q</strong> es el componente de media móvil, que indica cuántos términos de los residuos anteriores influyen en la observación actual.</p></li>
+</ul></li>
+</ul>
+<p>Si la serie está ligeramente por debajo del nivel de diferenciación adecuado (subdiferenciada), se pueden agregar uno o más términos de AR adicionales. Por otro lado, si la serie está sobrediferenciada, se puede considerar agregar términos MA adicionales para mejorar el modelo.</p>
+<p>Hasta ahora, hemos restringido nuestra atención a datos no estacionales y modelos ARIMA no estacionales. Sin embargo, los modelos <strong>ARIMA</strong> también son capaces de modelar una amplia gama de <strong>datos estacionales</strong>.</p>
+<p>Un modelo SARIMA estacional se forma incluyendo términos estacionales adicionales en los modelos ARIMA que hemos visto hasta ahora. Está escrito de la siguiente manera:</p>
+</section>
+</section>
+<section id="seasonal-arima-autoregressive-integrated-moving-average" class="level1">
+<h1>Seasonal ARIMA (AutoRegressive Integrated Moving Average)</h1>
+<p>Un modelo ARIMA estacional se forma al incluir términos estacionales adicionales en los modelos ARIMA que hemos visto hasta ahora. Se escribe de la siguiente manera:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ARIMA</span>(p, d, q)(P, D, Q)(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>donde <code>(p,d,q)</code> representa la parte no estacional del modelo, y <code>(P,D,Q)</code>la parte estacional. Además <code>m</code> sirve para indicar el número de observaciones que hay por año, es decir, el periodo.</p>
+</section>
+<section id="pasos-generales" class="level1">
+<h1>PASOS GENERALES</h1>
+<ol type="1">
+<li><p><strong>Dibujar la serie</strong> Examina la serie en busca de características como tendencia y estacionalidad. Verifica si realmente existe un patrón estacional.</p></li>
+<li><p><strong>Diferenciar</strong> Vamos a calcular los valores de <strong>D,d</strong> (en ese orden)</p>
+<ul>
+<li>Si se observa <strong>componente estacional</strong> en 1), tomar la diferencia estacional de orden m, <code>ej: diff(tss,12)</code>, esto equivale a D=1, y dibujar. En caso de que la serie aun tenga tendencia, diferenciar ahora la componente no estacional las veces que sea necesario.</li>
+<li>Si <strong>sólo hay componente no estacional</strong>, diferenciar la serie las veces que sea necesario hasta remover la tendencia, y ese será el parámetro <em>d</em>.</li>
+<li>Si no se observa ni componente estacional ni tendencia, no diferenciar.</li>
+</ul></li>
+<li><p><strong>Examinar ACF/PACF de las series diferencias (si es necesario)</strong> Para determinar los parámetros:</p>
+<ul>
+<li><strong>Componente NO Estacional</strong>: Examinar los primeros lags (1,2,3,..). El número de picos sucesivos (o casi) en el ACF fuera de las bandas horizontales con un PACF que se reduce gradualmente indican MA no estacionales, determinando q. Lo mismo en la ACF indica p.</li>
+<li><strong>Componente Estacional</strong>: Examinar los lags en múltiplos de m (Ej dato mensual 12,24,36,…). El número de picos sucesivos en el ACF fuera de las bandas horizontales con un PACF que se reduce gradualmente indican MA no estacionales, determinando Q. Lo mismo en la ACF indica P.</li>
+</ul></li>
+<li><p><strong>Generar todas las combinaciones posibles</strong> de parámetros con los candidatos seleccionados en los pasos anteriores. Alimentar todas las combinaciones en el algoritmo SARIMA.</p></li>
+<li><p><strong>Evaluar los resultados</strong>, revisando los residuos para los modelos propuestos anteriormente, viendo los residuos, AIC, BIC,…. En caso de no obtener buenos resultados, estudiar otra parametrización para el ARIMA/SARIMA.</p></li>
+</ol>
+<p>En general, SARIMA requiere un ajuste de parámetros más metódico, pero puede aprender patrones más ricos. La selección de pedidos de ARIMA es más rápida pero menos sólida para las series estacionales.</p>
+<p>Vamos a cargar los datos en un objeto adecuado para su análisis:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertir el vector en una serie temporal</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ts() del paquete stats</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>tss <span class="ot">&lt;-</span> <span class="fu">ts</span>(<span class="fu">rev</span>(data<span class="sc">$</span>Total), <span class="at">start =</span> <span class="dv">2013</span>, <span class="at">frequency =</span> <span class="dv">4</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>tss</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       Qtr1   Qtr2   Qtr3   Qtr4
+2013 6278.2 6047.3 5943.4 5935.6
+2014 5933.3 5622.9 5427.7 5457.7
+2015 5444.6 5149.0 4850.8 4779.5
+2016 4791.4 4574.7 4320.8 4237.8
+2017 4255.0 3914.3 3731.7 3766.7
+2018 3796.1 3490.1 3326.0 3304.3
+2019 3354.2 3230.6 3214.4 3191.9
+2020 3313.0 3368.0 3722.9 3719.8
+2021 3703.3 3586.4 3467.4 3148.7
+2022 3214.7 2994.7 3025.8 3081.6
+2023 3186.3 2808.2 2894.5 2860.8
+2024 2977.9 2755.3              </code></pre>
+</div>
+</div>
+<p><strong>Análisis Descriptivo:</strong> Podemos realizar un análisis descriptivo básico para comprender mejor la serie temporal.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(tss)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   2755    3214    3712    4026    4788    6278 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tss, <span class="at">main =</span> <span class="st">"Parados en España"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Total"</span>), <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">lty =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Paro_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><strong>Tendencia Descendente</strong>:</li>
+</ul>
+<p>La serie temporal presenta una clara tendencia descendente a lo largo del período analizado. Esto indica que el número de parados ha disminuido de manera consistente con el tiempo.</p>
+<ul>
+<li><strong>Estacionalidad</strong>:</li>
+</ul>
+<p>Aunque no se observa una estacionalidad clara en el gráfico, es posible que existan patrones estacionales que no sean evidentes a simple vista.</p>
+<ul>
+<li><strong>Variabilidad</strong>:</li>
+</ul>
+<p>Aunque hay una tendencia general a la baja, existen varias fluctuaciones y picos. Estos picos podrían estar relacionados con eventos específicos, como el COVID, y podrían necesitar un análisis más profundo.</p>
+<ul>
+<li><p><strong>Estabilización Reciente</strong>: En los años más recientes (aproximadamente desde 2020), coincidiendo con el COVID la serie aumentó el número de parados para después mostrar cierta estabilización, con variaciones más pequeñas en comparación con los años anteriores. Esto podría indicar que la tendencia a la baja se está ralentizando o que el número de parados está alcanzando un valor estable.</p></li>
+<li><p><strong>Posibles Cambios Estructurales</strong>:</p></li>
+</ul>
+<p>La serie podría tener posibles cambios estructurales, especialmente alrededor de 2020, donde se observa un cambio en la variabilidad. Es relevante considerar estos cambios al modelar, ya que pueden afectar la precisión del modelo ARIMA</p>
+<section id="modelo" class="level2">
+<h2 class="anchored" data-anchor-id="modelo">Modelo</h2>
+<p>Sabiendo que los datos tienen frecuencia trimestral y siendo razonable pensar que puede haber una componente estacional ya que de cara a verano se crean más puestos de trabajo (temporales), que luego se destruyen, vamos a considerar un <strong>Seasonal ARIMA</strong>. Dibujamos la serie de nuevo a ver si es necesario diferenciar una vez más para eliminar la tendencia.</p>
+<p>En primer lugar, como hemos comentado, parece razonable tener en cuenta la componente estacional luego diferenciamos un número de veces igual al periodo de los datos</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Series diferenciadas</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>t1 <span class="ot">&lt;-</span> <span class="fu">diff</span>(tss, <span class="dv">4</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(t1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Paro_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TEST</span><span class="co"> para ver estacionaridad</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># H0= NO es estacionaria</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># hace uso del paquete tseries</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">adf.test</span>(t1, <span class="at">alternative =</span> <span class="st">"stationary"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Augmented Dickey-Fuller Test
+
+data:  t1
+Dickey-Fuller = -3.275, Lag order = 3, p-value = 0.08903
+alternative hypothesis: stationary</code></pre>
+</div>
+</div>
+<p>No es estacionaria luego valoramos el diferenciar una vez para ver si conseguimos la estacionaridad.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Diferenciar</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>t2 <span class="ot">&lt;-</span> <span class="fu">diff</span>(t1, <span class="dv">1</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># La dibujamos</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(t2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Paro_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TEST</span><span class="co"> para ver estacionaridad</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># H0= NO es estacionaria</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># hace uso del paquete tseries</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">adf.test</span>(t2, <span class="at">alternative =</span> <span class="st">"stationary"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Augmented Dickey-Fuller Test
+
+data:  t2
+Dickey-Fuller = -4.5648, Lag order = 3, p-value = 0.01
+alternative hypothesis: stationary</code></pre>
+</div>
+</div>
+<p>Al trazar la serie diferenciada, ya vemos un patrón oscilante alrededor de 0, sin una tendencia fuerte visible. Esto sugiere que la diferenciación es suficiente y debe incluirse en el modelo. Además el test de estacionariedad ya lo pasa.</p>
+<p>Es decir, tomamos D=1, d=1. Examinemos ahora ACF/PACF para determinar los p,q y P,Q.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ACF plot</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Acf</span>(t2, <span class="at">main =</span> <span class="st">"ACF para la serie estacionaria"</span>, <span class="at">lag.max =</span> <span class="dv">50</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Paro_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p><strong>Primeros Lags (parámetros NO estacionales)</strong>En el gráfico de ACF vemos que para lag=1 la barra se sale notablemente del límite deseado, reduciéndose en las sucesivas, luego podríamos tomaríamos como q= 1.</p></li>
+<li><p><strong>Lags múltiplos de 4 (parámetros estacionales)</strong> En el gráfico de ACF vemos que para el lag=4 la barra que se sale del límite deseado, no así para lag=8,16,.. (múltiplos m=4 ), luego tomaríamos como Q= 1.</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># PACF plot</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Pacf</span>(t2, <span class="at">main =</span> <span class="st">"PACF para la serie estacionaria"</span>, <span class="at">lag.max =</span> <span class="dv">50</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Paro_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p><strong>Primeros Lags (parámetros NO estacionales)</strong>En el gráfico de PACF vemos que para lag=1 la barra se sale notablemente del límite deseado, reduciéndose en las sucesivas, luego podríamos tomaríamos como q= 1.</p></li>
+<li><p><strong>Lags múltiplos de 12 (parámetros estacionales)</strong> En el gráfico de PACF vemos que para el lag=4 la barra que se sale del límite deseado, no así para lag=8,16,.. (múltiplos m=4 ), luego tomaríamos como P= 1.</p></li>
+</ul>
+</section>
+</section>
+<section id="plantear-modelos" class="level1">
+<h1>Plantear modelos</h1>
+<p>De acuerdo con lo comentado anteriormente parece razonable tomar el modelo ARIMA(1,1,1)(1,1,1)4</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajustar el modelo ARIMA</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Modelo seleccionado</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>arima_model_1 <span class="ot">&lt;-</span> <span class="fu">arima</span>(tss, <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="at">seasonal =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>arima_model_1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+arima(x = tss, order = c(1, 1, 1), seasonal = c(1, 1, 1))
+
+Coefficients:
+          ar1     ma1    sar1     sma1
+      -0.0220  0.4914  0.1553  -0.5914
+s.e.   0.2662  0.2469  0.3364   0.3254
+
+sigma^2 estimated as 14079:  log likelihood = -254.68,  aic = 519.36</code></pre>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(arima_model_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+arima(x = tss, order = c(1, 1, 1), seasonal = c(1, 1, 1))
+
+Coefficients:
+          ar1     ma1    sar1     sma1
+      -0.0220  0.4914  0.1553  -0.5914
+s.e.   0.2662  0.2469  0.3364   0.3254
+
+sigma^2 estimated as 14079:  log likelihood = -254.68,  aic = 519.36
+
+Training set error measures:
+                   ME     RMSE      MAE       MPE     MAPE      MASE
+Training set 7.123907 112.0401 81.84408 0.2562595 2.371014 0.6291719
+                    ACF1
+Training set 0.007450536</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">checkresiduals</span>(arima_model_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Paro_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Ljung-Box test
+
+data:  Residuals from ARIMA(1,1,1)(1,1,1)[4]
+Q* = 8.9359, df = 4, p-value = 0.06272
+
+Model df: 4.   Total lags used: 8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Box.test</span>(<span class="fu">residuals</span>(arima_model_1), <span class="at">type =</span> <span class="st">"Ljung-Box"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Box-Ljung test
+
+data:  residuals(arima_model_1)
+X-squared = 0.0027237, df = 1, p-value = 0.9584</code></pre>
+</div>
+</div>
+<ul>
+<li>El <strong>Ljung-Box test</strong> tiene un p_val&gt;0.05 luego podemos aceptar H0 y asumir que los errores son independientes. Habría que ver para otros modelos.</li>
+<li><strong>Gráfico Residuos vs.&nbsp;Índice</strong>: Este gráfico muestra los residuos en función del índice de las observaciones. Idealmente, los residuos deberían estar dispersos alrededor de cero sin ningún patrón discernible (parece que si lo están).</li>
+<li><strong>Gráfico Autocorrelación de Residuos</strong>: muestra la autocorrelación de los residuos a diferentes rezagos. Se espera que los residuos no estén correlacionados entre sí. La mayoría de los rezagos no son significativos, lo que sugiere que los residuos no tienen autocorrelación significativa.</li>
+<li><strong>Histograma de Residuos</strong>: Muestra la distribución de los residuos. Los residuos parecen estar centrados en torno a cero (aunque hay algunos picos pronunciados) y se aproximan a una distribución normal, lo cual es deseable.</li>
+</ul>
+<p>Ahora vamos a proponer ligeras modificaciones en los parámetros del modelo a ver si obtenemos mejores resultados haciendo variar dichos parámetros.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combinaciones para parámetros ARIMA</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>order_list <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"p"</span> <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">2</span>),</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"d"</span> <span class="ot">=</span> <span class="dv">1</span>,</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"q"</span> <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">2</span>)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cross</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="fu">lift</span>(c))</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Combinaciones para parámetros estacionales</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>season_list <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"P"</span> <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"D"</span> <span class="ot">=</span>  <span class="dv">1</span>,</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Q"</span> <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cross</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="fu">lift</span>(c))</span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Combinar los anteriores</span></span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>complete <span class="ot">&lt;-</span> <span class="fu">list</span>(order_list, season_list) <span class="sc">%&gt;%</span></span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cross</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="fu">lift</span>(c))</span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-28"><a href="#cb31-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Inicializamos el dataframe que guarda las métricas</span></span>
+<span id="cb31-29"><a href="#cb31-29" aria-hidden="true" tabindex="-1"></a>metrics_arima <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">p =</span> <span class="fu">integer</span>(), <span class="at">d =</span> <span class="fu">integer</span>(), <span class="at">q =</span> <span class="fu">integer</span>(), <span class="at">P =</span> <span class="fu">integer</span>(), <span class="at">D =</span> <span class="fu">integer</span>(), <span class="at">Q =</span> <span class="fu">integer</span>(), <span class="at">MAPE =</span> <span class="fu">numeric</span>(), <span class="at">RMSE =</span> <span class="fu">numeric</span>(), <span class="at">AIC =</span> <span class="fu">numeric</span>())</span>
+<span id="cb31-30"><a href="#cb31-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-31"><a href="#cb31-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-32"><a href="#cb31-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-33"><a href="#cb31-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluamos todos los modelos con las combinaciones</span></span>
+<span id="cb31-34"><a href="#cb31-34" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(complete))) {</span>
+<span id="cb31-35"><a href="#cb31-35" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Los que dan error los quitamos</span></span>
+<span id="cb31-36"><a href="#cb31-36" aria-hidden="true" tabindex="-1"></a>  arimaa <span class="ot">&lt;-</span> <span class="fu">arima</span>(tss, <span class="at">order =</span> complete[[i]][<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>], <span class="at">seasonal =</span> complete[[i]][<span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>])</span>
+<span id="cb31-37"><a href="#cb31-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-38"><a href="#cb31-38" aria-hidden="true" tabindex="-1"></a>  MAPE <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>((tss <span class="sc">-</span> <span class="fu">fitted</span>(arimaa)) <span class="sc">/</span> tss)) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb31-39"><a href="#cb31-39" aria-hidden="true" tabindex="-1"></a>  RMSE <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((tss <span class="sc">-</span> <span class="fu">fitted</span>(arimaa))<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb31-40"><a href="#cb31-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-41"><a href="#cb31-41" aria-hidden="true" tabindex="-1"></a>  metrics_arima[i, ] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">c</span>(complete[[i]]), MAPE, RMSE, <span class="fu">summary</span>(arimaa)[[<span class="st">"aic"</span>]])</span>
+<span id="cb31-42"><a href="#cb31-42" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb31-43"><a href="#cb31-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-44"><a href="#cb31-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-45"><a href="#cb31-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Quitamos las observaciones que tienen valores nulos</span></span>
+<span id="cb31-46"><a href="#cb31-46" aria-hidden="true" tabindex="-1"></a>metrics_arima <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(metrics_arima)</span>
+<span id="cb31-47"><a href="#cb31-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-48"><a href="#cb31-48" aria-hidden="true" tabindex="-1"></a>metrics_arima <span class="ot">&lt;-</span> metrics_arima[<span class="fu">order</span>(metrics_arima<span class="sc">$</span>AIC), ]</span>
+<span id="cb31-49"><a href="#cb31-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-50"><a href="#cb31-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-51"><a href="#cb31-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostramos los resultados</span></span>
+<span id="cb31-52"><a href="#cb31-52" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(metrics_arima)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">p</th>
+<th style="text-align: right;">d</th>
+<th style="text-align: right;">q</th>
+<th style="text-align: right;">P</th>
+<th style="text-align: right;">D</th>
+<th style="text-align: right;">Q</th>
+<th style="text-align: right;">MAPE</th>
+<th style="text-align: right;">RMSE</th>
+<th style="text-align: right;">AIC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">27</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.824499</td>
+<td style="text-align: right;">98.52474</td>
+<td style="text-align: right;">514.6145</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">22</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.381759</td>
+<td style="text-align: right;">112.47135</td>
+<td style="text-align: right;">515.5862</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">13</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.484048</td>
+<td style="text-align: right;">115.37288</td>
+<td style="text-align: right;">517.2650</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">31</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.375174</td>
+<td style="text-align: right;">112.03060</td>
+<td style="text-align: right;">517.3646</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">25</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.376143</td>
+<td style="text-align: right;">112.45542</td>
+<td style="text-align: right;">517.5592</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">23</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.377129</td>
+<td style="text-align: right;">112.45752</td>
+<td style="text-align: right;">517.5623</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">20</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.355598</td>
+<td style="text-align: right;">114.73773</td>
+<td style="text-align: right;">517.5780</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">21</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.352555</td>
+<td style="text-align: right;">113.64722</td>
+<td style="text-align: right;">518.6770</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.545648</td>
+<td style="text-align: right;">120.75934</td>
+<td style="text-align: right;">518.7198</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">29</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.380937</td>
+<td style="text-align: right;">113.14800</td>
+<td style="text-align: right;">518.8496</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">26</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.322109</td>
+<td style="text-align: right;">110.24799</td>
+<td style="text-align: right;">518.9644</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">16</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.466333</td>
+<td style="text-align: right;">115.16374</td>
+<td style="text-align: right;">519.1214</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">14</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.469534</td>
+<td style="text-align: right;">115.17743</td>
+<td style="text-align: right;">519.1301</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">34</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.370649</td>
+<td style="text-align: right;">112.04161</td>
+<td style="text-align: right;">519.3571</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">32</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.371014</td>
+<td style="text-align: right;">112.04007</td>
+<td style="text-align: right;">519.3578</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">24</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.364762</td>
+<td style="text-align: right;">112.39329</td>
+<td style="text-align: right;">519.5076</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">17</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.369324</td>
+<td style="text-align: right;">111.61460</td>
+<td style="text-align: right;">519.8802</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">8</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.405546</td>
+<td style="text-align: right;">115.61033</td>
+<td style="text-align: right;">520.0355</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">30</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.367857</td>
+<td style="text-align: right;">112.53661</td>
+<td style="text-align: right;">520.1042</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.537381</td>
+<td style="text-align: right;">120.52312</td>
+<td style="text-align: right;">520.5438</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.541460</td>
+<td style="text-align: right;">120.53131</td>
+<td style="text-align: right;">520.5466</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">11</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.559854</td>
+<td style="text-align: right;">121.00635</td>
+<td style="text-align: right;">520.9394</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">15</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.451736</td>
+<td style="text-align: right;">115.09807</td>
+<td style="text-align: right;">521.0804</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">19</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.227996</td>
+<td style="text-align: right;">122.44482</td>
+<td style="text-align: right;">521.2291</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">33</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.362370</td>
+<td style="text-align: right;">112.02718</td>
+<td style="text-align: right;">521.3299</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">35</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.370299</td>
+<td style="text-align: right;">112.04173</td>
+<td style="text-align: right;">521.3561</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">12</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.534603</td>
+<td style="text-align: right;">119.10918</td>
+<td style="text-align: right;">521.6933</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">18</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.367991</td>
+<td style="text-align: right;">111.64051</td>
+<td style="text-align: right;">521.8769</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">9</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.408823</td>
+<td style="text-align: right;">115.74212</td>
+<td style="text-align: right;">522.0103</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">28</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.229198</td>
+<td style="text-align: right;">120.36548</td>
+<td style="text-align: right;">522.4966</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">6</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.530760</td>
+<td style="text-align: right;">120.50559</td>
+<td style="text-align: right;">522.5368</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">36</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.316717</td>
+<td style="text-align: right;">110.10590</td>
+<td style="text-align: right;">522.8850</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.820368</td>
+<td style="text-align: right;">129.15689</td>
+<td style="text-align: right;">523.8542</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.722357</td>
+<td style="text-align: right;">125.95327</td>
+<td style="text-align: right;">523.8909</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">10</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.548782</td>
+<td style="text-align: right;">131.13138</td>
+<td style="text-align: right;">525.4774</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.748537</td>
+<td style="text-align: right;">142.27674</td>
+<td style="text-align: right;">529.5991</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>En este caso de acuerdo a las métricas observadas (mirando principalmente un menor AIC) parece razonable seleccionar el ARIMA(2,1,2)(0,1,1) como el mejor modelo, aunque parece un poco complejo. Acto seguido aparece el ARIMA(0,1,1)(0,1,1). Comprobemos también con la función <code>auto.arima()</code> , la cual nos devuelve los parámetros óptimos de manera automática.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">auto.arima</span>(tss)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: tss 
+ARIMA(0,1,1)(0,1,1)[4] 
+
+Coefficients:
+         ma1     sma1
+      0.4958  -0.4556
+s.e.  0.1510   0.1833
+
+sigma^2 = 14920:  log likelihood = -254.79
+AIC=515.59   AICc=516.23   BIC=520.73</code></pre>
+</div>
+</div>
+<p>Luego parece razonable quedarnos con el ARIMA(0,1,1)(0,1,1). Examinemos qué tal es el modelo:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Modelo seleccionado</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>arima_model_4 <span class="ot">&lt;-</span> <span class="fu">arima</span>(tss, <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Serie junto a modelo</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tss, <span class="at">col =</span> <span class="st">"blue"</span>)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">fitted</span>(arima_model_4), <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Paro_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Diagnóstico del modelo</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">checkresiduals</span>(arima_model_4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Paro_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Ljung-Box test
+
+data:  Residuals from ARIMA(0,1,1)(0,1,1)[4]
+Q* = 9.3113, df = 6, p-value = 0.1568
+
+Model df: 2.   Total lags used: 8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># H0: no hay autocorrelación residual en los residuos del model</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Queremos ver que se prueba H0</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Box.test</span>(<span class="fu">residuals</span>(arima_model_4), <span class="at">type =</span> <span class="st">"Ljung-Box"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Box-Ljung test
+
+data:  residuals(arima_model_4)
+X-squared = 0.0014225, df = 1, p-value = 0.9699</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aceptamos H0 puesto que es &gt;0.05</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>De nuevo, - El <strong>Ljung-Box test</strong> tiene un p_val&gt;0.05 luego podemos aceptar H0 y asumir que los errores son independientes. Habría que ver para otros modelos. - <strong>Gráfico Residuos vs.&nbsp;Índice</strong>: Este gráfico muestra los residuos en función del índice de las observaciones. Idealmente, los residuos deberían estar dispersos alrededor de cero sin ningún patrón discernible (parece que si lo están). - <strong>Gráfico Autocorrelación de Residuos</strong>: muestra la autocorrelación de los residuos a diferentes rezagos. Se espera que los residuos no estén correlacionados entre sí. La mayoría de los rezagos no son significativos, lo que sugiere que los residuos no tienen autocorrelación significativa. - <strong>Histograma de Residuos</strong>: Muestra la distribución de los residuos. Los residuos parecen estar centrados en torno a cero (aunque hay algunos picos pronunciados) y se aproximan a una distribución normal, lo cual es deseable.</p>
+<p>En consecuencia, los pronósticos de este método probablemente serán buenos.</p>
+<p>Ahora, una vez seleccionados los parámetros, vamos a construir el modelo con todos datos menos las últimas 6 observaciones y vamos a predecir a ver que tal es.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creamos train/test partición</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>data.train <span class="ot">&lt;-</span> <span class="fu">window</span>(tss, <span class="at">end =</span> <span class="fu">c</span>(<span class="dv">2022</span>, <span class="dv">4</span>))</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>data.test <span class="ot">&lt;-</span> <span class="fu">window</span>(tss, <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">2023</span>, <span class="dv">1</span>))</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Modelo</span></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Cogemos esos parámetros porque los otros dan error</span></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>arima_model_4 <span class="ot">&lt;-</span> <span class="fu">arima</span>(data.train, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">forecast</span>(arima_model_4, <span class="at">h =</span> <span class="dv">6</span>)</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(pred, data.test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     ME     RMSE       MAE       MPE     MAPE      MASE
+Training set    4.69072 114.1325  82.21041  0.191017 2.296659 0.1915248
+Test set     -119.17935 134.2443 119.17935 -4.161533 4.161533 0.2776509
+                   ACF1 Theil's U
+Training set  0.0172511        NA
+Test set     -0.2926606 0.7155813</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico con los datos originales y las predicciones de los modelos</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tss,</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">2013</span>, <span class="dv">2025</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fu">min</span>(tss, pred<span class="sc">$</span>pred), <span class="fu">max</span>(tss, pred<span class="sc">$</span>pred)),</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">"Fecha"</span>, <span class="at">ylab =</span> <span class="st">"Valor"</span>, <span class="at">main =</span> <span class="st">"Comparación de Predicciones ARIMA"</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(pred<span class="sc">$</span>mean, <span class="at">col =</span> <span class="st">"purple"</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">cex =</span> <span class="fl">0.5</span>) <span class="co"># Predicciones con arima_model1 en rojo</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(tss, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>) <span class="co"># Serie original en azul</span></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">fitted</span>(arima_model_4), <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Original"</span>, <span class="st">"ARIMA Modelo "</span>, <span class="st">"Predicción"</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>, <span class="st">"purple"</span>), <span class="at">lty =</span> <span class="dv">1</span>)</span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(pred<span class="sc">$</span>lower[, <span class="dv">2</span>], <span class="at">col =</span> <span class="st">"purple"</span>, <span class="at">lty =</span> <span class="st">"solid"</span>)</span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(pred<span class="sc">$</span>upper[, <span class="dv">2</span>], <span class="at">col =</span> <span class="st">"purple"</span>, <span class="at">lty =</span> <span class="st">"solid"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Paro_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Tenemos un MAPE del 4%, que es una desviación ligera.</p>
+<section id="arima-automático" class="level2">
+<h2 class="anchored" data-anchor-id="arima-automático">ARIMA automático</h2>
+<p>Existe una función, ya comentada, que permite identificar los parámetros de manera automática. Generalmente se suele usar como primer approach está función para después modificar según evidencia los parámetros.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Identificar los parámetros del modelo ARIMA de manera automática</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>auto_arima <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(tss)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>auto_arima</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: tss 
+ARIMA(0,1,1)(0,1,1)[4] 
+
+Coefficients:
+         ma1     sma1
+      0.4958  -0.4556
+s.e.  0.1510   0.1833
+
+sigma^2 = 14920:  log likelihood = -254.79
+AIC=515.59   AICc=516.23   BIC=520.73</code></pre>
+</div>
+</div>
+<p>Notar que nos propone ARIMA(1,1,1)(1,0,0)[4], que es el modelo que hemos usado previamente.</p>
+<p>El modelo seleccionado por nosotros parece un buen modelo y que predice con poco error. Este era muy cercano all detectado automáticamente por R, luego esto evidencia que como primer approach se puede usar la función <code>auto.arima()</code> obteniendo buenos resultados. No obstante es aconsejable estudiar el problema más a fondo para estudiar todas las posibles modelizaciones y tomar la que mejor se ajuste a nuestras expectativas.</p>
+</section>
+</section>
+<section id="conclusión" class="level1">
+<h1>Conclusión</h1>
+<p>A lo largo de este notebook se ha expuesto las principales característica de una serie temporal y se ha explicado como modelarla mediante un modelo ARIMA, explicando además la ampliación de este tipo de modelos a los SARIMA (ARIMA estacional) y todas las consideraciones a tener en cuenta.</p>
+</section>
+<section id="bibliografía" class="level1">
+<h1>Bibliografía</h1>
+<ul>
+<li><a href="https://online.stat.psu.edu/stat510/book/export/html/666" class="uri">https://online.stat.psu.edu/stat510/book/export/html/666</a></li>
+<li><a href="https://otexts.com/fpp2/seasonal-arima.html" class="uri">https://otexts.com/fpp2/seasonal-arima.html</a></li>
+<li><a href="https://rpubs.com/ryankelly/tsa5" class="uri">https://rpubs.com/ryankelly/tsa5</a></li>
+<li><a href="https://online.stat.psu.edu/stat510/lesson/4/4.1" class="uri">https://online.stat.psu.edu/stat510/lesson/4/4.1</a></li>
+</ul>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/uvima\.github\.io\/datasets\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

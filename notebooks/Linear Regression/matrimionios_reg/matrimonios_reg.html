@@ -1,0 +1,1898 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.56">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Regresión Lineal: matrimonios_reg – Datasets</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Datasets</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools tools-end">
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Notebooks</li><li class="breadcrumb-item">Linear Regression</li><li class="breadcrumb-item"><a href="../../../notebooks/Linear Regression/matrimionios_reg/Dataset_cleaning.html">Matrimionios Reg</a></li><li class="breadcrumb-item"><a href="../../../notebooks/Linear Regression/matrimionios_reg/matrimonios_reg.html">Regresión Lineal: matrimonios_reg</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="../../../index.html" class="sidebar-logo-link">
+      <img src="../../../img/LogoINE.svg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Notebooks</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Analisis Discriminante</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Lineal Y Cuadratico</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Laboral</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Analisis Discriminante/Lineal_y_Cuadratico/laboral/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variables de Interés</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Analisis Discriminante/Lineal_y_Cuadratico/laboral/laboral.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis Discriminante: laboral</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Salud</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Analisis Discriminante/Lineal_y_Cuadratico/salud/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variables de Interés</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Analisis Discriminante/Lineal_y_Cuadratico/salud/salud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis Discriminante: salud</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Cluster Jerarquico</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
+ <span class="menu-text">Desigualdad Ccaa</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Cluster Jerarquico/desigualdad_ccaa/desigualdad_ccaa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster Jerárquico: desigualdad_CCAA</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false">
+ <span class="menu-text">Ecv Cluster</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Cluster Jerarquico/ecv_cluster/ecv_cluster.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster Jerárquico: ecv_cluster</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
+ <span class="menu-text">VarCovid</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Cluster Jerarquico/VarCovid/VarCovid.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster Jerárquico: VarCovid</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false">
+ <span class="menu-text">VarCovid Provincias</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Cluster Jerarquico/VarCovid_provincias/VarCovid_provincias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster Jerárquico: VarCovid_provincias</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false">
+ <span class="menu-text">Cluster K-Means</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false">
+ <span class="menu-text">Desigualdad Ccaa</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Cluster K-Means/desigualdad_ccaa/desigualdad_ccaa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster K-Means: desigualdad_CCAA</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false">
+ <span class="menu-text">Ecv Cluster</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Cluster K-Means/ecv_cluster/ecv_cluster.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster K-Means: ecv_cluster</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false">
+ <span class="menu-text">Salario Kmeans</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Cluster K-Means/salario_kmeans/salario_kmeans.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster K-Means: salario_kmeans</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false">
+ <span class="menu-text">VarCovid</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Cluster K-Means/VarCovid/VarCovid.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cluster K-Means: VarCovid</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="true">
+ <span class="menu-text">Linear Regression</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false">
+ <span class="menu-text">IMCV</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Linear Regression/IMCV/IMCV.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Lineal: IMCV_reg</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="true">
+ <span class="menu-text">Matrimionios Reg</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-18" class="collapse list-unstyled sidebar-section depth3 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Linear Regression/matrimionios_reg/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preproceso</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Linear Regression/matrimionios_reg/matrimonios_reg.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Regresión Lineal: matrimonios_reg</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" role="navigation" aria-expanded="false">
+ <span class="menu-text">Salud Reg</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-19" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Linear Regression/salud_reg/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variables de Interés</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Linear Regression/salud_reg/salud_reg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Lineal: salud_reg</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" role="navigation" aria-expanded="false">
+ <span class="menu-text">Suicidios 2019CCAA</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-20" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Linear Regression/Suicidios_2019CCAA/Suicidios_2019.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Lineal: Sucidios</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-21" role="navigation" aria-expanded="false">
+ <span class="menu-text">Logistic Regression</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-21" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-21" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-22" role="navigation" aria-expanded="false">
+ <span class="menu-text">ECV</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-22" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-22" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Logistic Regression/ECV/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">¿Cómo determinamos si una persona ha mejorado o no su situación económica?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Logistic Regression/ECV/ECV.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Logística: ECV_microdatos</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-23" role="navigation" aria-expanded="false">
+ <span class="menu-text">Laboral</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-23" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-23" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Logistic Regression/laboral/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variables de Interés</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Logistic Regression/laboral/laboral.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Logística: laboral</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-24" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partos</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-24" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-24" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Logistic Regression/Partos/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variables de Interés</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Logistic Regression/Partos/Partos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Logística: Partos</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-25" role="navigation" aria-expanded="false">
+ <span class="menu-text">Salud</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-25" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-25" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Logistic Regression/salud/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variables de Interés</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Logistic Regression/salud/salud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión Logística: salud</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-26" role="navigation" aria-expanded="false">
+ <span class="menu-text">Reduccion Dimension</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-26" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-26" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-27" role="navigation" aria-expanded="false">
+ <span class="menu-text">Analisis Factorial</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-27" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-27" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-28" role="navigation" aria-expanded="false">
+ <span class="menu-text">ECV Factorial</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-28" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-28" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Reduccion Dimension/Analisis Factorial/ECV_factorial/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Procesamos el dataset para adaptarlo a lo de arriba</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Reduccion Dimension/Analisis Factorial/ECV_factorial/ECV_factorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reducción Dimensionalidad - Análisis Factorial: ECV_factorial</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-29" role="navigation" aria-expanded="false">
+ <span class="menu-text">Pisa Factorial</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-29" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-29" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Reduccion Dimension/Analisis Factorial/pisa_factorial/Dataset_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Procesamos el dataset para adaptarlo a lo de arriba</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Reduccion Dimension/Analisis Factorial/pisa_factorial/pisa_factorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reducción Dimensionalidad - Análisis Factorial: pisa_factorial</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-30" role="navigation" aria-expanded="false">
+ <span class="menu-text">PCA</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-30" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-30" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-31" role="navigation" aria-expanded="false">
+ <span class="menu-text">IMCV Pca</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-31" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-31" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Reduccion Dimension/PCA/IMCV_pca/IMCV_pca.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reducción Dimensionalidad - PCA: IMCV_pca</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-32" role="navigation" aria-expanded="false">
+ <span class="menu-text">MercadoHipotecas</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-32" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-32" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Reduccion Dimension/PCA/MercadoHipotecas/MercadoHipotecas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reducción Dimensionalidad - PCA: MercadoHipotecas</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-33" role="navigation" aria-expanded="false">
+ <span class="menu-text">Provincias Variado</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-33" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-33" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Reduccion Dimension/PCA/provincias_variado/provincias_variado.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reducción Dimensionalidad - PCA: provincias_variado</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-34" role="navigation" aria-expanded="false">
+ <span class="menu-text">Situacion Sanitaria</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-34" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-34" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Reduccion Dimension/PCA/Situacion_sanitaria/Situacion_sanitaria.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reducción Dimensionalidad - PCA: Situacion_sanitaria</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-35" role="navigation" aria-expanded="false">
+ <span class="menu-text">Series Temporales</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-35" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-35" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-36" role="navigation" aria-expanded="false">
+ <span class="menu-text">ARIMA</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-36" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-36" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-37" role="navigation" aria-expanded="false">
+ <span class="menu-text">Ipc Series</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-37" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-37" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Series Temporales/ARIMA/ipc_series/ipc_series.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Series Temporales - ARIMA: ipc_series</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-38" role="navigation" aria-expanded="false">
+ <span class="menu-text">Madrid</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-38" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-38" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Series Temporales/ARIMA/Madrid/madrid_series.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Series Temporales - ARIMA: madrid_series</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-39" role="navigation" aria-expanded="false">
+ <span class="menu-text">Navarra</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-39" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-39" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Series Temporales/ARIMA/Navarra/navarra_series.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Series Temporales - ARIMA: navarra</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-40" role="navigation" aria-expanded="false">
+ <span class="menu-text">Paro</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-40" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-40" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Series Temporales/ARIMA/Paro/Paro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Series Temporales - ARIMA: Paro</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-41" role="navigation" aria-expanded="false">
+ <span class="menu-text">Holt Winters</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-41" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-41" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-42" role="navigation" aria-expanded="false">
+ <span class="menu-text">Ipc Series</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-42" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-42" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Series Temporales/Holt Winters/ipc_series/ipc_series.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Series Temporales - Holt Winters: ipc_series</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-43" role="navigation" aria-expanded="false">
+ <span class="menu-text">Madrid</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-43" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-43" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Series Temporales/Holt Winters/Madrid/Madrid.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Series Temporales - Holt Winters: madrid_series</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-44" role="navigation" aria-expanded="false">
+ <span class="menu-text">Paro</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-44" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-44" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../notebooks/Series Temporales/Holt Winters/Paro/Paro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Series Temporales - Holt Winters: Paro</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción">Introducción</a>
+  <ul class="collapse">
+  <li><a href="#dataset" id="toc-dataset" class="nav-link" data-scroll-target="#dataset">dataset</a></li>
+  <li><a href="#descripción-del-trabajo-a-realizar" id="toc-descripción-del-trabajo-a-realizar" class="nav-link" data-scroll-target="#descripción-del-trabajo-a-realizar">Descripción del trabajo a realizar</a></li>
+  </ul></li>
+  <li><a href="#análisis-exploratorio-eda" id="toc-análisis-exploratorio-eda" class="nav-link" data-scroll-target="#análisis-exploratorio-eda">Análisis Exploratorio (EDA)</a>
+  <ul class="collapse">
+  <li><a href="#cargar-librerías" id="toc-cargar-librerías" class="nav-link" data-scroll-target="#cargar-librerías">Cargar Librerías</a></li>
+  <li><a href="#lectura-datos" id="toc-lectura-datos" class="nav-link" data-scroll-target="#lectura-datos">Lectura datos</a></li>
+  <li><a href="#análisis" id="toc-análisis" class="nav-link" data-scroll-target="#análisis">Análisis</a></li>
+  </ul></li>
+  <li><a href="#regresión-lineal" id="toc-regresión-lineal" class="nav-link" data-scroll-target="#regresión-lineal">Regresión Lineal</a>
+  <ul class="collapse">
+  <li><a href="#hipótesis-y-indicadores-de-bondad" id="toc-hipótesis-y-indicadores-de-bondad" class="nav-link" data-scroll-target="#hipótesis-y-indicadores-de-bondad">Hipótesis y indicadores de bondad</a></li>
+  <li><a href="#modelo" id="toc-modelo" class="nav-link" data-scroll-target="#modelo">Modelo</a></li>
+  <li><a href="#test-de-bonferroni-datos-atípicos" id="toc-test-de-bonferroni-datos-atípicos" class="nav-link" data-scroll-target="#test-de-bonferroni-datos-atípicos">Test de Bonferroni (datos atípicos)</a></li>
+  <li><a href="#test-homocedasticidad" id="toc-test-homocedasticidad" class="nav-link" data-scroll-target="#test-homocedasticidad">Test homocedasticidad</a></li>
+  <li><a href="#normalidad-de-residuos" id="toc-normalidad-de-residuos" class="nav-link" data-scroll-target="#normalidad-de-residuos">Normalidad de residuos</a></li>
+  <li><a href="#test-linealidad" id="toc-test-linealidad" class="nav-link" data-scroll-target="#test-linealidad">Test linealidad</a></li>
+  <li><a href="#gráfico-de-influencia-del-modelo-porpuesto" id="toc-gráfico-de-influencia-del-modelo-porpuesto" class="nav-link" data-scroll-target="#gráfico-de-influencia-del-modelo-porpuesto">Gráfico de influencia del modelo porpuesto</a></li>
+  <li><a href="#colinealidad" id="toc-colinealidad" class="nav-link" data-scroll-target="#colinealidad">Colinealidad</a></li>
+  </ul></li>
+  <li><a href="#selección-de-modelos" id="toc-selección-de-modelos" class="nav-link" data-scroll-target="#selección-de-modelos">Selección de Modelos</a></li>
+  <li><a href="#predicción" id="toc-predicción" class="nav-link" data-scroll-target="#predicción">Predicción</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#bibliografía" id="toc-bibliografía" class="nav-link" data-scroll-target="#bibliografía">Bibliografía</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Notebooks</li><li class="breadcrumb-item">Linear Regression</li><li class="breadcrumb-item"><a href="../../../notebooks/Linear Regression/matrimionios_reg/Dataset_cleaning.html">Matrimionios Reg</a></li><li class="breadcrumb-item"><a href="../../../notebooks/Linear Regression/matrimionios_reg/matrimonios_reg.html">Regresión Lineal: matrimonios_reg</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Regresión Lineal: matrimonios_reg</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introducción" class="level1">
+<h1>Introducción</h1>
+<p>En este notebook se expondrá como llevar a cabo una Regresión Lineal a partir de un conjunto de datos, explicando las hipótesis que se deben satisfacer y un posterior análisis de bondad del modelo. Por último se explicará como utilizar el modelo creado para predecir nuevas observaciones.</p>
+<section id="dataset" class="level2">
+<h2 class="anchored" data-anchor-id="dataset">dataset</h2>
+<p>En este cuaderno vamos a analizar el dataset llamado <a href="../../../files/matrimonios_reg.xlsx"><em>matrimonios_reg.xlsx</em></a>. Se quiere predecir el número de matrimonios en las ciudades españolas (de entre 50.000 y 300.000 habitantes) a partir del número de mujeres que las habitan y el número de nacimientos que ha habido ese año. Concretamente, se han tomado los datos relativos a 2022. Este análisis parece razonable a simple vista ya que el matrimonio la mayor parte de las veces va a acompañado de un nacimiento en los meses anteriores o posteriores. Los datos han sido extraídos de la <strong>Operación</strong> <a href="https://www.ine.es/dyngs/IOE/es/operacion.htm?numinv=30302"><strong>8867 Movimiento Natural de la Población</strong></a> (IOE 8867), que se encuentra dentro de la temática Demografía y Población. Ha sido necesario un preprocesado para adaptar los datos a los fines de este estudio, que puede ser encontrado en <a href="../../../notebooks/Linear Regression/matrimionios_reg/Dataset_cleaning.html">Limpieza de datos</a></p>
+<p>Concretamente tenemos las siguientes variables:</p>
+<ul>
+<li><strong>Municipios</strong>: Códigos de los municipios.</li>
+<li><strong>Ciudad</strong>: Nombres de los municipios.</li>
+<li><strong>Matrimonios</strong>: Número de matrimonios en cada municipio.</li>
+<li><strong>Mujeres</strong>: Número total de habitantes mujeres en cada municipio.</li>
+<li><strong>Nacimientos</strong>:Número de nacimientos en cada municipio.</li>
+<li><strong>Total</strong>: Número total de habitantes en cada municipio.</li>
+</ul>
+</section>
+<section id="descripción-del-trabajo-a-realizar" class="level2">
+<h2 class="anchored" data-anchor-id="descripción-del-trabajo-a-realizar">Descripción del trabajo a realizar</h2>
+<p>Elaborar una regresión lineal que explique la variable Matrimonios en función de Nacimientos y Mujeres. Interpretar y ver si incluir todas variables o no.</p>
+<pre><code>1. Análisis exploratorio.
+2. Plantear las hipótesis de una regresión (incluyendo todas variables).
+3. Analizar el modelo planteado y su ajuste de bondad.
+4. Comprobar hipótesis de regresión.
+5. Conclusión.          
+                
+                
+                
+                
+            </code></pre>
+</section>
+</section>
+<section id="análisis-exploratorio-eda" class="level1">
+<h1>Análisis Exploratorio (EDA)</h1>
+<p>EDA viene del Inglés <em>Exploratory Data Analysis</em> y son los pasos relativos en los que se exploran las variables para tener una idea de que forma toma el dataset.</p>
+<section id="cargar-librerías" class="level2">
+<h2 class="anchored" data-anchor-id="cargar-librerías">Cargar Librerías</h2>
+<p>Lo primero de todo vamos a cargar las librerías necesarias para ejecutar el resto del código del trabajo:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl) <span class="co"># Para leer los excels</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra) <span class="co"># Para dar formato a las tablas html</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr) <span class="co"># Formato tablas en html</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra) <span class="co"># Para el layout de los gráficos</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car) <span class="co"># Para el bonfferroni test</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot) <span class="co"># Para el gráfico de correlaciones</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest) <span class="co"># Test Homocedasticidad</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret) <span class="co"># Para crear partición</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr) <span class="co"># Filtrar datos</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="lectura-datos" class="level2">
+<h2 class="anchored" data-anchor-id="lectura-datos">Lectura datos</h2>
+<p>Ahora cargamos los datos del excel correspondientes a la pestaña <em>“Datos”</em> y vemos si hay algún NA o algún valor igual a 0 en nuestro dataset. Vemos que no han ningún NA (missing value) en el dataset luego no será necesario realizar ninguna técnica para imputar los missing values o borrar observaciones.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"../../../files/matrimonios_reg.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"Datos"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anyNA</span>(data), <span class="co"># Any missing data</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">any</span>(data <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>) <span class="co"># Any value equal to 0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE FALSE</code></pre>
+</div>
+</div>
+<p>No hay ningún NA leugo no será necesario escalar imputar ningún valor.</p>
+</section>
+<section id="análisis" class="level2">
+<h2 class="anchored" data-anchor-id="análisis">Análisis</h2>
+<p>Realizando un <strong>resumen numérico</strong> vemos que todas las variables toman valores mayores que 0 y con un máximo dependiendo de la naturaleza de la variable.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>summary_stats <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filtra solo las columnas numéricas del dataframe</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  num_data <span class="ot">&lt;-</span> data[, <span class="fu">sapply</span>(data, is.numeric)]</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calcula las estadísticas descriptivas para cada columna</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  stats <span class="ot">&lt;-</span> <span class="fu">sapply</span>(num_data, <span class="cf">function</span>(col) {</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">Min =</span> <span class="fu">format</span>(<span class="fu">round</span>(<span class="fu">min</span>(col, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>), <span class="at">nsmall =</span> <span class="dv">2</span>),</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">Q1 =</span> <span class="fu">format</span>(<span class="fu">round</span>(<span class="fu">quantile</span>(col, <span class="fl">0.25</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>), <span class="at">nsmall =</span> <span class="dv">2</span>),</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">Mean =</span> <span class="fu">format</span>(<span class="fu">round</span>(<span class="fu">mean</span>(col, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>), <span class="at">nsmall =</span> <span class="dv">2</span>),</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">Median =</span> <span class="fu">format</span>(<span class="fu">round</span>(<span class="fu">median</span>(col, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>), <span class="at">nsmall =</span> <span class="dv">2</span>),</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">Q3 =</span> <span class="fu">format</span>(<span class="fu">round</span>(<span class="fu">quantile</span>(col, <span class="fl">0.75</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>), <span class="at">nsmall =</span> <span class="dv">2</span>),</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">Max =</span> <span class="fu">format</span>(<span class="fu">round</span>(<span class="fu">max</span>(col, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>), <span class="at">nsmall =</span> <span class="dv">2</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Transpone el resultado y conviértelo en un dataframe</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">t</span>(stats))</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Agrega una columna con los nombres de las variables</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">variable =</span> <span class="fu">rownames</span>(result), result)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Establece los nombres de las columnas</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(result) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"variable"</span>, <span class="st">"Min"</span>, <span class="st">"Q1"</span>, <span class="st">"Mean"</span>, <span class="st">"Median"</span>, <span class="st">"Q3"</span>, <span class="st">"Max"</span>)</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(result)</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejemplo de uso con un data frame 'df'</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Reemplaza 'df' con el nombre de tu data frame</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>result_df <span class="ot">&lt;-</span> <span class="fu">summary_stats</span>(data)</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Convierte la salida a una tabla utilizando kable</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(result_df, <span class="at">format =</span> <span class="st">"pipe"</span>, <span class="at">caption =</span> <span class="st">"Table showing the measures of interest."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Histogram Matrimonios</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>histogram <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> Matrimonios)) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"deepskyblue2"</span>, <span class="at">color =</span> <span class="st">"navy"</span>, <span class="at">bins =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Histogram of Matrimonios"</span>, <span class="at">x =</span> <span class="st">"Matrimonios"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">8</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Box Plot Matrimonios</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>boxplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">"d"</span>, <span class="at">y =</span> Matrimonios)) <span class="sc">+</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"deepskyblue2"</span>, <span class="at">color =</span> <span class="st">"navy"</span>) <span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_boxplot</span>(<span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Box Plot of Matrimonios"</span>, <span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">"Matrimonios"</span>) <span class="sc">+</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">8</span>) <span class="sc">+</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Histogram Mujeres</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>histogram2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> Mujeres)) <span class="sc">+</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"deepskyblue2"</span>, <span class="at">color =</span> <span class="st">"navy"</span>, <span class="at">bins =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Histogram of Mujeres"</span>, <span class="at">x =</span> <span class="st">"Mujeres"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">8</span>)</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Box Plot Mujeres</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>boxplot2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">"d"</span>, <span class="at">y =</span> Mujeres)) <span class="sc">+</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"deepskyblue2"</span>, <span class="at">color =</span> <span class="st">"navy"</span>) <span class="sc">+</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_boxplot</span>(<span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Box Plot of Mujeres"</span>, <span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">"Mujeres"</span>) <span class="sc">+</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">8</span>) <span class="sc">+</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Histogram Nacimientos</span></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>histogram3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> Nacimientos)) <span class="sc">+</span></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"deepskyblue2"</span>, <span class="at">color =</span> <span class="st">"navy"</span>, <span class="at">bins =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Histogram of Nacimientos"</span>, <span class="at">x =</span> <span class="st">"Nacimientos"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">8</span>)</span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Box Plot Nacimientos</span></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>boxplot3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">"d"</span>, <span class="at">y =</span> Nacimientos)) <span class="sc">+</span></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"deepskyblue2"</span>, <span class="at">color =</span> <span class="st">"navy"</span>) <span class="sc">+</span></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_boxplot</span>(<span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Box Plot of Nacimientos"</span>, <span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">"Nacimientos"</span>) <span class="sc">+</span></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">8</span>) <span class="sc">+</span></span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a><span class="co"># Histogram Total</span></span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>histogram4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> Total)) <span class="sc">+</span></span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"deepskyblue2"</span>, <span class="at">color =</span> <span class="st">"navy"</span>, <span class="at">bins =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Histogram of Total"</span>, <span class="at">x =</span> <span class="st">"Total"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">8</span>)</span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a><span class="co"># Box Plot Total</span></span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a>boxplot4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">"d"</span>, <span class="at">y =</span> Total)) <span class="sc">+</span></span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"deepskyblue2"</span>, <span class="at">color =</span> <span class="st">"navy"</span>) <span class="sc">+</span></span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_boxplot</span>(<span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Box Plot of Total"</span>, <span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">"Total"</span>) <span class="sc">+</span></span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">8</span>) <span class="sc">+</span></span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a><span class="co"># Arrange plots vertically</span></span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(histogram, boxplot, histogram2, boxplot2, histogram3, boxplot3, histogram4, boxplot4, <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">4</span>, <span class="at">widths =</span> <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="matrimonios_reg_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="regresión-lineal" class="level1">
+<h1>Regresión Lineal</h1>
+<p>Una Regresión Lineal es una técnica estadística que busca ajustar un conjunto de datos a una recta. Es decir, dada una observación <em>x</em>, se proyecta sobre la recta y se obtiene un valor <em>y</em>, de tal manera que si el ajuste por regresión es bueno entonces la <span class="math inline">\(\hat{y}\)</span> obtenida se parece mucho al valor real <span class="math inline">\(y\)</span>.</p>
+<p>Antes de explicar las hipótesis que deben cumplir los datos para que el ajuste y como llevarlo a cabo, se va a mostrar un ejemplo de buen y mal ajuste. Intuitivamente cuanto mejor sea el ajuste de los datos a una recta cuando se representen las observaciones en un gráfico, mejor será el ajuste.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)) <span class="co"># Dos gráficos misma fila</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Poca variabilidad</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">100</span>, <span class="dv">1</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, x, <span class="dv">5</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">plot</span>(y, <span class="at">col =</span> <span class="st">"lightblue"</span>, <span class="at">main =</span> <span class="st">"BUEN Ajuste"</span>) <span class="sc">+</span> <span class="fu">abline</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x), <span class="at">col =</span> <span class="st">"navy"</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Mucha variabilidad</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>x_malo <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">100</span>, <span class="dv">1</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>y_malo <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, x, <span class="dv">35</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">plot</span>(y_malo, <span class="at">col =</span> <span class="st">"lightblue"</span>, <span class="at">main =</span> <span class="st">"MAL Ajuste"</span>) <span class="sc">+</span> <span class="fu">abline</span>(<span class="fu">lm</span>(y_malo <span class="sc">~</span> x_malo), <span class="at">col =</span> <span class="st">"navy"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="matrimonios_reg_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="hipótesis-y-indicadores-de-bondad" class="level2">
+<h2 class="anchored" data-anchor-id="hipótesis-y-indicadores-de-bondad">Hipótesis y indicadores de bondad</h2>
+<p>Para que una regresión lineal proporcione un buen ajuste a los datos debe cumplir una serie de requisitos que por tanto deben ser verificados al llevar a cabo el estudio. Recordar que la regresión lineal se expresa como: <span class="math display">\[
+\mathbf{Y}=\mathbf{X} \boldsymbol{\beta}+\boldsymbol{\varepsilon}
+\]</span> donde <span class="math inline">\(\mathbf{Y}\)</span> es la variable respuesta, <span class="math inline">\(\mathbf{X}\)</span> los predictores (hay <span class="math inline">\(k\)</span> variables predictoras), <span class="math inline">\(\boldsymbol{\beta}\)</span> los coeficientes de la regresión y <span class="math inline">\(\boldsymbol{\varepsilon}\)</span> el error. <span class="math display">\[
+\mathbf{Y}=\left[\begin{array}{c}
+y_1 \\
+y_2 \\
+\vdots \\
+y_n
+\end{array}\right] \quad \mathbf{X}=\left[\begin{array}{cccc}
+1 &amp; x_{11} &amp; \ldots &amp; x_{1 k} \\
+1 &amp; x_{21} &amp; \ldots &amp; x_{2 k} \\
+\vdots &amp; \ddots &amp; \vdots &amp; \\
+1 &amp; x_{n 1} &amp; \ldots &amp; x_{n k}
+\end{array}\right] \quad \boldsymbol{\beta}=\left[\begin{array}{c}
+\beta_0 \\
+\beta_1 \\
+\vdots \\
+\beta_k
+\end{array}\right] \quad \boldsymbol{\varepsilon}=\left[\begin{array}{c}
+\varepsilon_1 \\
+\varepsilon_2 \\
+\vdots \\
+\varepsilon_n
+\end{array}\right]
+\]</span> Las hipótesis que se deben cumplir son:</p>
+<ul>
+<li><p><strong>Linealidad</strong>: La media de la respuesta es función lineal de los predictores. En términos matemáticos: <span class="math display">\[E\left[\mathbf{Y} \mid \mathbf{X}_1=x_1, \ldots, \mathbf{X}_k=x_k\right]=\beta_0+\beta_1 x_1+\ldots+\beta_k x_k \]</span></p></li>
+<li><p><strong>Independencia de errores</strong>: Los errores <span class="math inline">\(\varepsilon_i\)</span> deben ser independientes, es decir, <span class="math inline">\(Cov[\varepsilon_i,\varepsilon_j] =0, \; \forall i\neq j\)</span>.</p></li>
+<li><p><strong>Homocedasticidad</strong>: La varianza del error debe ser constante.</p></li>
+</ul>
+<p><span class="math display">\[Var\left[\varepsilon_i \mid \mathbf{X}_1=x_1, \ldots, \mathbf{X}_k=x_k\right]=\sigma^2 \quad \forall \;i \]</span></p>
+<ul>
+<li><strong>Normalidad</strong> : Los errores deben estar distribuidos normalmente, es decir, <span class="math inline">\(\varepsilon_i \sim N(0,\sigma^2)\; \forall i\)</span>.</li>
+</ul>
+<p>Para analizar la bondad, hay algunos indicadores como el <strong>Coeficiente de Determinación</strong> o <span class="math inline">\(R^2\)</span> que representa el porcentaje de variabilidad de la variable respuesta que es capaz de explicar el modelo. Es decir, si toma valor 1 hay una dependencia lineal exacta entre los predictores y la variable respuesta y por tanto las predicciones serán perfectas. Por el contrario, si toma valor 0 habrá que desechar el modelo puesto que no es capaz de predecir con nada de exactitud.</p>
+<p>En caso de que haya más de un predictor (<span class="math inline">\(k &gt;1\)</span>, Regresión Lineal Múltiple), es más recomendable usar el <strong>Coeficiente de Determinación Ajustado</strong> <span class="math inline">\(R^2\_adj\)</span> como indicador de bondad, pues el <span class="math inline">\(R^2\)</span> puede inflarse artificialmente debido a la presencia de varios predictores. Su interpretación es similar.</p>
+</section>
+<section id="modelo" class="level2">
+<h2 class="anchored" data-anchor-id="modelo">Modelo</h2>
+<p>En este caso nos encontramos ante una Regresión Lineal Múltiple puesto que tenemos más de una variable predictora. Inicialmente vamos a considerar un modelo con todas variables predictoras para intentar predecir <code>Nacimientos</code> y veremos si este modelo cumple las hipótesis necesarias y cuan bueno es.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r fold-show code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">785248</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  80%/20% train/test pariticion</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>trainIndex <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(data<span class="sc">$</span>Matrimonios, <span class="at">list =</span> <span class="cn">FALSE</span>, <span class="at">p =</span> <span class="fl">0.8</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>data_train <span class="ot">&lt;-</span> data[trainIndex, ]</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>data_test <span class="ot">&lt;-</span> data[<span class="sc">-</span>trainIndex, ]</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Modelo inicial</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Matrimonios <span class="sc">~</span> Nacimientos <span class="sc">+</span> Mujeres, <span class="at">data =</span> data_train)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>lm1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Matrimonios ~ Nacimientos + Mujeres, data = data_train)
+
+Coefficients:
+(Intercept)  Nacimientos      Mujeres  
+  28.364455    -0.008467     0.006424  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r fold-show code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Matrimonios ~ Nacimientos + Mujeres, data = data_train)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-163.460  -33.633   -7.279   30.070  154.947 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 28.3644547 10.8801761   2.607   0.0104 *  
+Nacimientos -0.0084675  0.0324383  -0.261   0.7946    
+Mujeres      0.0064237  0.0004282  15.002   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 54.78 on 106 degrees of freedom
+Multiple R-squared:  0.937, Adjusted R-squared:  0.9358 
+F-statistic: 788.6 on 2 and 106 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>A primera vista vemos un valor de <strong>Múltiple R-squared: 0.93</strong>, lo cual es bastante alto y por tanto nuestro modelo parece capturar bien la variabilidad de la variable respuesta, concretamente un <span class="math inline">\(93\%\)</span>. Sin embargo, en los sucesivos modelos que planteemos no podemos usar como criterio de comparación el <span class="math inline">\(R-squared\)</span> pues aumenta a la vez que lo hace el número de variables, y por tanto para comparar modelos entre si se debe usar el <strong>Adjusted R-squared</strong> (que tiene en cuenta el número de variables).</p>
+<p>En la línea de los residuos no parece haber contraindicaciones a que estos sigan una distribución normal centrada en cero puesto que tenemos unas medidas de dispersión bastante simétricas. No obstante, más adelante se procederán a hacer los test pertinentes.</p>
+<p>En la última linea se lleva a cabo un <strong>Test de Significación Global</strong> <span class="math inline">\(F-Test\)</span> lo que considera es la hipótesis nula de</p>
+<p><span class="math display">\[H_0: \beta_i =0\; \forall i
+\\
+H_1: al\; menos \; un \; \beta_i \neq 0\]</span>.</p>
+<p>Para un nivel de confianza de <span class="math inline">\(0.95\)</span> podemos rechazar la hipótesis nula (puesto que p_val&lt; 0.05) y por tanto aceptar la alternativa, lo cual es buena señal.</p>
+<p>No obstante es necesario analizar que se cumplan las hipótesis iniciales para poder asegurar que estamos ante un buen modelo.</p>
+</section>
+<section id="test-de-bonferroni-datos-atípicos" class="level2">
+<h2 class="anchored" data-anchor-id="test-de-bonferroni-datos-atípicos">Test de Bonferroni (datos atípicos)</h2>
+<p>La idea principal es verificar si los residuos de las observaciones son significativamente diferentes de cero. Si un residuo tiene un valor “studentizado” grande en comparación con una distribución t, puede considerarse como un posible valor atípico. Esto se debe a que teóricamente se demuestra que los <strong>residuos “studentizados”</strong> <span class="math inline">\(r^* _i \sim t_{n-k-1}\)</span> con <em>k</em> el número de predictores. En este caso parece haber indicación de sólo un valor atípico.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r fold-show code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>aa <span class="ot">&lt;-</span> <span class="fu">outlierTest</span>(lm1)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">outlierTest</span>(lm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>No Studentized residuals with Bonferroni p &lt; 0.05
+Largest |rstudent|:
+    rstudent unadjusted p-value Bonferroni p
+23 -3.336085          0.0011755      0.12813</code></pre>
+</div>
+</div>
+</section>
+<section id="test-homocedasticidad" class="level2">
+<h2 class="anchored" data-anchor-id="test-homocedasticidad">Test homocedasticidad</h2>
+<p>En términos sencillos, la <strong>Prueba de Breusch-Pagan</strong> evalúa si la varianza de los errores en un modelo de regresión es constante o si varía a lo largo de los valores de las variables predictoras. Una violación de la homocedasticidad puede afectar la validez de las inferencias realizadas a partir del modelo.</p>
+<p>El test funciona de la siguiente manera: se obtienen los residuos al cuadrado y se realiza una regresión auxiliar para determinar si hay una relación significativa entre los residuos al cuadrado y las variables predictoras. Si se encuentra evidencia significativa, puede indicar la presencia de heterocedasticidad.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r fold-show code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bptest</span>(Matrimonios <span class="sc">~</span> Nacimientos <span class="sc">+</span> Mujeres, <span class="at">data =</span> data_train, <span class="at">varformula =</span> <span class="sc">~</span> <span class="fu">fitted.values</span>(lm1), <span class="at">studentize =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Breusch-Pagan test
+
+data:  Matrimonios ~ Nacimientos + Mujeres
+BP = 11.687, df = 1, p-value = 0.0006294</code></pre>
+</div>
+</div>
+<p><span class="math display">\[H_0: Var[\varepsilon_i ] =\sigma^2 \; \forall \;i
+\\
+H_1: Var[\varepsilon_i ] \neq \sigma^2 \; \forall \;i\]</span>.</p>
+<p>Si el valor p obtenido de la prueba de Breusch-Pagan es <span class="math inline">\(&lt;0.05\)</span>, interpretaríamos esto como evidencia suficiente para rechazar la hipótesis nula de homocedasticidad (a nivel de significancia de <span class="math inline">\(0.05\)</span>). En otras palabras, tendríamos suficiente evidencia estadística para decir que hay heterocedasticidad en los errores del modelo de regresión.</p>
+<p>En términos prácticos, esto sugiere que <strong>la varianza de los errores parece no ser constante</strong> a lo largo de los valores de las variables predictoras.</p>
+</section>
+<section id="normalidad-de-residuos" class="level2">
+<h2 class="anchored" data-anchor-id="normalidad-de-residuos">Normalidad de residuos</h2>
+<p>El <strong>Test de Shapiro</strong> es una prueba de normalidad que se utiliza para evaluar si una muestra proviene de una población con una distribución normal. La hipótesis nula del test es que la muestra sigue una distribución normal. Si el valor p obtenido en la prueba es menor que el nivel de significancia (comúnmente establecido en <span class="math inline">\(0.05\)</span>), se rechaza la hipótesis nula, indicando que la muestra no sigue una distribución normal.</p>
+<p><span class="math display">\[H_0: \varepsilon_i  \sim N(\;,\;) \; \forall
+\\
+H_1: \varepsilon_i  \nsim N(\;,\;) \; \forall \]</span>.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r fold-show code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(lm1<span class="sc">$</span>residuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  lm1$residuals
+W = 0.98659, p-value = 0.3493</code></pre>
+</div>
+</div>
+<p>Aceptamos la normalidad de los residuos puesto que el <span class="math inline">\(p-value&gt;0.05\)</span>.</p>
+</section>
+<section id="test-linealidad" class="level2">
+<h2 class="anchored" data-anchor-id="test-linealidad">Test linealidad</h2>
+<p>La hipótesis alternativa analiza si la inclusión de términos cuadráticos (potencia 2) de las variables predictoras mejora significativamente el modelo en comparación con un modelo que solo incluye términos lineales.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resettest</span>(Matrimonios <span class="sc">~</span> Nacimientos <span class="sc">+</span> Mujeres, <span class="at">data =</span> data_train, <span class="at">power =</span> <span class="dv">2</span>, <span class="at">type =</span> <span class="st">"regressor"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Hay evidencia significativa de que el modelo Matrimonios ~ Nacimientos + Mujeres está mal especificado. Esto sugiere que podría faltar algún término no lineal o interacción en el modelo, o que se deben incluir variables adicionales para capturar correctamente la relación entre Matrimonios, Nacimientos y Mujeres.</p>
+<p>Por ejemplo, se podría modificar el modelo para incluir términos no lineales y de interacción:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>modelo_mejorado <span class="ot">&lt;-</span> <span class="fu">lm</span>(Matrimonios <span class="sc">~</span> Nacimientos <span class="sc">+</span> <span class="fu">I</span>(Nacimientos<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> Mujeres <span class="sc">+</span> <span class="fu">I</span>(Mujeres<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> Nacimientos<span class="sc">:</span>Mujeres, <span class="at">data =</span> data_train)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo_mejorado)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Matrimonios ~ Nacimientos + I(Nacimientos^2) + Mujeres + 
+    I(Mujeres^2) + Nacimientos:Mujeres, data = data_train)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-115.010  -36.734   -1.545   31.532  143.208 
+
+Coefficients:
+                      Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)         -4.111e+01  2.595e+01  -1.584   0.1162    
+Nacimientos          1.905e-01  9.239e-02   2.062   0.0417 *  
+I(Nacimientos^2)    -2.063e-04  1.276e-04  -1.617   0.1089    
+Mujeres              6.140e-03  1.392e-03   4.411 2.54e-05 ***
+I(Mujeres^2)        -1.760e-08  1.799e-08  -0.978   0.3302    
+Nacimientos:Mujeres  2.964e-06  2.945e-06   1.007   0.3165    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 52.42 on 103 degrees of freedom
+Multiple R-squared:  0.944, Adjusted R-squared:  0.9412 
+F-statistic: 346.9 on 5 and 103 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="gráfico-de-influencia-del-modelo-porpuesto" class="level2">
+<h2 class="anchored" data-anchor-id="gráfico-de-influencia-del-modelo-porpuesto">Gráfico de influencia del modelo porpuesto</h2>
+<p>En el siguiente gráfico se muestran los residuos “studentizados”, es decir, los residuos transformados a una <span class="math inline">\(N(0,1)\)</span>. Es por ello, que debido a el cuantil <span class="math inline">\(z_{\alpha/2}=-1.96\; con \; \alpha=0.05\)</span> de una normal, sabemos que el <span class="math inline">\(95\%\)</span> de elementos deben estar contenidos en <span class="math inline">\((-1,96,1.96)\)</span> que son las rayas horizontales del gráfico.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">influencePlot</span>(lm1, <span class="at">id =</span> <span class="fu">list</span>(<span class="at">method =</span> <span class="st">"noteworth"</span>, <span class="at">n =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="matrimonios_reg_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>Los <strong>residuos</strong> bajo hipótesis de RLM siguen una N(0,sigma) y los “studentizados” un N(0,1), es decir el <span class="math inline">\(95\%\)</span> de datos están entre <span class="math inline">\((-1.96,1.96)\)</span>, las líneas horizontales. Tenemos varios datos fuera de la línea lo que a priori podría ser un problema</li>
+<li>Las <strong>líneas verticales</strong> indican los datos con apalancamiento en el modelo.</li>
+<li>El <strong>área de las burbujas</strong> es proporcional a la Distancia de Cook (mide cómo cambian los parámetros del modelo cuando se excluye una observación específica). Vemos que hay uno con una gran distancia de cook (tienen residuo grande), luego esto nos indica que podría considerarse en cierto modo atípico.</li>
+</ul>
+</section>
+<section id="colinealidad" class="level2">
+<h2 class="anchored" data-anchor-id="colinealidad">Colinealidad</h2>
+<p>Cuando los regresores no tienen una relación lineal, se consideran ortogonales. Sin embargo, en la mayoría de las aplicaciones de regresión, los regresores no cumplen con esta condición. En algunos casos, la falta de ortogonalidad no representa un problema significativo, pero en otros, los regresores pueden estar tan estrechamente relacionados linealmente de manera que las predicciones del modelo de regresión se vuelven poco fiables o incorrectas.</p>
+<p>Este fenómeno, en el que los regresores presentan dependencias lineales casi perfectas, se conoce como el problema de colinealidad. Se realiza la matriz de correlaciones para ver la dependencia lineal entre las distintas variables.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>mat_cor <span class="ot">&lt;-</span> <span class="fu">cor</span>(data[, <span class="dv">3</span><span class="sc">:</span><span class="dv">5</span>]) <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(mat_cor, <span class="at">type =</span> <span class="st">"upper"</span>, <span class="at">order =</span> <span class="st">"hclust"</span>, <span class="at">tl.col =</span> <span class="st">"black"</span>, <span class="at">tl.srt =</span> <span class="dv">45</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="matrimonios_reg_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Combinando los resultados de la matriz anterior y el conocimiento de las variables es posible identificar variables que podrían generar el problema de multicolinealidad. Es por ello que se puede optar por suprimir uno de los dos predictores.</p>
+<p>Por otro lado, el <strong>factor de inflación de la varianza (FIV)</strong> detecta si una variable independiente es colineal con el resto. Es decir, mira cuanto se infla la varianza de los estimadores por culpa de la colinealidad de unas variables respecto a otras. <strong>Decisión</strong>: Un Valor del FIV mayor de 10 requiere actuación.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inflación de la varianza</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(lm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Nacimientos     Mujeres 
+   7.239639    7.239639 </code></pre>
+</div>
+</div>
+<p>Vemos que puede haber problema de multicolinealidad.</p>
+</section>
+</section>
+<section id="selección-de-modelos" class="level1">
+<h1>Selección de Modelos</h1>
+<p>A la hora de realizar un modelo de acuerdo a una lista de variables estadísticas, suele ser frecuente estudiar la relevancia de todas ellas, o si por el contrario con un número reducido de predictores es suficiente. Además del <span class="math inline">\(R^2_{adj}\)</span>, el <strong>Criterio de Información de Akaike (AIC)</strong>, es una medida para comparar diferentes modelos. Comparando dos modelos, el que tenga un AIC más bajo se puede considerar mejor modelo.</p>
+<p>Vamos a realizar un método de Stepwise que lo que hace es sacando variables sobre el modelo inicial hasta encontrar el modelo con el mejor AIC(el más bajo). Es una forma de encontrar el modelo con el menor número de variables y las mejores métricas.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">step</span>(lm1, <span class="at">direction =</span> <span class="st">"backward"</span>, <span class="at">criterion =</span> <span class="st">"AIC"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Destacar que como comentábamos el modelo con sólo un término parece ser también bueno. Veamos como programarlo y analicemos su bondad.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> Matrimonios <span class="sc">~</span> Mujeres, <span class="at">data =</span> data_train)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejecutar tests correspondientes</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co"># outlierTest(lm2)</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># bptest(Matrimonios ~  Mujeres, data = data_train, varformula = ~ fitted.values(lm1), studentize = FALSE)</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># resettest(Matrimonios ~  Mujeres,data=data_train, power = 2, type = "regressor")</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co"># shapiro.test(lm2$residuals)</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co"># influencePlot(lm2, id = list(method = "noteworth", n = 2))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="predicción" class="level1">
+<h1>Predicción</h1>
+<p>Una vez que hemos seleccionado un modelo, en este caso <code>lm2</code>, vamos a predecir nuevas observaciones y calcular intervalos de confianza para estas. Utilizaremos los datos almacenados en data_test. Para predecir usaremos la función <code>predict()</code>, que además nos puede proporcionar un intervalo de confianza para los valores predichos.</p>
+<p>Posteriormente vamos a calcular el <strong>Mean Absolute Error (MAE)</strong>, que se calcula como la diferencia absoluta promedio entre los valores ajustados por el modelo (un paso por delante de la previsión de muestra) y los datos históricos observados.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>prediccion <span class="ot">&lt;-</span> <span class="fu">predict</span>(lm2, data_test, <span class="at">interval =</span> <span class="st">"confidence"</span>, <span class="at">level =</span> <span class="fl">0.95</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>valor_real <span class="ot">&lt;-</span> data_test[, <span class="st">"Matrimonios"</span>]</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculamos el MAE</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>MAE <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">abs</span>(prediccion[, <span class="dv">1</span>] <span class="sc">-</span> valor_real)) <span class="sc">/</span> <span class="fu">dim</span>(data_test)[<span class="dv">1</span>]</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>MAE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 45.07476</code></pre>
+</div>
+</div>
+<p>Vemos un MAE de 45, bastante bajo luego vemos que el modelo es bueno para predecir observaciones futuras, que no hay un sobre entrenamiento. Esto significa que, en media, el algoritmo tiene una desviación de 45 unidades en el número de matrimonios de cada ciudad. Teniendo en cuenta que las ciudades seleccionadas tenían entre 50.000 y 300.000 y que aproximadamente hay 350 matrimonios cada 100.000 habitantes, no parece un desvío muy grande.</p>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>El modelo considerado tiene buenos indicadores de bondad de ajuste y además pasa las hipótesis requeridas para una regresión lineal. Es por ello que parece razonable tomarlo como bueno y usarlo para predecir observaciones futuras.</p>
+</section>
+<section id="bibliografía" class="level1">
+<h1>Bibliografía</h1>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Linear_regression" class="uri">https://en.wikipedia.org/wiki/Linear_regression</a></li>
+<li><a href="https://www.datacamp.com/tutorial/linear-regression-R" class="uri">https://www.datacamp.com/tutorial/linear-regression-R</a></li>
+<li><a href="http://r-statistics.co/Linear-Regression.html" class="uri">http://r-statistics.co/Linear-Regression.html</a></li>
+<li><a href="https://rpubs.com/Sergio_Garcia/linear_regression" class="uri">https://rpubs.com/Sergio_Garcia/linear_regression</a></li>
+</ul>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/uvima\.github\.io\/datasets\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
