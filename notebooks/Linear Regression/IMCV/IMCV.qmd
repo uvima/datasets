@@ -21,7 +21,9 @@ Nota: Se trata de un ejemplo meramente didáctico ya que como se verá no tiene 
 
 ## dataset
 
-En el siguiente dataset disponemos de datos por Comunidades Autónomas de las nueve **dimensiones relativas a la calidad de vida que componen el Índice Multidimensional de Calidad de Vida (IMCV)** \[¡Pincha aquí!\] (https://www.ine.es/experimental/imcv/experimental_ind_multi_calidad_vida.htm), una estadística con carácter experimental. Datos correspondientes al año 2020.
+El dataset [*imcv_reg.xlsx*](../../../files/IMCV_reg.xlsx) dispone de datos por Comunidades Autónomas de
+las nueve **dimensiones relativas a la calidad de vida que componen el Índice Multidimensional de Calidad de Vida (IMCV)** [¡Pincha aquí!](https://www.ine.es/experimental/imcv/experimental_ind_multi_calidad_vida.htm), una estadística con carácter experimental. Datos correspondientes al año 2020.
+
 
 Concretamente tenemos las siguientes variables:
 

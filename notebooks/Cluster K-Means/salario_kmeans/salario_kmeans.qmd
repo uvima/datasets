@@ -1,0 +1,247 @@
+---
+title: 'Cluster K-Means: salario_kmeans'
+---
+
+```{r}
+#| label: setup
+#| include: false
+knitr::opts_chunk$set(echo = TRUE, fig.align = "center", warning = FALSE, message = FALSE)
+
+
+# fig.align= 'center para que nos centre todas figuras que se muestran
+# warning = FALSE para que no muestre mensajes de warning
+# message = FALSE para que no muestre mensajes automáticos cuando carga paquetes y demás en el output
+```
+
+# Introducción
+
+En este notebook se expondrá como llevar a cabo un Análisis Cluster de tipo K-Means a partir de un conjunto de datos, explicando los fundamentos teóricos en el que se basa para agrupar los datos.
+
+## dataset
+
+En este cuaderno vamos a analizar el dataset llamado [*salario_kmeans.xlsx*](../../../files/salario_kmeans.xlsx). Este dataset presenta un conjunto de datos sobre el salario medio anual en las comunidades autónomas en España junto a Ceuta y Melilla, relativos al año 2018. Los datos corresponden a las operaciones [**Encuesta Anual de Estructura Salarial**](https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177025&menu=ultiDatos&idp=1254735976596) (IOE 30189), que se encuentra dentro de la temática Mercado laboral y salarios y [**Cifras Oficiales de Población de los Municipios Españoles**](https://www.ine.es/dyngs/IOE/es/operacion.htm?numinv=30245) (IOE 30245). Concretamente en este dataset tenemos las siguientes variables (que nos interesan para este análisis):
+
+-   **Nombre**: Comunidades autónomas.
+-   **Poblacion**: Número de habitantes en la respectiva comunidad autónoma
+-   **Salario**: Salario medio anual.
+
+El objetivo de este estudio será aplicar un Análisis **Cluster** para hacer grupos de comunidades autónomas en función de las variables **Poblacion** y **Salario**. Concretamente usaremos la técnica K-Means.
+
+## Descripción del trabajo a realizar
+
+En este notebook se expondrá como realizar un Análisis Cluster empleando la técnica K-Means en función de las variables **Poblacion** y **Salario** para agrupar las comunidades autónomas.
+
+-   Hacer un análisis exploratorio.Ver si hay NA's y si es necesario escalar los datos.
+-   Variables sobre las que se buscan clúster
+-   Estandarizar datos y probar k-means con k=4.
+-   Interpretar resultados.
+-   Ver métodos Elbow y Silhouette si hay otro número óptimo de clústeres y en ese caso repetir el estudio.
+
+# Análisis Exploratorio (EDA)
+
+EDA viene del Inglés *Exploratory Data Analysis* y son los pasos relativos en los que se exploran las variables para tener una idea de que forma toma el dataset.
+
+## Cargar Librerías
+
+Lo primero de todo vamos a cargar las librerías necesarias para ejecutar el resto del código del trabajo:
+
+```{r}
+#| label: librerias
+#| message: false
+#| warning: false
+# Librerías
+library(readxl) # Para leer los excels
+library(ggplot2) # Nice plots
+library(stats) # hclust package
+library(factoextra) # fviz_cluster function
+library(gridExtra) # Para el layout de los gráficos
+```
+
+## Lectura de datos
+
+Ahora cargamos los datos del excel correspondientes a la pestaña *"Datos"* y vemos si hay algún NA o algún valor igual a 0 en nuestro dataset. Vemos que no han ningún NA (missing value) en el dataset luego no será necesario realizar ninguna técnica para imputar los missing values o borrar observaciones.
+
+```{r}
+#| label: cargar_datos
+datos <- read_excel("../../../files/salario_kmeans.xlsx", sheet = "Datos")
+```
+
+```{r}
+# Histogram dim1
+histogram <- ggplot(datos, aes(x = Salario)) +
+  geom_histogram(fill = "deepskyblue2", color = "navy", bins = 5) +
+  labs(title = "Histogram of Salario", x = "Salario", y = "Frequency") +
+  theme_minimal(base_size = 8)
+
+# Box Plot dim1
+boxplot <- ggplot(datos, aes(x = "d", y = Salario)) +
+  geom_boxplot(fill = "deepskyblue2", color = "navy") +
+  stat_boxplot(geom = "errorbar", width = 0.2) +
+  labs(title = "Box Plot of Salario", x = "", y = "Salario") +
+  theme_minimal(base_size = 8) +
+  theme(
+    axis.title.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank()
+  )
+
+
+# Histogram dim2
+histogram2 <- ggplot(datos, aes(x = Poblacion)) +
+  geom_histogram(fill = "deepskyblue2", color = "navy", bins = 5) +
+  labs(title = "Histogram of Poblacion", x = "Poblacion", y = "Frequency") +
+  theme_minimal(base_size = 8)
+
+# Box Plot dim2
+boxplot2 <- ggplot(datos, aes(x = "d", y = Poblacion)) +
+  geom_boxplot(fill = "deepskyblue2", color = "navy") +
+  stat_boxplot(geom = "errorbar", width = 0.2) +
+  labs(title = "Box Plot of Poblacion", x = "", y = "Poblacion") +
+  theme_minimal(base_size = 8) +
+  theme(
+    axis.title.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank()
+  )
+
+
+
+grid.arrange(histogram, histogram2, boxplot, boxplot2, nrow = 2, ncol = 2, widths = c(0.3, 0.3))
+```
+
+-   **Distribución Salarial**:
+
+    -   El rango intercuartílico se extiende aproximadamente de 21.000 a 24.000, lo que indica que la mayoría de las comunidades tienen salarios en este rango.
+    -   No hay valores atípicos significativos, y los salarios más altos y más bajos están bien dentro de un rango razonable.
+
+-   **Distribución Población**:
+
+    -   La mayoría de las comunidades tienen poblaciones menores a 5.000.000.
+    -   El rango intercuartílico se extiende aproximadamente de 1.000.000 a 3.000.000.
+    -   Existe un grupo pequeño pero significativo de comunidades con poblaciones muy altas (más de 7.500.000), lo cual podría estar influenciado por comunidades como Madrid o Cataluña.
+
+Estos gráficos pueden ayudar a identificar patrones y a entender mejor la estructura demográfica y económica de las comunidades autónomas, facilitando la toma de decisiones políticas y económicas.
+
+# Clustering: K-means
+
+## Introducción
+
+El **Análisis Clúster** es una técnica de aprendizaje no supervisado que agrupa datos similares en conjuntos, llamados clústeres. El objetivo es dividir un conjunto de datos en grupos homogéneos, donde los miembros de cada grupo son más similares entre sí que con los miembros de otros grupos, según algún criterio de similitud predefinido.
+
+**Ejemplo ilustrativo**: Imaginar que tenemos un conjunto de datos de alumnos de un colegio de educación primaria y para cada uno de ellos disponemos de varias variables como edad, sexo, altura, promedio de notas.. Imaginar que queremos hacer grupos de estudiantes para aplicar programas de estudios. Intuitivamente asociaremos a cada edad un curso, y de manera adicional podemos decir que si tienen una media de notas muy alta se les podría asociar a un curso superior y si es muy baja a uno inferior. Es decir, a partir de determinadas reglas de decisión hemos conseguido clasificar las observaciones en diferentes grupos de datos.
+
+Concretamente, la técnica **K-Means** define clústeres de modo que se **minimice la variación total dentro del grupo** de acuerdo con el algoritmo Hartigan-Wong (Hartigan y Wong 1979), que define la variación total dentro del grupo como la suma de las distancias al cuadrado de las distancias euclidianas entre elementos y el centroide correspondiente. Se describe a continuación.
+
+Los pasos generales de este algoritmo son:
+
+1.  **Especificar** el número de clústeres (**K**) que se se desean obtener.
+
+2.  **Seleccionar aleatoriamente k** objetos del conjunto de datos como centros del grupo (centroides). Asigna cada observación a su centroide más cercano, según la distancia entre el objeto y el centroide (es necesario elegir una función de distancia).
+
+3.  Para cada uno de los k grupos, **actualizar el centroide** del grupo calculando los nuevos valores medios de todos los puntos de datos del grupo. El **centroide de un grupo K-ésimo es** un vector de longitud p que contiene las medias de todas las variables para las observaciones en el grupo K-ésimo; p es el número de variables.
+
+4.  Calcular la distancia entre las observaciones y los nuevos centroides, asignado las observaciones al clúster del centroide más cercano.
+
+5.  Repetir pasos 3-4 sucesivamente hasta que los centroides no cambien. En ese caso se supone que se ha alcanzado la convergencia y ya se han encontrado unos clústeres estables. De forma predeterminada, el software R utiliza 10 como valor predeterminado para el número máximo de iteraciones, con el fin de evitar que entre en una secuencia infinita de iteraciones en el caso de no converger nunca.
+
+*Véase funciones de R stats::kmeans(x, centers, iter.max, nstart) que realizan los pasos 2-5 automáticamente.*
+
+# Modelo
+
+**IMPORTANTE**:
+
+-   Ver que no hay ningún **NA** en el dataset.
+-   El **escalado** es un paso esencial en la fase de preprocesamiento de datos para los algoritmos de agrupación. Garantiza que cada característica contribuya por igual al proceso de decisión del algoritmo, lo que lleva a resultados de agrupación más precisos e interpretables.
+
+```{r}
+#| label: factor
+ifelse(sum(is.na(datos)) == 0, print("There is no NA in the dataset."), print("There is some NA in the dataset."))
+```
+
+Si queremos que el código sea reproducible, es necesario fijar semilla (función `set.seed(n)`) ya que el algoritmo *k-means* elige los centroides iniciales aleatoriamente.
+
+```{r}
+# Preparación de los datos
+resultado <- datos[, c("Poblacion", "Salario")]
+
+
+resultado <- scale(resultado) # scaling/standardizing
+rownames(resultado) <- datos$Nombre # Para que nos salgan luego los nombres
+
+
+# K-MEANS algortihm
+set.seed(785248) # reproducibilidad
+k1 <- kmeans(resultado, centers = 4, nstart = 25)
+k1
+fviz_cluster(k1, data = resultado) # plot
+```
+
+Podemos observar que la agrupación en 4 clusters que ha hecho el algoritmo K-MEANS es bastante marcada y parece tener una interpretación directa. Se podría decir que las agrupaciones se dan a partir de salarios medios de las CCAA altos y bajos, y luego CCAA muy/poco pobladas. En cierto modo:
+
+-   **Cluster 1 (rojo)**:
+    -   **Comunidades**: Comunidad Valenciana y Andalucía.
+    -   **Características**: Estas comunidades tienen una población relativamente alta y salarios medios moderados. Aunque tienen una alta población, tienen salarios moderados, lo que podría reflejar desafíos económicos específicos o una estructura económica diferente.
+-   **Cluster 2 (verde)**:
+    -   **Comunidades**: Navarra, País Vasco y Ceuta y Melilla.
+    -   **Características**: Estas comunidades tienen salarios medios/altos y una población relativamente baja. Es decir, las comunidades con salarios más altos tienden a tener una población más baja, sugiriendo que pueden ser regiones más prósperas pero menos densamente pobladas.
+-   **Cluster 3 (azul)**:
+    -   **Comunidades**: Varias comunidades como Asturias, Aragón, Castilla y León, etc.
+    -   **Características**: Estas comunidades tienen una población y salarios medios relativamente bajos. Son el grueso de comunidades.
+-   **Cluster 4 (morado)**:
+    -   **Comunidades**: Madrid y Cataluña.
+    -   **Características**: Estas comunidades tienen una población muy alta y salarios medios altos. Indica que los grandes centros urbanos pueden tener mejores salarios debido a una economía más diversificada y oportunidades laborales
+
+El gráfico refleja la diversidad económica y demográfica entre las comunidades autónomas, destacando las diferencias en el nivel de vida y la distribución de la población. Este tipo de análisis es útil para identificar patrones regionales y implementar estrategias específicas para cada grupo.
+
+# Número Clústeres Óptimo
+
+Encontrar el número óptimo de clústeres implica identificar la cantidad ideal de grupos en los que se pueden dividir los datos de manera significativa y coherente. Es crucial porque determina la calidad y utilidad de los resultados del análisis de agrupamiento.
+
+## Método Elbow
+
+Una de las formas comunes de determinar este número es a través del método del **codo** o **elbow** en inglés. Este método busca identificar el punto donde la adición de más clústeres ya no proporciona un beneficio significativo en la varianza explicada (distancia promedio de los elementos al centroide del clúster) o la cohesión dentro de los grupos.
+
+Al representar la variación explicada en función del número de clústeres, observamos un **gráfico** que se asemeja a la **forma** de un codo. A medida que aumentamos el número de clústeres, la varianza explicada tiende a disminuir. El punto en el que esta disminución se estabiliza o se aplana marca el número óptimo de clústeres, indicando un equilibrio entre una mayor partición (más clústeres) y una adecuada interpretabilidad de los grupos.
+
+```{r}
+#  Método Elbow
+set.seed(785248)
+factoextra::fviz_nbclust(resultado, kmeans, method = "wss", print.summary = TRUE)
+```
+
+Este gráfico ayuda a determinar el número óptimo de clústeres para el algoritmo K-means. El método del codo (Elbow Method) consiste en observar el punto donde la reducción en la suma de los cuadrados dentro del clúster (WSS) empieza a disminuir de manera considerable.
+
+-   El gráfico muestra un fuerte descenso en WSS hasta 3 ó 4 clústeres, luego se reduce más lentamente.
+-   El "codo" más pronunciado parece estar en 3 ó 4 clústeres, luego se podría tomar alguno de estos como óptimo.
+
+## Método Silhouette
+
+El **método Silhouette** es una técnica utilizada para determinar la calidad de la agrupación en un conjunto de datos. Consiste en calcular el valor de la silueta para cada punto de datos, que mide qué tan similar es un punto a su propio grupo (cohesión) en comparación con otros grupos vecinos (separación).
+
+El proceso implica:
+
+1.  **Cálculo de la silueta individual**: Para cada punto de datos, se calcula la silueta, que es la diferencia entre la distancia media intra-clúster (distancia al resto de puntos en su mismo grupo) y la distancia media al clúster más cercano (distancia a los puntos del grupo más próximo, excluyendo el propio grupo).
+
+2.  **Valor de la silueta global**: Se obtiene el promedio de las siluetas individuales de todos los puntos de datos en el conjunto. Contra más cercano a 1, mejor formado estará el clúster.
+
+La siguiente función generará un gráfico que muestra los valores de Silhouette en función del número de clústeres. El número óptimo de clústeres es típicamente aquel que maximiza el valor de Silhouette, representando una mejor cohesión intra-clúster y separación inter-clúster.
+
+```{r}
+#  Método Silhouette
+set.seed(785248)
+factoextra::fviz_nbclust(resultado, kmeans, method = "silhouette")
+```
+
+Este método nos reafirma que el número óptimo es 2 puesto que es el caso cuyos clústeres maximiza el valor de Silhouette, representando una mejor cohesión intra-clúster y separación inter-clúster.
+
+**NOTA**: Ahora podríamos repetir el estudio anterior con el número de clústeres igual a 2 ó 3 e intentar analizar de nuevo los resultados. Destacar que, en última instancia, el número de clústeres depende del interés del usuario que deberá fijarlo en función de sus objetivos o analizando que número es el óptimo.
+
+# Conclusión
+
+Aquí se han explicado los supuestos del agrupamiento K-MEANS por medio de un dataset que contiene el salario medio y el número de habitantes de las comunidades autónomas junto a Ceuta y Melilla. Se trata de un procedimiento muy útil para agrupar los datos en función de las variables disponibles y poder identificar patrones subyacentes en los datos.
+
+# Bibliografía
+
+-   <https://www.datanovia.com/en/lessons/k-means-clustering-in-r-algorith-and-practical-examples/>
+-   <https://uc-r.github.io/kmeans_clustering>
+-   <https://rpubs.com/rdelgado/399475>

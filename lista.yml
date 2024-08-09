@@ -485,4 +485,71 @@
   hoperation: [https://www.ine.es/dyngs/IOE/es/fichaProg.htm?cid=1259946013552]
   tema: Demografía y población
   observaciones: 104
+- title: 'Regresión Lineal: matrimonios_reg'
+  tecnica: Regresión Lineal
+  href: files/matrimonios_reg.xlsx
+  notebook: notebooks/Linear Regression/matrimionios_reg/matrimonios_reg.html
+  categories:
+  - 'Técnica: Regresión Lineal'
+  - 'Tema: Demografía y población'
+  description: Dataset con número de matrimonios en las ciudades españolas (de entre
+    50.000 y 300.000 habitantes), número total de habitantes, número de mujeres y
+    número de nacimientos que ha habido ese año. Datos correspondientes a 2022.
+  operation:
+  - 'Cifras Oficiales de Población de los Municipios Españoles: Revisión del Padrón
+    Municipal'
+  - 'MNP: Estadística de Matrimonios'
+  - 'MNP: Estadística de Nacimientos'
+  hoperation:
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?numinv=30245
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?numinv=30302
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?numinv=30304
+  tema: Demografía y población
+  observaciones: 133
+  cleaning: notebooks/Linear Regression/matrimionios_reg/Dataset_cleaning.html
+- title: 'Series Temporales - ARIMA: Paro'
+  tecnica: Series Temporales - ARIMA
+  href: files/paro.xlsx
+  notebook: notebooks/Series Temporales/ARIMA/Paro/Paro.html
+  categories:
+  - 'Técnica: Series Temporales'
+  - 'Tema: Mercado laboral y salarios'
+  description: Datos relativos al número de parados de España desde 2013 hasta 2024
+    con carácter trimestral.
+  operation: [Encuesta de Población Activa (EPA)]
+  hoperation: [https://www.ine.es/dyngs/IOE/es/operacion.htm?numinv=30308]
+  tema: Mercado laboral y salarios
+  observaciones: 46
+- title: 'Series Temporales - Holt Winters: Paro'
+  tecnica: Series Temporales - Holt Winters
+  href: files/paro.xlsx
+  notebook: notebooks/Series Temporales/Holt Winters/Paro/Paro.html
+  categories:
+  - 'Técnica: Series Temporales'
+  - 'Tema: Mercado laboral y salarios'
+  description: Datos relativos al número de parados de España desde 2013 hasta 2024
+    con carácter trimestral.
+  operation: [Encuesta de Población Activa (EPA)]
+  hoperation: [https://www.ine.es/dyngs/IOE/es/operacion.htm?numinv=30308]
+  tema: Mercado laboral y salarios
+  observaciones: 46
+- title: 'Cluster K-Means: salario_kmeans'
+  tecnica: Cluster K-Means
+  href: files/salario_kmeans.xlsx
+  notebook: notebooks/Cluster K-Means/salario_kmeans/salario_kmeans.html
+  categories:
+  - 'Técnica: Cluster K-Means'
+  - 'Tema: Mercado laboral y salarios'
+  - 'Tema: Demografía y población'
+  description: Este dataset presenta un conjunto de datos sobre el salario medio de
+    los trabajadores y la población en las comunidades autónomas junto a Ceuta y Melilla,
+    relativos al año 2018.
+  operation:
+  - Cifras Oficiales de Población de los Municipios Españoles
+  - Encuesta Anual de Estructura Salarial
+  hoperation:
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?numinv=30245
+  - https://www.ine.es/dyngs/IOE/es/operacion.htm?numinv=30189
+  tema: Mercado laboral y salarios, Demografía y población
+  observaciones: 18
 
