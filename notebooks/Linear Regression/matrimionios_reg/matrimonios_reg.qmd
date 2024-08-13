@@ -283,7 +283,7 @@ En caso de que haya más de un predictor ($k >1$, Regresión Lineal Múltiple), 
 
 ## Modelo
 
-En este caso nos encontramos ante una Regresión Lineal Múltiple puesto que tenemos más de una variable predictora. Inicialmente vamos a considerar un modelo con todas variables predictoras para intentar predecir `Nacimientos` y veremos si este modelo cumple las hipótesis necesarias y cuan bueno es.
+En este caso nos encontramos ante una Regresión Lineal Múltiple puesto que tenemos más de una variable predictora. Inicialmente vamos a considerar un modelo con todas variables predictoras para intentar predecir `Matrimonios` y veremos si este modelo cumple las hipótesis necesarias y cuan bueno es.
 
 ```{r}
 #| label: modelo1

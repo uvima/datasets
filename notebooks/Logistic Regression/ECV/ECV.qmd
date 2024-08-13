@@ -23,7 +23,7 @@ En este cuaderno vamos a analizar la existencia del llamado *"ascensor social"* 
 
 En primer lugar, debemos definir qué es eso del "ascensor social" y cómo vamos a tratar de analizarlo nosotros. Éste **se define como** la posibilidad de ascender o descender de clase social. Aunque podemos considerar que la pertenencia a una determinada clase social - si es que éstas existen de forma estanca y perfectamente distinguible - se explica por una combinación de aspectos: nivel económico, cultural, de estudios, etc, nosotros nos vamos a centrar simplemente en el nivel económico.
 
-Ver fichero [*Dataset_cleaning.rmd*](https://github.com/davidperezros/ine_sg_difusion_explica_datasets/blob/8afaee7bf19634c1d7a0676c81d63ffeaef3def7/Notebooks/Logistic%20Regression/ECV/Dataset_cleaning.md) para ver cómo se han tratado dichos microdatos hasta obtener un conjunto de datos adecuado para la regresión logística, y que tomaremos aquí como punto de partida. En este cuaderno vamos a analizar el dataset llamado [*ECV.xlsx*](../../../files/ECV.xlsx).
+Ver fichero [*Dataset_cleaning.rmd*](Dataset_cleaning.md) para ver cómo se han tratado dichos microdatos hasta obtener un conjunto de datos adecuado para la regresión logística, y que tomaremos aquí como punto de partida. En este cuaderno vamos a analizar el dataset llamado [*ECV.xlsx*](../../../files/ECV.xlsx).
 
 Concretamente tenemos las siguientes variables:
 
@@ -186,7 +186,7 @@ La **especificidad** y la **sensibilidad** son medidas utilizadas para evaluar e
 Un equilibrio entre ambas es deseable, pero depende del contexto específico del problema y de las consecuencias de los falsos positivos y falsos negativos. En el caso, por ejemplo, de detectar si un paciente tiene cáncer o no, parece más razonable centrarse en los Falsos Negativos, ya que un paciente que tiene cáncer no lo estamos detectando, lo que lleva un riesgo implícito muy alto.
 
 |                        | **Clasificado como Positivo** | **Clasificado como Negativo** | **Total** |
-|------------------------|-------------------------------|-------------------------------|-----------|
+|----------------|---------------------|---------------------|----------------|
 | **Realmente Positivo** | Verdadero Positivo (VP)       | Falso Negativo (FN)           | VP + FN   |
 | **Realmente Negativo** | Falso Positivo (FP)           | Verdadero Negativo (VN)       | FP + VN   |
 | **Total**              | VP + FP                       | FN + VN                       |           |

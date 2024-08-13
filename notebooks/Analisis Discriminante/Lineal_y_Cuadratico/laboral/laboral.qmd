@@ -19,53 +19,43 @@ En este notebook se va a explicar el método de Análisis de Discriminante Linea
 
 ## dataset
 
+En este cuaderno vamos a analizar el dataset llamado [*laboral.xlsx*](../../../../files/laboral.xlsx). Este contiene microdatos relativos a la [Encuestas de estructura salarial](https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177025&menu=ultiDatos&idp=1254735976596). Concretamente, datos correspondientes al año 2018. Las variables de interés son las siguientes:
 
-En este cuaderno vamos a analizar el dataset llamado
-[*laboral.xlsx*](../../../../files/laboral.xlsx).
-Este contiene microdatos relativos a la [Encuestas de estructura salarial](https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177025&menu=ultiDatos&idp=1254735976596). Concretamente, datos correspondientes al año 2018. Las variables de interés son las siguientes:
+-   **Estudios**: Nivel de estudios del encuestado. Valor 1 corresponde a individuos con muy bajo nivel académico (hasta primaria), y 0 a individuos con al menos nivel académico universitario. **Notar que en el conjunto de datos no hay encuestados con nivel de estudios medio, sólo muy bajo o muy alto.**
 
-  - **Estudios**: Nivel de estudios del encuestado. Valor 1 corresponde a individuos con muy bajo nivel académico (hasta primaria), y 0 a individuos con al menos nivel académico universitario. **Notar que en el conjunto de datos no hay encuestados con nivel de estudios medio, sólo muy bajo o muy alto.**
-  - **Salario**: Sueldo bruto anual.
-  - **Edad**: Grupo de Edad del encuestado. Puesto que las clases tienen un orden intrínseco, la variable la vamos a tratar como cuantitativa.
-  
-    - 01	MENOS 19 AÑOS 
-    - 02	DE 20 A 29    
-    - 03	DE 30 A 39    
-    - 04	DE 40 A 49    
-    - 05	DE 50 A 59    
-    - 06	MÁS DE 59     
+-   **Salario**: Sueldo bruto anual.
 
-  - **Antiguedad**: Años de antigüedad.
-  - **Vacaciones**: Días de vacaciones al año.
+-   **Edad**: Grupo de Edad del encuestado. Puesto que las clases tienen un orden intrínseco, la variable la vamos a tratar como cuantitativa.
 
-El objetivo de este estudio será aplicar un Análisis **Discriminante** para
-clasificar a la población entre alto y bajo nivel de estudios a partir de estas variables. Además se verá si el salario en si mismo constituye un buen factor de discriminación.
+    -   01 MENOS 19 AÑOS
+    -   02 DE 20 A 29\
+    -   03 DE 30 A 39\
+    -   04 DE 40 A 49\
+    -   05 DE 50 A 59\
+    -   06 MÁS DE 59
 
+-   **Antiguedad**: Años de antigüedad.
 
+-   **Vacaciones**: Días de vacaciones al año.
 
+El objetivo de este estudio será aplicar un Análisis **Discriminante** para clasificar a la población entre alto y bajo nivel de estudios a partir de estas variables. Además se verá si el salario en si mismo constituye un buen factor de discriminación.
 
 ## Descripción del trabajo a realizar
 
-Se pretende hacer un Análisis
-de Discriminante empleando los procedimientos de LDA (Análisis de Discriminante Lineal) y  QDA (Análisis de Discriminante Cuadrático).
+Se pretende hacer un Análisis de Discriminante empleando los procedimientos de LDA (Análisis de Discriminante Lineal) y QDA (Análisis de Discriminante Cuadrático).
 
-  -   Hacer un análisis exploratorio. Ver si las variables separan bien las clases.
-  - Convertir a factor la variable respuesta.
-  - Realizar una partición de datos Train/Test.
-  -   Fijar semilla cuando se usen números aleatorios (para la reproductividad).
-  - Ejecutar algoritmos lda/qda y evaluar su bondad.
-
-
-
-
+-   Hacer un análisis exploratorio. Ver si las variables separan bien las clases.
+-   Convertir a factor la variable respuesta.
+-   Realizar una partición de datos Train/Test.
+-   Fijar semilla cuando se usen números aleatorios (para la reproductividad).
+-   Ejecutar algoritmos lda/qda y evaluar su bondad.
 
 # Análisis Exploratorio (EDA)
 
 EDA viene del Inglés *Exploratory Data Analysis* y son los pasos relativos en los que se exploran las variables para tener una idea de que forma toma el dataset.
 
-
-
 ## Cargar Librerías
+
 Lo primero de todo vamos a cargar las librerías necesarias para ejecutar el resto del código del trabajo:
 
 ```{r}
@@ -92,39 +82,26 @@ Cargamos entonces el conjunto de datos:
 datos <- read_excel("../../../../files/laboral.xlsx", sheet = "Datos")
 ```
 
+Veamos un resumen de los datos y si hay algún NA para quitarlo/imputarlo.
 
-
-Veamos un resumen de los datos y si hay algún NA para quitarlo/imputarlo. 
 ```{r}
 summary(datos)
 sum(is.na(datos))
 ```
 
-
-
-
-# Análisis de Discrminante: LDA y QDA 
+# Análisis de Discrminante: LDA y QDA
 
 ## Introducción
+
 El análisis discriminante es una técnica estadística utilizada para clasificar observaciones en grupos o categorías predefinidas en función de un conjunto de variables predictoras.
 
 El objetivo principal es identificar las características o variables que mejor distinguen entre diferentes grupos conocidos. Es una técnica de **aprendizaje supervisado**, lo que significa que requiere un conjunto de datos etiquetado con información sobre las categorías o grupos a los que pertenecen las observaciones.
 
-
-
 El análisis discriminante se puede dividir en dos tipos principales:
 
-  - **Análisis Discriminante Lineal (LDA)**: LDA asume que las variables predictoras tienen una distribución normal y que las matrices de covarianza de las variables predictoras son iguales para todos los grupos. LDA busca un hiperplano (o límite de decisión) que maximice la distancia entre las medias de los grupos y minimice la varianza dentro de cada grupo.
-  Debido a la asunción de igual covarianzas, los **hiperplanos que separan las clases son lineales**.
+-   **Análisis Discriminante Lineal (LDA)**: LDA asume que las variables predictoras tienen una distribución normal y que las matrices de covarianza de las variables predictoras son iguales para todos los grupos. LDA busca un hiperplano (o límite de decisión) que maximice la distancia entre las medias de los grupos y minimice la varianza dentro de cada grupo. Debido a la asunción de igual covarianzas, los **hiperplanos que separan las clases son lineales**.
 
-  - **Análisis Discriminante Cuadrático (QDA)**: QDA relaja la suposición de igualdad de matrices de covarianza y permite que cada grupo tenga su propia matriz de covarianza. Esto hace que QDA sea más flexible pero también requiere más datos para estimar las matrices de covarianza para cada grupo. Los hiperplanos que separan las clases son **cuadráticos**.
-
-
-
-
-
-
-
+-   **Análisis Discriminante Cuadrático (QDA)**: QDA relaja la suposición de igualdad de matrices de covarianza y permite que cada grupo tenga su propia matriz de covarianza. Esto hace que QDA sea más flexible pero también requiere más datos para estimar las matrices de covarianza para cada grupo. Los hiperplanos que separan las clases son **cuadráticos**.
 
 Ahora grafiquemos los histogramas de las variables distinguiendo entre variable respuesta a ver si alguno de ellos parece separar bien las variables y por tanto es susceptible de que funcione luego bien en LDA/QDA.
 
@@ -136,7 +113,6 @@ ggplot(datos, aes(Salario)) +
   geom_density(aes(group = Estudios, colour = Estudios, fill = Estudios), alpha = 0.1) +
   theme(text = element_text(size = 9))
 ```
-
 
 ```{r}
 library(ggplot2)
@@ -154,7 +130,6 @@ ggplot(datos, aes(Antiguedad)) +
 
 Vemos que la única que parece discriminar algo la variable respuesta, es la variable salarios. Se observa que los que tienen variable respuesta 0, en la mayoría de los casos presentan un salario anual bruto mayor. Luego esto puede ser un indicador de que el presente método funcionará.
 
-
 Veamos ahora en 2D las clasificaciones y observamos que la variable Salario parece discriminar muy bien las clases cuando la juntamos con cualquiera de las demás, ya que se ven los colores de ambas clases separados en la última columna.
 
 ```{r}
@@ -164,7 +139,6 @@ colo <- c("pink", "#1874CD")[Label]
 X <- datos[, c(2:5)]
 pairs(X, main = "Diabetes data set", pch = 20, col = colo, lower.panel = NULL, cex = 0.2, oma = c(1, 3, 3, 15))
 ```
-
 
 Por último, visualizamos las correlaciones entre variables, que no son muy altas. Aunque las correlaciones no son influyentes para el uso de este tipo de algoritmos, es aconsejable visualizarlas por si se encuentra algún dato llamativo.
 
@@ -187,7 +161,6 @@ corrplot(cor((datos[, 2:5])),
 datos$Estudios <- as.factor(datos$Estudios)
 ```
 
-
 ## Partición de datos
 
 Para evitar el **overffiting** debido a que el modelo se ha entrenado demasiado con los datos proporcionados, vamos a realizar una partición de datos y una vez entrenado el modelo, lo evaluaremos con la partición segunda.
@@ -201,16 +174,12 @@ laboralTrain <- datos[spl, ]
 laboralTest <- datos[-spl, ]
 ```
 
-
-
 ## Análisis de Discriminante Lineal (LDA)
 
 Como se ha comentado previamente:
-  
-  - Se supone que la distribución de los datos es una **normal multivariante.** 
-  - Supone que todas las **matrices de covarianzas son iguales** ( y por tanto el clasificador es lineal).
-  
 
+-   Se supone que la distribución de los datos es una **normal multivariante.**
+-   Supone que todas las **matrices de covarianzas son iguales** ( y por tanto el clasificador es lineal).
 
 ```{r}
 set.seed(785248) # For Reproducibility
@@ -232,30 +201,23 @@ pred.lda <- predict(lda.class.laboral, laboralTest)$class
 confusionMatrix(pred.lda, laboralTest$Estudios)
 ```
 
- - **Exactitud (Accuracy)**: La exactitud del modelo es del 75.86%, lo que significa que el modelo clasificó correctamente aproximadamente el 75.86% de las instancias en el conjunto de prueba.
+-   **Exactitud (Accuracy)**: La exactitud del modelo es del 75.86%, lo que significa que el modelo clasificó correctamente aproximadamente el 75.86% de las instancias en el conjunto de prueba.
 
- - **Sensibilidad (Sensitivity o Recall)**: La sensibilidad del modelo para la clase 0 es del 84.96%, lo que indica que el modelo identificó correctamente alrededor del 84.96% de las instancias de la clase 0 en el conjunto de prueba.
+-   **Sensibilidad (Sensitivity o Recall)**: La sensibilidad del modelo para la clase 0 es del 84.96%, lo que indica que el modelo identificó correctamente alrededor del 84.96% de las instancias de la clase 0 en el conjunto de prueba.
 
- - **Especificidad (Specificity)**: La especificidad del modelo para la clase 1 es del 59.91%, lo que significa que el modelo identificó correctamente alrededor del 59.91% de las instancias de la clase 1 en el conjunto de prueba.
-
+-   **Especificidad (Specificity)**: La especificidad del modelo para la clase 1 es del 59.91%, lo que significa que el modelo identificó correctamente alrededor del 59.91% de las instancias de la clase 1 en el conjunto de prueba.
 
 En general, estos resultados muestran que el modelo LDA tiene un rendimiento decente en la clasificación de las instancias en el conjunto de prueba, con una exactitud y un kappa significativos.
-
 
 ## Análisis de Discriminante Cuadrático
 
 Como se ha comentado previamente:
-  
-  - Se supone que la distribución de los datos es una **normal multivariante**. 
-  - **No** supone que todas las **matrices de covarianzas son iguales** ( y por tanto el clasificador es cuadrático y no lineal).
-  - Método **muy inestable a menos que** tengamos muestras muy grandes y de dimensiones bajas.
-  
-  
-  Es más inestable debido a que al permitir que cada grupo tenga su propia matriz de covarianza, aunque lo que lo hace más flexible, requiere muchos más datos para estimar las matrices de covarianza para cada grupo.
-  
-  
-  
 
+-   Se supone que la distribución de los datos es una **normal multivariante**.
+-   **No** supone que todas las **matrices de covarianzas son iguales** ( y por tanto el clasificador es cuadrático y no lineal).
+-   Método **muy inestable a menos que** tengamos muestras muy grandes y de dimensiones bajas.
+
+Es más inestable debido a que al permitir que cada grupo tenga su propia matriz de covarianza, aunque lo que lo hace más flexible, requiere muchos más datos para estimar las matrices de covarianza para cada grupo.
 
 ```{r}
 set.seed(785248) # For Reproducibility
@@ -274,27 +236,19 @@ pred.qda <- predict(qda.class.laboral, laboralTest)$class
 confusionMatrix(pred.qda, laboralTest$Estudios)
 ```
 
-  - **Exactitud (Accuracy)**: La exactitud del modelo es del 76.7%, lo que significa que el modelo clasificó correctamente aproximadamente el 76.7% de las instancias en el conjunto de prueba.
+-   **Exactitud (Accuracy)**: La exactitud del modelo es del 76.7%, lo que significa que el modelo clasificó correctamente aproximadamente el 76.7% de las instancias en el conjunto de prueba.
 
-  - **Sensibilidad (Sensitivity o Recall)**: La sensibilidad del modelo para la clase 0 es del 78.41%, lo que indica que el modelo identificó correctamente alrededor del 78.41% de las instancias de la clase 0 en el conjunto de prueba.
+-   **Sensibilidad (Sensitivity o Recall)**: La sensibilidad del modelo para la clase 0 es del 78.41%, lo que indica que el modelo identificó correctamente alrededor del 78.41% de las instancias de la clase 0 en el conjunto de prueba.
 
-  - **Especificidad (Specificity)**: La especificidad del modelo para la clase 1 es del 73.71%, lo que significa que el modelo identificó correctamente alrededor del 73.71% de las instancias de la clase 1 en el conjunto de prueba.
-
-
+-   **Especificidad (Specificity)**: La especificidad del modelo para la clase 1 es del 73.71%, lo que significa que el modelo identificó correctamente alrededor del 73.71% de las instancias de la clase 1 en el conjunto de prueba.
 
 **Comparando** estos resultados con los del modelo LDA, observamos que el modelo QDA tiene una mayor exactitud, sensibilidad y valor predictivo negativo. Sin embargo, el modelo LDA tiene una mayor especificidad y valor predictivo positivo. La elección entre LDA y QDA depende del contexto específico del problema y de las preferencias en términos de los errores de clasificación que se desean minimizar. Si se valora más la identificación correcta de la clase minoritaria (clase 1), el modelo QDA podría ser más adecuado debido a su mayor sensibilidad. Si se desea minimizar los falsos positivos, el modelo LDA podría ser preferible debido a su mayor especificidad.
 
 # Conclusión
 
-
 En el presente estudio se ha visto como poder clasificar a individuos (que o bien tengan estudios muy altos o muy bajos) en sus respectivas clases, de acuerdo a variables de edad, salario, días de vacaciones y antigüedad en el trabajo. Se ha certificado que la variable Salario es la que más influye en el nivel de estudios, o dicho de otra manera, las personas que tiene estudios superiores (respecto a los que tienen estudios muy inferiores, hasta primaria) presentan salarios bastante más elevados. Este hecho permite discriminar bastante bien la variable respuesta mediante modelos de Análisis de Discriminante Lineal y Cuadrático.
-
-
-
-
 
 # Bibliografía
 
-  - <https://rpubs.com/Joaquin_AR/233932>
-  - <https://rpubs.com/jaimeisaacp/775949>
-
+-   <https://rpubs.com/Joaquin_AR/233932>
+-   <https://rpubs.com/jaimeisaacp/775949>

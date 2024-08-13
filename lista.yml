@@ -250,7 +250,7 @@
   - 'Técnica: Regresión Logística'
   - 'Tema: Demografía y población'
   description: Datos relativos a partos en 2022 en la Comunidad Autónoma de Navarra.
-    El objetivo es clasificarlos partos en si hubo o no una cesárea en función de
+    El objetivo es clasificar los partos en si hubo o no una cesárea en función de
     la edad de la madre, las complicaciones en el parto y las semanas de gestación.
   operation:
   - Estadística de nacimientos. Movimiento natural de la población
@@ -328,7 +328,7 @@
   operation: [Encuesta Nacional de Salud (ENSE)]
   hoperation: [https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736176783&menu=resultados&idp=1254735573175]
   tema: Salud
-  observaciones: 229
+  observaciones: 23089
   cleaning: notebooks/Analisis Discriminante/Lineal_y_Cuadratico/salud/Dataset_cleaning.html
 - title: 'Regresión Logística: salud'
   tecnica: Regresión Logística
@@ -343,7 +343,7 @@
   operation: [Encuesta Nacional de Salud (ENSE)]
   hoperation: [https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736176783&menu=resultados&idp=1254735573175]
   tema: Salud
-  observaciones: 229
+  observaciones: 23089
   cleaning: notebooks/Logistic Regression/salud/Dataset_cleaning.html
 - title: 'Regresión Lineal: salud_reg'
   tecnica: Regresión Lineal
