@@ -1075,7 +1075,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="partición-de-datos" class="level2">
 <h2 class="anchored" data-anchor-id="partición-de-datos">Partición de datos</h2>
 <p>Para evitar el <strong>overffiting</strong> debido a que el modelo se ha entrenado demasiado con los datos proporcionados, vamos a realizar una partición de datos y una vez entrenado el modelo, lo evaluaremos con la partición segunda.</p>
-<p>Para ello usamos la función <code>caret::createDataPartition()</code> que nos permite mantener la proporción de la variable binaria respuesta. En caso de no usar esta función podríamos estar dejando en la partición de entreno observaciones con la misma variable respueta y dejar la clase minoritaria infrarepresnetada, lo que podría incurrir en un mal ajuste del modelo para dicha clase.</p>
+<p>Para ello usamos la función <code>caret::createDataPartition()</code> que nos permite mantener la proporción de la variable binaria respuesta. En caso de no usar esta función podríamos estar dejando en la partición de entreno observaciones con la misma variable respuesta y dejar la clase minoritaria infrarepresentada, lo que podría incurrir en un mal ajuste del modelo para dicha clase.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">785248</span>) <span class="co"># For Reproducibility</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>spl <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(datos<span class="sc">$</span>Sexo, <span class="at">p =</span> <span class="fl">0.75</span>, <span class="at">list =</span> <span class="cn">FALSE</span>) <span class="co"># 75% for training</span></span>
@@ -1152,8 +1152,8 @@ Prediction    1    2
 </div>
 <ul>
 <li><p><strong>Exactitud (Accuracy)</strong>: La exactitud del modelo es del 83%, lo que significa que el modelo clasificó correctamente aproximadamente el 83% de las instancias en el conjunto de prueba.</p></li>
-<li><p><strong>Sensibilidad (Sensitivity o Recall)</strong>: La sensibilidad del modelo para la clase 0 es del 80%, lo que indica que el modelo identificó correctamente alrededor del 80% de las instancias de la clase 0 en el conjunto de prueba.</p></li>
-<li><p><strong>Especificidad (Specificity)</strong>: La especificidad del modelo para la clase 1 es del 85%, lo que significa que el modelo identificó correctamente alrededor del 85% de las instancias de la clase 1 en el conjunto de prueba.</p></li>
+<li><p><strong>Sensibilidad (Sensitivity o Recall)</strong>: La sensibilidad del modelo para la clase 1 es del 80%, lo que indica que el modelo identificó correctamente alrededor del 80% de las instancias de la clase 1 en el conjunto de prueba.</p></li>
+<li><p><strong>Especificidad (Specificity)</strong>: La especificidad del modelo para la clase 0 es del 85%, lo que significa que el modelo identificó correctamente alrededor del 85% de las instancias de la clase 0 en el conjunto de prueba.</p></li>
 </ul>
 <p>En general, estos resultados muestran que el modelo LDA tiene un rendimiento bueno en la clasificación de las instancias en el conjunto de prueba, con una exactitud y un kappa significativos.</p>
 </section>
@@ -1228,8 +1228,8 @@ Prediction    1    2
 </div>
 <ul>
 <li><p><strong>Exactitud (Accuracy)</strong>: La exactitud del modelo es del 83%, lo que significa que el modelo clasificó correctamente aproximadamente el 83% de las instancias en el conjunto de prueba.</p></li>
-<li><p><strong>Sensibilidad (Sensitivity o Recall)</strong>: La sensibilidad del modelo para la clase 0 es del 80%, lo que indica que el modelo identificó correctamente alrededor del 80% de las instancias de la clase 0 en el conjunto de prueba.</p></li>
-<li><p><strong>Especificidad (Specificity)</strong>: La especificidad del modelo para la clase 1 es del 85%, lo que significa que el modelo identificó correctamente alrededor del 85% de las instancias de la clase 1 en el conjunto de prueba.</p></li>
+<li><p><strong>Sensibilidad (Sensitivity o Recall)</strong>: La sensibilidad del modelo para la clase 1 es del 80%, lo que indica que el modelo identificó correctamente alrededor del 80% de las instancias de la clase 1 en el conjunto de prueba.</p></li>
+<li><p><strong>Especificidad (Specificity)</strong>: La especificidad del modelo para la clase 0 es del 85%, lo que significa que el modelo identificó correctamente alrededor del 85% de las instancias de la clase 0 en el conjunto de prueba.</p></li>
 </ul>
 <p><strong>Comparando</strong> estos resultados con los del modelo LDA, observamos ambos modelos tienen una exactitud, sensibilidad y valor predictivo negativo parecidos.</p>
 </section>

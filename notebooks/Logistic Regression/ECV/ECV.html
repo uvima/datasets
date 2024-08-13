@@ -972,7 +972,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="dataset">dataset</h2>
 <p>En este cuaderno vamos a analizar la existencia del llamado <em>“ascensor social”</em> en España a partir de los microdatos de la <a href="https://www.google.com/url?sa=t&amp;source=web&amp;rct=j&amp;opi=89978449&amp;url=https://www.ine.es/dyngs/INEbase/es/operacion.htm%3Fc%3DEstadistica_C%26cid%3D1254736176807%26menu%3DultiDatos%26idp%3D1254735976608&amp;ved=2ahUKEwj2jsm76ZGGAxUl-gIHHZkwCOoQFnoECAYQAQ&amp;usg=AOvVaw0SHHG9Z7tm62Y7fE5HapVb">Encuesta de Condiciones de Vida (ECV)</a> del año 2019. Dicho análisis nos sirve como excusa para tratar de mostrar en qué consiste una regresión logística y cómo llevarla a cabo en R.</p>
 <p>En primer lugar, debemos definir qué es eso del “ascensor social” y cómo vamos a tratar de analizarlo nosotros. Éste <strong>se define como</strong> la posibilidad de ascender o descender de clase social. Aunque podemos considerar que la pertenencia a una determinada clase social - si es que éstas existen de forma estanca y perfectamente distinguible - se explica por una combinación de aspectos: nivel económico, cultural, de estudios, etc, nosotros nos vamos a centrar simplemente en el nivel económico.</p>
-<p>Ver fichero <a href="https://github.com/davidperezros/ine_sg_difusion_explica_datasets/blob/8afaee7bf19634c1d7a0676c81d63ffeaef3def7/Notebooks/Logistic%20Regression/ECV/Dataset_cleaning.md"><em>Dataset_cleaning.rmd</em></a> para ver cómo se han tratado dichos microdatos hasta obtener un conjunto de datos adecuado para la regresión logística, y que tomaremos aquí como punto de partida. En este cuaderno vamos a analizar el dataset llamado <a href="../../../files/ECV.xlsx"><em>ECV.xlsx</em></a>.</p>
+<p>Ver fichero <a href="../../../notebooks/Logistic Regression/ECV/Dataset_cleaning.html"><em>Dataset_cleaning.rmd</em></a> para ver cómo se han tratado dichos microdatos hasta obtener un conjunto de datos adecuado para la regresión logística, y que tomaremos aquí como punto de partida. En este cuaderno vamos a analizar el dataset llamado <a href="../../../files/ECV.xlsx"><em>ECV.xlsx</em></a>.</p>
 <p>Concretamente tenemos las siguientes variables:</p>
 <ul>
 <li><strong>MSE</strong> (Mejora Situación Económica): Variable binaria, 1= ha mejorado la calidad de vida del encuestado respecto a su infancia, 0=no ha mejorado. teniendo en cuenta las nueve dimensiones.</li>
@@ -1122,10 +1122,10 @@ P(Y=1)=\frac{1}{1+e^{-(\beta_0 + \beta_1X_1 + ϵ)}}
 <p>Un equilibrio entre ambas es deseable, pero depende del contexto específico del problema y de las consecuencias de los falsos positivos y falsos negativos. En el caso, por ejemplo, de detectar si un paciente tiene cáncer o no, parece más razonable centrarse en los Falsos Negativos, ya que un paciente que tiene cáncer no lo estamos detectando, lo que lleva un riesgo implícito muy alto.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 24%">
-<col style="width: 31%">
-<col style="width: 31%">
-<col style="width: 11%">
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
 </colgroup>
 <thead>
 <tr class="header">

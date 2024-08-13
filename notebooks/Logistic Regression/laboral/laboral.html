@@ -970,7 +970,7 @@ window.Quarto = {
 <p>En este cuaderno se va a explicar los fundamentos de la Regresión Logística, como detectar cuando nos encontramos ante un problema que se debe abordar mediante este tipo de Regresión. Se verán los fundamentos teóricos que lo sustentan y las técnicas a llevar a cabo para analizar los datos.</p>
 <section id="dataset" class="level2">
 <h2 class="anchored" data-anchor-id="dataset">dataset</h2>
-<p>En este cuaderno vamos a analizar el dataset llamado <a href="../../../files/laboral.xlsx"><em>laboral.xlsx</em></a>. Este contiene microdatos relativos a la <strong>Encuestas de estructura salarial. Resultados</strong>. Concretamente, datos correspondientes al año 2018. Las variables de interés son las siguientes:</p>
+<p>En este cuaderno vamos a analizar el dataset llamado <a href="../../../files/laboral.xlsx"><em>laboral.xlsx</em></a>. Este contiene microdatos relativos a la <a href="https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&amp;cid=1254736177025&amp;menu=ultiDatos&amp;idp=1254735976596">Encuestas de estructura salarial. Resultados.</a>. Concretamente, datos correspondientes al año 2018. Las variables de interés son las siguientes:</p>
 <ul>
 <li><p><strong>Estudios</strong>: Nivel de estudios del encuestado. Valor 1 corresponde a individuos con muy bajo nivel académico (hasta primaria), y 0 a individuos con al menos nivel académico universitario.</p></li>
 <li><p><strong>Salario</strong>: Sueldo bruto anual.</p></li>
@@ -1132,7 +1132,7 @@ window.Quarto = {
 <p>Aunque matemáticamente se pueda ajustar un modelo de regresión lineal clásico a la relación entre una variable dependiente categórica y una o varias covariables, cuando la variable dependiente es dicotómica (regresión logística binaria, caso más sencillo de regresión logística) no es apropiado utilizar un modelo de regresión lineal porque una variable dicotómica no se ajusta a una distribución normal, sino a una binomial. Ignorar esta cuestión podría llevar a obtener probabilidades imposibles: menores que cero o mayores que uno.</p>
 <p>Para evitar este problema, es preferible utilizar funciones que realicen predicciones comprendidas entre un máximo y un mínimo. Una de estas funciones - posiblemente la más empleada - es la curva logística o función sigmoide:</p>
 <p>[ =()= _0 + _1 X_1 + _2 X_2 + , p=P(Y=1) ]</p>
-<p>Es decir, <strong>estamos estimando con una regresión lineal el valor de <span class="math inline">\(\eta\)</span>, que sí es una v.a. continua - a diferencia de Y que es binaria-</strong>.</p>
+<p>Es decir, <strong>estamos estimando con una regresión lineal el valor de</strong> <span class="math inline">\(\eta\)</span>, que sí es una v.a. continua - a diferencia de Y que es binaria-.</p>
 <p>Esto es, <span class="math inline">\(p=\frac{e^\eta}{1+e^\eta}=\frac{1}{1+e^{-\eta}}\)</span>. De esta forma, para valores positivos muy grandes de <span class="math inline">\(\eta\)</span> llamado <strong>odds</strong>, <span class="math inline">\(e^{-\eta}\)</span> es aproximadamente cero, por lo que el valor de la función es 1; mientras que para valores negativos muy grandes de <span class="math inline">\(\eta\)</span>, <span class="math inline">\(e^{-\eta}\)</span> tiende a infinito, haciendo que el valor de la función sea 0.</p>
 <p>A continuación, para simplificar un poco las cosas, consideremos el modelo de regresión logística más sencillo: regresión logística binaria simple (una sola covariable):</p>
 <p>[ P(Y=1)= ]</p>
@@ -1188,9 +1188,9 @@ window.Quarto = {
 <p>Por ejemplo, a una probabilidad de 0,5, le corresponde una odds de 1 y un logit de 0. Ahora bien, es cierto que razonar en términos de cambios en los logaritmos resulta poco intuitivo. Por ello, es preferible interpretar el cambio en las odds o en la razón de ventajas (también llamada odds ratio, razón de probabilidades o razón de momios).</p>
 <p>La interpretación más frecuente es interpretar los signos de los coeficientes del modelo, es decir, los signos de <span class="math inline">\(\beta_1, \ldots , \beta_k\)</span>.</p>
 <ul>
-<li><p>Si <span class="math inline">\(\beta_i &gt;0\)</span> , se traduce en que un aumento de una unidad en la variable <span class="math inline">\(x_i\)</span> -si es continua- o un cambio de categoría -si <span class="math inline">\(x_i\)</span> es categórica- se traduce en un <strong>aumento</strong> de <span class="math inline">\(\beta_i\)</span> unidades el valor de <strong>logit</strong>. Es decir, <strong>la probabilidad <span class="math inline">\(p\)</span> </strong>(que Y=1) aumenta, en función de <span class="math display">\[p=\frac{e^\eta}{1+e^\eta}\]</span>.</p>
+<li><p>Si <span class="math inline">\(\beta_i &gt;0\)</span> , se traduce en que un aumento de una unidad en la variable <span class="math inline">\(x_i\)</span> -si es continua- o un cambio de categoría -si <span class="math inline">\(x_i\)</span> es categórica- se traduce en un <strong>aumento</strong> de <span class="math inline">\(\beta_i\)</span> unidades el valor de <strong>logit</strong>. Es decir, <strong>la probabilidad</strong> <span class="math inline">\(p\)</span> (que Y=1) aumenta, en función de <span class="math display">\[p=\frac{e^\eta}{1+e^\eta}\]</span>.</p>
 <ul>
-<li>Si <span class="math inline">\(\beta_i &lt;0\)</span> , se traduce en que un aumento de una unidad en la variable <span class="math inline">\(x_i\)</span> -si es continua- o un cambio de categoría -si <span class="math inline">\(x_i\)</span> es categórica- se traduce en una <strong>disminución</strong> de <span class="math inline">\(\beta_i\)</span> unidades el valor de <strong>logit</strong>. Es decir, <strong>la probabilidad <span class="math inline">\(p\)</span></strong> (que Y=1) disminuye, en función de <span class="math display">\[p=\frac{e^\eta}{1+e^\eta}\]</span>.</li>
+<li>Si <span class="math inline">\(\beta_i &lt;0\)</span> , se traduce en que un aumento de una unidad en la variable <span class="math inline">\(x_i\)</span> -si es continua- o un cambio de categoría -si <span class="math inline">\(x_i\)</span> es categórica- se traduce en una <strong>disminución</strong> de <span class="math inline">\(\beta_i\)</span> unidades el valor de <strong>logit</strong>. Es decir, <strong>la probabilidad</strong> <span class="math inline">\(p\)</span> (que Y=1) disminuye, en función de <span class="math display">\[p=\frac{e^\eta}{1+e^\eta}\]</span>.</li>
 </ul></li>
 </ul>
 <p>Una pregunta importante en cualquier análisis de regresión es si el modelo propuesto se ajusta adecuadamente a los datos, lo que conduce naturalmente a la noción de una prueba formal para la falta de ajuste (o bondad de ajuste).</p>
@@ -1205,10 +1205,10 @@ window.Quarto = {
 <p>Un equilibrio entre ambas es deseable, pero depende del contexto específico del problema y de las consecuencias de los falsos positivos y falsos negativos. En el caso, por ejemplo, de detectar si un paciente tiene cáncer o no, parece más razonable centrarse en los Falsos Negativos, ya que un paciente que tiene cáncer no lo estamos detectando, lo que lleva un riesgo implícito muy alto.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 19%">
-<col style="width: 34%">
-<col style="width: 34%">
-<col style="width: 11%">
+<col style="width: 20%">
+<col style="width: 29%">
+<col style="width: 29%">
+<col style="width: 20%">
 </colgroup>
 <thead>
 <tr class="header">

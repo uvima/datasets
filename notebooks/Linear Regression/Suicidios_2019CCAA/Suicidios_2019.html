@@ -977,7 +977,7 @@ window.Quarto = {
 <li><strong>def</strong>: Número de defunciones.</li>
 <li><strong>defpc</strong>: Número de defunciones per cápita.</li>
 <li><strong>deu_nec</strong>: Deudores concursados necesarios</li>
-<li><strong>gastoid </strong>: Gastos internos totales y personal en I+D</li>
+<li><strong>gastoid</strong> : Gastos internos totales y personal en I+D</li>
 <li><strong>gastomed</strong>: Gasto Medio por Persona.</li>
 <li><strong>gastoprotec</strong>: Gasto en protección ambiental.</li>
 <li><strong>gastoprotecpc</strong>: Gasto en protección ambiental per cápita.</li>
@@ -1012,7 +1012,6 @@ window.Quarto = {
 </ul>
 <p>En este caso de uso, vamos a intentar explicar qué variables $(x1,x2,…,xk) $ pueden afectar al número de suicidios <span class="math inline">\((y)\)</span> que ocurren en España.</p>
 <p>Los datos relativos a este estudio corresponden a una serie de estadísticas relacionadas con el suicidio y la población como pueden ser la <a href="https://www.ine.es/dyngs/IOE/es/fichaPlan.htm?cid=1259946127417">Estadística de Defunciones según la Causa de Muerte</a> o la <a href="https://www.ine.es/dyngs/IOE/es/operacion.htm?id=1259931120732">Encuesta de Población Activa (EPA)</a>. Aunque el dataset presente muchas variables, sólo se usaran las relativas a términos per cápita puesto que las demás tienen una correlación bastante alta y esto puede causar problemas.</p>
-<p><strong>Nota</strong>: Notar que en este dataset no se tiene la variable <strong>dim9</strong> ya que en ese caso el ajuste de la regresión sería prefecto puesto que la variable <strong>índice_total</strong> es la media aritmética de las 9 dimensiones.</p>
 </section>
 <section id="descripción-del-trabajo-a-realizar" class="level2">
 <h2 class="anchored" data-anchor-id="descripción-del-trabajo-a-realizar">Descripción del trabajo a realizar</h2>
@@ -1652,7 +1651,7 @@ RESET = 0.72339, df1 = 6, df2 = 4, p-value = 0.6563</code></pre>
 </section>
 <section id="conclusión" class="level1">
 <h1>Conclusión</h1>
-<p>El modelo inicial considerado tiene buenos indicadores de bondad de ajuste y además pasa toas las hipótesis requeridas para una regresión lineal. Es por ello que parece razonable tomarlo como bueno. Destacar que se han eliminado las variables que dependían de la estructura poblacional ya que había una alta correlación entre ellas (debido al tamaño de la población considerada).</p>
+<p>El modelo inicial considerado tiene buenos indicadores de bondad de ajuste y además pasa todas las hipótesis requeridas para una regresión lineal. Es por ello que parece razonable tomarlo como bueno. Destacar que se han eliminado las variables que dependían de la estructura poblacional ya que había una alta correlación entre ellas (debido al tamaño de la población considerada).</p>
 </section>
 <section id="bibliografía" class="level1">
 <h1>Bibliografía</h1>
